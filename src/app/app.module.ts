@@ -7,13 +7,15 @@ import {GesComponent} from './ges/ges.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainLayoutComponent,
     GesComponent,
-    DashboardComponent
+    DashboardComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
