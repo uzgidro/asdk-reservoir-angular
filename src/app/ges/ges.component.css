@@ -1,0 +1,7 @@
+th {
+  @apply text-sky-700
+}
+
+td {
+  @apply p-1.5
+}
