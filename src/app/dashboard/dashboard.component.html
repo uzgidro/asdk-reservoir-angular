@@ -35,7 +35,9 @@
         <button class="tablinks rounded-tr-xl" (click)="tabclick($event, 'Чарвак')">Чарвак</button>
       </div>
       <div class="chart-container">
-        <canvas id="ReportChart"></canvas>
+        <canvas id="ReportChart">{{waterChart}}</canvas>
+        <canvas id="FilterChart">{{filterChart}}</canvas>
+        <canvas id="VolumeChart">{{volumeChart}}</canvas>
       </div>
 
     </div>
