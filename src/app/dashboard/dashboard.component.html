@@ -1,6 +1,6 @@
 <!--Container-->
 <div class="p-10 flex space-x-5">
-  <div class="block space-y-4">
+  <div class="block space-y-4 max-w-4xl">
 <!--Power-->
     <div class="flex space-x-5">
       <div class="p-6 max-w-sm bg-white rounded-xl shadow-lg flex items-center">
@@ -34,7 +34,7 @@
         <button class="tablinks" (click)="tabclick($event, 'Хисорак')">Хисорак</button>
         <button class="tablinks rounded-tr-xl" (click)="tabclick($event, 'Чарвак')">Чарвак</button>
       </div>
-      <div class="chart-container mx-auto">
+      <div class="chart-container">
         <canvas id="ReportChart">{{waterChart}}</canvas>
         <canvas id="FilterChart">{{filterChart}}</canvas>
         <canvas id="VolumeChart">{{volumeChart}}</canvas>
@@ -59,14 +59,12 @@
 <!--/GES-->
     <!--GES-->
     <div class="p-6 w-80 bg-white rounded-xl shadow-lg flex-col items-center space-y-2">
-      <h3 class="text-center font-medium text-black text-xl border-b border-gray-300">ГЭС</h3>
+      <h3 class="text-center font-medium text-black text-xl border-b border-gray-300">Данные за год</h3>
       <ul class="space-y-2">
-        <li class="flex justify-between"><p>Самый мощный №1</p> <p>165 МВт</p></li>
-        <li class="flex justify-between"><p>Самый мощный №2</p> <p>140 МВт</p></li>
-        <li class="flex justify-between"><p>Самый мощный №3</p> <p>120 МВт</p></li>
-        <li class="flex justify-between"><p>Мощный №1</p> <p>100 МВт</p></li>
-        <li class="flex justify-between"><p>Мощный №2</p> <p>83 МВт</p></li>
-        <li class="flex justify-between"><p>Мощный №3</p> <p>65 МВт</p></li>
+        <li class="flex justify-between"><p>Приток:</p> <p>777 м3</p></li>
+        <li class="flex justify-between"><p>Отток:</p> <p>777 м3</p></li>
+        <li class="flex justify-between"><p>Фильтрация:</p> <p>333 м3</p></li>
+        <li class="flex justify-between"><p>Объем:</p> <p>1 млрд м3</p></li>
       </ul>
     </div>
     <!--/GES-->

@@ -32,6 +32,12 @@ export class DashboardComponent implements OnInit{
     if (this.waterChart !== undefined) {
       this.waterChart.destroy()
     }
+    if (this.filterChart !== undefined) {
+      this.filterChart.destroy()
+    }
+    if (this.volumeChart !== undefined) {
+      this.volumeChart.destroy()
+    }
     // draw charts
     this.waterChart = new Chart('ReportChart', {
       type: 'line',
@@ -55,7 +61,7 @@ export class DashboardComponent implements OnInit{
         ]
       },
       options: {
-        aspectRatio: 2.5,
+        aspectRatio: 1,
       }
     })
 
@@ -74,7 +80,7 @@ export class DashboardComponent implements OnInit{
         ]
       },
       options: {
-        aspectRatio: 2.5
+        aspectRatio: 1
       }
     })
 
@@ -93,7 +99,7 @@ export class DashboardComponent implements OnInit{
         ]
       },
       options: {
-        aspectRatio: 2.5
+        aspectRatio: 1
       }
     })
   }

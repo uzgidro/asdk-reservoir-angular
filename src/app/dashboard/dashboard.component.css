@@ -12,6 +12,6 @@
 }
 
 .chart-container{
-  display: block;
-  width: 720px;
+  display: flex;
+  width: 280px;
 }
