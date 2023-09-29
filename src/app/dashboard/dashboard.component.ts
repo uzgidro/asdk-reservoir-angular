@@ -42,24 +42,20 @@ export class DashboardComponent implements OnInit{
             label: "Приток воды, м3",
             data: [1234, 1234, 3456, 4567, 5678, 5789, 6123, 6123, 5234],
             backgroundColor: 'blue',
-            borderColor: 'blue'
+            borderColor: 'blue',
+            tension: 0.4
           },
           {
             label: "Отток воды, м3",
             data: [1232, 2342, 3452, 5678, 6789, 4589, 4567, 3456, 3412],
             backgroundColor: 'red',
-            borderColor: 'red'
-          },
-          {
-            label: "Отфильтровано воды, м3",
-            data: [45, 23, 89, 90, 64, 74, 38, 86, 57],
-            backgroundColor: 'green',
-            borderColor: 'green'
+            borderColor: 'red',
+            tension: 0.4
           }
         ]
       },
       options: {
-        aspectRatio: 2.5
+        aspectRatio: 2.5,
       }
     })
 
@@ -72,7 +68,8 @@ export class DashboardComponent implements OnInit{
             label: "Отфильтровано воды, м3",
             data: [45, 23, 89, 90, 64, 74, 38, 86, 57],
             backgroundColor: 'green',
-            borderColor: 'green'
+            borderColor: 'green',
+            tension: 0.4
           }
         ]
       },
@@ -90,7 +87,8 @@ export class DashboardComponent implements OnInit{
             label: "Объем воды, млн м3",
             data: [567, 569, 623, 689, 612, 534, 645, 656, 545],
             backgroundColor: 'gray',
-            borderColor: 'gray'
+            borderColor: 'gray',
+            tension: 0.4
           }
         ]
       },
