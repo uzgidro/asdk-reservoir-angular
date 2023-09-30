@@ -8,6 +8,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
+import { DashboardOneComponent } from './dashboard-one/dashboard-one.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
     MainLayoutComponent,
     GesComponent,
     DashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+    DashboardOneComponent
   ],
   imports: [
     BrowserModule,
