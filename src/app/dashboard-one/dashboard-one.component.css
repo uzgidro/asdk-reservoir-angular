@@ -12,6 +12,5 @@
 }
 
 .chart-container{
-  display: block;
-  width: 720px;
+  @apply block w-full px-6 pb-6
 }

@@ -1,5 +1,5 @@
 .tab {
-  @apply overflow-hidden w-full flex justify-between border-b-2
+  @apply overflow-hidden w-full flex justify-between border-b-2 border-t-2
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -12,6 +12,5 @@
 }
 
 .chart-container{
-  display: flex;
-  width: 1080px;
+  @apply px-6 pb-6 w-full mx-auto
 }
