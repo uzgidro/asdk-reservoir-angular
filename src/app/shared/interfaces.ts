@@ -42,3 +42,11 @@ export interface Piezometer {
     $date: string
   }
 }
+
+export interface Dataset {
+  label: string,
+  data: number[],
+  backgroundColor: string,
+  borderColor: string,
+  tension: number
+}
