@@ -11,6 +11,14 @@
   @apply bg-gray-300
 }
 
-.chart-container{
+.chart-container {
   @apply block w-full px-6 pb-6
+}
+
+.st0 {
+  @apply fill-orange-300 stroke-black hover:fill-orange-600
+}
+
+.st1 {
+  @apply fill-blue-600 stroke-yellow-600
 }

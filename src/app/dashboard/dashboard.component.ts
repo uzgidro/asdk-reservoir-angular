@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit{
             tension: 0.4
           },
           {
-            label: "Отток воды, м3",
+            label: "Попуск воды, м3",
             data: [1232, 2342, 3452, 5678, 6789, 4589, 4567, 3456, 3412],
             backgroundColor: 'red',
             borderColor: 'red',
