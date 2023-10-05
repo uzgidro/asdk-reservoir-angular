@@ -1,27 +1,49 @@
-<!--Container-->
-<div class="block py-3">
-  <div class="block max-w-4xl mx-auto space-y-4">
-    <div class="flex justify-center space-x-4">
-      <div class="p-6 max-w-sm bg-white rounded-xl shadow-lg flex items-center">
-        <h3>Активная мощность:</h3>
-        <p>2000 МВт</p>
-      </div>
-      <div class="p-6 max-w-sm bg-white rounded-xl shadow-lg flex items-center">
-        <h3>Реактивная мощность:</h3>
-        <p>2000 МВар</p>
-      </div>
-    </div>
-    <div class="p-2 max-w-xs mx-auto bg-white rounded-xl shadow-lg">
-      <h3 class="text-xl text-center">
-        {{currentTime | date:'HH:mm:ss, d MMMM y'}}
-      </h3>
-    </div>
+<div class="flex flex-row w-screen ">
 
+  <div class="max-w-xs flex-auto bg-gray-600 -mt-14 pt-14 h-screen ">
+    <div *ngIf="currentTime" class="flex flex-col m-2 p-2 bg-gray-200 text-black rounded">
+      <h2 class="p-2 text-center text-lg italic border-b border-gray-600">
+        {{currentTime | date:'HH:mm:ss, dd MMMM yyyy'}}
+      </h2>
+
+      <div class="p-2 flex flex-row justify-between">
+        <p>Агрегаты:</p>
+        <div class="flex flex-row">
+          <p class="text-red-600">12</p>
+          <p>/</p>
+          <p class="text-green-600">60</p>
+          <p>/</p>
+          <p>72</p>
+        </div>
+      </div>
+
+      <div class="p-2 flex flex-row justify-between">
+        <p>Активная мощность:</p>
+        <p>2.500 МВт</p>
+      </div>
+
+      <div class="p-2 flex flex-row justify-between">
+        <p>Реактивная мощность:</p>
+        <p>1.000 МВар</p>
+      </div>
+
+      <div class="p-2 flex flex-row justify-between">
+        <p>Мощность на {{currentTime | date:'HH'}}:00 :</p>
+        <p>1.000 МВт</p>
+      </div>
+
+      <div class="p-2 flex flex-row justify-between">
+        <p>Частота:</p>
+        <p>50 Гц</p>
+      </div>
+    </div>
   </div>
+
+
   <svg
     id="svgUzbekistan"
-    class="mx-auto -mt-10"
-    width="50%"
+    class="mx-auto"
+    width="55%"
     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 860 564"
     style="enable-background:new 0 0 860 564;" xml:space="preserve">
 

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TimeService} from "../shared/service/time.service";
 
 @Component({
   selector: 'app-region',
@@ -7,8 +8,11 @@ import {Component, OnInit} from '@angular/core';
 })
 export class RegionComponent implements OnInit{
 
-  currentTime?: Date = new Date()
+  currentTime?: Date
 
+  constructor(
+    private _timeService: TimeService
+  ) {}
   ngOnInit() {
 
     this.updateTime();
@@ -16,7 +20,8 @@ export class RegionComponent implements OnInit{
   }
 
   private updateTime() {
-    console.log('Update')
-    this.currentTime = new Date();
+    this._timeService.getCurrentTime().subscribe((data: any) => {
+      this.currentTime = data.datetime;
+    });
   }
 }
