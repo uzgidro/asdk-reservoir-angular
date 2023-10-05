@@ -7,8 +7,8 @@ import {GesComponent} from './ges/ges.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
-import { DashboardOneComponent } from './dashboard-one/dashboard-one.component';
+import { NavbarComponent } from './shared/component/navbar/navbar.component';
+import { RegionComponent } from './region/region.component';
 import { PiezoComponent } from './piezo/piezo.component';
 
 @NgModule({
@@ -17,8 +17,8 @@ import { PiezoComponent } from './piezo/piezo.component';
     MainLayoutComponent,
     GesComponent,
     DashboardComponent,
-    SidebarComponent,
-    DashboardOneComponent,
+    NavbarComponent,
+    RegionComponent,
     PiezoComponent
   ],
   imports: [
