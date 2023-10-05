@@ -6,17 +6,23 @@ import {TimeService} from "../shared/service/time.service";
   templateUrl: './region.component.html',
   styleUrls: ['./region.component.css']
 })
-export class RegionComponent implements OnInit{
+export class RegionComponent implements OnInit {
 
   currentTime?: Date
+  currentRegion?: string
 
   constructor(
     private _timeService: TimeService
-  ) {}
-  ngOnInit() {
+  ) {
+  }
 
+  ngOnInit() {
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
+  }
+
+  hoverRegion(region: string) {
+    this.currentRegion = region
   }
 
   private updateTime() {
