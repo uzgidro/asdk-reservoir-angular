@@ -1,4 +1,4 @@
-<div class="flex flex-row w-screen ">
+<div *ngIf="currentTime; else loader" class="flex flex-row w-screen ">
 
   <div class="max-w-xs flex-auto bg-gray-600 -mt-14 pt-14 h-screen space-y-4">
     <div *ngIf="currentTime" class="flex flex-col m-2 p-2 bg-gray-200 text-black rounded">
@@ -168,3 +168,11 @@
 </svg>
 
 </div>
+
+<ng-template #loader>
+  <div class="flex -mt-14 justify-center items-center h-screen">
+    <div
+      class="border-x-8 border-x-blue-600 border-y-8 border-y-green-600 rounded-full h-16 w-16 animate-spin"></div>
+
+  </div>
+</ng-template>
