@@ -50,3 +50,13 @@ export interface Dataset {
   borderColor: string,
   tension: number
 }
+
+export interface Region {
+  label: string,
+  reservoirCount: number,
+  gesCount: number,
+  aggregateCount: number,
+  activePower: number,
+  activePowerAtMoment: number,
+  frequency: number
+}
