@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './shared/component/navbar/navbar.component';
 import { RegionComponent } from './region/region.component';
 import { PiezoComponent } from './piezo/piezo.component';
+import { LoaderComponent } from './shared/component/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PiezoComponent } from './piezo/piezo.component';
     DashboardComponent,
     NavbarComponent,
     RegionComponent,
-    PiezoComponent
+    PiezoComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
