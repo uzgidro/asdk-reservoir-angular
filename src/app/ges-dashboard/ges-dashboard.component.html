@@ -24,12 +24,12 @@
               {{ges.activePower * 0.3 | number:'1.0-2'}}
             </div>
             <div *ngIf="Math.floor(Math.random() * 10) % 2 == 0; else notStonks" class="flex-row flex">
-              <object class="w-6 h-6" data="../../../assets/icons/trendUp.svg"></object>
+              <object class="w-6 h-6" data="../../assets/icons/trendUp.svg"></object>
               +{{ges.activePower * 0.0068 | number:'1.0-2'}}
             </div>
             <ng-template #notStonks>
               <div class="flex-row flex">
-                <object class="w-6 h-6" data="../../../assets/icons/trendDown.svg"></object>
+                <object class="w-6 h-6" data="../../assets/icons/trendDown.svg"></object>
                 -{{ges.activePower * 0.0068 | number:'1.0-2'}}
               </div>
             </ng-template>

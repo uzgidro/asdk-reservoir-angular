@@ -5,6 +5,7 @@ import {NgModule} from "@angular/core";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {RegionComponent} from "./region/region.component";
 import {PiezoComponent} from "./piezo/piezo.component";
+import {GesDashboardComponent} from "./ges-dashboard/ges-dashboard.component";
 
 const routes: Routes = [
   {
@@ -12,12 +13,8 @@ const routes: Routes = [
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'region', component: RegionComponent},
-      {path: 'report', component: GeslolComponent},
-      {path: 'piezo', component: PiezoComponent},
+      {path: 'ges', component: GesDashboardComponent},
     ]
-  },
-  {
-    path: 'ges',  loadChildren: () => import('./ges/ges.module').then(m => m.GesModule)
   }
 ]
 

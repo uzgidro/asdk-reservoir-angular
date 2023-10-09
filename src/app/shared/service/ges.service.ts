@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {Ges} from "../../../shared/interfaces";
+import {Ges} from "../interfaces";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GesService {
   gesList: Ges[] = [
     {name: 'ГЭС-6 (Чорвоқ)', activePower: 666},
