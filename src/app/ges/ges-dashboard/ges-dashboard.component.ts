@@ -9,6 +9,7 @@ import {GesService} from "../shared/service/ges.service";
 })
 export class GesDashboardComponent implements OnInit{
 
+  protected readonly Math = Math;
   currentTime?: Date
 
   constructor(private _timeService: TimeService,
@@ -25,5 +26,4 @@ export class GesDashboardComponent implements OnInit{
       this.currentTime = data.datetime;
     });
   }
-
 }
