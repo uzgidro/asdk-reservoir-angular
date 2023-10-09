@@ -3,11 +3,11 @@ import {HttpService} from "../shared/service/http.service";
 import {Piezometer} from "../shared/interfaces";
 
 @Component({
-  selector: 'app-ges',
-  templateUrl: './ges.component.html',
-  styleUrls: ['./ges.component.css']
+  selector: 'app-geslol',
+  templateUrl: './geslol.component.html',
+  styleUrls: ['./geslol.component.css']
 })
-export class GesComponent implements OnInit{
+export class GeslolComponent implements OnInit{
 
   piezo?: Piezometer
 

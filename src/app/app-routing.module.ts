@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from "@angular/router";
 import {MainLayoutComponent} from "./shared/component/main-layout/main-layout.component";
-import {GesComponent} from "./ges/ges.component";
+import {GeslolComponent} from "./geslol/geslol.component";
 import {NgModule} from "@angular/core";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {RegionComponent} from "./region/region.component";
@@ -12,14 +12,19 @@ const routes: Routes = [
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'region', component: RegionComponent},
-      {path: 'report', component: GesComponent},
+      {path: 'report', component: GeslolComponent},
       {path: 'piezo', component: PiezoComponent},
     ]
+  },
+  {
+    path: 'ges',  loadChildren: () => import('./ges/ges.module').then(m => m.GesModule)
   }
 ]
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forRoot(routes)]
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: 'enabledBlocking'
+})]
 })
 export class AppRoutingModule {}

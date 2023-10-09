@@ -60,3 +60,8 @@ export interface Region {
   activePowerAtMoment: number,
   frequency: number
 }
+
+export interface Ges {
+  name: string,
+  activePower: number,
+}

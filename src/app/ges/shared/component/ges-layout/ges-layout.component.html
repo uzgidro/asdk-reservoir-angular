@@ -1,0 +1,17 @@
+<div class="flex flex-col space-y-7">
+  <nav class="h-14 w-screen fixed">
+    <div class="flex flex-row w-full justify-between items-center p-1 overflow-hidden text-gray-200 bg-gray-800">
+      <a class="m-3" routerLink="/ges">
+        <span class="ml-2 text-sm font-bold">ASDK GES by UzGidro</span>
+      </a>
+      <div class="flex mr-4">
+        <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/dashboard" routerLinkActive="active">
+          <object class="w-6 h-6" data="assets/icons/grid.svg"></object>
+          <span class="ml-2 text-sm font-medium">Главная</span>
+        </a>
+        </div>
+    </div>
+  </nav>
+
+  <router-outlet></router-outlet>
+</div>

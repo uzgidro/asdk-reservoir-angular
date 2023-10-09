@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/uasdk-angular",
+            "outputPath": "dist/uasdk-angular/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -91,6 +91,60 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/uasdk-angular/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "uasdk-angular:build:development",
+              "serverTarget": "uasdk-angular:server:development"
+            },
+            "production": {
+              "browserTarget": "uasdk-angular:build:production",
+              "serverTarget": "uasdk-angular:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "uasdk-angular:build:production",
+              "serverTarget": "uasdk-angular:server:production"
+            },
+            "development": {
+              "browserTarget": "uasdk-angular:build:development",
+              "serverTarget": "uasdk-angular:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
