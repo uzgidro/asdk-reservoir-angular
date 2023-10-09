@@ -4,10 +4,10 @@
       <thead class="text-gray-500">
       <tr>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tl-3xl">№</th>
-        <th class="bg-gray-300 sticky top-14 p-4">ГЭС</th>
-        <th class="bg-gray-300 sticky top-14 p-4">Аквтивная мощность, МВт</th>
-        <th class="bg-gray-300 sticky top-14 p-4">Аквтивная мощность на {{currentTime | date:'HH'}}:00, МВт</th>
-        <th class="bg-gray-300 sticky top-14 p-4">Реаквтивная мощность, МВар</th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByName($event)">ГЭС</th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event)">Аквтивная мощность, МВт</th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event)">Аквтивная мощность на {{currentTime | date:'HH'}}:00, МВт</th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event)">Реаквтивная мощность, МВар</th>
         <th class="bg-gray-300 sticky top-14 p-4">Частота, Гц</th>
         <th class="bg-gray-300 sticky top-14 p-4">Попуск, м3</th>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tr-3xl">Холостой сброс, м3</th>

@@ -7,10 +7,12 @@ import {GesService} from "../shared/service/ges.service";
   templateUrl: './ges-dashboard.component.html',
   styleUrls: ['./ges-dashboard.component.css']
 })
-export class GesDashboardComponent implements OnInit{
+export class GesDashboardComponent implements OnInit {
 
   protected readonly Math = Math;
   currentTime?: Date
+  private selectedTab?: string
+  private ascSort: boolean = true
 
   constructor(private _timeService: TimeService,
               public _gesService: GesService) {
@@ -18,7 +20,28 @@ export class GesDashboardComponent implements OnInit{
 
   ngOnInit() {
     this.updateTime();
-    setInterval(() => this.updateTime(), 1000*60*20);
+    setInterval(() => this.updateTime(), 1000 * 60 * 20);
+  }
+
+  sortByName(event: any) {
+    this.isAscSort(event)
+    this._gesService.sortByName(this.ascSort)
+  }
+
+  sortByActivePower(event: any) {
+    this.isAscSort(event)
+    this._gesService.sortByPower(this.ascSort)
+  }
+
+  private isAscSort(event: any) {
+    const selected = event.target.textContent
+    if (selected != this.selectedTab) {
+      this.ascSort = true
+    } else {
+      console.log(!this.ascSort)
+      this.ascSort = !this.ascSort
+    }
+    this.selectedTab = selected
   }
 
   private updateTime() {
