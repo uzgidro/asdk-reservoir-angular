@@ -8,17 +8,21 @@ import {GesDashboardComponent} from './ges-dashboard/ges-dashboard.component';
 import {AppModule} from "../app.module";
 import {LoaderComponent} from "../shared/component/loader/loader.component";
 import {GesService} from "./shared/service/ges.service";
+import {SharedModule} from "../shared/module/shared.module";
 
 
 @NgModule({
   declarations: [
     GesLayoutComponent,
-    GesDashboardComponent,
-    LoaderComponent
+    GesDashboardComponent
   ],
   imports: [
     CommonModule,
     GesRoutingModule,
+    SharedModule
+  ],
+  exports: [
+
   ],
   providers: [
     GesService

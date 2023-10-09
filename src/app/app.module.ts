@@ -11,6 +11,7 @@ import {NavbarComponent} from './shared/component/navbar/navbar.component';
 import {RegionComponent} from './region/region.component';
 import {PiezoComponent} from './piezo/piezo.component';
 import {LoaderComponent} from './shared/component/loader/loader.component';
+import {SharedModule} from "./shared/module/shared.module";
 
 @NgModule({
   declarations: [
@@ -21,14 +22,14 @@ import {LoaderComponent} from './shared/component/loader/loader.component';
     NavbarComponent,
     RegionComponent,
     PiezoComponent,
-    LoaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
-  exports: [HttpClientModule, LoaderComponent],
+  exports: [HttpClientModule],
   providers: [],
   bootstrap: [AppComponent]
 })
