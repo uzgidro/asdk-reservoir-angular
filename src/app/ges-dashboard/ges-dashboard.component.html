@@ -2,12 +2,12 @@
   <div class="w-screen px-4">
     <table *ngIf="currentTime; else loader" class=" relative table-auto w-full text-left border-collapse text-sm">
       <thead class="text-gray-500">
-      <tr>
+      <tr #thead>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tl-3xl">№</th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByName($event)">ГЭС</th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event)">Аквтивная мощность, МВт</th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event)">Аквтивная мощность на {{currentTime | date:'HH'}}:00, МВт</th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event)">Реаквтивная мощность, МВар</th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByName($event, thead); changeArrow(gesIcon)"><div class="flex-row flex items-center">ГЭС <object #gesIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object></div></th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event, thead); changeArrow(activeIcon)"><div class="flex-row flex items-center">Аквтивная мощность, МВт <object #activeIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object></div></th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event, thead); changeArrow(activeAtMomentIcon)"><div class="flex-row flex items-center">Аквтивная мощность на {{currentTime | date:'HH'}}:00, МВт<object #activeAtMomentIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object> </div></th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event, thead); changeArrow(reactiveIcon)"><div class="flex-row flex items-center">Реаквтивная мощность, МВар<object #reactiveIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object> </div></th>
         <th class="bg-gray-300 sticky top-14 p-4">Частота, Гц</th>
         <th class="bg-gray-300 sticky top-14 p-4">Попуск, м3</th>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tr-3xl">Холостой сброс, м3</th>
