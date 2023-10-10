@@ -65,3 +65,15 @@ export interface Ges {
   name: string,
   activePower: number,
 }
+
+export interface GesValues {
+  name: string,
+  activePower: number,
+  activePowerAtMoment: number,
+  difference: number,
+  reactivePower: number,
+  frequency: number,
+  waterRelease: number,
+  idleDischarge: number
+
+}

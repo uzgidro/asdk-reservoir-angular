@@ -9,7 +9,6 @@ import {GesService} from "../shared/service/ges.service";
 })
 export class GesDashboardComponent implements OnInit {
 
-  protected readonly Math = Math;
   currentTime?: Date
   private selectedTab?: string
   private ascSort: boolean = true
@@ -38,7 +37,6 @@ export class GesDashboardComponent implements OnInit {
     if (selected != this.selectedTab) {
       this.ascSort = true
     } else {
-      console.log(!this.ascSort)
       this.ascSort = !this.ascSort
     }
     this.selectedTab = selected

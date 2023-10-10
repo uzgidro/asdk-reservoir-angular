@@ -13,7 +13,7 @@
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tr-3xl">Холостой сброс, м3</th>
       </tr>
       </thead>
-      <tbody *ngFor="let ges of _gesService.gesList; index as i">
+      <tbody *ngFor="let ges of _gesService.gesValues; index as i">
       <tr class=" border-b">
         <td class="px-4 py-2 border-b border-gray-500">{{i}}</td>
         <td class="px-4 py-2 border-b border-gray-500">{{ges.name}}</td>
@@ -21,25 +21,25 @@
         <td class="px-4 py-2 border-b border-gray-500 text-center">
           <div class="flex flex-row justify-evenly items-center">
             <div>
-              {{ges.activePower * 0.3 | number:'1.0-2'}}
+              {{ges.activePowerAtMoment | number:'1.0-2'}}
             </div>
-            <div *ngIf="Math.floor(Math.random()*10 % 2) == 0; else notStonks" class="flex-row flex">
+            <div *ngIf="ges.difference > 0; else notStonks" class="flex-row flex">
               <object class="w-6 h-6" data="../../assets/icons/trendUp.svg"></object>
-              +{{ges.activePower * 0.0068 | number:'1.0-2'}}
+              {{ges.difference | number:'1.0-2'}}
             </div>
             <ng-template #notStonks>
               <div class="flex-row flex">
                 <object class="w-6 h-6" data="../../assets/icons/trendDown.svg"></object>
-                -{{ges.activePower * 0.0068 | number:'1.0-2'}}
+                {{ges.difference | number:'1.0-2'}}
               </div>
             </ng-template>
 
           </div>
         </td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.activePower * 0.4 | number:'1.0-2'}}</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">50</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">100</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">20</td>
+        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.reactivePower | number:'1.0-2'}}</td>
+        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.frequency}}</td>
+        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.waterRelease}}</td>
+        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.idleDischarge}}</td>
       </tr>
       </tbody>
     </table>

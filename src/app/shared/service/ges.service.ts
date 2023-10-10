@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Ges} from "../interfaces";
+import {Ges, GesValues} from "../interfaces";
 
 @Injectable({providedIn: 'root'})
 export class GesService {
@@ -47,43 +47,51 @@ export class GesService {
     {name: 'ГЭС-9А', activePower: 6}
   ]
 
-  sortByName(sortType: boolean) {
-    if (sortType) {
-      this.gesList.sort((a, b) => {
-        const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-        const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-
-        // names must be equal
-        return 0;
-      })
-    } else {
-      this.gesList.sort((a, b) => {
-        const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-        const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-        if (nameA < nameB) {
-          return 1;
-        }
-        if (nameA > nameB) {
-          return -1;
-        }
-
-        // names must be equal
-        return 0;
-      })
+  gesValues: GesValues[] = Array.from(this.gesList, (ges) => {
+    return {
+      name: ges.name,
+      activePower: ges.activePower,
+      activePowerAtMoment: ges.activePower * 0.3,
+      difference: ges.activePower % 2 == 0 ? ges.activePower * 0.068 : -(ges.activePower * 0.068),
+      reactivePower: ges.activePower * 0.4,
+      frequency: 50,
+      waterRelease: 100,
+      idleDischarge: 30
     }
+  })
+
+  sortByName(isAscSort: boolean) {
+
+    this.gesValues.sort((a, b) => {
+      const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (isAscSort) {
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+      } else {
+        if (nameA < nameB) {
+          return 1;
+        }
+        if (nameA > nameB) {
+          return -1;
+        }
+      }
+      return 0;
+    })
   }
 
   sortByPower(isAscSort: boolean) {
-    if (isAscSort) {
-      this.gesList.sort((a, b) => a.activePower - b.activePower)
-    } else {
-      this.gesList.sort((a, b) => b.activePower - a.activePower)
-    }
+    this.gesValues.sort((a, b) => {
+        if (isAscSort) {
+          return a.activePower - b.activePower
+        } else {
+          return b.activePower - a.activePower
+        }
+      }
+    )
   }
 }
