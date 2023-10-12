@@ -57,6 +57,4 @@ export class RegionComponent implements OnInit {
       this.currentTime = data.datetime;
     });
   }
-
-  protected readonly Date = Date;
 }

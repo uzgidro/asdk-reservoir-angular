@@ -7,19 +7,12 @@ import {GesService} from "../shared/service/ges.service";
   templateUrl: './ges-dashboard.component.html',
   styleUrls: ['./ges-dashboard.component.css']
 })
-export class GesDashboardComponent implements OnInit {
+export class GesDashboardComponent {
 
-  currentTime?: Date
   private selectedTab?: string
   private ascSort?: boolean
 
-  constructor(private _timeService: TimeService,
-              public _gesService: GesService) {
-  }
-
-  ngOnInit() {
-    this.updateTime();
-    setInterval(() => this.updateTime(), 1000 * 60 * 20);
+  constructor(public _gesService: GesService) {
   }
 
   sortByName(event: any, thead: any) {
@@ -65,11 +58,5 @@ export class GesDashboardComponent implements OnInit {
       this.ascSort = !this.ascSort
     }
     this.selectedTab = selected
-  }
-
-  private updateTime() {
-    this._timeService.getCurrentTime().subscribe((data: any) => {
-      this.currentTime = data.datetime;
-    });
   }
 }

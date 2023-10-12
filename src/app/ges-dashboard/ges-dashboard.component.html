@@ -1,6 +1,6 @@
 <div class="flex">
   <div class="w-screen px-4">
-    <table *ngIf="currentTime; else loader" class=" relative table-auto w-full text-left border-collapse text-sm">
+    <table class=" relative table-auto w-full text-left border-collapse text-sm">
       <thead class="text-gray-500">
       <tr #thead>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tl-3xl">№</th>
@@ -53,9 +53,3 @@
     </table>
   </div>
 </div>
-
-<ng-template #loader>
-  <div class="flex -mt-14 justify-center items-center h-screen w-full">
-    <app-loader></app-loader>
-  </div>
-</ng-template>

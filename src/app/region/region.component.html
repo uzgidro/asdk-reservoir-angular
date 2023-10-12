@@ -1,8 +1,8 @@
-<div *ngIf="currentTime && regionsInfo; else loader" class="flex flex-row w-screen ">
+<div *ngIf="regionsInfo; else loader" class="flex flex-row w-screen ">
 
   <!-- sidebar -->
   <div class="w-96 flex-auto bg-gray-600 -mt-14 pt-14 h-screen space-y-3">
-    <div *ngIf="currentTime" class="flex flex-col m-2 p-4 bg-gray-200 text-black rounded space-y-3">
+    <div *ngIf="currentTime; else smallLoader" class="flex flex-col m-2 p-4 bg-gray-200 text-black rounded space-y-3">
       <h2 class="text-center text-lg italic border-b border-gray-600">
         Данные по Узбекистану
       </h2>
@@ -214,6 +214,12 @@
 </div>
 
 <ng-template #loader>
+  <div class="flex -mt-14 justify-center items-center h-screen">
+    <app-loader></app-loader>
+  </div>
+</ng-template>
+
+<ng-template #smallLoader>
   <div class="flex -mt-14 justify-center items-center h-screen">
     <app-loader></app-loader>
   </div>
