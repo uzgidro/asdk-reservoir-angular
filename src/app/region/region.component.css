@@ -30,3 +30,8 @@
 .sea {
   @apply fill-blue-600 stroke-yellow-600
 }
+
+
+.card {
+  @apply flex flex-row justify-between p-2 bg-gray-200 rounded-xl space-x-2
+}
