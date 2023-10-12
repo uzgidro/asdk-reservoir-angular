@@ -6,7 +6,7 @@ import {Chart, registerables} from "chart.js";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
 
   waterChart?: Chart
   filterChart?: Chart
@@ -47,15 +47,17 @@ export class DashboardComponent implements OnInit{
           {
             label: "Приток воды, м3",
             data: [1234, 1234, 3456, 4567, 5678, 5789, 6123, 6123, 5234],
-            backgroundColor: 'blue',
             borderColor: 'blue',
+            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+            fill: true,
             tension: 0.4
           },
           {
             label: "Попуск воды, м3",
             data: [1232, 2342, 3452, 5678, 6789, 4589, 4567, 3456, 3412],
-            backgroundColor: 'red',
             borderColor: 'red',
+            backgroundColor: 'rgba(255, 0, 0, 0.2)',
+            fill: true,
             tension: 0.4
           }
         ]
@@ -73,8 +75,9 @@ export class DashboardComponent implements OnInit{
           {
             label: "Отфильтровано воды, м3",
             data: [45, 23, 89, 90, 64, 74, 38, 86, 57],
-            backgroundColor: 'green',
             borderColor: 'green',
+            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+            fill: true,
             tension: 0.4
           }
         ]
@@ -92,8 +95,8 @@ export class DashboardComponent implements OnInit{
           {
             label: "Объем воды, млн м3",
             data: [567, 569, 623, 689, 612, 534, 645, 656, 545],
-            backgroundColor: 'gray',
             borderColor: 'gray',
+            fill: true,
             tension: 0.4
           }
         ]
