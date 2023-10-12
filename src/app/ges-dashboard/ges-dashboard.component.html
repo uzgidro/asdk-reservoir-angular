@@ -21,15 +21,9 @@
         <td class="px-4 py-2 border-b border-gray-500">{{i}}</td>
         <td class="px-4 py-2 border-b border-gray-500">{{ges.name}}</td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.activePower}}</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center"><div class="flex flex-row">
-          <p class="text-yellow-600">1</p>
-          <p>/</p>
-          <p class="text-red-600">1</p>
-          <p>/</p>
-          <p class="text-green-600">5</p>
-          <p>/</p>
-          <p>7</p>
-        </div></td>
+        <td class="px-4 py-2 border-b border-gray-500 text-center">
+          <app-aggregate [aggregates]="10"></app-aggregate>
+        </td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">112</td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">130</td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">130</td>

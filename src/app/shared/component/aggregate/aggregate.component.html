@@ -1,0 +1,17 @@
+<div class="flex flex-row tooltip">
+  <p class="text-yellow-600">{{aggregates*0.1 | number: '1.0-0'}}</p>
+  <p>/</p>
+  <p class="text-red-600">{{aggregates*0.3 | number: '1.0-0'}}</p>
+  <p>/</p>
+  <p class="text-green-600">{{aggregates*0.6 | number: '1.0-0'}}</p>
+  <p>/</p>
+  <p>{{aggregates}}</p>
+  <div class="tooltip-message">
+    <div class="h-3 w-9 bg-yellow-600"></div>
+    <p>: На ремонте, </p>
+    <div class="h-3 w-9 bg-red-600"></div>
+    <p>: Неактивные, </p>
+    <div class="h-3 w-9 bg-green-600"></div>
+    <p>: Активные</p>
+  </div>
+</div>

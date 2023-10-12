@@ -12,6 +12,7 @@ import {RegionComponent} from './region/region.component';
 import {PiezoComponent} from './piezo/piezo.component';
 import {LoaderComponent} from './shared/component/loader/loader.component';
 import {GesDashboardComponent} from "./ges-dashboard/ges-dashboard.component";
+import { AggregateComponent } from './shared/component/aggregate/aggregate.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {GesDashboardComponent} from "./ges-dashboard/ges-dashboard.component";
     RegionComponent,
     PiezoComponent,
     GesDashboardComponent,
-    LoaderComponent
+    LoaderComponent,
+    AggregateComponent
   ],
   imports: [
     BrowserModule,
