@@ -1,92 +1,92 @@
 <ng-container *ngIf="!queryRegion; else region">
-    <div *ngIf="regionsInfo; else loader" class="flex flex-col w-screen h-screen pt-14 -mt-14">
+  <div *ngIf="regionsInfo; else loader" class="flex flex-col w-screen h-screen pt-14 -mt-14">
 
-      <div *ngIf="currentTime; else smallLoader"
-           class="hidden flex-row flex-wrap bg-gray-600 p-2 h-fit lg:flex justify-evenly">
-        <div class="card">
-          <p>Количество водохранилищ:</p>
-          <p>{{regionsInfo.reservoirCount}}</p>
-        </div>
-
-        <div class="card">
-          <p>Количество ГЭС:</p>
-          <p>{{regionsInfo.gesCount}}</p>
-        </div>
-
-        <div class="card">
-          <p>Агрегаты:</p>
-          <app-aggregate [aggregates]="regionsInfo.aggregateCount"></app-aggregate>
-        </div>
-
-        <div class="card">
-          <p>Активная мощность:</p>
-          <p>{{regionsInfo.activePower}} МВт</p>
-        </div>
-
-        <div class="card">
-          <p>Реактивная мощность:</p>
-          <p>{{regionsInfo.reactivePower}} МВар</p>
-        </div>
-
-        <div class="card">
-          <p>Выработка на {{currentTime | date:'HH'}}:00 :</p>
-          <p>{{regionsInfo.activePowerAtMoment}} МВт</p>
-        </div>
-
-        <div class="card">
-          <p>Частота:</p>
-          <p>{{regionsInfo.frequency}} Гц</p>
-        </div>
+    <div *ngIf="currentTime; else smallLoader"
+         class="hidden flex-row flex-wrap bg-gray-600 p-2 h-fit lg:flex justify-evenly">
+      <div class="card">
+        <p>Количество водохранилищ:</p>
+        <p>{{regionsInfo.reservoirCount}}</p>
       </div>
 
-      <div class="flex flex-row h-full">
+      <div class="card">
+        <p>Количество ГЭС:</p>
+        <p>{{regionsInfo.gesCount}}</p>
+      </div>
 
-        <!-- sidebar -->
-        <div class="-z-10 bg-gray-400 space-y-3 lg:w-80 w-60">
-          <div *ngIf="currentRegion && currentTime"
-               class="flex flex-col m-2 p-4 bg-gray-200 space-y-3 text-black rounded">
-            <h2 class="text-center text-lg italic border-b border-gray-600">
-              {{currentRegion.label}}
-            </h2>
+      <div class="card">
+        <p>Агрегаты:</p>
+        <app-aggregate [aggregates]="regionsInfo.aggregateCount"></app-aggregate>
+      </div>
 
-            <div *ngIf="currentRegion.reservoirCount != 0" class="flex flex-row justify-between">
-              <p>Количество водохранилищ:</p>
-              <p>{{currentRegion.reservoirCount}}</p>
-            </div>
+      <div class="card">
+        <p>Активная мощность:</p>
+        <p>{{regionsInfo.activePower}} МВт</p>
+      </div>
 
-            <div class="flex flex-row justify-between">
-              <p>Количество ГЭС:</p>
-              <p>{{currentRegion.gesCount}}</p>
-            </div>
+      <div class="card">
+        <p>Реактивная мощность:</p>
+        <p>{{regionsInfo.reactivePower}} МВар</p>
+      </div>
 
-            <div class="flex flex-row justify-between">
-              <p>Агрегаты:</p>
-              <app-aggregate [aggregates]="currentRegion.aggregateCount"></app-aggregate>
-            </div>
+      <div class="card">
+        <p>Выработка на {{currentTime | date:'HH'}}:00 :</p>
+        <p>{{regionsInfo.activePowerAtMoment}} МВт</p>
+      </div>
 
-            <div class="flex flex-row justify-between">
-              <p>Активная мощность:</p>
-              <p>{{currentRegion.activePower}} МВт</p>
-            </div>
+      <div class="card">
+        <p>Частота:</p>
+        <p>{{regionsInfo.frequency}} Гц</p>
+      </div>
+    </div>
 
-            <div class="flex flex-row justify-between">
-              <p>Мощность на {{currentTime | date:'HH'}}:00 :</p>
-              <p>{{currentRegion.activePowerAtMoment}} МВт</p>
-            </div>
+    <div class="flex flex-row h-full">
 
-            <div class="flex flex-row justify-between">
-              <p>Частота:</p>
-              <p>{{currentRegion.frequency}} Гц</p>
-            </div>
+      <!-- sidebar -->
+      <div class="-z-10 bg-gray-400 space-y-3 lg:w-80 w-60">
+        <div *ngIf="currentRegion && currentTime"
+             class="flex flex-col m-2 p-4 bg-gray-200 space-y-3 text-black rounded">
+          <h2 class="text-center text-lg italic border-b border-gray-600">
+            {{currentRegion.label}}
+          </h2>
+
+          <div *ngIf="currentRegion.reservoirCount != 0" class="flex flex-row justify-between">
+            <p>Количество водохранилищ:</p>
+            <p>{{currentRegion.reservoirCount}}</p>
+          </div>
+
+          <div class="flex flex-row justify-between">
+            <p>Количество ГЭС:</p>
+            <p>{{currentRegion.gesCount}}</p>
+          </div>
+
+          <div class="flex flex-row justify-between">
+            <p>Агрегаты:</p>
+            <app-aggregate [aggregates]="currentRegion.aggregateCount"></app-aggregate>
+          </div>
+
+          <div class="flex flex-row justify-between">
+            <p>Активная мощность:</p>
+            <p>{{currentRegion.activePower}} МВт</p>
+          </div>
+
+          <div class="flex flex-row justify-between">
+            <p>Мощность на {{currentTime | date:'HH'}}:00 :</p>
+            <p>{{currentRegion.activePowerAtMoment}} МВт</p>
+          </div>
+
+          <div class="flex flex-row justify-between">
+            <p>Частота:</p>
+            <p>{{currentRegion.frequency}} Гц</p>
           </div>
         </div>
-        <!-- /sidebar -->
+      </div>
+      <!-- /sidebar -->
 
-        <div class="flex flex-col items-center mx-auto justify-around">
-          <svg
-            id="svgUzbekistan"
-            xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 860 564"
-            style="enable-background:new 0 0 860 564;" xml:space="preserve">
+      <div class="flex flex-col items-center mx-auto justify-around">
+        <svg
+          id="svgUzbekistan"
+          xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 860 564"
+          style="enable-background:new 0 0 860 564;" xml:space="preserve">
 
     <g id="layerHarita" transform="translate(106.03125,-324.8125)">
       <a [routerLink]="['/region']"
@@ -227,23 +227,26 @@
 		l-40.5-48.5l-3.2-8v-5.9l-10.7-7.1l-1.7-1.2l-7.4,15.8l-15.5,20.3l-9.6,16l-14.4-2.7L85,440.2l-25.6-7.5l-12.8,3.2l-8,8.5l-6.9-2.2
 		l5.9-19.7l-4.8-14.9l4.3-19.7l-4.8-13.9l12.3-27.2l6-12L42.9,329.3z"/>
 </g>
-            <path id="pathAral" class="sea" d="M165.5,107.9l-12.8,3.2l-8,8.5l-6.9-2.1l5.9-19.7l-4.8-14.9l4.3-19.7l-4.8-13.9l12.3-27.2
+          <path id="pathAral" class="sea" d="M165.5,107.9l-12.8,3.2l-8,8.5l-6.9-2.1l5.9-19.7l-4.8-14.9l4.3-19.7l-4.8-13.9l12.3-27.2
 	l6.4-12.8l92.7,68.2l-7.5,16l-15.5,20.3l-9.6,16l-14.4-2.7L191,115.4L165.5,107.9z"/>
 </svg>
-          <div class="flex-row flex items-center justify-center space-x-2">
-            <div class="h-3 w-9 bg-amber-500"></div>
-            <p>: Регионы с ГЭС, без Водохранилищ, </p>
-            <div class="h-3 w-9 bg-green-600"></div>
-            <p>: Регионы с ГЭС, с Водохранилищами</p>
-          </div>
+        <div class="flex-row flex items-center justify-center space-x-2">
+          <div class="h-3 w-9 bg-amber-500"></div>
+          <p>: Регионы с ГЭС, без Водохранилищ, </p>
+          <div class="h-3 w-9 bg-green-600"></div>
+          <p>: Регионы с ГЭС, с Водохранилищами</p>
         </div>
       </div>
     </div>
+  </div>
 </ng-container>
 
 <ng-template #region>
-  <h1 class="p-4 text-lg font-medium uppercase">{{queryRegion}}</h1>
-  <app-ges-dashboard [queryRegion]="queryRegion!!"></app-ges-dashboard>
+  <div class="flex-col flex space-y-4">
+    <h1 class="p-4 text-lg font-medium uppercase">{{queryRegion}}</h1>
+    <app-ges-dashboard [queryRegion]="queryRegion!!"></app-ges-dashboard>
+    <app-charts-temp></app-charts-temp>
+  </div>
 </ng-template>
 
 <ng-template #loader>

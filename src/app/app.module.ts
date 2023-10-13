@@ -13,6 +13,7 @@ import {PiezoComponent} from './piezo/piezo.component';
 import {LoaderComponent} from './shared/component/loader/loader.component';
 import {GesDashboardComponent} from "./ges-dashboard/ges-dashboard.component";
 import { AggregateComponent } from './shared/component/aggregate/aggregate.component';
+import { ChartsTempComponent } from './shared/temp/charts-temp/charts-temp.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AggregateComponent } from './shared/component/aggregate/aggregate.compo
     PiezoComponent,
     GesDashboardComponent,
     LoaderComponent,
-    AggregateComponent
+    AggregateComponent,
+    ChartsTempComponent
   ],
   imports: [
     BrowserModule,
