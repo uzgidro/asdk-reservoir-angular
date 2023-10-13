@@ -4,19 +4,19 @@
       <thead class="text-gray-500">
       <tr #thead>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tl-3xl">№</th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByName($event, thead); changeArrow(gesIcon)"><div class="flex-row flex items-center">ГЭС <object #gesIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object></div></th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event, thead); changeArrow(activeIcon)"><div class="flex-row flex items-center">Установленная мощность, МВт <object #activeIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object></div></th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer"><div class="flex-row flex items-center">ГЭС <object #gesIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object></div></th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer"><div class="flex-row flex items-center">Установленная мощность, МВт <object #activeIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object></div></th>
         <th class="bg-gray-300 sticky top-14 p-4">Агрегаты</th>
         <th class="bg-gray-300 sticky top-14 p-4">Статический напор, м</th>
         <th class="bg-gray-300 sticky top-14 p-4">Приток, м3/с</th>
         <th class="bg-gray-300 sticky top-14 p-4">Расход через ГЭС, м3/с</th>
         <th class="bg-gray-300 sticky top-14 p-4">Расход через турбину, м3/с</th>
         <th class="bg-gray-300 sticky top-14 p-4">Холостой сброс, м3/с</th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer" (click)="sortByActivePower($event, thead); changeArrow(activeAtMomentIcon)"><div class="flex-row flex items-center">P, МВт<object #activeAtMomentIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object> </div></th>
-        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer rounded-tr-3xl" (click)="sortByActivePower($event, thead); changeArrow(reactiveIcon)"><div class="flex-row flex items-center">Q, МВАр<object #reactiveIcon class="w-4 h-4" data="../../assets/icons/arrows.svg"></object> </div></th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer"><div class="flex-row flex items-center">P, МВт<object #activeAtMomentIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object> </div></th>
+        <th class="bg-gray-300 sticky top-14 p-4 cursor-pointer rounded-tr-3xl"><div class="flex-row flex items-center">Q, МВАр<object #reactiveIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object> </div></th>
       </tr>
       </thead>
-      <tbody *ngFor="let ges of _gesService.gesValues; index as i">
+      <tbody *ngFor="let ges of gesList; index as i">
       <tr class=" border-b text-lg">
         <td class="px-4 py-2 border-b border-gray-500">{{i}}</td>
         <td class="px-4 py-2 border-b border-gray-500">{{ges.name}}</td>

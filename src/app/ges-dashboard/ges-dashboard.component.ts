@@ -1,18 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TimeService} from "../shared/service/time.service";
 import {GesService} from "../shared/service/ges.service";
+import {GesValues} from "../shared/interfaces";
 
 @Component({
   selector: 'app-ges-dashboard',
   templateUrl: './ges-dashboard.component.html',
   styleUrls: ['./ges-dashboard.component.css']
 })
-export class GesDashboardComponent {
+export class GesDashboardComponent implements OnInit{
 
   private selectedTab?: string
   private ascSort?: boolean
+  gesList: GesValues[] = []
+  @Input() queryRegion: string = ''
 
-  constructor(public _gesService: GesService) {
+  constructor(private _gesService: GesService) {
+  }
+
+  ngOnInit() {
+    if (this.queryRegion == '') {
+      this.gesList = this._gesService.gesValues
+    } else {
+      this.gesList = this._gesService.gesValues.slice(0,5)
+    }
   }
 
   sortByName(event: any, thead: any) {

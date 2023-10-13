@@ -13,6 +13,7 @@ export class RegionComponent implements OnInit {
 
   currentTime?: Date
   currentRegion?: Region
+  queryRegion?: string
   regionsInfo?: {
     reservoirCount: number,
     gesCount: number,
@@ -33,7 +34,7 @@ export class RegionComponent implements OnInit {
   ngOnInit() {
     this._route.queryParams
       .subscribe(params => {
-        console.log(params['name'])
+        this.queryRegion = params['name']
       })
 
     this.updateTime();
