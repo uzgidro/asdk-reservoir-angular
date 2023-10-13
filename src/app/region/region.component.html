@@ -41,7 +41,7 @@
   <div class="flex flex-row h-full">
 
     <!-- sidebar -->
-    <div   class="-z-10 bg-gray-400 space-y-3 lg:w-80 w-60">
+    <div class="-z-10 bg-gray-400 space-y-3 lg:w-80 w-60">
       <div *ngIf="currentRegion && currentTime"
            class="flex flex-col m-2 p-4 bg-gray-200 space-y-3 text-black rounded">
         <h2 class="text-center text-lg italic border-b border-gray-600">
@@ -88,6 +88,8 @@
         style="enable-background:new 0 0 860 564;" xml:space="preserve">
 
     <g id="layerHarita" transform="translate(106.03125,-324.8125)">
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'khorezm'}">
 	<path id="khorezm" (mouseover)="hoverRegion(_regionService.khorezm)"
         [ngClass]="{
         region: true,
@@ -96,6 +98,7 @@
         d="M162.8,620.4l-3.2,4.8l-8.5-6.4h-29.8l-5.9-2.1l-14.9-11.2l-1.1-3.7l6.4-7.5l-3.7-8l-1.6-4.3
 		l2.1-2.7l8,1.6l-7.5-9.6l-9.1-1.6l0.5-3.7h3.2v-5.9l2.7-5.3l-9.1-9.6h3.7l16,14.4l-1.1,4.3l3.2,4.3l6.4,1.6v4.8l3.2,6.9l10.7,11.7
 		l9.1,6.9l8,8.5h4.8L162.8,620.4z"/>
+        </a>
       <path id="navoi" class="region" d="M203.3,613.9l-18.7-27.2l-3.7-8l12.3-7.5l1.1-2.7l-4.3-13.3l-1.1-17l4.3-6.4l7.5-7.5l6.4-12.8
 		l11.7-10.1l6.4-8l-1.6-2.1l-8-2.2l-9.1-6.9l-6.9-9.1l28.2-4.8l29.3-4.3l57,5.9l22.9-12.8l14.9,18.7l13.9,8.5l13.9,27.7l14.9-8
 		l-1.6,36.8l-2.1,3.7l2.1,25.1l22.4-0.5l3.7,16.5l9.1,36.8l5.3,1.6l1.1,5.3l-5.3,2.1l-0.5,5.9l5.3,17.1l1.1,3.7l-7.5,1.1l-1.1,6.9
@@ -111,6 +114,8 @@
 		l4.3-0.5l1.1-4.8l6.9-5.3l1.1-5.3l-4.3-0.5l-3.8-2.1h-2.7l-8,4.8h-4.8l-4.3-2.7l-8.5-11.2v-10.1l-2.1-4.8l-3.2,1.1l-2.2,4.3l-9,1.1
 		l-3.2,0.5v9.1l-1.6,2.1l-14.4,1.6l-2.1-2.7l2.7-4.3l-1.6-4.8l-4.8,0.5l-8,7.5l-0.5,4.3l4.3,6.4l-2.1,2.1h-5.3l-3.8-3.2l0.5-7.5
 		l-27.2-16.5l-3.7,6.9l-4.3,0.5l-1.6-5.3v-6.4l-3.2-3.2l-3.7-5.3l-1.1-8.5L223.6,606.9z"/>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'kashkadarya'}">
       <path id="kashkadarya" (mouseover)="hoverRegion(_regionService.kashkadarya)"
             [ngClass]="{
         region: true,
@@ -121,6 +126,9 @@
 		l-10.1-3.7l-3.7,3.2l-4.3,7.5l-4.8-1.1l-4.3-4.8l2.1,0.6l-6.4,5.9l-3.7-2.7l-0.5-5.8l-3.7,2.7l-5.9,4.3l-4.8-0.5l-4.8-10.7
 		l-4.8-2.6l-3.7,3.7l-24.5-0.5l0,1.2l-2.7,4.3l-6.9,4.3l-7.5,5.9l-0.5,9.1l-4.3,1.6l-6.4-0.5l-5.3,1.6l-5.9,6.9l13.3,14.4l20.3,10.1
 		l29.3,21.3l8.5,1.1l4.8-3.2l8.5,2.1l7.5,5.3l11.7,6.4l12.8,2.7L427.2,824.5z"/>
+      </a>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'surkhandarya'}">
       <path id="surkhandarya" (mouseover)="hoverRegion(_regionService.surkhandarya)"
             [ngClass]="{
         region: true,
@@ -131,6 +139,9 @@
 		l4.8,6.9l2.1,6.9l8.5,4.8l2.7,5.9l-5.3,13.9l-7.5,1.6l-0.5,4.8l-4.3,10.7l-8.5,12.3l-1.6,7.5l2.1,9.6l-2.7,5.9l-2.1-2.1l-6.4-2.7
 		l-3.2,3.2l-4.3-4.8l-3.7,5.9l-8,2.1l-2.7-5.3l-5.3-2.1v-3.7l-7.5-2.7l-14.9,5.3l-8-3.7l2.7-5.3l-3.7-2.7l1.1-19.7l7.5-8.5
 		L428.8,829.3z"/>
+      </a>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'samarkand'}">
       <path id="samarkand" (mouseover)="hoverRegion(_regionService.samarkand)"
             [ngClass]="{
         region: true,
@@ -142,11 +153,14 @@
 		l0.5-13.3l3.2-6.9h4.3l1.6,6.4h3.2l5.3-5.8l3.7,1.6l0.5,4.8h3.2l2.7-3.2l1.1-6.9l7.5-1.1l-0.5-1l-0.5,7.5l1.1,5.3l3.2,1.6l2.1,3.7
 		l-3.7,3.7v5.9l2.7,3.2l6.9,0.5l3.2,6.4h3.2l1.6,3.2l-1.6,4.8l3.7,3.7h2.7l5.3-2.1l10.1,4.3v3.2l-3.7,2.1l-2.7,4.8l3.2,9.6l-3.2,2.7
 		L465.6,744.4z M413.5,742.1l0.9-0.8l-2.2-0.6L413.5,742.1z"/>
+      </a>
       <path id="dzhizak" class="region" d="M471.5,728.6l-3.2-9.6l2.7-4.8l3.7-2.1v-3.2l-10.1-4.3l-5.3,2.2h-2.7l-3.7-3.8l1.6-4.8
 		l-1.6-3.2h-3.2l-3.2-6.4l-6.9-0.5l-2.7-3.2V679l3.7-3.8l-2.1-3.7l-3.2-1.6l-1.1-5.3l0.5-6.4l0.6-0.1l-1.1-3.7l-5.3-17.1l0.5-5.9
 		l5.3-2.1l-1.1-5.3l0.5-0.4l0,0l14.4,2.1l30.4-5.9l4.8,2.1l3.7-2.1l4.8,9.1l5.3-1.6l-2.1,12.3l-2.1,2.7v2.7l14.4,8.5v10.7L497,675.8
 		l1.1,6.9l6.9,0.5l12.8-3.7l3.7,3.7l-2.7,3.7l0.5,4.8l4.8,1.6l2.1,2.7l-6.9,3.2l4.3,4.8l2.7,1.6l1.1,12.8l-5.3,6.9h-5.9l-34.6-2.7
 		h-3.7L471.5,728.6z"/>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'sirdarya'}">
       <path id="sirdarya" (mouseover)="hoverRegion(_regionService.sirdarya)"
             [ngClass]="{
         region: true,
@@ -156,6 +170,9 @@
 		l1.1-3.2l-5.3-5.8l0.5-5.3l-2.1-6.9l-20.3-19.2l-0.5-5.3l-6.4,3.7l1.1,13.3h2.7v7.5l-3.7-0.5l-4.3,1.6l-8-3.7v10.7L497,675.8
 		l1.1,6.9l6.9,0.5l12.8-3.7l3.7,3.7l-2.7,3.7l0.5,4.8l4.8,1.6l2.1,2.7l-6.9,3.2l4.3,4.8l2.7,1.6l6.4,1.1l-2.1-9.6l5.3,5.3l4.3-0.5
 		l-7.5-10.7L534.4,690.2z"/>
+      </a>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'tashkent'}">
       <path id="tashkent" (mouseover)="hoverRegion(_regionService.tashkent)"
             [ngClass]="{
         region: true,
@@ -165,6 +182,9 @@
 		l14.9-5.9l5.9-9.6l8.5-5.9l14.4-3.7l3.2-2.1l10.1-13.9l0.5-5.9l8.5-4.3l8,4.8l4.3-10.1l10.1-6.9l3.7-3.2l10.7,5.3v4.8l-18.7,8.5
 		v9.1h-8l-7.5,11.7l-5.3,4.3l-10.1,6.4v4.8l12.3,0.5l2.1,4.8l-2.1,8l6.4,9.6l2.1,7.5l-2.1,3.2l-3.2-3.7l-2.1,2.1L609,631l-8.5,6.9
 		l-16.5,6.4l-3.2,5.3l-5.9,0.5l-10.7-10.7l-5.3,3.7l-0.5,4.3v7.5l-5.9,3.7l4.3,5.9l1.6,5.3l0,0L554.1,674.1z"/>
+      </a>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'namangan'}">
       <path id="namangan" (mouseover)="hoverRegion(_regionService.namangan)"
             [ngClass]="{
         region: true,
@@ -174,6 +194,9 @@
 		l10.1,0.5l4.8,3.2l6.4,0.5l6.4-6.4l5.9-9.6l9.6-2.1l10.1,0.5l5.3-3.7l1.6-5.3l-3.7-14.9l-4.3,4.8l-8.5-5.3L682,598l-4.8-6.9h-4.8
 		l-1.6-8.5h-2.7l-0.5,5.3l0.5,5.3l-2.1,8l-5.3-2.7l-1.1,2.1l0.5,13.3l-4.3-3.7l-1.1,3.2l-5.3-4.3v5.3l-1.6,0.5l-9.1-6.4l-11.2-1.1
 		v-7.5l-4.3-7.5L610.6,596.9z"/>
+      </a>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'andijan'}">
       <path id="andijan" (mouseover)="hoverRegion(_regionService.andijan)"
             [ngClass]="{
         region: true,
@@ -182,6 +205,9 @@
             d="M666.5,636.9l5.9-9.6l9.6-2.1l10.1,0.5l5.3-3.7l1.6-5.3l5.9-1.1l0.5-4.8l8.5,4.3l1.1,3.7
 		l5.9,2.1L746,622l3.7,3.2L731,635.3l-1.1,7.5h-3.7l-0.5,3.7h-4.3l-8.5-5.3l-2.7,2.1l5.3,9.1l-2.7,3.7l-5.9-2.7v-4.3l-7.5-6.4
 		l-16-5.3L666.5,636.9z"/>
+      </a>
+      <a [routerLink]="['/region']"
+         [queryParams]="{name: 'fergana'}">
       <path id="fergana" (mouseover)="hoverRegion(_regionService.fergana)"
             [ngClass]="{
         region: true,
@@ -191,6 +217,7 @@
 		v5.3l-6.4,3.2v3.2l-6.9,3.7l-2.1,4.3l-4.3,3.2l-4.3-9.1l-1.6,3.2l-4.8,1.1l-9.1-5.3l-30.9,9.6h-3.2l-4.8-9.6h-5.3L610,663l1.1-3.2
 		l9.6-6.9l5.9-5.9L629.2,641.2z M646.8,692.8l4.8,1.1h5.9l-0.5-5.3v-6.4h-6.4l-4.8-5.3l-2.1,3.2l1.6,4.3l-1.6,2.1l4.8,2.1
 		L646.8,692.8z M679.9,689.6h3.2l3.7-1.1l-1.1-4.3L679.9,689.6z"/>
+      </a>
       <path id="karakalpakstan" class="region" d="M42.9,329.3l-122.1,28.3l-22.4,239.3l50.6,8.5l8.5-5.9l-5.3-3.2l-3.2-6.9l-1.1-12.8
 		l1.1-12.8l19.7-16l4.3-1.1l10.1,2.7l11.2-0.5v-3.2l3.2-1.6l1.1-6.9v-4.8l1.1-2.7l6.4-2.7l5.3,4.8l8,8l0.5,3.7h8l-8.5-13.8l-1.6-3.8
 		l-6.4-4.3v-2.7l8-2.2l9.6,2.7l4.3-9.1l14.9,17.1l10.7,2.1l5.3,13.8l15-0.5l12.2,2.1h3.8l16,14.4l-1.1,4.3l3.2,4.3l6.4,1.6v4.8

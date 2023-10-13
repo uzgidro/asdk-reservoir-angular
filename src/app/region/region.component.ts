@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TimeService} from "../shared/service/time.service";
 import {RegionService} from "../shared/service/region.service";
 import {Region} from "../shared/interfaces";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-region',
@@ -24,13 +25,19 @@ export class RegionComponent implements OnInit {
 
   constructor(
     private _timeService: TimeService,
-    public _regionService: RegionService
+    public _regionService: RegionService,
+    private _route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
+    this._route.queryParams
+      .subscribe(params => {
+        console.log(params['name'])
+      })
+
     this.updateTime();
-    setInterval(() => this.updateTime(), 1000);
+    setInterval(() => this.updateTime(), 1000 * 60);
 
     this.regionsInfo = {
       reservoirCount: this._regionService.regions.reduce(
