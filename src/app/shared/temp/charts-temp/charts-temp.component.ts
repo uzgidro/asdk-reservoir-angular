@@ -41,7 +41,24 @@ export class ChartsTempComponent  implements OnInit {
             backgroundColor: 'rgba(0, 0, 255, 0.2)',
             fill: true,
             tension: 0.4
-          },
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    })
+
+    this.filterChart = new Chart('FilterChart', {
+      type: 'line',
+      data: {
+        labels: ['01.2023', '02.2023', '03.2023', '04.2023', '05.2023', '06.2023', '07.2023', '08.2023', '09.2023'],
+        datasets: [
           {
             label: "Реактивная мощность, КВАр",
             data: [1232, 2342, 3452, 5678, 6789, 4589, 4567, 3456, 3412],
@@ -53,27 +70,12 @@ export class ChartsTempComponent  implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 2.5
-      }
-    })
-
-    this.filterChart = new Chart('FilterChart', {
-      type: 'line',
-      data: {
-        labels: ['01.2023', '02.2023', '03.2023', '04.2023', '05.2023', '06.2023', '07.2023', '08.2023', '09.2023'],
-        datasets: [
-          {
-            label: "Попуск воды, м3",
-            data: [45, 23, 89, 90, 64, 74, 38, 86, 57],
-            borderColor: 'green',
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            fill: true,
-            tension: 0.4
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            position: 'bottom'
           }
-        ]
-      },
-      options: {
-        aspectRatio: 2.5
+        }
       }
     })
 
@@ -92,7 +94,12 @@ export class ChartsTempComponent  implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 2.5
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
       }
     })
   }
