@@ -1,7 +1,3 @@
-.tooltip {
-  position: relative;
-}
-
 /* Tooltip text */
 .tooltip .tooltip-message {
   align-items: center;
@@ -16,7 +12,7 @@
 
   /* Position the tooltip text */
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   bottom: 125%;
   left: 50%;
   margin-left: -60px;
