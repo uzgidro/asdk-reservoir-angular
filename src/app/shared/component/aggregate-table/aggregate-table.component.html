@@ -1,1 +1,41 @@
-<p>aggregate-table works!</p>
+<table>
+  <thead>
+  <tr>
+    <th>№</th>
+    <th>Аггрегат</th>
+    <th>Установленная мощность, МВт</th>
+    <th>Открытость направляющего клапана, %</th>
+    <th>Нетто напор, м</th>
+    <th>Расход, м3/с</th>
+    <th>КПД, %</th>
+    <th>Фактическая производительность, %</th>
+    <th>Активная мощность, МВт</th>
+    <th>Реактивная мощность, МВАр</th>
+    <th>Статус</th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let agg of getAggregates(); index as i">
+  <tr [ngClass]="{
+  'bg-gray-400': !agg.status,
+  'bg-yellow-400': agg.pressure >= 2 && agg.pressure < 3 && agg.status,
+  'bg-red-400': agg.pressure >= 3 && agg.status,
+  }">
+    <td>{{i + 1}}</td>
+    <td class="text-left"><a [routerLink]="'/ges'" [queryParams]="{agg: agg.name}" [queryParamsHandling]="'merge'">{{agg.name}}</a></td>
+    <td>{{agg.installedPower}}</td>
+    <td>{{agg.status ? agg.valveOpenness : 0}}</td>
+    <td>{{agg.status ? agg.pressure : 0}}</td>
+<!--   [ngClass]="{
+    'text-yellow-600': agg.pressure >= 2 && agg.pressure < 3 && agg.status,
+    'text-red-600': agg.pressure >= 3 && agg.status
+    }"  -->
+    <td>{{agg.status ? agg.waterRelease : 0}}</td>
+    <td>{{agg.status ? (agg.efficiency | percent) : 0}}</td>
+    <td>{{agg.status ? (agg.actualEfficiency | percent) : 0}}</td>
+    <td>{{agg.status ? agg.activePower : 0}}</td>
+    <td>{{agg.status ? agg.reactivePower : 0}}</td>
+    <td>{{agg.status ? 'Активен' : 'Отключен'}}</td>
+
+  </tr>
+  </tbody>
+</table>

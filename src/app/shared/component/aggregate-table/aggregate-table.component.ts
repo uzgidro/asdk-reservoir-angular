@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AggregateService} from "../../service/aggregate.service";
 
 @Component({
   selector: 'app-aggregate-table',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AggregateTableComponent {
 
+  constructor(private _agService: AggregateService) {
+  }
+
+  getAggregates() {
+    return this._agService.aggregateList
+  }
 }

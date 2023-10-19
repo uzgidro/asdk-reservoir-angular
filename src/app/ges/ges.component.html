@@ -3,5 +3,8 @@
 </ng-container>
 
 <ng-template #ges>
- <app-aggregate-table></app-aggregate-table>
+  <div class="flex-col flex space-y-4">
+    <h1 class="p-4 text-lg font-medium uppercase">{{queryGes}}</h1>
+    <app-aggregate-table></app-aggregate-table>
+  </div>
 </ng-template>

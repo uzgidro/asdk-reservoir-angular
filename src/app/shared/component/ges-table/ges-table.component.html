@@ -1,31 +1,31 @@
 <div class="flex">
   <div class="w-screen px-4">
-    <table class="relative table-auto w-full text-left border-collapse text-sm overflow-x-auto">
-      <thead class="text-gray-500">
+    <table>
+      <thead>
       <tr>
-        <th class="bg-gray-300 sticky top-14 p-4 rounded-tl-3xl">№</th>
-        <th class="bg-gray-300 sticky top-14 p-4">
+        <th>№</th>
+        <th>
           <div class="flex-row flex items-center">ГЭС
             <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
         </th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">
+        <th>
           <div class="flex-row flex items-center">Установленная мощность, МВт
             <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
         </th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">Агрегаты</th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">Статический напор, м</th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">Приток, м3/с</th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">Расход через ГЭС, м3/с</th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">Расход через турбину, м3/с</th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">Холостой сброс, м3/с</th>
-        <th class="bg-gray-300 sticky top-14 p-4 text-center">
+        <th>Агрегаты</th>
+        <th>Статический напор, м</th>
+        <th>Приток, м3/с</th>
+        <th>Расход через ГЭС, м3/с</th>
+        <th>Расход через турбину, м3/с</th>
+        <th>Холостой сброс, м3/с</th>
+        <th>
           <div class="flex-row flex items-center justify-center">P, МВт
             <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
         </th>
-        <th class="bg-gray-300 sticky top-14 p-4 rounded-tr-3xl text-center">
+        <th>
           <div class="flex-row flex items-center">Q, МВАр
             <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
@@ -33,21 +33,21 @@
       </tr>
       </thead>
       <tbody *ngFor="let ges of gesList; index as i">
-      <tr class=" border-b text-lg">
-        <td class="px-4 py-2 border-b border-gray-500">{{i+1}}</td>
-        <td class="px-4 py-2 border-b border-gray-500">
+      <tr class="text-lg">
+        <td>{{i+1}}</td>
+        <td class="text-left">
           <a [routerLink]="'/ges'" [queryParams]="{name: ges.name | lowercase}">{{ges.name}}</a>
         </td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.activePower}}</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">
+        <td>{{ges.activePower}}</td>
+        <td>
           <app-aggregate-table-field [aggregates]="10"></app-aggregate-table-field>
         </td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">112</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">130</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">130</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.waterRelease}}</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.idleDischarge}}</td>
-        <td class="px-4 py-2 border-b border-gray-500 text-center">
+        <td>112</td>
+        <td>130</td>
+        <td>130</td>
+        <td>{{ges.waterRelease}}</td>
+        <td>{{ges.idleDischarge}}</td>
+        <td>
           <div class="flex flex-row justify-evenly items-center">
             <div>
               {{ges.activePowerAtMoment | number:'1.0-2'}}
