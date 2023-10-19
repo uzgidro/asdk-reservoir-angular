@@ -1,0 +1,7 @@
+<ng-container *ngIf="!queryGes; else ges">
+  <app-ges-table></app-ges-table>
+</ng-container>
+
+<ng-template #ges>
+ <app-aggregate-table></app-aggregate-table>
+</ng-template>

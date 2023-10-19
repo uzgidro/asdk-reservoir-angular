@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpService} from "../shared/service/http.service";
-import {Piezometer} from "../shared/interfaces";
+import {HttpService} from "../../service/http.service";
+import {Piezometer} from "../../interfaces";
 
 @Component({
   selector: 'app-geslol',

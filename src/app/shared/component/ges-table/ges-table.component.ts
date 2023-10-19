@@ -1,14 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TimeService} from "../shared/service/time.service";
-import {GesService} from "../shared/service/ges.service";
-import {GesValues} from "../shared/interfaces";
+import {GesService} from "../../service/ges.service";
+import {GesValues} from "../../interfaces";
 
 @Component({
-  selector: 'app-ges-dashboard',
-  templateUrl: './ges-dashboard.component.html',
-  styleUrls: ['./ges-dashboard.component.css']
+  selector: 'app-ges-table',
+  templateUrl: './ges-table.component.html',
+  styleUrls: ['./ges-table.component.css']
 })
-export class GesDashboardComponent implements OnInit{
+export class GesTableComponent implements OnInit{
 
   private selectedTab?: string
   private ascSort?: boolean

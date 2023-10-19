@@ -1,11 +1,9 @@
 import {RouterModule, Routes} from "@angular/router";
 import {MainLayoutComponent} from "./shared/component/main-layout/main-layout.component";
-import {GeslolComponent} from "./geslol/geslol.component";
 import {NgModule} from "@angular/core";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {RegionComponent} from "./region/region.component";
-import {PiezoComponent} from "./piezo/piezo.component";
-import {GesDashboardComponent} from "./ges-dashboard/ges-dashboard.component";
+import {GesComponent} from "./ges/ges.component";
 
 const routes: Routes = [
   {
@@ -13,7 +11,7 @@ const routes: Routes = [
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'region', component: RegionComponent},
-      {path: 'ges', component: GesDashboardComponent},
+      {path: 'ges', component: GesComponent},
     ]
   }
 ]

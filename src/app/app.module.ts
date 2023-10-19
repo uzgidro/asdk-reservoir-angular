@@ -3,17 +3,20 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {MainLayoutComponent} from './shared/component/main-layout/main-layout.component';
-import {GeslolComponent} from './geslol/geslol.component';
+import {GeslolComponent} from './shared/temp/geslol/geslol.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {NavbarComponent} from './shared/component/navbar/navbar.component';
 import {RegionComponent} from './region/region.component';
-import {PiezoComponent} from './piezo/piezo.component';
+import {PiezoComponent} from './shared/temp/piezo/piezo.component';
 import {LoaderComponent} from './shared/component/loader/loader.component';
-import {GesDashboardComponent} from "./ges-dashboard/ges-dashboard.component";
-import { AggregateComponent } from './shared/component/aggregate/aggregate.component';
+import {GesTableComponent} from "./shared/component/ges-table/ges-table.component";
+import { AggregateTableFieldComponent } from './shared/component/aggregate-table-field/aggregate-table-field.component';
 import { ChartsTempComponent } from './shared/temp/charts-temp/charts-temp.component';
+import { GesComponent } from './ges/ges.component';
+import { AggregateTableComponent } from './shared/component/aggregate-table/aggregate-table.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -24,15 +27,18 @@ import { ChartsTempComponent } from './shared/temp/charts-temp/charts-temp.compo
     NavbarComponent,
     RegionComponent,
     PiezoComponent,
-    GesDashboardComponent,
+    GesTableComponent,
     LoaderComponent,
-    AggregateComponent,
-    ChartsTempComponent
+    AggregateTableComponent,
+    ChartsTempComponent,
+    GesComponent,
+    AggregateTableFieldComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgOptimizedImage
   ],
   exports: [HttpClientModule],
   providers: [],

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Chart, registerables} from "chart.js";
-import {Dataset} from "../shared/interfaces";
-import {PizeoService} from "../shared/service/pizeo.service";
+import {Dataset} from "../../interfaces";
+import {PizeoService} from "../../service/pizeo.service";
 
 @Component({
   selector: 'app-piezo',

@@ -85,7 +85,7 @@ export class ChartsTempComponent  implements OnInit {
         labels: ['01.2023', '02.2023', '03.2023', '04.2023', '05.2023', '06.2023', '07.2023', '08.2023', '09.2023'],
         datasets: [
           {
-            label: "Холостой сброс, м3",
+            label: "Суммарный расход через турбину, м3",
             data: [567, 569, 623, 689, 612, 534, 645, 656, 545],
             borderColor: 'gray',
             fill: true,

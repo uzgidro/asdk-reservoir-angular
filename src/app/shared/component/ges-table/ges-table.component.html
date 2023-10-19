@@ -2,16 +2,16 @@
   <div class="w-screen px-4">
     <table class="relative table-auto w-full text-left border-collapse text-sm overflow-x-auto">
       <thead class="text-gray-500">
-      <tr #thead>
+      <tr>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tl-3xl">№</th>
         <th class="bg-gray-300 sticky top-14 p-4">
           <div class="flex-row flex items-center">ГЭС
-            <object #gesIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
         </th>
         <th class="bg-gray-300 sticky top-14 p-4 text-center">
           <div class="flex-row flex items-center">Установленная мощность, МВт
-            <object #activeIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
         </th>
         <th class="bg-gray-300 sticky top-14 p-4 text-center">Агрегаты</th>
@@ -22,23 +22,25 @@
         <th class="bg-gray-300 sticky top-14 p-4 text-center">Холостой сброс, м3/с</th>
         <th class="bg-gray-300 sticky top-14 p-4 text-center">
           <div class="flex-row flex items-center justify-center">P, МВт
-            <object #activeAtMomentIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
         </th>
         <th class="bg-gray-300 sticky top-14 p-4 rounded-tr-3xl text-center">
           <div class="flex-row flex items-center">Q, МВАр
-            <object #reactiveIcon class="w-4 h-4 hidden" data="../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
           </div>
         </th>
       </tr>
       </thead>
       <tbody *ngFor="let ges of gesList; index as i">
       <tr class=" border-b text-lg">
-        <td class="px-4 py-2 border-b border-gray-500">{{i}}</td>
-        <td class="px-4 py-2 border-b border-gray-500">{{ges.name}}</td>
+        <td class="px-4 py-2 border-b border-gray-500">{{i+1}}</td>
+        <td class="px-4 py-2 border-b border-gray-500">
+          <a [routerLink]="'/ges'" [queryParams]="{name: ges.name | lowercase}">{{ges.name}}</a>
+        </td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">{{ges.activePower}}</td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">
-          <app-aggregate [aggregates]="10"></app-aggregate>
+          <app-aggregate-table-field [aggregates]="10"></app-aggregate-table-field>
         </td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">112</td>
         <td class="px-4 py-2 border-b border-gray-500 text-center">130</td>
@@ -51,13 +53,13 @@
               {{ges.activePowerAtMoment | number:'1.0-2'}}
             </div>
             <div *ngIf="ges.difference > 0; else notStonks" class="flex-row flex">
-              <object class="w-6 h-6" data="../../assets/icons/trendUp.svg"></object>
+              <object class="w-6 h-6" data="../../../../assets/icons/trendUp.svg"></object>
               {{ges.difference | number:'1.0-2'}}
             </div>
           </div>
           <ng-template #notStonks>
             <div class="flex-row flex">
-              <object class="w-6 h-6" data="../../assets/icons/trendDown.svg"></object>
+              <object class="w-6 h-6" data="../../../../assets/icons/trendDown.svg"></object>
               {{ges.difference | number:'1.0-2'}}
             </div>
           </ng-template>
