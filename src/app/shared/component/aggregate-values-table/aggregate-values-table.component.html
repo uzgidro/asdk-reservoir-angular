@@ -1,0 +1,61 @@
+<div class="flex flex-row max-md:flex-wrap max-md:space-y-4 md:space-x-4">
+  <table>
+    <thead>
+    <tr>
+      <th colspan="3">Температура подшипника</th>
+    </tr>
+    <tr>
+      <th>№</th>
+      <th>Датчик</th>
+      <th>Значение</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let ax of ['a','b','c','d','e','f','g']; index as i">
+    <tr>
+      <td>{{i + 1}}</td>
+      <td>{{ax}}</td>
+      <td>123</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+    <tr>
+      <th colspan="3">Уровень вибрации</th>
+    </tr>
+    <tr>
+      <th>№</th>
+      <th>Датчик</th>
+      <th>Значение</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let ax of ['h','i','j','k','l','m','n']; index as i">
+    <tr>
+      <td>{{i + 1}}</td>
+      <td>{{ax}}</td>
+      <td>123</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+    <tr>
+      <th colspan="3">Ещё какая-то таблица</th>
+    </tr>
+    <tr>
+      <th>№</th>
+      <th>Датчик</th>
+      <th>Значение</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let ax of ['o','p','q','r','s','t','u']; index as i">
+    <tr>
+      <td>{{i + 1}}</td>
+      <td>{{ax}}</td>
+      <td>123</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
