@@ -1,0 +1,15 @@
+table tr th {
+  @apply text-gray-500 bg-gray-300 sticky top-14 p-4
+}
+table tr td {
+  @apply border-b border-gray-500 text-center
+}
+table tr:last-child td {
+  @apply border-0
+}
+table tr:first-child th {
+  @apply rounded-tl-3xl
+}
+table tr:last-child th {
+  @apply rounded-bl-3xl
+}

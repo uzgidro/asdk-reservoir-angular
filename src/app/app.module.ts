@@ -19,6 +19,7 @@ import { AggregateTableComponent } from './shared/component/aggregate-table/aggr
 import {NgOptimizedImage} from "@angular/common";
 import { AggregateValuesTableComponent } from './shared/component/aggregate-values-table/aggregate-values-table.component';
 import { ChartComponent } from './shared/temp/chart/chart.component';
+import { GesVerticalTableComponent } from './shared/component/get-vertical-table/ges-vertical-table.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ChartComponent } from './shared/temp/chart/chart.component';
     GesComponent,
     AggregateTableFieldComponent,
     AggregateValuesTableComponent,
-    ChartComponent
+    ChartComponent,
+    GesVerticalTableComponent
   ],
   imports: [
     BrowserModule,
