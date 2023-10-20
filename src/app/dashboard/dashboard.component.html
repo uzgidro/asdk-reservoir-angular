@@ -1,31 +1,25 @@
 <!--Container-->
-<div class="py-3 flex space-x-5 justify-center">
-  <div class="block space-y-4 max-w-4xl">
+<div class="p-4 flex w-full xl:space-x-8 justify-center max-xl:flex-wrap max-xl:space-y-4">
+  <div class="block space-y-8">
 <!--Power-->
-    <div class="flex space-x-5">
-      <div class="p-6 max-w-sm bg-white rounded-xl shadow-lg flex items-center">
-        <div>
+    <div class="flex md:space-x-4 max-md:flex-wrap max-md:text-center max-md:space-y-4">
+      <div class="p-6 w-full bg-white rounded-xl shadow-md">
           <div class="text-xl font-medium text-black">Средняя мощность</div>
           <p class="text-slate-500">2.225 МВт</p>
-        </div>
       </div>
-      <div class="p-6 max-w-sm bg-white rounded-xl shadow-lg flex items-center">
-        <div>
+      <div class="p-6 w-full bg-white rounded-xl shadow-md">
           <div class="text-xl font-medium text-black">Минимальная мощность</div>
           <p class="text-slate-500">2 МВт</p>
-        </div>
       </div>
 
-      <div class="p-6 max-w-sm bg-white rounded-xl shadow-lg flex items-center">
-        <div>
+      <div class="p-6 w-full bg-white rounded-xl shadow-md">
           <div class="text-xl font-medium text-black">Максимальная мощность</div>
           <p class="text-slate-500">2.5 МВт</p>
-        </div>
       </div>
     </div>
 <!--/Power-->
 <!--Reservoir-->
-    <div class="w-full bg-white rounded-xl shadow-lg flex-col items-center space-y-2">
+    <div class="w-full bg-white rounded-xl shadow-md flex-col items-center space-y-2">
       <div class="tab">
         <button class="tablinks active rounded-tl-xl" (click)="tabclick($event, 'Андижан')">Андижан</button>
         <button class="tablinks" (click)="tabclick($event, 'Охангаран')">Охангаран</button>
@@ -39,9 +33,9 @@
 <!--/Reservoir-->
 
   </div>
-  <div class="block space-y-4">
+  <div class="w-full max-xl:flex max-xl:space-x-4 xl:max-w-xs xl:block xl:space-y-4">
 <!--GES-->
-    <div class="p-6 w-80 bg-white rounded-xl shadow-lg flex-col items-center space-y-2">
+    <div class="p-6 w-full bg-white rounded-xl shadow-md flex-col items-center space-y-2">
       <h3 class="text-center font-medium text-black text-xl border-b border-gray-300">ГЭС</h3>
       <ul class="space-y-2">
         <li class="flex justify-between"><p>Самый мощный №1</p> <p>165 МВт</p></li>
@@ -54,7 +48,7 @@
     </div>
 <!--/GES-->
     <!--GES-->
-    <div class="p-6 w-80 bg-white rounded-xl shadow-lg flex-col items-center space-y-2">
+    <div class="p-6 w-full bg-white rounded-xl shadow-md flex-col items-center space-y-2">
       <h3 class="text-center font-medium text-black text-xl border-b border-gray-300">Данные за год</h3>
       <ul class="space-y-2">
         <li class="flex justify-between"><p>Приток воды:</p> <p>777 м3</p></li>
