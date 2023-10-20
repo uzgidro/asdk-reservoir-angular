@@ -8,5 +8,8 @@
   <div>
     <canvas id="VolumeChart">{{volumeChart}}</canvas>
   </div>
+  <div [ngClass]="{'hidden': !showPressure}">
+    <canvas id="PressureChart">{{pressureChart}}</canvas>
+  </div>
 
 </div>

@@ -1,10 +1,23 @@
-<ng-container *ngIf="!queryGes; else ges">
+<ng-container *ngIf="!queryGes; else aggregate">
   <app-ges-table></app-ges-table>
 </ng-container>
 
-<ng-template #ges>
+<ng-template #aggregate>
+  <ng-container *ngIf="!queryAggregate; else aggValues">
+    <div class="flex-col flex space-y-4">
+      <h1 class="p-4 text-lg font-medium uppercase">{{queryGes}}</h1>
+      <app-aggregate-table></app-aggregate-table>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #aggValues>
   <div class="flex-col flex space-y-4">
-    <h1 class="p-4 text-lg font-medium uppercase">{{queryGes}}</h1>
-    <app-aggregate-table></app-aggregate-table>
+    <h1 class="p-4 text-lg font-medium uppercase">{{queryAggregate}}</h1>
+    <div class="flex flex-row justify-center">
+      <app-charts-temp [showPressure]="true"></app-charts-temp>
+    </div>
+
+    <app-aggregate-values-table></app-aggregate-values-table>
   </div>
 </ng-template>

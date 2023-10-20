@@ -9,6 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 export class GesComponent implements OnInit{
 
   queryGes?: string
+  queryAggregate?: string
 
   constructor(private _route: ActivatedRoute) {
   }
@@ -17,6 +18,7 @@ export class GesComponent implements OnInit{
     this._route.queryParams
       .subscribe(params => {
         this.queryGes = params['name']
+        this.queryAggregate = params['agg']
       })
   }
 
