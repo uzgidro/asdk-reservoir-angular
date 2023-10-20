@@ -14,9 +14,7 @@
 <ng-template #aggValues>
   <div class="flex-col flex space-y-4 px-4">
     <h1 class="p-4 text-lg font-medium uppercase">{{queryAggregate}}</h1>
-    <div class="flex flex-row justify-center">
-      <app-charts-temp [showPressure]="true"></app-charts-temp>
-    </div>
+    <app-charts-temp [showPressure]="true"></app-charts-temp>
 
     <app-aggregate-values-table></app-aggregate-values-table>
   </div>

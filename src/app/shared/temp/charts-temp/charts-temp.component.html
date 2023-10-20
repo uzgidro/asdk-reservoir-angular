@@ -1,14 +1,14 @@
-<div class="flex flex-row justify-center">
-  <div>
-    <canvas id="ReportChart">{{waterChart}}</canvas>
+<div class="flex flex-row flex-wrap xl:flex-nowrap justify-center">
+  <div class="w-full">
+    <canvas id="ActivePowerChart">{{activePowerChart}}</canvas>
   </div>
-  <div>
-    <canvas id="FilterChart">{{filterChart}}</canvas>
+  <div class="w-full">
+    <canvas id="ReactivePowerChart">{{reactivePowerChart}}</canvas>
   </div>
-  <div>
-    <canvas id="VolumeChart">{{volumeChart}}</canvas>
+  <div class="w-full">
+    <canvas id="WaterReleaseChart">{{waterReleaseChart}}</canvas>
   </div>
-  <div [ngClass]="{'hidden': !showPressure}">
+  <div class="w-full" [ngClass]="{'hidden': !showPressure}">
     <canvas id="PressureChart">{{pressureChart}}</canvas>
   </div>
 

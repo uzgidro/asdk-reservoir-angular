@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {Chart, registerables} from "chart.js";
 
 @Component({
@@ -8,33 +8,46 @@ import {Chart, registerables} from "chart.js";
 })
 export class ChartsTempComponent implements OnInit {
 
-  waterChart?: Chart
-  filterChart?: Chart
-  volumeChart?: Chart
+  activePowerChart?: Chart
+  reactivePowerChart?: Chart
+  waterReleaseChart?: Chart
   pressureChart?: Chart
   @Input() showPressure: boolean = false
+
+  screenWidth?: number
+
+
+  constructor() {
+    this.screenWidth = window.innerWidth
+  }
 
   ngOnInit() {
     Chart.register(...registerables)
     this.drawChart()
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.screenWidth = (event.target as Window).innerWidth
+    this.drawChart()
+  }
+
   drawChart() {
     // destroy shown charts
-    if (this.waterChart !== undefined) {
-      this.waterChart.destroy()
+    if (this.activePowerChart !== undefined) {
+      this.activePowerChart.destroy()
     }
-    if (this.filterChart !== undefined) {
-      this.filterChart.destroy()
+    if (this.reactivePowerChart !== undefined) {
+      this.reactivePowerChart.destroy()
     }
-    if (this.volumeChart !== undefined) {
-      this.volumeChart.destroy()
+    if (this.waterReleaseChart !== undefined) {
+      this.waterReleaseChart.destroy()
     }
     if (this.pressureChart !== undefined) {
       this.pressureChart.destroy()
     }
     // draw charts
-    this.waterChart = new Chart('ReportChart', {
+    this.activePowerChart = new Chart('ActivePowerChart', {
       type: 'line',
       data: {
         labels: ['01.2023', '02.2023', '03.2023', '04.2023', '05.2023', '06.2023', '07.2023', '08.2023', '09.2023'],
@@ -50,7 +63,8 @@ export class ChartsTempComponent implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 1,
+        animation: false,
+        aspectRatio: this.screenWidth!! <= 1280 ? 2.5 : 1,
         plugins: {
           legend: {
             position: 'bottom'
@@ -67,7 +81,7 @@ export class ChartsTempComponent implements OnInit {
       }
     })
 
-    this.filterChart = new Chart('FilterChart', {
+    this.reactivePowerChart = new Chart('ReactivePowerChart', {
       type: 'line',
       data: {
         labels: ['01.2023', '02.2023', '03.2023', '04.2023', '05.2023', '06.2023', '07.2023', '08.2023', '09.2023'],
@@ -83,7 +97,8 @@ export class ChartsTempComponent implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 1,
+        animation: false,
+        aspectRatio: this.screenWidth!! <= 1280 ? 2.5 : 1,
         plugins: {
           legend: {
             position: 'bottom'
@@ -100,7 +115,7 @@ export class ChartsTempComponent implements OnInit {
       }
     })
 
-    this.volumeChart = new Chart('VolumeChart', {
+    this.waterReleaseChart = new Chart('WaterReleaseChart', {
       type: 'line',
       data: {
         labels: ['01.2023', '02.2023', '03.2023', '04.2023', '05.2023', '06.2023', '07.2023', '08.2023', '09.2023'],
@@ -115,7 +130,8 @@ export class ChartsTempComponent implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 1,
+        animation: false,
+        aspectRatio: this.screenWidth!! <= 1280 ? 2.5 : 1,
         plugins: {
           legend: {
             position: 'bottom'
@@ -147,7 +163,8 @@ export class ChartsTempComponent implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 1,
+        animation: false,
+        aspectRatio: this.screenWidth!! <= 1280 ? 2.5 : 1,
         plugins: {
           legend: {
             position: 'bottom'
