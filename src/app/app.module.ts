@@ -20,7 +20,8 @@ import {NgOptimizedImage} from "@angular/common";
 import { AggregateValuesTableComponent } from './shared/component/aggregate-values-table/aggregate-values-table.component';
 import { ChartComponent } from './shared/temp/chart/chart.component';
 import { GesVerticalTableComponent } from './shared/component/get-vertical-table/ges-vertical-table.component';
-import { LoggerComponent } from './logger/logger.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoggerComponent } from './logger/component/logger.component';
 
 @NgModule({
   declarations: [
@@ -40,13 +41,14 @@ import { LoggerComponent } from './logger/logger.component';
     AggregateValuesTableComponent,
     ChartComponent,
     GesVerticalTableComponent,
-    LoggerComponent
+    LoggerComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    BrowserAnimationsModule
   ],
   exports: [HttpClientModule],
   providers: [],
