@@ -1,5 +1,8 @@
 table tr th {
-  @apply text-gray-500 bg-gray-300 sticky top-14 p-4
+  @apply text-gray-500 bg-gray-300 top-14 p-4 border-b border-gray-400
+}
+table tr:last-child th {
+  @apply border-0
 }
 table tr td {
   @apply border-b border-gray-500 text-center
