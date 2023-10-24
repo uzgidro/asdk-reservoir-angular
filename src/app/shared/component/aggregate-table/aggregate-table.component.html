@@ -21,7 +21,11 @@
   'bg-red-400': agg.pressure >= 3 && agg.status,
   }">
     <td>{{i + 1}}</td>
-    <td class="text-left"><a [routerLink]="'/ges'" [queryParams]="{agg: agg.name}" [queryParamsHandling]="'merge'">{{agg.name}}</a></td>
+    <td class="text-left"><a [routerLink]="'/ges'" [queryParams]="{agg: agg.name}" [queryParamsHandling]="'merge'">
+      <div class="flex-row flex items-center justify-center">{{agg.name}}
+        <object class="w-4 h-4" data="assets/icons/touch.svg"></object>
+      </div>
+    </a></td>
     <td>{{agg.installedPower}}</td>
     <td>{{agg.status ? agg.valveOpenness : 0}}</td>
     <td>{{agg.status ? agg.pressure : 0}}</td>

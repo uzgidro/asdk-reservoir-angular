@@ -36,7 +36,12 @@
       <tr class="text-lg">
         <td>{{i+1}}</td>
         <td class="text-left">
-          <a [routerLink]="'/ges'" [queryParams]="{name: ges.name | lowercase}">{{ges.name}}</a>
+          <a [routerLink]="'/ges'" [queryParams]="{name: ges.name | lowercase}">
+            <div class="flex-row flex items-center justify-between">
+              {{ges.name}}
+              <object class="w-4 h-4" data="assets/icons/touch.svg"></object>
+            </div>
+          </a>
         </td>
         <td>{{ges.activePower}}</td>
         <td>

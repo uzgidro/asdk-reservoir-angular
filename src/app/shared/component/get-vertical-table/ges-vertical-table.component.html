@@ -12,7 +12,11 @@
           </div>
         </th>
         <td *ngFor="let ges of gesList">
-          <a [routerLink]="'/ges'" [queryParams]="{name: ges.name | lowercase}">{{ges.name}}</a>
+          <a [routerLink]="'/ges'" [queryParams]="{name: ges.name | lowercase}">
+            <div class="flex-row flex items-center justify-center">{{ges.name}}
+              <object class="w-4 h-4" data="assets/icons/touch.svg"></object>
+            </div>
+          </a>
         </td>
       </tr>
       <tr>
