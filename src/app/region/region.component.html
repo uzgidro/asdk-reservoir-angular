@@ -14,8 +14,10 @@
             <p>{{regionsInfo.gesCount}}</p>
           </div>
 
-          <div class="card">
-            <p>Агрегаты:</p>
+          <div matTooltip="На ремонте/Нерабочие/Активные/Общее количество" class="card">
+            <div class="flex-row flex items-center justify-center">Агрегаты:
+              <object class="w-4 h-4" data="assets/icons/info.svg"></object>
+            </div>
             <app-aggregate-table-field [aggregates]="regionsInfo.aggregateCount"></app-aggregate-table-field>
           </div>
 
@@ -63,8 +65,10 @@
             <p>{{currentRegion.gesCount}}</p>
           </div>
 
-          <div class="flex flex-row justify-between">
-            <p>Агрегаты:</p>
+          <div matTooltip="На ремонте/Нерабочие/Активные/Общее количество" class="flex flex-row justify-between">
+            <div class="flex-row flex items-center justify-center">Агрегаты:
+              <object class="w-4 h-4" data="assets/icons/info.svg"></object>
+            </div>
             <app-aggregate-table-field [aggregates]="currentRegion.aggregateCount"></app-aggregate-table-field>
           </div>
 
@@ -260,5 +264,5 @@
 </ng-template>
 
 <ng-template #smallLoader>
-    <app-loader></app-loader>
+  <app-loader></app-loader>
 </ng-template>

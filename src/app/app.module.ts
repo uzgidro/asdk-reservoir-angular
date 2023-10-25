@@ -22,6 +22,7 @@ import { ChartComponent } from './shared/temp/chart/chart.component';
 import { GesVerticalTableComponent } from './shared/component/get-vertical-table/ges-vertical-table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoggerComponent } from './logger/component/logger.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -43,13 +44,14 @@ import { LoggerComponent } from './logger/component/logger.component';
     GesVerticalTableComponent,
     LoggerComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgOptimizedImage,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgOptimizedImage,
+        BrowserAnimationsModule,
+        MatTooltipModule
+    ],
   exports: [HttpClientModule],
   providers: [],
   bootstrap: [AppComponent]

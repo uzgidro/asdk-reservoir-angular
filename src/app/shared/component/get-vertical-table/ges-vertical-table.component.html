@@ -8,7 +8,7 @@
       <tr>
         <th>
           <div class="flex-row flex items-center justify-center">ГЭС
-            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="assets/icons/arrows.svg"></object>
           </div>
         </th>
         <td *ngFor="let ges of gesList">
@@ -22,13 +22,17 @@
       <tr>
         <th>
           <div class="flex-row flex items-center justify-center">Установленная мощность, МВт
-            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="assets/icons/arrows.svg"></object>
           </div>
         </th>
         <td *ngFor="let ges of gesList">{{ges.activePower}}</td>
       </tr>
       <tr>
-        <th>Агрегаты</th>
+        <th matTooltip="На ремонте/Нерабочие/Активные/Общее количество">
+          <div class="flex-row flex items-end justify-center">Агрегаты
+            <object class="w-4 h-4" data="assets/icons/info.svg"></object>
+          </div>
+        </th>
         <td *ngFor="let ges of gesList">
           <app-aggregate-table-field [aggregates]="10"></app-aggregate-table-field>
         </td>
@@ -56,7 +60,7 @@
       <tr>
         <th>
           <div class="flex-row flex items-center justify-center">P, МВт
-            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="assets/icons/arrows.svg"></object>
           </div>
         </th>
         <td *ngFor="let ges of gesList">
@@ -65,13 +69,13 @@
               {{ges.activePowerAtMoment | number:'1.0-2'}}
             </div>
             <div *ngIf="ges.difference > 0; else notStonks" class="flex-row flex">
-              <object class="w-6 h-6" data="../../../../assets/icons/trendUp.svg"></object>
+              <object class="w-6 h-6" data="assets/icons/trendUp.svg"></object>
               {{ges.difference | number:'1.0-2'}}
             </div>
           </div>
           <ng-template #notStonks>
             <div class="flex-row flex">
-              <object class="w-6 h-6" data="../../../../assets/icons/trendDown.svg"></object>
+              <object class="w-6 h-6" data="assets/icons/trendDown.svg"></object>
               {{ges.difference | number:'1.0-2'}}
             </div>
           </ng-template>
@@ -80,10 +84,11 @@
       <tr>
         <th>
           <div class="flex-row flex items-center justify-center">Q, МВАр
-            <object class="w-4 h-4 hidden" data="../../../../assets/icons/arrows.svg"></object>
+            <object class="w-4 h-4 hidden" data="assets/icons/arrows.svg"></object>
           </div>
         </th>
-        <td *ngFor="let ges of gesList" class="px-4 py-2 border-b border-gray-500 text-center">{{ges.reactivePower | number:'1.0-2'}}</td>
+        <td *ngFor="let ges of gesList"
+            class="px-4 py-2 border-b border-gray-500 text-center">{{ges.reactivePower | number:'1.0-2'}}</td>
       </tr>
     </table>
   </div>
