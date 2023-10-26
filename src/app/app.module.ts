@@ -23,6 +23,7 @@ import { GesVerticalTableComponent } from './shared/component/get-vertical-table
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoggerComponent } from './logger/component/logger.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {ResizableModule} from "angular-resizable-element";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         HttpClientModule,
         NgOptimizedImage,
         BrowserAnimationsModule,
-        MatTooltipModule
+        MatTooltipModule,
+        ResizableModule
     ],
   exports: [HttpClientModule],
   providers: [],

@@ -1,0 +1,14 @@
+mwlResizable {
+  box-sizing: border-box;
+}
+
+.resize-handle-top {
+  position: absolute;
+  height: 5px;
+  cursor: row-resize;
+  width: 100%;
+}
+
+.resize-handle-top {
+  top: 0;
+}

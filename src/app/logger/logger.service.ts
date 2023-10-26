@@ -16,8 +16,8 @@ export class LoggerService {
     const positionStrategy = this.overlay
       .position()
       .global()
-      .top('3.5rem')
-      .right();
+      .bottom()
+      .centerHorizontally();
 
     // Create the overlay with customizable options
     const overlayRef = this.overlay.create({
