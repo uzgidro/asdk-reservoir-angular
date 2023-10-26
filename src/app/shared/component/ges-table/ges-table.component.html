@@ -10,7 +10,7 @@
           </div>
         </th>
         <th>
-          <div class="flex-row flex items-center">Установленная мощность, МВт
+          <div class="flex-row flex items-center">Уст. мощность, МВт
             <object class="w-4 h-4 hidden" data="assets/icons/arrows.svg"></object>
           </div>
         </th>
@@ -20,6 +20,8 @@
             <object class="w-4 h-4" data="assets/icons/info.svg"></object>
           </div>
         </th>
+        <th>Верхний бьеф, м</th>
+        <th>Нижний бьеф, м</th>
         <th>Статический напор, м</th>
         <th>Приток, м3/с</th>
         <th>Расход через ГЭС, м3/с</th>
@@ -52,7 +54,9 @@
         <td>
           <app-aggregate-table-field [aggregates]="10"></app-aggregate-table-field>
         </td>
-        <td>112</td>
+        <td>240</td>
+        <td>180</td>
+        <td>60</td>
         <td>130</td>
         <td>130</td>
         <td>{{ges.waterRelease}}</td>

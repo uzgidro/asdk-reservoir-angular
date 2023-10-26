@@ -78,6 +78,11 @@
           </div>
 
           <div class="flex flex-row justify-between">
+            <p>Реактивная мощность:</p>
+            <p>{{currentRegion.activePower * 0.4}} МВАр</p>
+          </div>
+
+          <div class="flex flex-row justify-between">
             <p>Мощность на {{currentTime | date:'HH'}}:00 :</p>
             <p>{{currentRegion.activePowerAtMoment}} МВт</p>
           </div>
