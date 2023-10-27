@@ -1,11 +1,11 @@
 <div
   [style]="windowHeight"
-  class="relative flex flex-col-reverse h-20 w-screen border-2 border-gray-600 bg-gray-200 shadow-2xl text-sm space-y-2"
+  class="relative h-20 w-screen border-2 border-gray-600 bg-gray-200 shadow-2xl text-sm space-y-2"
   mwlResizable
   [enableGhostResize]="true"
   (resizeEnd)="onResizeEnd($event)"
 >
-  <div class="resize-handle-top"
+  <div class="absolute top-0 flex flex-col cursor-row-resize w-full"
        mwlResizeHandle
        [resizeEdges]="{ top: true }">
     <div class="flex flex-row justify-between text-red-600">

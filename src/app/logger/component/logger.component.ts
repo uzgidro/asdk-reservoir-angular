@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {LoggerRef} from "../logger-ref";
 import {ResizeEvent} from "angular-resizable-element";
 
@@ -11,11 +11,19 @@ export class LoggerComponent {
 
   windowHeight: string = ''
 
-  constructor(private loggerRef: LoggerRef) {}
+  constructor(private loggerRef: LoggerRef) {
+  }
 
   onResizeEnd(event: ResizeEvent): void {
-    console.log('Element was resized', event.rectangle.height);
-    this.windowHeight = `height: ${event.rectangle.height}px`
+    let height = event.rectangle.height
+    console.log(height)
+    if (height!! >= 150) {
+      this.windowHeight = `height: 150px`
+    } else if (height!! <= 45) {
+      this.windowHeight = `height: 45px`
+    } else {
+      this.windowHeight = `height: ${event.rectangle.height}px`
+    }
   }
 
   close() {
