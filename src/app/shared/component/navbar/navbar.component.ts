@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
+    this.openLogger()
   }
 
   openLogger() {

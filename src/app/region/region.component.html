@@ -2,7 +2,7 @@
   <div *ngIf="regionsInfo; else loader" class="flex flex-col w-screen h-screen pt-14 -mt-14">
 
     <div class="flex max-md:hidden bg-gray-600 p-2 justify-center">
-      <div *ngIf="currentTime; else smallLoader" class="w-full flex max-xl:flex-col max-xl:space-y-2 xl:space-x-2">
+      <div *ngIf="currentTime; else smallLoader" class="text-sm flex max-xl:flex-col max-xl:space-y-2 xl:space-x-2">
         <div class="flex space-x-2">
           <div class="card">
             <p>Количество водохранилищ:</p>
@@ -79,7 +79,7 @@
 
           <div class="flex flex-row justify-between">
             <p>Реактивная мощность:</p>
-            <p>{{currentRegion.activePower * 0.4}} МВАр</p>
+            <p>{{currentRegion.activePower * 0.4 | number: '1.1-2'}} МВАр</p>
           </div>
 
           <div class="flex flex-row justify-between">
