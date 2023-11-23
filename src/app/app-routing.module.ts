@@ -4,6 +4,7 @@ import {NgModule} from "@angular/core";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {RegionComponent} from "./region/region.component";
 import {GesComponent} from "./ges/ges.component";
+import {ReservoirComponent} from "./reservoir/reservoir.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
+      {path: 'reservoir', component: ReservoirComponent},
     ]
   }
 ]

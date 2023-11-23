@@ -12,18 +12,21 @@ import {RegionComponent} from './region/region.component';
 import {PiezoComponent} from './shared/temp/piezo/piezo.component';
 import {LoaderComponent} from './shared/component/loader/loader.component';
 import {GesTableComponent} from "./shared/component/ges-table/ges-table.component";
-import { AggregateTableFieldComponent } from './shared/component/aggregate-table-field/aggregate-table-field.component';
-import { ChartsTempComponent } from './shared/temp/charts-temp/charts-temp.component';
-import { GesComponent } from './ges/ges.component';
-import { AggregateTableComponent } from './shared/component/aggregate-table/aggregate-table.component';
+import {AggregateTableFieldComponent} from './shared/component/aggregate-table-field/aggregate-table-field.component';
+import {ChartsTempComponent} from './shared/temp/charts-temp/charts-temp.component';
+import {GesComponent} from './ges/ges.component';
+import {AggregateTableComponent} from './shared/component/aggregate-table/aggregate-table.component';
 import {NgOptimizedImage} from "@angular/common";
-import { AggregateValuesTableComponent } from './shared/component/aggregate-values-table/aggregate-values-table.component';
-import { ChartComponent } from './shared/temp/chart/chart.component';
-import { GesVerticalTableComponent } from './shared/component/get-vertical-table/ges-vertical-table.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoggerComponent } from './logger/component/logger.component';
+import {
+  AggregateValuesTableComponent
+} from './shared/component/aggregate-values-table/aggregate-values-table.component';
+import {ChartComponent} from './shared/temp/chart/chart.component';
+import {GesVerticalTableComponent} from './shared/component/get-vertical-table/ges-vertical-table.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {LoggerComponent} from './logger/component/logger.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ResizableModule} from "angular-resizable-element";
+import {ReservoirComponent} from './reservoir/reservoir.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import {ResizableModule} from "angular-resizable-element";
     ChartComponent,
     GesVerticalTableComponent,
     LoggerComponent,
+    ReservoirComponent,
   ],
     imports: [
         BrowserModule,

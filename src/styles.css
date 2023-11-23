@@ -11,10 +11,13 @@
     @apply bg-gray-200
   }
   table {
-    @apply relative table-auto w-full border-collapse text-sm overflow-x-auto
+    @apply table-auto w-full border-collapse text-sm overflow-x-auto
   }
   thead tr:first-child th {
     @apply text-gray-500 bg-gray-300 border-b border-gray-400 sticky top-14 p-4 first:rounded-tl-3xl last:rounded-tr-3xl
+  }
+  thead tr:last-child th {
+    @apply text-gray-500 bg-gray-300 border-b border-gray-400 sticky top-14 p-4
   }
   thead tr th {
     @apply text-gray-500 bg-gray-300 sticky top-14 p-4
