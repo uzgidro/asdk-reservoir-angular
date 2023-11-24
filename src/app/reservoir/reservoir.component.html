@@ -99,6 +99,27 @@
         </th>
       </tr>
       </thead>
+      <tbody *ngFor="let res of reservoirs">
+      <tr>
+        <td>{{res.name}}</td>
+        <td><small>{{res.weather[1]}}</small></td>
+        <td><small>{{res.weather[0]}}</small></td>
+        <td>{{res.level[1]}}</td>
+        <td>{{res.level[0]}}</td>
+        <td>{{res.level[0] - res.level[1] | number: '.0-2'}}</td>
+        <td>{{res.volume[1]}}</td>
+        <td>{{res.volume[0]}}</td>
+        <td>{{res.volume[0] - res.volume[1] | number: '.0-2'}}</td>
+        <td>{{res.income[5]}}</td>
+        <td>{{res.income[4]}}</td>
+        <td>{{res.income[3]}}</td>
+        <td>{{res.income[2]}}</td>
+        <td>{{res.income[1]}}</td>
+        <td>{{res.income[0]}}</td>
+        <td>{{res.income[0] - res.income[1] | number: '.0-2'}}</td>
+        <td>{{res.release}}</td>
+      </tr>
+      </tbody>
     </table>
   </div>
 </div>
