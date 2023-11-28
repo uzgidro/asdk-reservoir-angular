@@ -11,7 +11,20 @@ import {PizeoService} from "../../service/pizeo.service";
 export class PiezoComponent implements OnInit {
 
   piezoChart?: Chart
-
+  groupMap: Record<string, any> = {
+    '1': this._service.st1,
+    '2': this._service.st2,
+    '3': this._service.st3,
+    '4': this._service.st4,
+    '5': this._service.st5,
+    '6': this._service.st6,
+    '7': this._service.st7,
+    '8': this._service.st8,
+    '9': this._service.st9,
+    '10': this._service.st10,
+    '11': this._service.st11,
+    '12': this._service.st12,
+  };
 
   constructor(private _service: PizeoService) {
   }
@@ -28,47 +41,7 @@ export class PiezoComponent implements OnInit {
     }
     (event.currentTarget as HTMLElement).className += " active";
     console.log(group)
-    let st
-    switch (group) {
-      case '1':
-        st = this._service.st1
-        break
-      case "2":
-        st = this._service.st2
-        break
-      case '3':
-        st = this._service.st3
-        break
-      case '4':
-        st = this._service.st4
-        break
-      case '5':
-        st = this._service.st5
-        break
-      case '6':
-        st = this._service.st6
-        break
-      case '7':
-        st = this._service.st7
-        break
-      case '8':
-        st = this._service.st8
-        break
-      case '9':
-        st = this._service.st9
-        break
-      case '10':
-        st = this._service.st10
-        break
-      case '11':
-        st = this._service.st11
-        break
-      case '12':
-        st = this._service.st12
-        break
-      default:
-        st = this._service.st1
-    }
+    let st = this.groupMap[group] || this._service.st1;
     this.drawChart(st)
   }
 
