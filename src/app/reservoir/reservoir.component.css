@@ -1,0 +1,6 @@
+button {
+  @apply px-4 py-1 font-semibold rounded-xl border border-gray-400 hover:text-white hover:bg-gray-600 hover:border-transparent
+}
+ .active {
+   @apply outline-none ring-2 ring-gray-600 ring-offset-2
+ }

@@ -1,0 +1,81 @@
+<div class="w-full px-4">
+  <table>
+    <thead>
+    <tr>
+      <th rowspan="3">Водохранилища</th>
+      <th rowspan="2" colspan="2">Уровень, м</th>
+      <th colspan="5">Объём, млн. м<sup>3</sup></th>
+      <th colspan="6">Приток, м<sup>3</sup>/с</th>
+      <th colspan="5">Попуск, м<sup>3</sup>/с</th>
+    </tr>
+    <tr>
+      <th rowspan="2">{{yesterday | date: 'dd-MM'}}</th>
+      <th rowspan="2">{{today | date: 'dd-MM'}}</th>
+      <th colspan="3">Данные за прошлые года</th>
+      <th rowspan="2">{{yesterday | date: 'dd-MM'}}</th>
+      <th rowspan="2">{{today | date: 'dd-MM'}}</th>
+      <th rowspan="2">Среднее</th>
+      <th colspan="3">Данные за прошлые года</th>
+      <th rowspan="2">{{yesterday | date: 'dd-MM'}}</th>
+      <th rowspan="2">{{today | date: 'dd-MM'}}</th>
+      <th colspan="3">Данные за прошлые года</th>
+    </tr>
+    <tr>
+      <th>{{yesterday | date: 'dd-MM'}}</th>
+      <th>{{today | date: 'dd-MM'}}</th>
+      <th>{{years[0]}}</th>
+      <th>{{years[1]}}</th>
+      <th>{{years[2]}}</th>
+      <th>{{years[0]}}</th>
+      <th>{{years[1]}}</th>
+      <th>{{years[2]}}</th>
+      <th>{{years[0]}}</th>
+      <th>{{years[1]}}</th>
+      <th>{{years[2]}}</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let res of data">
+    <tr>
+      <td rowspan="2">{{res.reservoir}}</td>
+      <td>{{res.level[0]}}</td>
+      <td>{{res.level[1]}}</td>
+      <td>{{res.volume[0]}}</td>
+      <td>{{res.volume[1]}}</td>
+      <td>{{res.volume[2]}}</td>
+      <td>{{res.volume[3]}}</td>
+      <td>{{res.volume[4]}}</td>
+      <td>{{res.income[0]}}</td>
+      <td>{{res.income[1]}}</td>
+      <td>{{res.income[2]}}</td>
+      <td>{{res.income[3]}}</td>
+      <td>{{res.income[4]}}</td>
+      <td>{{res.income[5]}}</td>
+      <td>{{res.release[0]}}</td>
+      <td>{{res.release[1]}}</td>
+      <td>{{res.release[2]}}</td>
+      <td>{{res.release[3]}}</td>
+      <td>{{res.release[4]}}</td>
+    </tr>
+    <tr>
+      <td><small>{{difference}}</small></td>
+      <td><small>{{(res.level[1] - res.level[0]) | number: '1.0-2'}}</small></td>
+      <td><small>{{difference}}</small></td>
+      <td><small>{{(res.volume[1] - res.volume[0]) | number: '1.0-2'}}</small></td>
+      <td><small>{{difference}}</small></td>
+      <td><small>{{(res.volume[3] - res.volume[2]) | number: '1.0-2'}}</small></td>
+      <td><small>{{(res.volume[4] - res.volume[3]) | number: '1.0-2'}}</small></td>
+      <td><small>{{difference}}</small></td>
+      <td><small>{{(res.income[1] - res.income[0]) | number: '1.0-2'}}</small></td>
+      <td></td>
+      <td><small>{{difference}}</small></td>
+      <td><small>{{(res.income[4] - res.income[3]) | number: '1.0-2'}}</small></td>
+      <td><small>{{(res.income[5] - res.income[4]) | number: '1.0-2'}}</small></td>
+      <td><small>{{difference}}</small></td>
+      <td><small>{{(res.release[1] - res.release[0]) | number: '1.0-2'}}</small></td>
+      <td><small>{{difference}}</small></td>
+      <td><small>{{(res.release[3] - res.release[2]) | number: '1.0-2'}}</small></td>
+      <td><small>{{(res.release[4] - res.release[3]) | number: '1.0-2'}}</small></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

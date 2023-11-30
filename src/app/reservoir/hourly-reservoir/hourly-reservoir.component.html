@@ -1,0 +1,123 @@
+<div class="w-full px-4">
+  <table>
+    <thead>
+    <tr>
+      <th rowspan="2">Водохранилища</th>
+      <th colspan="2">Погода</th>
+      <th colspan="3">Уровень воды, м</th>
+      <th colspan="3">Объём воды, млн.м<sup>3</sup></th>
+      <th colspan="7">Приток, м<sup>3</sup>/с</th>
+      <th>Попуск, м<sup>3</sup>/с</th>
+    </tr>
+    <tr>
+      <!--        Weather-->
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[1] | date:'HH-mm'}}</p>
+          <small>({{times[1] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[0] | date:'HH-mm'}}</p>
+          <small>({{times[0] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <!--        Level-->
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[1] | date:'HH-mm'}}</p>
+          <small>({{times[1] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[0] | date:'HH-mm'}}</p>
+          <small>({{times[0] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>Разница</th>
+      <!--        Volume-->
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[1] | date:'HH-mm'}}</p>
+          <small>({{times[1] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[0] | date:'HH-mm'}}</p>
+          <small>({{times[0] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>Разница</th>
+      <!--        Income-->
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[5] | date:'HH-mm'}}</p>
+          <small>({{times[5] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[4] | date:'HH-mm'}}</p>
+          <small>({{times[4] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[3] | date:'HH-mm'}}</p>
+          <small>({{times[3] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[2] | date:'HH-mm'}}</p>
+          <small>({{times[2] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[1] | date:'HH-mm'}}</p>
+          <small>({{times[1] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[0] | date:'HH-mm'}}</p>
+          <small>({{times[0] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+      <th>Разница</th>
+      <!--        Release-->
+      <th>
+        <div class="flex flex-col">
+          <p>{{times[0] | date:'HH-mm'}}</p>
+          <small>({{times[0] | date:'dd-MM'}})</small>
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let res of reservoirs">
+    <tr>
+      <td>{{res.name}}</td>
+      <td><small>{{res.weather[1]}}</small></td>
+      <td><small>{{res.weather[0]}}</small></td>
+      <td>{{res.level[1]}}</td>
+      <td>{{res.level[0]}}</td>
+      <td>{{res.level[0] - res.level[1] | number: '.0-2'}}</td>
+      <td>{{res.volume[1]}}</td>
+      <td>{{res.volume[0]}}</td>
+      <td>{{res.volume[0] - res.volume[1] | number: '.0-2'}}</td>
+      <td>{{res.income[5]}}</td>
+      <td>{{res.income[4]}}</td>
+      <td>{{res.income[3]}}</td>
+      <td>{{res.income[2]}}</td>
+      <td>{{res.income[1]}}</td>
+      <td>{{res.income[0]}}</td>
+      <td>{{res.income[0] - res.income[1] | number: '.0-2'}}</td>
+      <td>{{res.release}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

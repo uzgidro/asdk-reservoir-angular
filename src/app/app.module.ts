@@ -27,6 +27,8 @@ import {LoggerComponent} from './logger/component/logger.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ResizableModule} from "angular-resizable-element";
 import {ReservoirComponent} from './reservoir/reservoir.component';
+import {HourlyReservoirComponent} from "./reservoir/hourly-reservoir/hourly-reservoir.component";
+import { DailyReservoirComponent } from './reservoir/daily-reservoir/daily-reservoir.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import {ReservoirComponent} from './reservoir/reservoir.component';
     GesVerticalTableComponent,
     LoggerComponent,
     ReservoirComponent,
+    HourlyReservoirComponent,
+    DailyReservoirComponent
   ],
     imports: [
         BrowserModule,
