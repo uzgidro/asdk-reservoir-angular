@@ -38,7 +38,6 @@ export class RegionComponent implements OnInit {
       })
 
     this.updateTime();
-    setInterval(() => this.updateTime(), 1000 * 60);
 
     this.regionsInfo = {
       reservoirCount: this._regionService.regions.reduce(
@@ -61,8 +60,6 @@ export class RegionComponent implements OnInit {
   }
 
   private updateTime() {
-    this._timeService.getCurrentTime().subscribe((data: any) => {
-      this.currentTime = data.datetime;
-    });
+    this._timeService.getCurrentTime().subscribe((data: any) => this.currentTime = data);
   }
 }
