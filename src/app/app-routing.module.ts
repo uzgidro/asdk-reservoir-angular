@@ -5,15 +5,41 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {RegionComponent} from "./region/region.component";
 import {GesComponent} from "./ges/ges.component";
 import {ReservoirComponent} from "./reservoir/reservoir.component";
+import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
 
 const routes: Routes = [
   {
     path: '', component: MainLayoutComponent, children: [
-      {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+      {path: '', redirectTo: '/region', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
-      {path: 'reservoir', component: ReservoirComponent},
+      {path: 'reservoir', component: ReservoirComponent, children: [
+          {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
+          {path: 'dashboard', component: BlankPageComponent},
+          {path: 'water', children: [
+              {path: '', pathMatch: 'full', redirectTo: 'current'},
+              {path: 'current', component: BlankPageComponent},
+              {path: '10-days', component: BlankPageComponent},
+              {path: 'month', component: BlankPageComponent},
+              {path: 'all-time', component: BlankPageComponent}
+            ]},
+          {path: 'snow', children: [
+              {path: '', pathMatch: 'full', redirectTo: 'current'},
+              {path: 'current', component: BlankPageComponent},
+              {path: 'all-time', component: BlankPageComponent}
+            ]},
+          {path: 'meter', children: [
+              {path: '', pathMatch: 'full', redirectTo: 'hydro-post'},
+              {path: 'hydro-post', component: BlankPageComponent},
+              {path: 'water-meter', component: BlankPageComponent},
+              {path: 'indicator', component: BlankPageComponent},
+              {path: 'journal', component: BlankPageComponent},
+              {path: 'contract', component: BlankPageComponent},
+              {path: 'work-meter-works', component: BlankPageComponent}
+            ]},
+          {path: 'docs', component: BlankPageComponent}
+        ]},
     ]
   }
 ]

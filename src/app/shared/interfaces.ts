@@ -90,3 +90,10 @@ export interface Aggregate {
   reactivePower: number
   status: boolean
 }
+
+export interface MenuItem {
+  name: string
+  path?: string
+  isActive?: boolean
+  children?: MenuItem[]
+}

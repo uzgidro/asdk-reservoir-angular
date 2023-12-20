@@ -29,6 +29,7 @@ import {ResizableModule} from "angular-resizable-element";
 import {ReservoirComponent} from './reservoir/reservoir.component';
 import {HourlyReservoirComponent} from "./reservoir/hourly-reservoir/hourly-reservoir.component";
 import { DailyReservoirComponent } from './reservoir/daily-reservoir/daily-reservoir.component';
+import { BlankPageComponent } from './shared/temp/blank-page/blank-page.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DailyReservoirComponent } from './reservoir/daily-reservoir/daily-reser
     LoggerComponent,
     ReservoirComponent,
     HourlyReservoirComponent,
-    DailyReservoirComponent
+    DailyReservoirComponent,
+    BlankPageComponent
   ],
     imports: [
         BrowserModule,
