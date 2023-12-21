@@ -1,18 +1,22 @@
-<div class="flex flex-row justify-between">
+<div class="relative flex h-full">
 
-  <div class="bg-slate-700 p-4 pt-16 h-full absolute top-0 overflow-y-auto">
+  <div class="bg-slate-700 px-5  left-0 top-0 overflow-y-auto">
     <nav>
       <ul class="text-slate-200 text-lg font-medium">
         <li *ngFor="let item of menuItems">
-          <a [routerLink]="item.path" routerLinkActive="active" (click)="selectItem(item)" [ngClass]="{'parent-active': item.isActive}">{{item.name}}</a>
+          <a [routerLink]="item.path" routerLinkActive="active" (click)="selectItem(item)"
+             [ngClass]="{'parent-active': item.isActive}">{{ item.name }}</a>
           <ul *ngIf="item.children">
             <li class="pl-4" *ngFor="let childItem of item.children">
-              <a [routerLink]="childItem.path" routerLinkActive="active" (click)="selectItem(childItem)">{{ childItem.name }}</a>
+              <a [routerLink]="childItem.path" routerLinkActive="active"
+                 (click)="selectItem(childItem)">{{ childItem.name }}</a>
             </li>
           </ul>
         </li>
       </ul>
     </nav>
   </div>
-  <router-outlet></router-outlet>
+  <div class="flex-1">
+    <router-outlet></router-outlet>
+  </div>
 </div>

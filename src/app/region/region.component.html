@@ -1,5 +1,5 @@
 <ng-container *ngIf="!queryRegion; else region">
-  <div *ngIf="regionsInfo; else loader" class="flex flex-col w-screen h-screen pt-14 -mt-14">
+  <div *ngIf="regionsInfo; else loader" class="flex flex-col w-screen h-full">
 
     <div class="flex max-md:hidden bg-gray-600 p-2 justify-center">
       <div *ngIf="currentTime; else smallLoader" class="text-sm flex max-xl:flex-col max-xl:space-y-2 xl:space-x-2">
@@ -96,10 +96,7 @@
       <!-- /sidebar -->
 
       <div class="flex flex-col items-center mx-auto justify-around">
-        <svg
-          id="svgUzbekistan"
-          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 564"
-          xml:space="preserve">
+        <svg id="svgUzbekistan" viewBox="0 0 860 564">
 
     <g id="layerHarita" transform="translate(106.03125,-324.8125)">
       <a [routerLink]="['/region']"

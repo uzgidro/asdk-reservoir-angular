@@ -1,4 +1,8 @@
-<div class="flex-col flex space-y-7 h-screen">
-  <app-navbar></app-navbar>
-  <router-outlet></router-outlet>
+<div class="flex flex-col h-screen">
+  <div class="fixed top-0 left-0">
+    <app-navbar></app-navbar>
+  </div>
+  <div class="mt-14 flex-1">
+    <router-outlet></router-outlet>
+  </div>
 </div>
