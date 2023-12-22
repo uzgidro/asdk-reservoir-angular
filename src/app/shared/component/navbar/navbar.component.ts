@@ -22,7 +22,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.subscription = this._timeService.getCurrentTimeSecond().subscribe(
       (data: any) => this.currentTime = data
     );
-    this.openLogger()
   }
 
   openLogger() {

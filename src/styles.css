@@ -14,10 +14,10 @@
     @apply table-auto w-full border-collapse text-sm overflow-x-auto
   }
   thead tr:first-child th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 sticky top-14 p-4 first:rounded-tl-3xl last:rounded-tr-3xl
+    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-4 first:rounded-tl-3xl last:rounded-tr-3xl
   }
   thead tr th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 sticky top-14 p-4
+    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-4
   }
   tbody tr {
     @apply text-lg

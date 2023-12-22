@@ -6,6 +6,8 @@ import {RegionComponent} from "./region/region.component";
 import {GesComponent} from "./ges/ges.component";
 import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
+import {HourlyReservoirComponent} from "./reservoir/hourly-reservoir/hourly-reservoir.component";
+import {DailyReservoirComponent} from "./reservoir/daily-reservoir/daily-reservoir.component";
 
 const routes: Routes = [
   {
@@ -19,8 +21,8 @@ const routes: Routes = [
           {path: 'dashboard', component: BlankPageComponent},
           {path: 'water', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
-              {path: 'current', component: BlankPageComponent},
-              {path: '10-days', component: BlankPageComponent},
+              {path: 'current', component: HourlyReservoirComponent},
+              {path: '10-days', component: DailyReservoirComponent},
               {path: 'month', component: BlankPageComponent},
               {path: 'all-time', component: BlankPageComponent}
             ]},
