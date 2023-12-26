@@ -8,6 +8,7 @@ import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
 import {HourlyReservoirComponent} from "./reservoir/hourly-reservoir/hourly-reservoir.component";
 import {DailyReservoirComponent} from "./reservoir/daily-reservoir/daily-reservoir.component";
+import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reservoir-dashboard.component";
 
 const routes: Routes = [
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
       {path: 'ges', component: GesComponent},
       {path: 'reservoir', component: ReservoirComponent, children: [
           {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
-          {path: 'dashboard', component: BlankPageComponent},
+          {path: 'dashboard', component: ReservoirDashboardComponent},
           {path: 'water', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: HourlyReservoirComponent},

@@ -27,8 +27,9 @@
     "@angular/router": "^16.2.0",
     "@nguniversal/express-engine": "^16.2.0",
     "angular-resizable-element": "^7.0.2",
-    "chart.js": "^4.4.0",
+    "chart.js": "^4.4.1",
     "express": "^4.15.2",
+    "ng2-charts": "^5.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
