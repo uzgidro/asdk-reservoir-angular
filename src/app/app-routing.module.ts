@@ -9,6 +9,7 @@ import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component"
 import {HourlyReservoirComponent} from "./reservoir/hourly-reservoir/hourly-reservoir.component";
 import {TenDayReservoirComponent} from "./reservoir/daily-reservoir/ten-day-reservoir.component";
 import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reservoir-dashboard.component";
+import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
             ]},
           {path: 'snow', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
-              {path: 'current', component: BlankPageComponent},
+              {path: 'current', component: ModsnowDailyComponent},
               {path: 'all-time', component: BlankPageComponent}
             ]},
           {path: 'meter', children: [
