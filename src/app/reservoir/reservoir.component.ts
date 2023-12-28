@@ -21,8 +21,7 @@ export class ReservoirComponent {
       children: [
         {name: 'Срочные данные', path: '/reservoir/water/current'},
         {name: '10 дней', path: '/reservoir/water/10-days'},
-        {name: 'Месяц', path: '/reservoir/water/month'},
-        {name: 'За все время', path: '/reservoir/water/all-time'}
+        {name: 'Данные за год', path: '/reservoir/water/year'}
       ]
     },
     {

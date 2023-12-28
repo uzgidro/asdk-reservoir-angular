@@ -24,8 +24,7 @@ const routes: Routes = [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: HourlyReservoirComponent},
               {path: '10-days', component: TenDayReservoirComponent},
-              {path: 'month', component: BlankPageComponent},
-              {path: 'all-time', component: BlankPageComponent}
+              {path: 'year', component: BlankPageComponent}
             ]},
           {path: 'snow', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
