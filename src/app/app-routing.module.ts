@@ -10,6 +10,7 @@ import {HourlyReservoirComponent} from "./reservoir/hourly-reservoir/hourly-rese
 import {TenDayReservoirComponent} from "./reservoir/daily-reservoir/ten-day-reservoir.component";
 import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reservoir-dashboard.component";
 import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
+import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
           {path: 'snow', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ModsnowDailyComponent},
-              {path: 'all-time', component: BlankPageComponent}
+              {path: 'all-time', component: ModsnowYearlyComponent}
             ]},
           {path: 'meter', children: [
               {path: '', pathMatch: 'full', redirectTo: 'hydro-post'},
