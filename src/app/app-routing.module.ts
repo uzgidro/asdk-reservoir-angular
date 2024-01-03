@@ -12,6 +12,7 @@ import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reser
 import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
 import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
+import {HydrometricComponent} from "./reservoir/hydrometric/hydrometric.component";
 
 const routes: Routes = [
   {
@@ -36,7 +37,7 @@ const routes: Routes = [
             ]},
           {path: 'meter', children: [
               {path: '', pathMatch: 'full', redirectTo: 'hydro-post'},
-              {path: 'hydro-post', component: BlankPageComponent},
+              {path: 'hydro-post', component: HydrometricComponent},
               {path: 'water-meter', component: BlankPageComponent},
               {path: 'indicator', component: BlankPageComponent},
               {path: 'journal', component: BlankPageComponent},
