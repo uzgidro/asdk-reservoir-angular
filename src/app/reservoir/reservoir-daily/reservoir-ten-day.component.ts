@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-daily-reservoir',
-  templateUrl: './ten-day-reservoir.component.html',
-  styleUrls: ['./ten-day-reservoir.component.css']
+  selector: 'app-reservoir-daily',
+  templateUrl: './reservoir-ten-day.component.html',
+  styleUrls: ['./reservoir-ten-day.component.css']
 })
-export class TenDayReservoirComponent {
+export class ReservoirTenDayComponent {
 
 
   today = new Date();

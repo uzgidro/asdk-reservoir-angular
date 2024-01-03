@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-hourly-reservoir',
-  templateUrl: './hourly-reservoir.component.html',
-  styleUrls: ['./hourly-reservoir.component.css']
+  selector: 'app-reservoir-hourly',
+  templateUrl: './reservoir-hourly.component.html',
+  styleUrls: ['./reservoir-hourly.component.css']
 })
-export class HourlyReservoirComponent implements OnInit{
+export class ReservoirHourlyComponent implements OnInit{
   times: Date[] = []
   reservoirs = [
     {

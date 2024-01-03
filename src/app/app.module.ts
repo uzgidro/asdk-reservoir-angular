@@ -27,8 +27,8 @@ import {LoggerComponent} from './logger/component/logger.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ResizableModule} from "angular-resizable-element";
 import {ReservoirComponent} from './reservoir/reservoir.component';
-import {HourlyReservoirComponent} from "./reservoir/hourly-reservoir/hourly-reservoir.component";
-import {TenDayReservoirComponent} from './reservoir/daily-reservoir/ten-day-reservoir.component';
+import {ReservoirHourlyComponent} from "./reservoir/reservoir-hourly/reservoir-hourly.component";
+import {ReservoirTenDayComponent} from './reservoir/reservoir-daily/reservoir-ten-day.component';
 import {BlankPageComponent} from './shared/temp/blank-page/blank-page.component';
 import {ReservoirDashboardComponent} from './reservoir/reservoir-dashboard/reservoir-dashboard.component';
 import {NgChartsModule} from "ng2-charts";
@@ -53,8 +53,8 @@ import {NgChartsModule} from "ng2-charts";
     GesVerticalTableComponent,
     LoggerComponent,
     ReservoirComponent,
-    HourlyReservoirComponent,
-    TenDayReservoirComponent,
+    ReservoirHourlyComponent,
+    ReservoirTenDayComponent,
     BlankPageComponent,
     ReservoirDashboardComponent
   ],
