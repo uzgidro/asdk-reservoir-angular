@@ -13,6 +13,7 @@ import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.com
 import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
 import {HydrometricComponent} from "./reservoir/hydrometric/hydrometric.component";
+import {OrdersComponent} from "./reservoir/orders/orders.component";
 
 const routes: Routes = [
   {
@@ -44,7 +45,7 @@ const routes: Routes = [
               {path: 'contract', component: BlankPageComponent},
               {path: 'work-meter-works', component: BlankPageComponent}
             ]},
-          {path: 'docs', component: BlankPageComponent}
+          {path: 'docs', component: OrdersComponent}
         ]},
     ]
   }
