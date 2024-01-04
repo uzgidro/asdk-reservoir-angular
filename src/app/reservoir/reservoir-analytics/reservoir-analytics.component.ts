@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, registerables} from "chart.js";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
 import {DecimalPipe, NgForOf} from "@angular/common";
+import {CalendarModule} from "primeng/calendar";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-reservoir-analytics',
@@ -9,7 +11,9 @@ import {DecimalPipe, NgForOf} from "@angular/common";
   imports: [
     NgChartsModule,
     NgForOf,
-    DecimalPipe
+    DecimalPipe,
+    CalendarModule,
+    FormsModule
   ],
   templateUrl: './reservoir-analytics.component.html',
   styleUrl: './reservoir-analytics.component.css'
@@ -56,8 +60,10 @@ export class ReservoirAnalyticsComponent implements OnInit {
   private readonly pastYearCoefficient = [1.4,1.5,8.1,18.3,23.3,18.8,13.4,5.2,3.3,2.1,3.1,1.6]
 
   filteredYears: { year: number, value: number }[] = []
-  startYear = 1993
-  endYear = 2023
+  startYear = new Date(1993, 0)
+  minDate = new Date(1993, 0)
+  endYear = new Date(2023, 0)
+  maxDate = new Date(2023, 0)
   pastYear?: YearValue
   avgValue?: number
   minValue?: YearValue
@@ -101,25 +107,28 @@ export class ReservoirAnalyticsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filteredYears = this.filter()
+    this.configureData()
+    this.getPastYearByMonth()
+    this.pastYear = this.years[this.years.length-1]
+    this.setupChart()
+  }
+
+  dateChange() {
+    this.configureData()
+    this.setupChart()
+  }
+  private configureData() {
+    this.filter()
     this.getAvg()
     this.getMax()
     this.getMin()
     this.getAvgByMonth()
     this.getMinByMonth()
     this.getMaxByMonth()
-    this.getPastYearByMonth()
-    this.pastYear = this.years[this.years.length-1]
-    this.setupChart()
-    console.log(this.minValue)
-    console.log(this.maxValue)
   }
 
-  private filter(start?: number, end?: number) {
-    if (!start || !end) {
-      return this.years
-    }
-    return this.years.filter(item => item.year >= start && item.year <= end)
+  private filter() {
+    this.filteredYears = this.years.filter(item => item.year >= this.startYear.getFullYear() && item.year <= this.endYear.getFullYear())
   }
 
   private getAvg() {
@@ -179,7 +188,7 @@ export class ReservoirAnalyticsComponent implements OnInit {
         },
         {
           data: this.avgByMonth,
-          label: `Среднее за года (${this.startYear} - ${this.endYear})`,
+          label: `Среднее за года (${this.startYear.getFullYear()} - ${this.endYear.getFullYear()})`,
           backgroundColor: 'rgba(37, 99, 235,0.2)',
           borderColor: 'rgba(37, 99, 235,1)',
           pointBackgroundColor: 'rgba(37, 99, 235,1)',
