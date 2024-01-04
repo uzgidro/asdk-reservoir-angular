@@ -1,14 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, registerables} from "chart.js";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
-import {NgForOf} from "@angular/common";
+import {DecimalPipe, NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-reservoir-analytics',
   standalone: true,
   imports: [
     NgChartsModule,
-    NgForOf
+    NgForOf,
+    DecimalPipe
   ],
   templateUrl: './reservoir-analytics.component.html',
   styleUrl: './reservoir-analytics.component.css'
@@ -57,6 +58,7 @@ export class ReservoirAnalyticsComponent implements OnInit {
   filteredYears: { year: number, value: number }[] = []
   startYear = 1993
   endYear = 2023
+  pastYear?: YearValue
   avgValue?: number
   minValue?: YearValue
   maxValue?: YearValue
@@ -107,6 +109,7 @@ export class ReservoirAnalyticsComponent implements OnInit {
     this.getMinByMonth()
     this.getMaxByMonth()
     this.getPastYearByMonth()
+    this.pastYear = this.years[this.years.length-1]
     this.setupChart()
     console.log(this.minValue)
     console.log(this.maxValue)

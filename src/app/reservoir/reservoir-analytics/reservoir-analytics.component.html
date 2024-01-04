@@ -1,9 +1,82 @@
-<div class="w-full h-full">
+<div class="w-full flex px-8 pb-8 justify-between">
+  <div class="flex flex-col">
     <canvas
-            baseChart
-            class="p-10"
-            [data]="lineChartData"
-            [options]="lineChartOptions"
-            [type]="'line'"
+      baseChart
+      class="p-10"
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [type]="'line'"
     ></canvas>
+    <table>
+      <thead>
+      <tr>
+        <th rowspan="2">Года</th>
+        <th colspan="12">Месяца, млн. м3</th>
+        <th rowspan="2">Средний приток, м3/с</th>
+        <th rowspan="2">Годовой приток, млн. м3</th>
+        <th rowspan="2">В отношении среднего показателя, %</th>
+      </tr>
+      <tr>
+        <th>Янв.</th>
+        <th>Фев.</th>
+        <th>Март</th>
+        <th>Апр.</th>
+        <th>Май</th>
+        <th>Июнь</th>
+        <th>Июль</th>
+        <th>Авг.</th>
+        <th>Сент.</th>
+        <th>Окт.</th>
+        <th>Ноя.</th>
+        <th>Дек.</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="text-blue-600">
+        <td>Среднее за года {{ this.startYear }} - {{ this.endYear }}</td>
+        <td *ngFor="let val of avgByMonth">{{val | number: '.0-0'}}</td>
+        <td>{{(avgValue!! * 0.031) | number: '.0-0'}}</td>
+        <td>{{avgValue | number: '.0-0'}}</td>
+        <td>100</td>
+      </tr>
+      <tr class="text-amber-600">
+        <td>Максимальное значение {{ this.maxValue?.year }}</td>
+        <td *ngFor="let val of maxByMonth">{{val | number: '.0-0'}}</td>
+        <td>{{(maxValue?.value!! * 0.031) | number: '.0-0'}}</td>
+        <td>{{maxValue?.value | number: '.0-0'}}</td>
+        <td>{{(maxValue?.value!! * 100 / avgValue!!) | number: '.0-0'}}</td>
+      </tr>
+      <tr class="text-green-600">
+        <td>Минимальное значение {{ this.minValue?.year }}</td>
+        <td *ngFor="let val of minByMonth">{{val | number: '.0-0'}}</td>
+        <td>{{(minValue?.value!! * 0.031) | number: '.0-0'}}</td>
+        <td>{{minValue?.value | number: '.0-0'}}</td>
+        <td>{{(minValue?.value!! * 100 / avgValue!!) | number: '.0-0'}}</td>
+      </tr>
+      <tr class="text-rose-600">
+        <td>Значение за прошлый {{ this.pastYear?.year }}</td>
+        <td *ngFor="let val of pastYearByMonth">{{val | number: '.0-0'}}</td>
+        <td>{{(pastYear?.value!! * 0.031) | number: '.0-0'}}</td>
+        <td>{{pastYear?.value | number: '.0-0'}}</td>
+        <td>{{(pastYear?.value!! * 100 / avgValue!!) | number: '.0-0'}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pt-8">
+    <table>
+      <thead>
+      <tr>
+        <th>Год</th>
+        <th>Приток воды, млн. м3</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of filteredYears">
+        <td>{{item.year}}</td>
+        <td>{{item.value}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
