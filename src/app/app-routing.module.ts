@@ -14,6 +14,7 @@ import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
 import {HydrometricComponent} from "./reservoir/hydrometric/hydrometric.component";
 import {OrdersComponent} from "./reservoir/orders/orders.component";
+import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
 
 const routes: Routes = [
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ReservoirHourlyComponent},
               {path: '10-days', component: ReservoirTenDayComponent},
-              {path: 'year', component: ReservoirYearlyComponent}
+              {path: 'year', component: ReservoirYearlyComponent},
+              {path: 'analytics', component: ReservoirAnalyticsComponent}
             ]},
           {path: 'snow', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
