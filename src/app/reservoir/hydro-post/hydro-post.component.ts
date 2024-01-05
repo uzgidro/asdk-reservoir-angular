@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import {NgForOf} from "@angular/common";
 
 @Component({
-  selector: 'app-hydrometric',
+  selector: 'app-hydro-post',
   standalone: true,
     imports: [
         NgForOf
     ],
-  templateUrl: './hydrometric.component.html',
-  styleUrl: './hydrometric.component.css'
+  templateUrl: './hydro-post.component.html',
+  styleUrl: './hydro-post.component.css'
 })
-export class HydrometricComponent {
+export class HydroPostComponent {
 
 }

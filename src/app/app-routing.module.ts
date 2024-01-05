@@ -12,9 +12,10 @@ import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reser
 import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
 import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
-import {HydrometricComponent} from "./reservoir/hydrometric/hydrometric.component";
+import {HydroPostComponent} from "./reservoir/hydro-post/hydro-post.component";
 import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
+import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
 
 const routes: Routes = [
   {
@@ -38,14 +39,14 @@ const routes: Routes = [
               {path: 'current', component: ModsnowDailyComponent},
               {path: 'all-time', component: ModsnowYearlyComponent}
             ]},
-          {path: 'meter', children: [
+          {path: 'hydro', children: [
               {path: '', pathMatch: 'full', redirectTo: 'hydro-post'},
-              {path: 'hydro-post', component: HydrometricComponent},
-              {path: 'water-meter', component: BlankPageComponent},
+              {path: 'posts', component: HydroPostComponent},
+              {path: 'meter', component: HydroMeterComponent},
               {path: 'indicator', component: BlankPageComponent},
               {path: 'journal', component: BlankPageComponent},
               {path: 'contract', component: BlankPageComponent},
-              {path: 'work-meter-works', component: BlankPageComponent}
+              {path: 'works', component: BlankPageComponent}
             ]},
           {path: 'docs', component: OrdersComponent}
         ]},

@@ -7,8 +7,6 @@ import {MenuItem} from "../shared/interfaces";
   styleUrls: ['./reservoir.component.css']
 })
 export class ReservoirComponent {
-  readonly HOURLY_CATEGORY = 1;
-  readonly DAILY_CATEGORY = 2;
 
   menuItems: MenuItem[] = [
     {
@@ -37,12 +35,12 @@ export class ReservoirComponent {
       name: 'Гидрометрия',
       isActive: false,
       children: [
-        {name: 'Гидропосты', path: '/reservoir/meter/hydro-post'},
-        {name: 'Водоизмерители', path: '/reservoir/meter/water-meter'},
-        {name: 'Датчики воды', path: '/reservoir/meter/indicator'},
-        {name: 'Журнал и документы', path: '/reservoir/meter/journal'},
-        {name: 'Контракты', path: '/reservoir/meter/contract'},
-        {name: 'Водомерные работы', path: '/reservoir/meter/work-meter-works'}
+        {name: 'Гидропосты', path: '/reservoir/hydro/posts'},
+        {name: 'Водоизмерители', path: '/reservoir/hydro/meter'},
+        {name: 'Датчики воды', path: '/reservoir/hydro/indicator'},
+        {name: 'Журнал и документы', path: '/reservoir/hydro/journal'},
+        {name: 'Контракты', path: '/reservoir/hydro/contract'},
+        {name: 'Водомерные работы', path: '/reservoir/hydro/works'}
       ]
     },
     {
@@ -50,12 +48,6 @@ export class ReservoirComponent {
       path: '/reservoir/docs',
     }
   ];
-
-  selectedCategory: number = this.HOURLY_CATEGORY
-
-  changeCategory(category: number) {
-    this.selectedCategory = category
-  }
 
   selectItem(item: MenuItem): void {
     this.resetActivity(this.menuItems);
