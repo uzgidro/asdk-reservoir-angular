@@ -32,6 +32,8 @@ import {ReservoirTenDayComponent} from './reservoir/reservoir-daily/reservoir-te
 import {BlankPageComponent} from './shared/temp/blank-page/blank-page.component';
 import {ReservoirDashboardComponent} from './reservoir/reservoir-dashboard/reservoir-dashboard.component';
 import {NgChartsModule} from "ng2-charts";
+import {CalendarModule} from "primeng/calendar";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import {NgChartsModule} from "ng2-charts";
     BrowserAnimationsModule,
     MatTooltipModule,
     ResizableModule,
-    NgChartsModule
+    NgChartsModule,
+    CalendarModule,
+    FormsModule
   ],
   exports: [HttpClientModule],
   providers: [],

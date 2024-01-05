@@ -16,6 +16,7 @@ import {HydroPostComponent} from "./reservoir/hydro-post/hydro-post.component";
 import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
 import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
+import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
 
 const routes: Routes = [
   {
@@ -43,7 +44,7 @@ const routes: Routes = [
               {path: '', pathMatch: 'full', redirectTo: 'hydro-post'},
               {path: 'posts', component: HydroPostComponent},
               {path: 'meter', component: HydroMeterComponent},
-              {path: 'indicator', component: BlankPageComponent},
+              {path: 'indicator', component: HydroIndicatorComponent},
               {path: 'journal', component: BlankPageComponent},
               {path: 'contract', component: BlankPageComponent},
               {path: 'works', component: BlankPageComponent}

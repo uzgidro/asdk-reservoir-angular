@@ -1,13 +1,22 @@
-<p-carousel [value]="reservoirs" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
-  <ng-template let-reservoir pTemplate="item">
-    <div class="mx-4 h-full ">
-      <h2 class="text-2xl font-medium text-center my-6">{{ reservoir.name }}</h2>
-      <div class="w-full ">
-        <img class="m-auto" ngSrc="assets/img/modsnow-daily.jpg" width="678" height="906" alt="Modsnow">
+<div class="flex flex-col justify-center">
+
+  <div class="flex w-fit mx-auto p-4 rounded ring-2 ring-slate-300 space-x-5 mt-8 text-lg font-medium bg-white">
+    <p-calendar [(ngModel)]="selectedDate" class="ring-transparent" [maxDate]="maxDate"
+                dateFormat="dd/mm/yy"></p-calendar>
+  </div>
+
+  <p-carousel [value]="reservoirs" [numVisible]="3" [numScroll]="3" [circular]="true"
+              [responsiveOptions]="responsiveOptions">
+    <ng-template let-reservoir pTemplate="item">
+      <div class="mx-4 h-full ">
+        <h2 class="text-2xl font-medium text-center my-6">{{ reservoir.name }}</h2>
+        <div class="w-full ">
+          <img class="m-auto" ngSrc="assets/img/modsnow-daily.jpg" width="678" height="906" alt="Modsnow">
+        </div>
       </div>
-    </div>
-  </ng-template>
-</p-carousel>
+    </ng-template>
+  </p-carousel>
+</div>
 
 <!--<div class="flex flex-col space-y-4">-->
 <!--  <button class="w-fit px-4 py-2 bg-slate-500 text-white rounded-xl"-->

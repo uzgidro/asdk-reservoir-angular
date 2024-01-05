@@ -1,4 +1,10 @@
-<div class="w-full px-4 mt-6">
+<div class="w-full px-4 mt-6 flex flex-col">
+
+  <div class="flex w-fit mx-auto p-4 rounded ring-2 ring-slate-300 space-x-5 my-4 text-lg font-medium bg-white">
+    <p-calendar [(ngModel)]="selectedDate" view="year" class="ring-transparent" [maxDate]="maxDate"
+                dateFormat="yy"></p-calendar>
+  </div>
+
   <table>
     <thead>
     <tr>

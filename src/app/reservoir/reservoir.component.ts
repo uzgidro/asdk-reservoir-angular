@@ -37,7 +37,7 @@ export class ReservoirComponent {
       children: [
         {name: 'Гидропосты', path: '/reservoir/hydro/posts'},
         {name: 'Водоизмерители', path: '/reservoir/hydro/meter'},
-        {name: 'Датчики воды', path: '/reservoir/hydro/indicator'},
+        {name: 'Рейки', path: '/reservoir/hydro/indicator'},
         {name: 'Журнал и документы', path: '/reservoir/hydro/journal'},
         {name: 'Контракты', path: '/reservoir/hydro/contract'},
         {name: 'Водомерные работы', path: '/reservoir/hydro/works'}

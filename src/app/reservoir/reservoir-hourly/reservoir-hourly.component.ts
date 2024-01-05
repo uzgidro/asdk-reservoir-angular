@@ -6,6 +6,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./reservoir-hourly.component.css']
 })
 export class ReservoirHourlyComponent implements OnInit{
+  maxDate = new Date()
+  selectedDate = new Date()
   times: Date[] = []
   reservoirs = [
     {

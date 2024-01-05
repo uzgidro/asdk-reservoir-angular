@@ -1,4 +1,10 @@
-<div class="w-full px-4 mt-6">
+<div class="w-full px-4 flex flex-col">
+
+  <div class="flex w-fit mx-auto p-4 rounded ring-2 ring-slate-300 space-x-5 my-8 text-lg font-medium bg-white">
+    <p-calendar [(ngModel)]="selectedDate" class="ring-transparent" [maxDate]="maxDate"
+                dateFormat="dd/mm/yy"></p-calendar>
+  </div>
+
   <table>
     <thead>
     <tr>
@@ -14,13 +20,13 @@
       <th>
         <div class="flex flex-col">
           <p>{{times[0] | date:'HH:mm'}}</p>
-          <small>({{times[0] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>
         <div class="flex flex-col">
           <p>{{times[1] | date:'HH:mm'}}</p>
-          <small>({{times[1] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>Разница</th>
@@ -28,13 +34,13 @@
       <th>
         <div class="flex flex-col">
           <p>{{times[0] | date:'HH:mm'}}</p>
-          <small>({{times[0] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>
         <div class="flex flex-col">
           <p>{{times[1] | date:'HH:mm'}}</p>
-          <small>({{times[1] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>Разница</th>
@@ -42,25 +48,25 @@
       <th>
         <div class="flex flex-col">
           <p>{{times[0] | date:'HH:mm'}}</p>
-          <small>({{times[0] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>
         <div class="flex flex-col">
           <p>{{times[1] | date:'HH:mm'}}</p>
-          <small>({{times[1] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>
         <div class="flex flex-col">
           <p>{{times[2] | date:'HH:mm'}}</p>
-          <small>({{times[2] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>
         <div class="flex flex-col">
           <p>{{times[3] | date:'HH:mm'}}</p>
-          <small>({{times[3] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <th>Разница</th>
@@ -68,7 +74,7 @@
       <th>
         <div class="flex flex-col">
           <p>{{times[0] | date:'HH:mm'}}</p>
-          <small>({{times[0] | date:'dd-MM'}})</small>
+          <small>({{selectedDate | date:'dd-MM'}})</small>
         </div>
       </th>
       <!--        Weather-->
