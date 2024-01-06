@@ -1,0 +1,15 @@
+.active {
+  @apply bg-slate-500 text-white
+}
+
+.parent-active {
+  @apply bg-gray-500 text-white
+}
+
+li {
+  @apply w-full
+}
+
+a {
+  @apply flex w-full my-2.5 rounded hover:bg-slate-400 p-2 active:bg-slate-300
+}

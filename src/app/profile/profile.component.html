@@ -1,0 +1,28 @@
+<div class="flex flex-col h-screen w-screen">
+
+    <div class="w-full flex flex-row p-2 bg-gray-800 items-center">
+      <button (click)="toggleMenu()"><img class="w-8 h-8 mr-6" src="assets/icons/burger.svg" alt=""></button>
+      <h2 class="text-sm font-bold text-gray-200">ASDK</h2>
+    </div>
+  <div class="flex-1 flex flex-row overflow-y-auto">
+  <div class="bg-slate-700 h-full px-5 left-0 top-0 overflow-y-auto" [hidden]="hidden">
+    <nav>
+      <ul class="text-slate-200 text-lg font-medium">
+        <li *ngFor="let item of menuItems">
+          <a [routerLink]="item.path" routerLinkActive="active" (click)="selectItem(item)"
+             [ngClass]="{'parent-active': item.isActive}">{{ item.name }}</a>
+          <ul *ngIf="item.children">
+            <li class="pl-4" *ngFor="let childItem of item.children">
+              <a [routerLink]="childItem.path" routerLinkActive="active"
+                 (click)="selectItem(childItem)">{{ childItem.name }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
