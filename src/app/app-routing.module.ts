@@ -17,6 +17,7 @@ import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
 import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
 import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
+import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [
   {
@@ -52,6 +53,9 @@ const routes: Routes = [
           {path: 'docs', component: OrdersComponent}
         ]},
     ]
+  },
+  {
+    path: 'login', component: LoginComponent
   }
 ]
 

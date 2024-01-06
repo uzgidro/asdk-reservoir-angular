@@ -34,6 +34,8 @@ import {ReservoirDashboardComponent} from './reservoir/reservoir-dashboard/reser
 import {NgChartsModule} from "ng2-charts";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
+import {MessageService} from "primeng/api";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -70,10 +72,11 @@ import {FormsModule} from "@angular/forms";
     ResizableModule,
     NgChartsModule,
     CalendarModule,
-    FormsModule
+    FormsModule,
+    ToastModule
   ],
   exports: [HttpClientModule],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
