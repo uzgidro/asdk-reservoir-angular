@@ -1,8 +1,8 @@
 <nav class="h-14 w-screen">
   <div class="flex flex-row w-full items-center p-1 overflow-hidden text-gray-200 bg-gray-800 justify-between">
-    <div class="flex flex-row space-x-5 items-center">
+    <div class="flex flex-row items-center">
       <a class="m-3" routerLink="/dashboard">
-        <span class="ml-2 text-sm font-bold">ASDK</span>
+        <span class="text-sm font-bold">ASDK</span>
       </a>
       <p>{{currentTime | date: 'HH:mm:ss, dd.MM.yyyy'}}</p>
     </div>
@@ -37,7 +37,7 @@
         <span class="ml-2 text-sm font-medium">Лог</span>
       </button>
       <div class="border border-gray-400 my-1"></div>
-      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/profile"
+      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/admin"
          routerLinkActive="active">
         <img class="w-8 h-8" src="assets/icons/profile.svg" alt="">
       </a>

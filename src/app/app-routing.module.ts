@@ -18,7 +18,6 @@ import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reser
 import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
 import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
 import {LoginComponent} from "./login/login.component";
-import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {
@@ -59,7 +58,8 @@ const routes: Routes = [
     path: 'login', component: LoginComponent
   },
   {
-    path: 'profile', component: ProfileComponent
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   }
 ]
 

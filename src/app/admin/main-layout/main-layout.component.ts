@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {MenuItem} from "../../shared/interfaces";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
-import {MenuItem} from "../shared/interfaces";
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-main-layout',
   standalone: true,
   imports: [
     NgForOf,
-    NgIf,
+    RouterLink,
+    NgClass,
     RouterLinkActive,
     RouterOutlet,
-    RouterLink,
-    NgClass
+    NgIf
   ],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  templateUrl: './main-layout.component.html',
+  styleUrl: './main-layout.component.css'
 })
-export class ProfileComponent {
+export class MainLayoutComponent {
   hidden = false
 
   toggleMenu() {
@@ -26,12 +26,8 @@ export class ProfileComponent {
 
   menuItems: MenuItem[] = [
     {
-      name: 'Главная',
-      path: '/profile',
-    },
-    {
       name: 'Заснеженность',
-      path: '/profile/modsnow'
+      path: '/admin/modsnow'
     },
     {
       name: 'Выйти',
