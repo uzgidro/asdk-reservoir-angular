@@ -2,12 +2,12 @@
   <h2 class="text-3xl uppercase">Modsnow</h2>
 
   <div class="rounded-lg bg-white ring-2 ring-gray-600">
-    <div class="flex flex-row p-4 border-b-2 border-b-gray-400 justify-between">
+    <div class="flex flex-row p-4 border-b-2 border-b-gray-400 justify-between items-center">
       <div>
         <p class="font-semibold mb-1">Дата</p>
-      <p-calendar [(ngModel)]="date" [maxDate]="today" [iconDisplay]="'input'" [showIcon]="true" class="ring-2 ring-offset-2 ring-gray-500 rounded"></p-calendar>
+      <p-calendar [(ngModel)]="date" dateFormat="dd.mm.yy" [maxDate]="today" [iconDisplay]="'input'" [showIcon]="true" class="ring-2 ring-offset-2 ring-gray-500 rounded"></p-calendar>
       </div>
-      <button class=" text-white p-2 bg-green-500 rounded-lg" type="submit" (click)="submitModsnow()" >Сохранить</button>
+      <button class="material-button success-button" type="submit" (click)="submitModsnow()"><i class="pi pi-check"></i> Сохранить</button>
     </div>
     <div class="p-4 flex flex-col space-y-4">
         <div class="flex xl:flex-row max-xl:flex-col max-xl:space-y-2">

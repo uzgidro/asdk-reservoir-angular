@@ -1,0 +1,196 @@
+<div class="flex-1 flex flex-col space-y-8 p-8">
+  <h2 class="text-3xl uppercase">Срочные данные</h2>
+
+  <div class="rounded-lg bg-white ring-2 ring-gray-600">
+    <div class="flex flex-row p-4 border-b-2 border-b-gray-400 justify-between items-center">
+      <div>
+        <p class="font-semibold mb-1">Дата</p>
+        <p-calendar [(ngModel)]="selectedDate" dateFormat="dd.mm.yy" [maxDate]="today" [iconDisplay]="'input'"
+                    [showIcon]="true" class="ring-2 ring-offset-2 ring-gray-500 rounded"></p-calendar>
+      </div>
+      <button class="material-button success-button" type="submit" (click)="show()"><i class="pi pi-check"></i> Обновить все записи</button>
+    </div>
+    <div class="p-4">
+      <div class="overflow-x-auto relative">
+        <table>
+          <thead>
+          <tr>
+            <th rowspan="2">Водохраилище</th>
+            <th colspan="10">Погода</th>
+          </tr>
+          <tr>
+            <th>
+              <div class="flex flex-col"><p>06:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>08:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>10:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>12:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>14:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>16:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>18:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>20:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>22:00</p>
+                <p>({{ today | date: 'dd-MM' }})</p></div>
+            </th>
+            <th>
+              <div class="flex flex-col"><p>00:00</p>
+                <p>({{ tomorrow | date: 'dd-MM' }})</p></div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Андижан</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+          </tr>
+          <tr>
+            <td>Ахангаран</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+          </tr>
+          <tr>
+            <td>Сардоба</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+          </tr>
+          <tr>
+            <td>Гисарак</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+          </tr>
+          <tr>
+            <td>Тупаланг</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+          </tr>
+          <tr>
+            <td>Чарвак</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+            <td>Ясно</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="material-button primary-button mt-4" (click)="show()">
+        <i class="pi pi-plus"></i>
+        Добавить
+      </button>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="visible" [modal]="true" [resizable]="true" [draggable]="false">
+  <ng-template pTemplate="header">
+    <h3 class="font-medium text-lg">Создать новую запись</h3>
+  </ng-template>
+  <div class="flex flex-col px-4">
+    <h4>Погода</h4>
+    <div class="grid grid-cols-6 max-2xl:grid-cols-3 max-md:grid-cols-1 gap-5">
+      <div class="flex flex-col">
+        <label for="weatherAnd">weatherAnd</label>
+        <p-dropdown class="ring-2 rounded w-fit" appendTo="body" [(ngModel)]="selectedMenu[0]" [options]="weathers"
+                    placeholder="Выберите погоду" [showClear]="true" id="weatherAnd"></p-dropdown>
+      </div>
+      <div class="flex flex-col">
+        <label for="weatherAkh">weatherAnd</label>
+        <p-dropdown class="ring-2 rounded w-fit" appendTo="body" [(ngModel)]="selectedMenu[1]" [options]="weathers"
+                    placeholder="Выберите погоду" [showClear]="true" id="weatherAkh"></p-dropdown>
+      </div>
+      <div class="flex flex-col">
+        <label for="weatherSar">weatherAnd</label>
+        <p-dropdown class="ring-2 rounded w-fit" appendTo="body" [(ngModel)]="selectedMenu[2]" [options]="weathers"
+                    placeholder="Выберите погоду" [showClear]="true" id="weatherSar"></p-dropdown>
+      </div>
+      <div class="flex flex-col">
+        <label for="weatherHis">weatherAnd</label>
+        <p-dropdown class="ring-2 rounded w-fit" appendTo="body" [(ngModel)]="selectedMenu[3]" [options]="weathers"
+                    placeholder="Выберите погоду" [showClear]="true" id="weatherHis"></p-dropdown>
+      </div>
+      <div class="flex flex-col">
+        <label for="weatherTup">weatherAnd</label>
+        <p-dropdown class="ring-2 rounded w-fit" appendTo="body" [(ngModel)]="selectedMenu[4]" [options]="weathers"
+                    placeholder="Выберите погоду" [showClear]="true" id="weatherTup"></p-dropdown>
+      </div>
+      <div class="flex flex-col">
+        <label for="weatherChor">weatherAnd</label>
+        <p-dropdown class="ring-2 rounded w-fit" appendTo="body" [(ngModel)]="selectedMenu[5]" [options]="weathers"
+                    placeholder="Выберите погоду" [showClear]="true" id="weatherChor"></p-dropdown>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button class="material-button info-button" (click)="hide()"><i class="pi pi-check"></i> Сохранить</button>
+  </ng-template>
+</p-dialog>

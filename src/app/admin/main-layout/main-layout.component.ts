@@ -30,6 +30,10 @@ export class MainLayoutComponent {
       path: '/admin/modsnow'
     },
     {
+      name: 'Срочные данные',
+      path: '/admin/water/current'
+    },
+    {
       name: 'Выйти',
       path: '/region'
     }
