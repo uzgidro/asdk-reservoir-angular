@@ -5,15 +5,15 @@ import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-modsnow',
+  templateUrl: './admin-modsnow.component.html',
   standalone: true,
   imports: [
     CalendarModule,
     FormsModule
   ],
-  templateUrl: './modsnow.component.html',
-  styleUrl: './modsnow.component.css'
+  styleUrl: './admin-modsnow.component.css'
 })
-export class ModsnowComponent {
+export class AdminModsnowComponent {
   date = new Date()
   readonly today = new Date()
   files: Record<string, File> = {}

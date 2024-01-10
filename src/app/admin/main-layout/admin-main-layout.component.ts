@@ -1,23 +1,24 @@
 import {Component} from '@angular/core';
 import {MenuItem} from "../../shared/interfaces";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-main-layout',
+  templateUrl: './admin-main-layout.component.html',
   standalone: true,
   imports: [
+    NgOptimizedImage,
     NgForOf,
     RouterLink,
     NgClass,
+    NgIf,
     RouterLinkActive,
-    RouterOutlet,
-    NgIf
+    RouterOutlet
   ],
-  templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.css'
+  styleUrl: './admin-main-layout.component.css'
 })
-export class MainLayoutComponent {
+export class AdminMainLayoutComponent {
   hidden = false
 
   toggleMenu() {
@@ -32,6 +33,10 @@ export class MainLayoutComponent {
     {
       name: 'Срочные данные',
       path: '/admin/water/current'
+    },
+    {
+      name: 'Измерительные работы',
+      path: '/admin/hydro/works'
     },
     {
       name: 'Выйти',

@@ -17,10 +17,10 @@ import {DropdownModule} from "primeng/dropdown";
     DropdownModule,
     NgIf
   ],
-  templateUrl: './water-current.component.html',
-  styleUrl: './water-current.component.css'
+  templateUrl: './admin-water-current.component.html',
+  styleUrl: './admin-water-current.component.css'
 })
-export class WaterCurrentComponent {
+export class AdminWaterCurrentComponent {
   today = new Date()
   selectedDate = this.today
   tomorrow = new Date(this.today.getDate() + 1)

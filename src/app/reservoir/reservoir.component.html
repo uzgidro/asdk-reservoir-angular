@@ -4,9 +4,9 @@
     <nav>
       <ul class="text-slate-200 text-lg font-medium">
         <li *ngFor="let item of menuItems">
-          <a [routerLink]="item.path" routerLinkActive="active" (click)="selectItem(item)"
-             [ngClass]="{'parent-active': item.isActive}">{{ item.name }}</a>
-          <ul *ngIf="item.children">
+          <a class="items-center flex flex-row justify-between" [routerLink]="item.path" routerLinkActive="active" (click)="selectItem(item)"
+             [ngClass]="{'parent-active': item.isActive}">{{ item.name }} <i *ngIf="!item.path" class="pi" [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i></a>
+          <ul *ngIf="item.children && item.isOpen" [@DropDownMenu]>
             <li class="pl-4" *ngFor="let childItem of item.children">
               <a [routerLink]="childItem.path" routerLinkActive="active"
                  (click)="selectItem(childItem)">{{ childItem.name }}</a>

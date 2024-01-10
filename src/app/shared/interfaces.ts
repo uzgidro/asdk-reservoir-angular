@@ -95,5 +95,6 @@ export interface MenuItem {
   name: string
   path?: string
   isActive?: boolean
+  isOpen?: boolean
   children?: MenuItem[]
 }

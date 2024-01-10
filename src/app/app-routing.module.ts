@@ -18,6 +18,7 @@ import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reser
 import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
 import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
 import {LoginComponent} from "./login/login.component";
+import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
 
 const routes: Routes = [
   {
@@ -48,7 +49,7 @@ const routes: Routes = [
               {path: 'indicator', component: HydroIndicatorComponent},
               {path: 'journal', component: BlankPageComponent},
               {path: 'contract', component: BlankPageComponent},
-              {path: 'works', component: BlankPageComponent}
+              {path: 'works', component: HydroWorksComponent}
             ]},
           {path: 'docs', component: OrdersComponent}
         ]},

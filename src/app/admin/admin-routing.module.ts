@@ -1,14 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MainLayoutComponent} from "./main-layout/main-layout.component";
-import {ModsnowComponent} from "./modsnow/modsnow.component";
-import {WaterCurrentComponent} from "./water-current/water-current.component";
+import {AdminMainLayoutComponent} from "./main-layout/admin-main-layout.component";
+import {AdminModsnowComponent} from "./modsnow/admin-modsnow.component";
+import {AdminWaterCurrentComponent} from "./water-current/admin-water-current.component";
+import {AdminHydroWorksComponent} from "./admin-hydro-works/admin-hydro-works.component";
 
 const routes: Routes = [{
-  path: '', component: MainLayoutComponent, children: [
+  path: '', component: AdminMainLayoutComponent, children: [
     {path: '', redirectTo: 'modsnow', pathMatch: "full"},
-    {path: 'water/current', component: WaterCurrentComponent},
-    {path: 'modsnow', component: ModsnowComponent}
+    {path: 'water/current', component: AdminWaterCurrentComponent},
+    {path: 'modsnow', component: AdminModsnowComponent},
+    {path: 'hydro/works', component: AdminHydroWorksComponent}
   ]
 }];
 

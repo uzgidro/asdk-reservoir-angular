@@ -36,6 +36,7 @@ import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
+import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {ToastModule} from "primeng/toast";
     ReservoirHourlyComponent,
     ReservoirTenDayComponent,
     BlankPageComponent,
-    ReservoirDashboardComponent
+    ReservoirDashboardComponent,
+    HydroWorksComponent
   ],
   imports: [
     BrowserModule,

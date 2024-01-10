@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
 import {MenuItem} from "../shared/interfaces";
+import {DropDownAnimation} from "../shared/animation/menu-animation";
 
 @Component({
   selector: 'app-reservoir',
   templateUrl: './reservoir.component.html',
-  styleUrls: ['./reservoir.component.css']
+  styleUrls: ['./reservoir.component.css'],
+  animations: [DropDownAnimation]
 })
 export class ReservoirComponent {
 
@@ -16,6 +18,7 @@ export class ReservoirComponent {
     {
       name: 'Вода',
       isActive: false,
+      isOpen: false,
       children: [
         {name: 'Срочные данные', path: '/reservoir/water/current'},
         {name: '10 дней', path: '/reservoir/water/10-days'},
@@ -26,6 +29,7 @@ export class ReservoirComponent {
     {
       name: 'Заснеженность',
       isActive: false,
+      isOpen: false,
       children: [
         {name: 'Срочные данные', path: '/reservoir/snow/current'},
         {name: 'За все время', path: '/reservoir/snow/all-time'}
@@ -34,6 +38,7 @@ export class ReservoirComponent {
     {
       name: 'Гидрометрия',
       isActive: false,
+      isOpen: false,
       children: [
         {name: 'Гидропосты', path: '/reservoir/hydro/posts'},
         {name: 'Водоизмерители', path: '/reservoir/hydro/meter'},
@@ -53,6 +58,8 @@ export class ReservoirComponent {
     this.resetActivity(this.menuItems);
     if (item.path) {
       item.isActive = true;
+    } else {
+      item.isOpen = !item.isOpen
     }
     const parent = this.findParent(this.menuItems, item);
     if (parent) {
