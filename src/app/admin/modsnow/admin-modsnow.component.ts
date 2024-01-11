@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
+import {NgForOf} from "@angular/common";
+import {EnvService} from "../../shared/service/env.service";
+import {RegionInfo} from "../../../environments/environment.development";
 
 @Component({
   selector: 'app-modsnow',
@@ -9,16 +12,22 @@ import {MessageService} from "primeng/api";
   standalone: true,
   imports: [
     CalendarModule,
-    FormsModule
+    FormsModule,
+    NgForOf
   ],
   styleUrl: './admin-modsnow.component.css'
 })
-export class AdminModsnowComponent {
+export class AdminModsnowComponent implements OnInit{
   date = new Date()
   readonly today = new Date()
   files: Record<string, File> = {}
+  regions?: RegionInfo[]
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private env: EnvService) {
+  }
+
+  ngOnInit() {
+    this.regions = this.env.getRegions()
   }
 
   submitModsnow() {

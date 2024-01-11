@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {MenuItem} from "../../shared/interfaces";
 import {NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import {SideMenuAnimation} from "../../shared/animation/menu-animation";
 
 @Component({
   selector: 'app-main-layout',
@@ -16,7 +17,8 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
     RouterLinkActive,
     RouterOutlet
   ],
-  styleUrl: './admin-main-layout.component.css'
+  styleUrl: './admin-main-layout.component.css',
+  animations: [SideMenuAnimation]
 })
 export class AdminMainLayoutComponent {
   hidden = false
