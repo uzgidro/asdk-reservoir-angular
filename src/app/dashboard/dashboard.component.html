@@ -1,63 +1,30 @@
-<!--Container-->
-<div class="p-4 flex w-full xl:space-x-8 justify-center max-xl:flex-wrap max-xl:space-y-4">
-  <div class="block space-y-8">
-<!--Power-->
-    <div class="flex md:space-x-4 max-md:flex-wrap max-md:text-center max-md:space-y-4">
-      <div class="p-6 w-full bg-white rounded-xl shadow-md">
-          <div class="text-xl font-medium text-black">Средняя мощность</div>
-          <p class="text-slate-500">2.225 МВт</p>
-      </div>
-      <div class="p-6 w-full bg-white rounded-xl shadow-md">
-          <div class="text-xl font-medium text-black">Минимальная мощность</div>
-          <p class="text-slate-500">2 МВт</p>
-      </div>
-
-      <div class="p-6 w-full bg-white rounded-xl shadow-md">
-          <div class="text-xl font-medium text-black">Максимальная мощность</div>
-          <p class="text-slate-500">2.5 МВт</p>
-      </div>
-    </div>
-<!--/Power-->
-<!--Reservoir-->
-    <div class="w-full bg-white rounded-xl shadow-md flex-col items-center space-y-2">
-      <div class="tab">
-        <button class="tablinks active rounded-tl-xl" (click)="tabclick($event, 'Андижан')">Андижан</button>
-        <button class="tablinks" (click)="tabclick($event, 'Охангаран')">Охангаран</button>
-        <button class="tablinks" (click)="tabclick($event, 'Сардоба')">Сардоба</button>
-        <button class="tablinks" (click)="tabclick($event, 'Тополанг')">Туполанг</button>
-        <button class="tablinks" (click)="tabclick($event, 'Хисорак')">Хисорак</button>
-        <button class="tablinks rounded-tr-xl" (click)="tabclick($event, 'Чарвак')">Чарвак</button>
-      </div>
-      <app-charts-temp></app-charts-temp>
-    </div>
-<!--/Reservoir-->
-
+<div class="h-full w-full flex flex-col space-y-4 justify-center items-center">
+  <div class="flex flex-row space-x-4 w-full justify-center ">
+    <a href="/" class="dash-card">
+        <span class="material-symbols-outlined text-7xl">water_drop</span>
+        <h3 class="font-medium text-4xl">Водные ресурсы</h3>
+    </a>
+    <a href="/" class="dash-card">
+      <span class="material-symbols-outlined text-7xl">partly_cloudy_day</span>
+      <h3 class="font-medium text-4xl">Погода</h3>
+    </a>
+    <a href="/" class="dash-card">
+      <span class="material-symbols-outlined text-7xl">swap_driving_apps_wheel</span>
+      <h3 class="font-medium text-4xl">КИА</h3>
+    </a>
   </div>
-  <div class="w-full max-xl:flex max-xl:space-x-4 xl:max-w-xs xl:block xl:space-y-4">
-<!--GES-->
-    <div class="p-6 w-full bg-white rounded-xl shadow-md flex-col items-center space-y-2">
-      <h3 class="text-center font-medium text-black text-xl border-b border-gray-300">ГЭС</h3>
-      <ul class="space-y-2">
-        <li class="flex justify-between"><p>Самый мощный №1</p> <p>165 МВт</p></li>
-        <li class="flex justify-between"><p>Самый мощный №2</p> <p>140 МВт</p></li>
-        <li class="flex justify-between"><p>Самый мощный №3</p> <p>120 МВт</p></li>
-        <li class="flex justify-between"><p>Мощный №1</p> <p>100 МВт</p></li>
-        <li class="flex justify-between"><p>Мощный №2</p> <p>83 МВт</p></li>
-        <li class="flex justify-between"><p>Мощный №3</p> <p>65 МВт</p></li>
-      </ul>
-    </div>
-<!--/GES-->
-    <!--GES-->
-    <div class="p-6 w-full bg-white rounded-xl shadow-md flex-col items-center space-y-2">
-      <h3 class="text-center font-medium text-black text-xl border-b border-gray-300">Данные за год</h3>
-      <ul class="space-y-2">
-        <li class="flex justify-between"><p>Приток воды:</p> <p>777 м3</p></li>
-        <li class="flex justify-between"><p>Попуск воды:</p> <p>777 м3</p></li>
-        <li class="flex justify-between"><p>Фильтрация воды:</p> <p>333 м3</p></li>
-        <li class="flex justify-between"><p>Объем:</p> <p>1 млрд м3</p></li>
-      </ul>
-    </div>
-    <!--/GES-->
+  <div class="flex flex-row space-x-4 w-full justify-center ">
+    <a href="/" class="dash-card">
+      <span class="material-symbols-outlined text-7xl">ac_unit</span>
+      <h3 class="font-medium text-4xl">MODSNOW</h3>
+    </a>
+    <a href="/" class="dash-card">
+      <span class="material-symbols-outlined text-7xl">earthquake</span>
+      <h3 class="font-medium text-4xl">Сейсмология</h3>
+    </a>
+    <a href="/" class="dash-card">
+      <span class="material-symbols-outlined text-7xl">rocket_launch</span>
+      <h3 class="font-medium text-4xl">УзбекКосмос</h3>
+    </a>
   </div>
 </div>
-<!--/Container-->

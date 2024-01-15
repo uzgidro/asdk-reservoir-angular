@@ -23,7 +23,7 @@ import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component
 const routes: Routes = [
   {
     path: '', component: MainLayoutComponent, children: [
-      {path: '', redirectTo: '/region', pathMatch: 'full'},
+      {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
