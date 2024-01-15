@@ -1,106 +1,82 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, ChartData, ChartType, registerables} from "chart.js";
 import {BaseChartDirective} from "ng2-charts";
+import {EnvService} from "../../shared/service/env.service";
 
 @Component({
   selector: 'app-reservoir-dashboard',
   templateUrl: './reservoir-dashboard.component.html',
   styleUrls: ['./reservoir-dashboard.component.css']
 })
-export class ReservoirDashboardComponent {
-  waterIncome = 1
-  waterRelease = 2
-  waterLevel = 3
-  waterVolume = 4
-
-  selectedCategory = 1
-
-  queue = [1,2,3]
-
+export class ReservoirDashboardComponent implements OnInit {
   public lineChartType: ChartType = 'line';
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  constructor() {
+  reservoirs = this.env.getRegions()
+  dataLabels = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00']
+  data: { data: ChartConfiguration['data'], options: ChartConfiguration['options'] }[] = []
+
+  constructor(private env: EnvService) {
     Chart.register(...registerables);
   }
 
-  changeCategory(category: number) {
-    this.selectedCategory = category
-  }
-
-  public lineChartData: ChartConfiguration['data'] = {
-    datasets: [
-      {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Series A',
-        backgroundColor: 'rgba(148,159,177,0.2)',
-        borderColor: 'rgba(148,159,177,1)',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        fill: 'origin',
-      },
-      {
-        data: [28, 48, 40, 19, 86, 27, 90],
-        label: 'Series B',
-        backgroundColor: 'rgba(77,83,96,0.2)',
-        borderColor: 'rgba(77,83,96,1)',
-        pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,1)',
-        fill: 'origin',
-      },
-      {
-        data: [180, 480, 770, 90, 1000, 270, 400],
-        label: 'Series C',
-        yAxisID: 'y1',
-        backgroundColor: 'rgba(255,0,0,0.3)',
-        borderColor: 'red',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        fill: 'origin',
-      },
-    ],
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  };
-
-  public lineChartOptions: ChartConfiguration['options'] = {
-    elements: {
-      line: {
-        tension: 0.5,
-      },
-    },
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      y: {
-        position: 'left',
-      },
-      y1: {
-        position: 'right',
-        grid: {
-          color: 'rgba(255,0,0,0.3)',
+  ngOnInit() {
+    let count = 0
+    for (const res of this.env.getRegions()) {
+      this.data[count++] = {
+        data: {
+          datasets: [
+            {
+              data: res.waterIncome,
+              label: 'Приток, м3/с',
+              backgroundColor: 'rgba(148,159,177,0.2)',
+              borderColor: 'rgb(59, 130, 246)',
+              pointBorderColor: '#fff',
+              pointHoverBorderColor: 'white',
+              pointBackgroundColor: 'rgb(59, 130, 246)'
+            }
+          ],
+          labels: this.dataLabels,
         },
-        ticks: {
-          color: 'red',
-        },
-      },
-    },
-    interaction: {
-      mode: 'index',
-      intersect: false
-    },
-    plugins: {
-      legend: {display: true},
-      title: {
-        display: true,
-        text: 'Водохранилище'
+        options: {
+          elements: {
+            line: {
+              tension: 0.5,
+            },
+          },
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            legend: {display: false},
+            title: {
+              display: true,
+              position: "top",
+              align: "start",
+              text: res.name
+            }
+          }
+        }
       }
     }
   }
+
+  // public lineChartData: ChartConfiguration['data'] = {
+  //   datasets: [
+  //     {
+  //       data: [65, 59, 80, 81, 56, 55, 40],
+  //       label: 'Приток, м3/с',
+  //       backgroundColor: 'rgba(148,159,177,0.2)',
+  //       borderColor: 'rgba(148,159,177,1)',
+  //       pointBorderColor: '#fff',
+  //       pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+  //     }
+  //   ],
+  //   labels: this.dataLabels,
+  // };
+
+  public lineChartOptions: ChartConfiguration['options']
 }
 

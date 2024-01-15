@@ -37,6 +37,7 @@ import {FormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
   declarations: [
@@ -64,19 +65,20 @@ import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component
     ReservoirDashboardComponent,
     HydroWorksComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgOptimizedImage,
-    BrowserAnimationsModule,
-    MatTooltipModule,
-    ResizableModule,
-    NgChartsModule,
-    CalendarModule,
-    FormsModule,
-    ToastModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgOptimizedImage,
+        BrowserAnimationsModule,
+        MatTooltipModule,
+        ResizableModule,
+        NgChartsModule,
+        CalendarModule,
+        FormsModule,
+        ToastModule,
+        ChartModule
+    ],
   exports: [HttpClientModule],
   providers: [MessageService],
   bootstrap: [AppComponent]

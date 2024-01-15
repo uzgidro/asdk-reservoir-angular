@@ -1,14 +1,16 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "../shared/interfaces";
-import {DropDownAnimation} from "../shared/animation/menu-animation";
+import {DropDownAnimation, SideMenuAnimation} from "../shared/animation/menu-animation";
+import {Router} from "@angular/router";
+import {EnvService} from "../shared/service/env.service";
 
 @Component({
   selector: 'app-reservoir',
   templateUrl: './reservoir.component.html',
   styleUrls: ['./reservoir.component.css'],
-  animations: [DropDownAnimation]
+  animations: [DropDownAnimation, SideMenuAnimation]
 })
-export class ReservoirComponent {
+export class ReservoirComponent implements OnInit {
 
   menuItems: MenuItem[] = [
     {
@@ -16,7 +18,7 @@ export class ReservoirComponent {
       path: '/reservoir/dashboard',
     },
     {
-      name: 'Вода',
+      name: 'Водные ресурсы',
       isActive: false,
       isOpen: false,
       children: [
@@ -53,6 +55,41 @@ export class ReservoirComponent {
       path: '/reservoir/docs',
     }
   ];
+  reservoirs = this.env.getRegions()
+
+  hidden = false
+
+  constructor(private activatedRouter: Router, private env: EnvService) {
+  }
+
+  ngOnInit() {
+    this.resetActivity(this.menuItems)
+    const url = this.activatedRouter.url
+    const selectedItem = this.findMenuByPath(this.menuItems, url)
+    if (selectedItem) {
+      this.selectItem(selectedItem)
+    }
+  }
+
+  toggleMenu() {
+    this.hidden = !this.hidden
+  }
+
+  findMenuByPath(items: MenuItem[], path: string): MenuItem | undefined {
+    for (const menuItem of items) {
+      if (menuItem.path === path) {
+        return menuItem; // Найден элемент с нужным path
+      }
+
+      if (menuItem.children) {
+        const foundInChildren = this.findMenuByPath(menuItem.children, path);
+        if (foundInChildren) {
+          return foundInChildren; // Найден элемент во вложенных детях
+        }
+      }
+    }
+    return undefined
+  }
 
   selectItem(item: MenuItem): void {
     this.resetActivity(this.menuItems);

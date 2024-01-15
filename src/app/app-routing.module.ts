@@ -28,11 +28,12 @@ const routes: Routes = [
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
       {path: 'reservoir', component: ReservoirComponent, children: [
-          {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
+          {path: '', pathMatch: 'full', redirectTo: 'water'},
           {path: 'dashboard', component: ReservoirDashboardComponent},
           {path: 'water', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ReservoirHourlyComponent},
+              {path: "current/:res", component: BlankPageComponent},
               {path: '10-days', component: ReservoirTenDayComponent},
               {path: 'year', component: ReservoirYearlyComponent},
               {path: 'analytics', component: ReservoirAnalyticsComponent}
@@ -61,7 +62,8 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
-  }
+  },
+
 ]
 
 @NgModule({

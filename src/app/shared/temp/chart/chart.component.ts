@@ -12,8 +12,10 @@ export class ChartComponent implements OnInit {
   @Input() labels: string[] = []
   @Input() dataLabel: string = ''
   @Input() data: number[] = []
-  @Input() borderColor: string = 'gray'
+  @Input() borderColor: string = ''
   @Input() backgroundColor: string = 'rgba(128, 128, 128, 0.2)'
+  @Input() title: string = ''
+  @Input() id:number = -1
 
 
   ngOnInit() {
@@ -36,19 +38,30 @@ export class ChartComponent implements OnInit {
             label: this.dataLabel,
             data: this.data,
             borderColor: this.borderColor,
-            backgroundColor: this.backgroundColor,
+            backgroundColor: 'transparent',
             fill: true,
             tension: 0.4
           }
         ]
       },
       options: {
+        interaction: {
+          mode: 'index',
+          intersect: false
+        },
         aspectRatio: 1,
         plugins: {
           legend: {
             position: 'bottom'
+          },
+          title: {
+            display: true,
+            align: "start",
+            position: "top",
+            text: this.title
           }
         }
+
       }
     })
   }
