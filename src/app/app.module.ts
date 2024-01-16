@@ -38,6 +38,8 @@ import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
 import {ChartModule} from "primeng/chart";
+import {WeatherComponent} from "./shared/component/weather/weather.component";
+import {ReservoirCurrentComponent} from "./shared/component/reservoir-current/reservoir-current.component";
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import {ChartModule} from "primeng/chart";
         CalendarModule,
         FormsModule,
         ToastModule,
-        ChartModule
+        ChartModule,
+        WeatherComponent,
+        ReservoirCurrentComponent
     ],
   exports: [HttpClientModule],
   providers: [MessageService],

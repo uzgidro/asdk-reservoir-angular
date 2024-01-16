@@ -1,0 +1,31 @@
+<table class="bg-white rounded-3xl shadow-xl">
+  <thead>
+  <tr>
+    <th colspan="3" class="text-xl">{{name}}</th>
+  </tr>
+  <tr>
+    <th>Уровень, м</th>
+    <th>Объём, млн.м3</th>
+    <th>Попуск, м3/с</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="fle">
+    <td class="border-0">
+      <div class="flex flex-row items-center justify-center"><p>{{level}}</p>
+        <span class="material-symbols-outlined text-green-600">trending_up</span>
+        <p>2</p></div>
+    </td>
+    <td class="border-0">
+      <div class="flex flex-row items-center justify-center"><p>{{volume}}</p>
+        <span class="material-symbols-outlined">trending_flat</span>
+        <p>0</p></div>
+    </td>
+    <td class="border-0">
+      <div class="flex flex-row items-center justify-center" ><p>{{release}}</p>
+        <span class="material-symbols-outlined text-red-600">trending_down</span>
+        <p>-2</p></div>
+    </td>
+  </tr>
+  </tbody>
+</table>

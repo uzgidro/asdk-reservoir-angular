@@ -28,7 +28,7 @@ const routes: Routes = [
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
       {path: 'reservoir', component: ReservoirComponent, children: [
-          {path: '', pathMatch: 'full', redirectTo: 'water'},
+          {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
           {path: 'dashboard', component: ReservoirDashboardComponent},
           {path: 'water', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
