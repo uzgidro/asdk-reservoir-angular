@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "../shared/interfaces";
 import {DropDownAnimation, SideMenuAnimation} from "../shared/animation/menu-animation";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {EnvService} from "../shared/service/env.service";
 
 @Component({
@@ -16,6 +16,8 @@ export class ReservoirComponent implements OnInit {
     {
       name: 'Главная',
       path: '/reservoir/dashboard',
+      queryParams: '',
+      queryParamsHandling: 'merge'
     },
     {
       name: 'Водные ресурсы',
@@ -56,23 +58,44 @@ export class ReservoirComponent implements OnInit {
     }
   ];
   reservoirs = this.env.getRegions()
-
+  selectedReservoir: string = ''
   hidden = false
 
-  constructor(private activatedRouter: Router, private env: EnvService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private env: EnvService) {
   }
 
   ngOnInit() {
+    console.log(this.reservoirs)
     this.resetActivity(this.menuItems)
-    const url = this.activatedRouter.url
+    const url = this.router.url
     const selectedItem = this.findMenuByPath(this.menuItems, url)
     if (selectedItem) {
       this.selectItem(selectedItem)
     }
+    this.activatedRoute.queryParams.subscribe({
+      next: value => this.selectedReservoir = value['reservoir']
+    })
   }
 
   toggleMenu() {
     this.hidden = !this.hidden
+  }
+
+  changeReservoir(id: string) {
+    if (this.router.url == '/reservoir/dashboard') {
+      this.router.navigate(['/reservoir/water/current'], {
+        relativeTo: this.activatedRoute,
+        queryParams: {reservoir: id},
+        queryParamsHandling: 'merge'
+      });
+      this.hidden = true
+    } else {
+      this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        queryParams: {reservoir: id},
+        queryParamsHandling: 'merge'
+      });
+    }
   }
 
   findMenuByPath(items: MenuItem[], path: string): MenuItem | undefined {

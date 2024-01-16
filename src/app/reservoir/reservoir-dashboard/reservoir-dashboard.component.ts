@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Chart, ChartConfiguration, ChartData, ChartType, registerables} from "chart.js";
+import {Chart, ChartConfiguration, ChartType, registerables} from "chart.js";
 import {BaseChartDirective} from "ng2-charts";
 import {EnvService} from "../../shared/service/env.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservoir-dashboard',
@@ -15,9 +16,9 @@ export class ReservoirDashboardComponent implements OnInit {
 
   reservoirs = this.env.getRegions()
   dataLabels = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00']
-  data: { data: ChartConfiguration['data'], options: ChartConfiguration['options'] }[] = []
+  data: { data: ChartConfiguration['data'], options: ChartConfiguration['options'], id: string }[] = []
 
-  constructor(private env: EnvService) {
+  constructor(private env: EnvService, private router: Router) {
     Chart.register(...registerables);
   }
 
@@ -25,6 +26,7 @@ export class ReservoirDashboardComponent implements OnInit {
     let count = 0
     for (const res of this.env.getRegions()) {
       this.data[count++] = {
+        id: res.id,
         data: {
           datasets: [
             {
@@ -61,6 +63,12 @@ export class ReservoirDashboardComponent implements OnInit {
         }
       }
     }
+  }
+
+  navigateToReservoirCurrent(id: string) {
+    this.router.navigate(['/reservoir/water/current'], {
+      queryParams: {reservoir: id}
+    })
   }
 
   // public lineChartData: ChartConfiguration['data'] = {

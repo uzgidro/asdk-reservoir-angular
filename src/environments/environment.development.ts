@@ -1,13 +1,14 @@
 export const environment: EnvInterface = {
-  regionId: [{
-    id: 'and',
-    name: 'Андижан',
-    waterIncome: [194, 211, 188, 195, 213, 213, 194, 211, 188, 195, 213, 213],
-    currentLevel: 895,
-    currentRelease: 200,
-    currentVolume: 1370
+  regionId: [
+    {
+      id: 'and',
+      name: 'Андижан',
+      waterIncome: [194, 211, 188, 195, 213, 213, 194, 211, 188, 195, 213, 213],
+      currentLevel: 895,
+      currentRelease: 200,
+      currentVolume: 1370
 
-  },
+    },
     {
       id: 'akh',
       name: 'Ахангаран',
