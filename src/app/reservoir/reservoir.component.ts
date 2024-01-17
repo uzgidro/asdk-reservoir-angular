@@ -59,18 +59,20 @@ export class ReservoirComponent implements OnInit {
   ];
   reservoirs = this.env.getRegions()
   selectedReservoir: string = ''
-  hidden = false
+  sideMenuVisible = false
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private env: EnvService) {
   }
 
   ngOnInit() {
-    console.log(this.reservoirs)
     this.resetActivity(this.menuItems)
     const url = this.router.url
-    const selectedItem = this.findMenuByPath(this.menuItems, url)
+    const selectedItem = this.findMenuByPath(url)
     if (selectedItem) {
       this.selectItem(selectedItem)
+    }
+    if (!url.includes('dashboard')) {
+      this.sideMenuVisible = true
     }
     this.activatedRoute.queryParams.subscribe({
       next: value => this.selectedReservoir = value['reservoir']
@@ -78,17 +80,22 @@ export class ReservoirComponent implements OnInit {
   }
 
   toggleMenu() {
-    this.hidden = !this.hidden
+    this.sideMenuVisible = !this.sideMenuVisible
   }
 
   changeReservoir(id: string) {
+    console.log(id)
     if (this.router.url == '/reservoir/dashboard') {
       this.router.navigate(['/reservoir/water/current'], {
         relativeTo: this.activatedRoute,
         queryParams: {reservoir: id},
         queryParamsHandling: 'merge'
       });
-      this.hidden = true
+      const menuItem = this.findMenuByPath('/reservoir/water/current')
+      if (menuItem) {
+        this.selectItem(menuItem)
+      }
+      this.sideMenuVisible = true
     } else {
       this.router.navigate([], {
         relativeTo: this.activatedRoute,
@@ -98,14 +105,14 @@ export class ReservoirComponent implements OnInit {
     }
   }
 
-  findMenuByPath(items: MenuItem[], path: string): MenuItem | undefined {
+  findMenuByPath(path: string, items: MenuItem[] = this.menuItems): MenuItem | undefined {
     for (const menuItem of items) {
       if (menuItem.path === path) {
         return menuItem; // Найден элемент с нужным path
       }
 
       if (menuItem.children) {
-        const foundInChildren = this.findMenuByPath(menuItem.children, path);
+        const foundInChildren = this.findMenuByPath(path, menuItem.children);
         if (foundInChildren) {
           return foundInChildren; // Найден элемент во вложенных детях
         }
@@ -115,7 +122,9 @@ export class ReservoirComponent implements OnInit {
   }
 
   selectItem(item: MenuItem): void {
-    this.resetActivity(this.menuItems);
+    if (!item.children) {
+      this.resetActivity(this.menuItems);
+    }
     if (item.path) {
       item.isActive = true;
     } else {
@@ -124,10 +133,11 @@ export class ReservoirComponent implements OnInit {
     const parent = this.findParent(this.menuItems, item);
     if (parent) {
       parent.isActive = true;
+      parent.isOpen = true
     }
   }
 
-  resetActivity(items: MenuItem[]): void {
+  private resetActivity(items: MenuItem[]): void {
     items.forEach(item => {
       item.isActive = false;
       if (item.children) {
@@ -136,7 +146,7 @@ export class ReservoirComponent implements OnInit {
     });
   }
 
-  findParent(items: MenuItem[], child: MenuItem): MenuItem | undefined {
+  private findParent(items: MenuItem[], child: MenuItem): MenuItem | undefined {
     for (const item of items) {
       if (item.children && item.children.includes(child)) {
         return item;
