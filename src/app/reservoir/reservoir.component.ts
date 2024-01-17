@@ -84,7 +84,6 @@ export class ReservoirComponent implements OnInit {
   }
 
   changeReservoir(id: string) {
-    console.log(id)
     if (this.router.url == '/reservoir/dashboard') {
       this.router.navigate(['/reservoir/water/current'], {
         relativeTo: this.activatedRoute,

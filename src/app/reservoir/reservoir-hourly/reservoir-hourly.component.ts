@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {EnvService} from "../../shared/service/env.service";
+import {ChartConfiguration} from "chart.js";
+import {RegionInfo} from "../../../environments/environment.development";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -6,63 +10,86 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./reservoir-hourly.component.css']
 })
 export class ReservoirHourlyComponent implements OnInit{
-  maxDate = new Date()
   selectedDate = new Date()
   times: Date[] = []
-  reservoirs = [
-    {
-      name: 'Андижан',
-      weather: ['Ясно', 'Облачно'],
-      level: [885.32, 885.33],
-      volume: [944.6, 944.9],
-      income: [65, 76, 75, 80, 80, 76],
-      release: 80
-    },
-    {
-      name: 'Охангаран',
-      weather: ['Ясно', 'Ясно'],
-      level: [1043.16, 1043.22],
-      volume: [74, 74.2],
-      income: [1.7, 3.1, 4.4, 4.4, 4.0, 2.8],
-      release: 10
-    },
-    {
-      name: 'Сардоба',
-      weather: ['Облачно', 'Облачно'],
-      level: [885.32, 885.33],
-      volume: [281.20, 281.20],
-      income: [0, 0, 0, 0, 0, 0],
-      release: 30
-    },
-    {
-      name: 'Хисорак',
-      weather: ['Осадки', 'Облачно'],
-      level: [1077.95, 1078.01],
-      volume: [53.1, 53.2],
-      income: [5.3, 4.5, 4.4, 4.5, 5.0, 5.0],
-      release: 10
-    },
-    {
-      name: 'Тупаланг',
-      weather: ['Осадки', 'Осадки'],
-      level: [925.67, 925.73],
-      volume: [263.2, 263.6],
-      income: [11.2, 11.1, 11.1, 11.1, 11.2, 11.2],
-      release: 20
-    },
-    {
-      name: 'Чарвак',
-      weather: ['Ясно', 'Осадки'],
-      level: [877.04, 877.10],
-      volume: [1519.3, 1521],
-      income: [96,96,96,100,95,95],
-      release: 224
-    },
-
+  reservoirs = this.env.getRegions()
+  queryReservoir? : RegionInfo
+  data: { data: ChartConfiguration['data'], options: ChartConfiguration['options']}[] = []
+  categories: {name: string, type: string}[] = [
+    {name: 'Приток', type: 'м3/с'},
+    {name: 'Попуск', type: 'м3/с'},
+    {name: 'Уровень', type: 'с'},
+    {name: 'Объём', type: 'млн. м3'}
   ]
+
+  constructor(private env: EnvService, private activatedRoute: ActivatedRoute, private router: Router) {
+  }
 
   async ngOnInit() {
     this.setInfoTime()
+
+    this.activatedRoute.queryParams.subscribe({
+      next: value => {
+        this.queryReservoir = this.reservoirs.find(region => value['reservoir'] === region.id)
+        if (this.queryReservoir) {
+          this.setData()
+        } else {
+          this.router.navigate(['/not-found'])
+        }
+      }
+    })
+  }
+
+  private setData() {
+    let count = 0
+    let data: number[]
+    for (const item of this.categories) {
+      if (item.name === 'Приток') {
+        data = this.queryReservoir?.waterIncome!!
+      } else if (item.name === 'Попуск') {
+        data = this.queryReservoir?.waterRelease!!
+      } else if (item.name === 'Уровень') {
+        data = this.queryReservoir?.waterLevel!!
+      } else {
+        data = this.queryReservoir?.waterVolume!!
+      }
+        this.data[count++] = {
+        data: {
+          datasets: [
+            {
+              data: data,
+              label: item.name + ' ' + item.type,
+              backgroundColor: 'rgba(148,159,177,0.2)',
+              borderColor: 'rgb(59, 130, 246)',
+              pointBorderColor: '#fff',
+              pointHoverBorderColor: 'white',
+              pointBackgroundColor: 'rgb(59, 130, 246)'
+            }
+          ],
+          labels: this.env.getDataLabels(),
+        },
+        options: {
+          elements: {
+            line: {
+              tension: 0.5,
+            },
+          },
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            legend: {display: false},
+            title: {
+              display: true,
+              position: "top",
+              align: "start",
+              text: item.name
+            }
+          }
+        }
+      }
+    }
   }
 
   private setInfoTime() {
@@ -73,28 +100,15 @@ export class ReservoirHourlyComponent implements OnInit{
 
     let roundedTime: number;
 
-    if (currentTime >= 0 && currentTime < 6) {
-      roundedTime = 0;
-    } else if (currentTime >= 6 && currentTime < 12) {
-      roundedTime = 6;
-    } else if (currentTime >= 12 && currentTime < 18) {
-      roundedTime = 12;
+    if (currentTime % 2 == 0) {
+      roundedTime = currentTime
     } else {
-      roundedTime = 18;
+      roundedTime = currentTime - 1
     }
 
     for (let i = 0; i <= 5; i++) {
       this.times.push(new Date(currentYear, currentMonth, currentDate, roundedTime))
-      roundedTime -= 6
-      if (roundedTime < 0) {
-        roundedTime = 18
-        if (currentDate == 1) {
-          currentDate -= 1
-          currentMonth -= 1
-        } else {
-          currentDate -= 1
-        }
-      }
+      roundedTime -= 2
     }
   }
 }

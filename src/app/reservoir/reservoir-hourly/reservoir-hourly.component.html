@@ -1,4 +1,16 @@
 <div class="w-full px-4 flex flex-col">
+
+  <div class="flex flex-col w-1/2 border-2 border-slate-500 p-4 bg-white rounded-xl shadow-xl my-4">
+    <canvas *ngFor="let item of data"
+            style="height: 14vh"
+            baseChart
+            class="chart"
+            [data]="item.data"
+            [options]="item.options"
+            type="line"
+    ></canvas>
+  </div>
+
   <table>
     <thead>
     <tr>
@@ -7,7 +19,7 @@
       <th colspan="3">Объём воды, млн.м<sup>3</sup></th>
       <th colspan="5">Приток, м<sup>3</sup>/с</th>
       <th>Попуск, м<sup>3</sup>/с</th>
-      <th colspan="4">Погода</th>
+<!--      <th colspan="4">Погода</th>-->
     </tr>
     <tr>
       <!--        Level-->
@@ -72,47 +84,47 @@
         </div>
       </th>
       <!--        Weather-->
-      <th>
-        <div class="flex flex-col">
-          <p>Условия</p>
-        </div>
-      </th>
-      <th>
-        <div class="flex flex-col">
-          <p>Температура, &deg;C</p>
-        </div>
-      </th>
-      <th>
-        <div class="flex flex-col">
-          <p>Ветер, м/с</p>
-        </div>
-      </th>
-      <th>
-        <div class="flex flex-col">
-          <p>Влажность, %</p>
-        </div>
-      </th>
+<!--      <th>-->
+<!--        <div class="flex flex-col">-->
+<!--          <p>Условия</p>-->
+<!--        </div>-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        <div class="flex flex-col">-->
+<!--          <p>Температура, &deg;C</p>-->
+<!--        </div>-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        <div class="flex flex-col">-->
+<!--          <p>Ветер, м/с</p>-->
+<!--        </div>-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        <div class="flex flex-col">-->
+<!--          <p>Влажность, %</p>-->
+<!--        </div>-->
+<!--      </th>-->
     </tr>
     </thead>
     <tbody *ngFor="let res of reservoirs">
     <tr>
       <td>{{res.name}}</td>
-      <td>{{res.level[0]}}</td>
-      <td>{{res.level[1]}}</td>
-      <td>{{res.level[0] - res.level[1] | number: '.0-2'}}</td>
-      <td>{{res.volume[0]}}</td>
-      <td>{{res.volume[1]}}</td>
-      <td>{{res.volume[0] - res.volume[1] | number: '.0-2'}}</td>
-      <td>{{res.income[0]}}</td>
-      <td>{{res.income[1]}}</td>
-      <td>{{res.income[2]}}</td>
-      <td>{{res.income[3]}}</td>
-      <td>{{res.income[0] - res.income[1] | number: '.0-2'}}</td>
-      <td>{{res.release}}</td>
-      <td>Ясно</td>
-      <td>24</td>
-      <td>3, С-В</td>
-      <td>50</td>
+      <td>{{res.waterLevel[res.waterLevel.length-1]}}</td>
+      <td>{{res.waterLevel[res.waterLevel.length-2]}}</td>
+      <td>{{res.waterLevel[res.waterLevel.length-1] - res.waterLevel[res.waterLevel.length-2] | number: '.0-2'}}</td>
+      <td>{{res.waterVolume[res.waterVolume.length-1]}}</td>
+      <td>{{res.waterVolume[res.waterVolume.length-2]}}</td>
+      <td>{{res.waterVolume[res.waterVolume.length-1] - res.waterVolume[res.waterVolume.length-2] | number: '.0-2'}}</td>
+      <td>{{res.waterIncome[res.waterIncome.length-1]}}</td>
+      <td>{{res.waterIncome[res.waterIncome.length-2]}}</td>
+      <td>{{res.waterIncome[res.waterIncome.length-3]}}</td>
+      <td>{{res.waterIncome[res.waterIncome.length-4]}}</td>
+      <td>{{res.waterIncome[res.waterIncome.length-1] - res.waterIncome[res.waterIncome.length-2] | number: '.0-2'}}</td>
+      <td>{{res.waterRelease[res.waterRelease.length-1]}}</td>
+<!--      <td>Ясно</td>-->
+<!--      <td>24</td>-->
+<!--      <td>3, С-В</td>-->
+<!--      <td>50</td>-->
     </tr>
     </tbody>
   </table>

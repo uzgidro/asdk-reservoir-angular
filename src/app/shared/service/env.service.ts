@@ -11,4 +11,8 @@ export class EnvService {
   getRegions() {
     return this.environment.regionId;
   }
+
+  getDataLabels() {
+    return this.environment.dataLabels
+  }
 }

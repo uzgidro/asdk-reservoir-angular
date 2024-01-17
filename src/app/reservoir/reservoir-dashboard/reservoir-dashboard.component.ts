@@ -15,7 +15,6 @@ export class ReservoirDashboardComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   reservoirs = this.env.getRegions()
-  dataLabels = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00']
   data: { data: ChartConfiguration['data'], options: ChartConfiguration['options'], id: string }[] = []
 
   constructor(private env: EnvService, private router: Router) {
@@ -39,7 +38,7 @@ export class ReservoirDashboardComponent implements OnInit {
               pointBackgroundColor: 'rgb(59, 130, 246)'
             }
           ],
-          labels: this.dataLabels,
+          labels: this.env.getDataLabels(),
         },
         options: {
           elements: {
