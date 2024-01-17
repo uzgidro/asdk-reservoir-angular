@@ -19,6 +19,7 @@ import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component
 import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
 import {LoginComponent} from "./login/login.component";
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -54,6 +55,12 @@ const routes: Routes = [
             ]},
           {path: 'docs', component: OrdersComponent}
         ]},
+      {
+        path: 'not-found', component: NotFoundComponent
+      },
+      {
+        path: '**', component: NotFoundComponent
+      }
     ]
   },
   {
