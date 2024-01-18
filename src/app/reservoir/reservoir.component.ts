@@ -66,7 +66,8 @@ export class ReservoirComponent implements OnInit {
 
   ngOnInit() {
     this.resetActivity(this.menuItems)
-    const url = this.router.url
+    // get url and remove query params to find menu item
+    const url = this.router.url.split('?')[0]
     const selectedItem = this.findMenuByPath(url)
     if (selectedItem) {
       this.selectItem(selectedItem)
