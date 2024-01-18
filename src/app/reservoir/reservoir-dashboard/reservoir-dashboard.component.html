@@ -1,6 +1,6 @@
-<div class="flex flex-row flex-1 p-4 space-x-4">
+<div class="flex flex-row max-xl:flex-col flex-1 p-4 space-x-4">
 
-  <div class="flex flex-col w-1/2 border-2 border-slate-500 p-4 bg-white rounded-xl shadow-xl">
+  <div class="flex flex-col w-1/2 max-xl:w-full border-2 border-slate-500 p-4 bg-white rounded-xl shadow-xl">
     <h2 class="text-center text-3xl">Приток воды к водохранилищам</h2>
     <canvas *ngFor="let item of data"
             (click)="navigateToReservoirCurrent(item.id)"
@@ -14,7 +14,7 @@
   </div>
   <div class="flex-1">
     <h2 class="text-3xl text-center my-2">Данные по водохранилищам</h2>
-    <div class="grid grid-cols-3 gap-5 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-5 mb-8">
       <app-reservoir-current  *ngFor="let res of reservoirs"
                               [level]="res.currentLevel"
                              [name]="res.name"
@@ -23,7 +23,7 @@
     </div>
 
     <h2 class="text-3xl text-center my-2">Погода</h2>
-    <div class="grid grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
       <app-weather *ngFor="let res of reservoirs" [name]="res.name"></app-weather>
     </div>
   </div>
