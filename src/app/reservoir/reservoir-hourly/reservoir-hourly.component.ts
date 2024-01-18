@@ -83,7 +83,7 @@ export class ReservoirHourlyComponent implements OnInit{
             title: {
               display: true,
               position: "top",
-              align: "start",
+              align: "center",
               text: item.name
             }
           }

@@ -55,7 +55,7 @@ export class ReservoirDashboardComponent implements OnInit {
             title: {
               display: true,
               position: "top",
-              align: "start",
+              align: "center",
               text: res.name
             }
           }

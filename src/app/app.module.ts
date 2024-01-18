@@ -40,6 +40,7 @@ import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component
 import {ChartModule} from "primeng/chart";
 import {WeatherComponent} from "./shared/component/weather/weather.component";
 import {ReservoirCurrentComponent} from "./shared/component/reservoir-current/reservoir-current.component";
+import {WeatherDetailedComponent} from "./shared/component/wearher-detailed/weather-detailed.component";
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import {ReservoirCurrentComponent} from "./shared/component/reservoir-current/re
         ToastModule,
         ChartModule,
         WeatherComponent,
-        ReservoirCurrentComponent
+        ReservoirCurrentComponent,
+        WeatherDetailedComponent
     ],
   exports: [HttpClientModule],
   providers: [MessageService],

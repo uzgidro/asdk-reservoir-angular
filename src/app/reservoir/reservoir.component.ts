@@ -75,7 +75,18 @@ export class ReservoirComponent implements OnInit {
       this.sideMenuVisible = true
     }
     this.activatedRoute.queryParams.subscribe({
-      next: value => this.selectedReservoir = value['reservoir']
+      next: value => {
+        this.selectedReservoir = value['reservoir']
+        const url = this.router.url
+        const selectedItem = this.findMenuByPath(url)
+        if (selectedItem) {
+          this.selectItem(selectedItem)
+        }
+        if (!url.includes('dashboard')) {
+          this.sideMenuVisible = true
+        }
+      }
+
     })
   }
 
