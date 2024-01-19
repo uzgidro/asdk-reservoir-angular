@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DatePipe, DecimalPipe, NgForOf} from "@angular/common";
-import {RusDatePipe} from "../../../rus-date.pipe";
+import {RusDatePipe} from "../../pipe/rus-date.pipe";
 
 @Component({
   selector: 'app-weather-detailed',

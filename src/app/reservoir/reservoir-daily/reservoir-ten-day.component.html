@@ -1,4 +1,42 @@
-<div class="w-full px-4 mt-6">
+<div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
+  <h3 class="text-center text-3xl">{{reservoir?.name}}</h3>
+
+  <table *ngIf="reservoir">
+    <thead>
+    <tr>
+      <th rowspan="2">Данные</th>
+      <th [colSpan]="daysInDecade.length">{{today.getMonth() | date:'MMMM' | rusMonth}}</th>
+      <th rowspan="2">Среднее</th>
+    </tr>
+    <tr>
+      <th *ngFor="let day of daysInDecade">{{day}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Приток, м3/с</td>
+      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterIncome[i]}}</p></td>
+      <td>{{avgIncome | number: '.0-0'}}</td>
+    </tr>
+    <tr>
+      <td>Попуск, м3/с</td>
+      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterRelease[i]}}</p></td>
+      <td>{{avgRelease | number: '.0-0'}}</td>
+    </tr>
+    <tr>
+      <td>Уровень, м</td>
+      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterLevel[i]}}</p></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Объём, млн. м3</td>
+      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterVolume[i]}}</p></td>
+      <td></td>
+    </tr>
+
+    </tbody>
+  </table>
+
   <table>
     <thead>
     <tr>
@@ -10,7 +48,7 @@
       <th>30 лет</th>
       <th>10 лет</th>
       <th>{{pastYear}} год</th>
-      <th><p>{{ currentYear }} год<br><small>{{decade()}}.{{currentYear}}</small></p></th>
+      <th><p>{{ currentYear }} год<br><small>{{decade}}.{{currentYear}}</small></p></th>
       <th>30 лет</th>
       <th>10 лет</th>
       <th>{{pastYear}} год</th>

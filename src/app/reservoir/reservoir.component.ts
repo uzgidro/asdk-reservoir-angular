@@ -78,7 +78,7 @@ export class ReservoirComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         this.selectedReservoir = value['reservoir']
-        const url = this.router.url
+        const url = this.router.url.split('?')[0]
         const selectedItem = this.findMenuByPath(url)
         if (selectedItem) {
           this.selectItem(selectedItem)
@@ -87,7 +87,6 @@ export class ReservoirComponent implements OnInit {
           this.sideMenuVisible = true
         }
       }
-
     })
   }
 

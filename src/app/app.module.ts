@@ -41,6 +41,8 @@ import {ChartModule} from "primeng/chart";
 import {WeatherComponent} from "./shared/component/weather/weather.component";
 import {ReservoirCurrentComponent} from "./shared/component/reservoir-current/reservoir-current.component";
 import {WeatherDetailedComponent} from "./shared/component/wearher-detailed/weather-detailed.component";
+import {RusDatePipe} from "./shared/pipe/rus-date.pipe";
+import {RusMonthPipe} from "./shared/pipe/rus-month.pipe";
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import {WeatherDetailedComponent} from "./shared/component/wearher-detailed/weat
         ChartModule,
         WeatherComponent,
         ReservoirCurrentComponent,
-        WeatherDetailedComponent
+        WeatherDetailedComponent,
+        RusDatePipe,
+        RusMonthPipe
     ],
   exports: [HttpClientModule],
   providers: [MessageService],
