@@ -19,6 +19,7 @@ import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component
 import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
 import {LoginComponent} from "./login/login.component";
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
+import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ReservoirHourlyComponent},
               {path: '10-days', component: ReservoirTenDayComponent},
+              {path: 'month', component: ReservoirMonthComponent},
               {path: 'year', component: ReservoirYearlyComponent},
               {path: 'analytics', component: ReservoirAnalyticsComponent}
             ]},

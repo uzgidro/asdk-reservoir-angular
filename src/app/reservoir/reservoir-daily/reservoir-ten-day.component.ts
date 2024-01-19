@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {EnvService} from "../../shared/service/env.service";
 import {RegionInfo} from "../../../environments/environment.development";
+import {ReservoirService} from "../reservoir.service";
 
 @Component({
   selector: 'app-reservoir-daily',
@@ -66,18 +67,14 @@ export class ReservoirTenDayComponent implements OnInit {
     }
   ]
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private env: EnvService) {
+  constructor(private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
   }
 
   ngOnInit() {
     this.setDecade()
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        const resId = value['reservoir']
-        const res = this.env.getRegions().find(value1 => resId === value1.id)
-        if (res) {
-          this.reservoir = res
-        }
+        this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
         this.getAvg()
       }
     })

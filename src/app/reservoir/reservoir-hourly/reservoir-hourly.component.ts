@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {EnvService} from "../../shared/service/env.service";
 import {ChartConfiguration} from "chart.js";
 import {RegionInfo} from "../../../environments/environment.development";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
+import {ReservoirService} from "../reservoir.service";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -22,7 +23,7 @@ export class ReservoirHourlyComponent implements OnInit{
     {name: 'Объём', type: 'млн. м3'}
   ]
 
-  constructor(private env: EnvService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private env: EnvService, private activatedRoute: ActivatedRoute, private resService: ReservoirService) {
   }
 
   async ngOnInit() {
@@ -30,11 +31,9 @@ export class ReservoirHourlyComponent implements OnInit{
 
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.queryReservoir = this.reservoirs.find(region => value['reservoir'] === region.id)
+        this.queryReservoir = this.resService.setReservoir(value, this.env.getRegions())
         if (this.queryReservoir) {
           this.setData()
-        } else {
-          this.router.navigate(['/not-found'])
         }
       }
     })
