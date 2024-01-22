@@ -9,7 +9,8 @@ export const environment: EnvInterface = {
       waterLevel: [880, 880, 880, 880, 880, 880, 881, 881, 881, 881, 881, 881, 881],
       currentLevel: 895,
       currentRelease: 200,
-      currentVolume: 1370
+      currentVolume: 1370,
+      snowCoverage: [82,93,90,92,95,98,100,100,100]
 
     },
     {
@@ -21,7 +22,8 @@ export const environment: EnvInterface = {
       waterLevel: [1037, 1036, 1036, 1036, 1036, 1036, 1036, 1036, 1036, 1036, 1036, 1036, 1036],
       currentLevel: 1070,
       currentRelease: 30,
-      currentVolume: 189
+      currentVolume: 189,
+      snowCoverage: [52,96,100,100,100,100]
     },
     {
       id: 'sar',
@@ -32,7 +34,8 @@ export const environment: EnvInterface = {
       waterVolume: [260, 258, 257, 255, 253, 251, 249, 246, 244, 243, 243, 242, 242],
       currentLevel: 284,
       currentRelease: 223,
-      currentVolume: 60
+      currentVolume: 60,
+      snowCoverage: []
     },
     {
       id: 'his',
@@ -43,7 +46,8 @@ export const environment: EnvInterface = {
       waterVolume: [32, 32, 33, 33, 34, 34, 35, 35, 36, 36, 36, 37, 37],
       currentLevel: 1106,
       currentRelease: 24,
-      currentVolume: 128
+      currentVolume: 128,
+      snowCoverage: [0,72,99,98,100,100,100]
     },
     {
       id: 'tup',
@@ -54,7 +58,8 @@ export const environment: EnvInterface = {
       waterVolume: [12, 13, 14, 15, 16, 18, 19, 21, 22, 23, 25, 26, 27],
       currentLevel: 945,
       currentRelease: 70,
-      currentVolume: 394
+      currentVolume: 394,
+      snowCoverage: [27,25,61,95,100,100,100,100]
     },
     {
       id: 'chor',
@@ -65,7 +70,8 @@ export const environment: EnvInterface = {
       waterVolume: [995, 990, 982, 976, 969, 959, 952, 946, 941, 934, 925, 911, 905],
       currentLevel: 889,
       currentRelease: 259,
-      currentVolume: 1986
+      currentVolume: 1986,
+      snowCoverage: []
     }],
   dataLabels: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00']
 };
@@ -86,4 +92,5 @@ export interface RegionInfo {
   currentLevel: number
   currentVolume: number
   currentRelease: number
+  snowCoverage: number[]
 }

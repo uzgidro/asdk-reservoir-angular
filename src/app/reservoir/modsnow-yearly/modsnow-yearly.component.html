@@ -1,10 +1,6 @@
-<p-carousel [value]="reservoirs" [numVisible]="1" [numScroll]="1" [circular]="true">
-  <ng-template let-reservoir pTemplate="item">
     <div class="mx-4 h-full ">
-      <h2 class="text-3xl font-medium text-center my-6">{{ reservoir.name }}</h2>
+      <h2 class="text-3xl font-medium text-center my-6">{{ reservoir?.name }}</h2>
       <div class="w-full ">
         <img class="m-auto" ngSrc="assets/img/modsnow-year.jpg" width="1527" height="907" alt="Modsnow">
       </div>
     </div>
-  </ng-template>
-</p-carousel>

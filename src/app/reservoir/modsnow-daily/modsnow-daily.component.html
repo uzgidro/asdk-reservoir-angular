@@ -1,28 +1,35 @@
-<div class="flex flex-col justify-center">
+<div class="flex flex-col justify-center py-4"  *ngIf="reservoir; else unselected">
+  <h3 class="text-center text-3xl">{{reservoir.name}}</h3>
 
-  <div class="flex w-fit mx-auto p-4 rounded ring-2 ring-slate-300 space-x-5 mt-8 text-lg font-medium bg-white">
-    <p-calendar [(ngModel)]="selectedDate" class="ring-transparent" [maxDate]="maxDate"
-                dateFormat="dd/mm/yy"></p-calendar>
-  </div>
 
-  <p-carousel [value]="reservoirs" [numVisible]="3" [numScroll]="3" [circular]="true"
-              [responsiveOptions]="responsiveOptions">
-    <ng-template let-reservoir pTemplate="item">
-      <div class="mx-4 h-full ">
-        <h2 class="text-2xl font-medium text-center my-6">{{ reservoir.name }}</h2>
-        <div class="w-full ">
-          <img class="m-auto" ngSrc="assets/img/modsnow-daily.jpg" width="678" height="906" alt="Modsnow">
-        </div>
-      </div>
-    </ng-template>
-  </p-carousel>
+  <div class="flex flex-row w-full max-xl:flex-col">
+
+    <div class="w-2/3 max-xl:w-full">
+      <canvas
+        baseChart
+        class="p-10"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="'line'"
+      ></canvas>
+    </div>
+
+    <img class="p-8" src="assets/img/modsnow-daily.jpg" alt=""></div>
 </div>
 
-<!--<div class="flex flex-col space-y-4">-->
-<!--  <button class="w-fit px-4 py-2 bg-slate-500 text-white rounded-xl"-->
-<!--          [ngClass]="{'ring-offset-2 ring ring-slate-500': num===i}"-->
-<!--          *ngFor="let res of reservoirs; index as i"-->
-<!--          (click)="setPage(i)">-->
-<!--    {{ res.name }}-->
-<!--  </button>-->
-<!--</div>-->
+<ng-template #unselected>
+  <div class="flex flex-col justify-center py-4">
+    <h3 *ngIf="!reservoir" class="text-center text-3xl">Заснеженность MODSNOW</h3>
+    <p-carousel [value]="reservoirs" [numVisible]="3" [numScroll]="3" [circular]="true"
+                [responsiveOptions]="responsiveOptions">
+      <ng-template let-reservoirs pTemplate="item">
+        <div class="mx-4 h-full ">
+          <h2 class="text-2xl font-medium text-center my-6">{{ reservoirs }}</h2>
+          <div class="w-full ">
+            <img class="m-auto" ngSrc="assets/img/modsnow-daily.jpg" width="678" height="906" alt="Modsnow">
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</ng-template>
