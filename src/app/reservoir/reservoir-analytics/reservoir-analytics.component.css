@@ -1,0 +1,6 @@
+td {
+  @apply text-sm
+}
+th {
+  @apply text-sm max-w-32
+}

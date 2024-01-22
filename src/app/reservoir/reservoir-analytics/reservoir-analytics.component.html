@@ -1,11 +1,7 @@
 <div class="flex flex-col justify-center">
-  <div class="flex w-fit mx-auto p-8 rounded ring-2 ring-slate-300 space-x-5 mt-8 text-lg font-medium bg-white">
-    <p>Данные за </p>
-    <p-calendar [(ngModel)]="startYear" class="ring-2 ring-slate-500 rounded" [minDate]="minDate" [maxDate]="endYear" view="year" dateFormat="yy" (ngModelChange)="dateChange()"></p-calendar>
-    <p>-</p>
-    <p-calendar [(ngModel)]="endYear" class="ring-2 ring-slate-500 rounded" [minDate]="startYear" [maxDate]="maxDate" view="year" dateFormat="yy" (ngModelChange)="dateChange()"></p-calendar>
-  </div>
-  <div class="w-full flex px-8 pb-8 justify-between">
+  <h3 class="text-center text-3xl">{{reservoir?.name}}</h3>
+
+  <div class="flex flex-row flex-1 px-8 pb-8 space-x-8">
     <div class="flex flex-col">
       <canvas
         baseChart
@@ -46,32 +42,39 @@
           <td>{{ avgValue | number: '.0-0' }}</td>
           <td>100</td>
         </tr>
-        <tr class="text-amber-600">
+        <tr class="text-green-600">
           <td>Максимальное значение {{ this.maxValue?.year }}</td>
           <td *ngFor="let val of maxByMonth">{{ val | number: '.0-0' }}</td>
           <td>{{ (maxValue?.value!! * 0.031) | number: '.0-0' }}</td>
           <td>{{ maxValue?.value | number: '.0-0' }}</td>
           <td>{{ (maxValue?.value!! * 100 / avgValue!!) | number: '.0-0' }}</td>
         </tr>
-        <tr class="text-green-600">
+        <tr class="text-rose-600">
           <td>Минимальное значение {{ this.minValue?.year }}</td>
           <td *ngFor="let val of minByMonth">{{ val | number: '.0-0' }}</td>
           <td>{{ (minValue?.value!! * 0.031) | number: '.0-0' }}</td>
           <td>{{ minValue?.value | number: '.0-0' }}</td>
           <td>{{ (minValue?.value!! * 100 / avgValue!!) | number: '.0-0' }}</td>
         </tr>
-        <tr class="text-rose-600">
+        <tr class="text-amber-600">
           <td>Значение за прошлый {{ this.pastYear?.year }}</td>
           <td *ngFor="let val of pastYearByMonth">{{ val | number: '.0-0' }}</td>
           <td>{{ (pastYear?.value!! * 0.031) | number: '.0-0' }}</td>
           <td>{{ pastYear?.value | number: '.0-0' }}</td>
           <td>{{ (pastYear?.value!! * 100 / avgValue!!) | number: '.0-0' }}</td>
         </tr>
+        <tr *ngIf="selectedYear" class="text-purple-600">
+          <td>Значение за {{ selectedYear.year }}</td>
+          <td *ngFor="let val of selectedYearValue">{{ val | number: '.0-0' }}</td>
+          <td>{{ (selectedYear.value!! * 0.031) | number: '.0-0' }}</td>
+          <td>{{ selectedYear.value | number: '.0-0' }}</td>
+          <td>{{ (selectedYear.value!! * 100 / avgValue!!) | number: '.0-0' }}</td>
+        </tr>
         </tbody>
       </table>
     </div>
-    <div class="pt-8">
-      <table>
+    <div class="flex flex-row space-x-4 pt-8">
+      <table *ngFor="let chunked of chunkedYears">
         <thead>
         <tr>
           <th>Год</th>
@@ -79,7 +82,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of filteredYears">
+        <tr *ngFor="let item of chunked" (click)="yearSelect(item)">
           <td>{{ item.year }}</td>
           <td>{{ item.value }}</td>
         </tr>
