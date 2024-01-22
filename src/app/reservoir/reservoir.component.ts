@@ -32,15 +32,6 @@ export class ReservoirComponent implements OnInit {
       ]
     },
     {
-      name: 'Заснеженность',
-      isActive: false,
-      isOpen: false,
-      children: [
-        {name: 'Срочные данные', path: '/reservoir/snow/current'},
-        {name: 'За все время', path: '/reservoir/snow/all-time'}
-      ]
-    },
-    {
       name: 'Гидрометрия',
       isActive: false,
       isOpen: false,
@@ -52,6 +43,19 @@ export class ReservoirComponent implements OnInit {
         {name: 'Контракты', path: '/reservoir/hydro/contract'},
         {name: 'Водомерные работы', path: '/reservoir/hydro/works'}
       ]
+    },
+    {
+      name: 'MODSNOW',
+      isActive: false,
+      isOpen: false,
+      children: [
+        {name: 'Срочные данные', path: '/reservoir/snow/current'},
+        {name: 'За все время', path: '/reservoir/snow/all-time'}
+      ]
+    },
+    {
+      name: 'Погода',
+      path: '/reservoir/weather'
     },
     {
       name: 'Нормативные документы',

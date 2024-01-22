@@ -20,6 +20,7 @@ import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicat
 import {LoginComponent} from "./login/login.component";
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
+import {WeatherComponent} from "./reservoir/weather/weather.component";
 
 const routes: Routes = [
   {
@@ -44,6 +45,9 @@ const routes: Routes = [
               {path: 'current', component: ModsnowDailyComponent},
               {path: 'all-time', component: ModsnowYearlyComponent}
             ]},
+          {
+            path: 'weather', component: WeatherComponent
+          },
           {path: 'hydro', children: [
               {path: '', pathMatch: 'full', redirectTo: 'posts'},
               {path: 'posts', component: HydroPostComponent},

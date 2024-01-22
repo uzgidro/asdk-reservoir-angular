@@ -1,0 +1,16 @@
+<div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center" *ngIf="selectedReservoir; else unselected">
+  <h3 class="text-center text-3xl">Прогноз погоды: {{selectedReservoir.name}}</h3>
+
+  <app-weather-detailed class="w-fit" [name]="selectedReservoir.name"></app-weather-detailed>
+</div>
+
+<ng-template #unselected>
+  <div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center pb-20">
+    <h3 class="text-center text-3xl">Прогноз погоды</h3>
+
+    <div class="grid gap-4 xl:grid-cols-3">
+      <app-weather-detailed *ngFor="let item of reservoirs" [name]="item.name" (click)="select(item.id)"></app-weather-detailed>
+    </div>
+
+  </div>
+</ng-template>
