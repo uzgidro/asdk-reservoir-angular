@@ -112,11 +112,19 @@ export class ReservoirComponent implements OnInit {
       }
       this.sideMenuVisible = true
     } else {
-      this.router.navigate([], {
-        relativeTo: this.activatedRoute,
-        queryParams: {reservoir: id},
-        queryParamsHandling: 'merge'
-      });
+      if (id === this.selectedReservoirId) {
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute,
+          queryParams: {reservoir: null},
+          queryParamsHandling: 'merge',
+        });
+      } else {
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute,
+          queryParams: {reservoir: id},
+          queryParamsHandling: 'merge'
+        });
+      }
     }
   }
 
