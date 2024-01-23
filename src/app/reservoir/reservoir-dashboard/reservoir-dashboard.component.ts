@@ -70,6 +70,12 @@ export class ReservoirDashboardComponent implements OnInit {
     })
   }
 
+  navigateToReservoirWeather(id: string) {
+    this.router.navigate(['/reservoir/weather'], {
+      queryParams: {reservoir: id}
+    })
+  }
+
   // public lineChartData: ChartConfiguration['data'] = {
   //   datasets: [
   //     {

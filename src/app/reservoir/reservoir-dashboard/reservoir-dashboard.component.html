@@ -16,6 +16,7 @@
     <h2 class="card-title my-2">Данные по водохранилищам</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-5 mb-8">
       <app-reservoir-current  *ngFor="let res of reservoirs"
+                              (click)="navigateToReservoirCurrent(res.id)"
                               [level]="res.currentLevel"
                              [name]="res.name"
                              [release]="res.currentRelease"
@@ -24,7 +25,7 @@
 
     <h2 class="card-title my-2">Погода</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
-      <app-weather *ngFor="let res of reservoirs" [name]="res.name"></app-weather>
+      <app-weather *ngFor="let res of reservoirs" (click)="navigateToReservoirWeather(res.id)" [name]="res.name"></app-weather>
     </div>
   </div>
 </div>
