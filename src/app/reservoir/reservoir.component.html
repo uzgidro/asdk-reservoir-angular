@@ -14,7 +14,7 @@
     <nav>
       <ul class="text-slate-200 font-medium text-sm mt-4">
         <li *ngFor="let item of menuItems">
-          <a class="items-center flex flex-row justify-between" [routerLink]="item.path" [queryParamsHandling]="item.path?.includes('dashboard') ? '' : 'preserve'" routerLinkActive="active" (click)="selectItem(item)"
+          <a *ngIf="selectedReservoirId || item !== waterMenuItem" class="items-center flex flex-row justify-between" [routerLink]="item.path" [queryParamsHandling]="item.path?.includes('dashboard') ? '' : 'preserve'" routerLinkActive="active" (click)="selectItem(item)"
              [ngClass]="{'parent-active': item.isActive}">{{ item.name }} <i *ngIf="!item.path" class="pi" [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i></a>
           <ul *ngIf="item.children && item.isOpen" [@DropDownMenu]="">
             <li class="pl-4" *ngFor="let childItem of item.children">

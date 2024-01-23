@@ -62,6 +62,8 @@ export class ReservoirComponent implements OnInit {
       path: '/reservoir/docs',
     }
   ];
+
+  waterMenuItem =this.menuItems[1]
   reservoirs = this.env.getRegions()
   selectedReservoirId: string = ''
   sideMenuVisible = false
