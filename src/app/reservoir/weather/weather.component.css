@@ -1,0 +1,7 @@
+tr td:first-child {
+  @apply text-left
+}
+
+tr td:last-child {
+  @apply text-right
+}

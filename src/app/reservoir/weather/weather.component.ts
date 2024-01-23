@@ -24,6 +24,7 @@ import {WeatherDetailedComponent} from "../../shared/component/wearher-detailed/
 export class WeatherComponent implements OnInit {
   selectedReservoir?: RegionInfo
   reservoirs?: RegionInfo[]
+  date?: Date
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
   }
@@ -32,6 +33,7 @@ export class WeatherComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
+        this.date = new Date()
         if (!this.selectedReservoir) {
           this.reservoirs = this.env.getRegions()
         }
