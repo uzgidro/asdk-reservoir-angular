@@ -72,7 +72,7 @@ export class ModsnowDailyComponent implements OnInit {
       }
     })
 
-    this.reservoirs = this.getProductsData();
+    this.reservoirs = this.env.getRegions().map(value => value.name);
 
     this.responsiveOptions = [
       {
@@ -114,16 +114,5 @@ export class ModsnowDailyComponent implements OnInit {
         labels: height,
       };
     }
-  }
-
-  getProductsData() {
-    return [
-      'Андижан',
-      'Гисарак',
-      'Тупаланг',
-      'Сардоба',
-      'Ахангаран',
-      'Чарвак',
-    ]
   }
 }

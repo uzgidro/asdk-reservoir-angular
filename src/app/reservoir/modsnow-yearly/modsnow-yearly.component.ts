@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {EnvService} from "../../shared/service/env.service";
 import {ReservoirService} from "../reservoir.service";
 import {Chart, registerables} from "chart.js";
+import {NgChartsModule} from "ng2-charts";
 
 @Component({
   selector: 'app-modsnow-yearly',
@@ -14,13 +15,16 @@ import {Chart, registerables} from "chart.js";
     imports: [
         CarouselModule,
         NgOptimizedImage,
-        SharedModule
+        SharedModule,
+        NgChartsModule
     ],
   templateUrl: './modsnow-yearly.component.html',
   styleUrl: './modsnow-yearly.component.css'
 })
 export class ModsnowYearlyComponent implements OnInit{
-  reservoir?: RegionInfo
+  selectedReservoir?: RegionInfo
+  reservoirs: string[] = [];
+  responsiveOptions: any[] = []
 
   constructor(private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
   }
@@ -29,9 +33,18 @@ export class ModsnowYearlyComponent implements OnInit{
     Chart.register(...registerables);
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
+        this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
       }
     })
+    this.reservoirs = this.env.getRegions().map(value => value.name);
+
+    this.responsiveOptions = [
+      {
+        breakpoint: '1499px',
+        numVisible: 1,
+        numScroll: 1
+      }
+    ];
   }
 
 

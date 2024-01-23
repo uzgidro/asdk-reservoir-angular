@@ -1,6 +1,23 @@
-    <div class="mx-4 h-full ">
-      <h2 class="text-3xl font-medium text-center my-6">{{ reservoir?.name }}</h2>
-      <div class="w-full ">
-        <img class="m-auto" ngSrc="assets/img/modsnow-year.jpg" width="1527" height="907" alt="Modsnow">
-      </div>
-    </div>
+<div class="flex flex-col justify-center py-4"  *ngIf="selectedReservoir; else unselected">
+  <h3 class="text-center text-3xl">{{selectedReservoir.name}}</h3>
+
+  <div class="flex flex-row w-full max-xl:flex-col">
+    <img class="p-8" src="assets/img/modsnow-year.jpg" alt=""></div>
+</div>
+
+<ng-template #unselected>
+  <div class="flex flex-col justify-center py-4">
+    <h3 *ngIf="!selectedReservoir" class="text-center text-3xl">Заснеженность MODSNOW</h3>
+    <p-carousel [value]="reservoirs" [numVisible]="2" [numScroll]="2" [circular]="true"
+                [responsiveOptions]="responsiveOptions">
+      <ng-template let-reservoirs pTemplate="item">
+        <div class="mx-4 h-full ">
+          <h2 class="text-2xl font-medium text-center my-6">{{ reservoirs }}</h2>
+          <div class="w-full ">
+            <img class="m-auto" ngSrc="assets/img/modsnow-year.jpg" width="1527" height="907" alt="Modsnow">
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</ng-template>
