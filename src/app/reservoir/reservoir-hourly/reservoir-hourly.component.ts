@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EnvService} from "../../shared/service/env.service";
 import {ChartConfiguration} from "chart.js";
 import {RegionInfo} from "../../../environments/environment.development";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ReservoirService} from "../reservoir.service";
 
 @Component({
@@ -23,7 +23,7 @@ export class ReservoirHourlyComponent implements OnInit{
     {name: 'Объём', type: 'млн. м3'}
   ]
 
-  constructor(private env: EnvService, private activatedRoute: ActivatedRoute, private resService: ReservoirService) {
+  constructor(private router: Router, private env: EnvService, private activatedRoute: ActivatedRoute, private resService: ReservoirService) {
   }
 
   async ngOnInit() {
@@ -36,6 +36,12 @@ export class ReservoirHourlyComponent implements OnInit{
           this.setData()
         }
       }
+    })
+  }
+
+  navigateToReservoirWeather(id: string) {
+    this.router.navigate(['/reservoir/weather'], {
+      queryParams: {reservoir: id}
     })
   }
 
