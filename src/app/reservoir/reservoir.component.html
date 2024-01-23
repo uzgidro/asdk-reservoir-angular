@@ -4,7 +4,7 @@
     <nav>
       <ul class="text-slate-200 font-medium text-sm flex flex-row space-x-4 items-center text-center">
         <li *ngFor="let item of reservoirs" class="hover:cursor-pointer">
-          <a [ngClass]="{'active': selectedReservoir == item.id}" (click)="changeReservoir(item.id)">{{ item.name }}</a>
+          <a [ngClass]="{'active': selectedReservoirId == item.id}" (click)="changeReservoir(item.id)">{{ item.name }}</a>
       </ul>
     </nav>
   </div>

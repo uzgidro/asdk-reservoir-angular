@@ -63,7 +63,7 @@ export class ReservoirComponent implements OnInit {
     }
   ];
   reservoirs = this.env.getRegions()
-  selectedReservoir: string = ''
+  selectedReservoirId: string = ''
   sideMenuVisible = false
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private env: EnvService) {
@@ -82,7 +82,7 @@ export class ReservoirComponent implements OnInit {
     }
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.selectedReservoir = value['reservoir']
+        this.selectedReservoirId = value['reservoir']
         const url = this.router.url.split('?')[0]
         const selectedItem = this.findMenuByPath(url)
         if (selectedItem) {
