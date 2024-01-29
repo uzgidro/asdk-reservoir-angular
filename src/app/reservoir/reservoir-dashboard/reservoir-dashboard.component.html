@@ -1,6 +1,6 @@
-<div class="flex flex-row max-xl:flex-col w-full h-full p-4 space-x-4">
+<div class="lg:grid lg:grid-cols-8 2xl:grid-cols-12 flex flex-col w-full h-full p-4 space-x-4">
 
-  <div class="flex flex-col w-1/2 max-xl:w-full material-card">
+  <div class="flex flex-col lg:col-span-4 2xl:col-span-5 2xl:col-start-2 material-card">
     <h2 class="card-title">Приток воды к водохранилищам</h2>
     <canvas *ngFor="let item of data"
             (click)="navigateToReservoirCurrent(item.id)"
@@ -12,9 +12,9 @@
             [type]="lineChartType"
     ></canvas>
   </div>
-  <div class="flex-1">
+  <div class="lg:col-span-4 2xl:col-span-5">
     <h2 class="card-title my-2">Данные по водохранилищам</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-5 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
       <app-reservoir-current  *ngFor="let res of reservoirs"
                               (click)="navigateToReservoirCurrent(res.id)"
                               [level]="res.currentLevel"

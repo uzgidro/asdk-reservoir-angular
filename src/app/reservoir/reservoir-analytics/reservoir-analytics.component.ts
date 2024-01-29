@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, registerables} from "chart.js";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
-import {DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {DecimalPipe, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
@@ -18,14 +18,16 @@ import {RegionInfo} from "../../../environments/environment.development";
     DecimalPipe,
     CalendarModule,
     FormsModule,
-    NgIf
+    NgIf,
+    NgStyle
   ],
   templateUrl: './reservoir-analytics.component.html',
   styleUrl: './reservoir-analytics.component.css'
 })
-export class ReservoirAnalyticsComponent implements OnInit {
+export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
   reservoir?: RegionInfo
+  tableHeight?: number
 
   protected readonly years: YearValue[] = [
     {year: 1993, value: 2346},
@@ -80,8 +82,6 @@ export class ReservoirAnalyticsComponent implements OnInit {
     {min: 1, max: 2}
   ]
 
-  chunkedYears: any
-
   startYear = new Date(1993, 0)
   endYear = new Date(2023, 0)
   pastYear?: YearValue
@@ -123,6 +123,7 @@ export class ReservoirAnalyticsComponent implements OnInit {
   }
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @ViewChild('infoContainer') infoContainer?: ElementRef
 
   constructor(private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
     Chart.register(...registerables);
@@ -139,13 +140,19 @@ export class ReservoirAnalyticsComponent implements OnInit {
         this.getAvg()
       }
     })
+  }
 
-    const chunkValue = 16
-    const result = [];
-    for (let i = 0; i < this.years.length; i += chunkValue) {
-      result.push(this.years.slice(i, i + chunkValue));
+  ngAfterViewInit() {
+    setTimeout(() =>
+      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight
+    )
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (this.tableHeight !== this.infoContainer?.nativeElement.offsetHeight) {
+      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight
     }
-    this.chunkedYears = result
   }
 
   yearSelect(yearValue: YearValue) {

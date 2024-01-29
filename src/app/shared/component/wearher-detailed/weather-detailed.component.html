@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="flex flex-row space-x-8">
+  <div class="grid grid-cols-7 gap-4">
     <div class="flex flex-col space-y-4 items-center" *ngFor="let item of hourlyWeather">
       <p>{{ item.time | date:'HH:mm' }}</p>
       <span class="material-symbols-outlined">{{ item.icon }}</span>
