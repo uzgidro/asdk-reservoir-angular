@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, registerables} from "chart.js";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
-import {DecimalPipe, NgForOf, NgIf, NgStyle} from "@angular/common";
+import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
@@ -19,7 +19,8 @@ import {RegionInfo} from "../../../environments/environment.development";
     CalendarModule,
     FormsModule,
     NgIf,
-    NgStyle
+    NgStyle,
+    NgClass
   ],
   templateUrl: './reservoir-analytics.component.html',
   styleUrl: './reservoir-analytics.component.css'
@@ -235,36 +236,36 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         {
           data: this.minByMonth,
           label: `Минимум ${this.minValue?.year}`,
-          borderColor: 'rgba(225, 29, 72,1)',
+          borderColor: 'rgba(225, 29, 72,0.4)',
           pointBackgroundColor: '#fff',
-          pointBorderColor: 'rgba(225, 29, 72,1)',
+          pointBorderColor: 'rgba(225, 29, 72,0.4)',
           pointHoverBackgroundColor: 'rgba(225, 29, 72,0.8)',
           pointHoverBorderColor: '#fff',
         },
         {
           data: this.avgByMonth,
           label: `Среднее за года (${this.startYear.getFullYear()} - ${this.endYear.getFullYear()})`,
-          borderColor: 'rgba(37, 99, 235,1)',
+          borderColor: 'rgba(37, 99, 235,0.4)',
           pointBackgroundColor: '#fff',
-          pointBorderColor: 'rgba(37, 99, 235,1)',
+          pointBorderColor: 'rgba(37, 99, 235,0.4)',
           pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
           pointHoverBorderColor: '#fff',
         },
         {
           data: this.pastYearByMonth,
           label: `Данные за прошлый ${this.years[this.years.length - 1].year}`,
-          borderColor: 'rgba(217, 119, 6,1)',
+          borderColor: 'rgba(217, 119, 6,0.4)',
           pointBackgroundColor: '#fff',
-          pointBorderColor: 'rgba(217, 119, 6,1)',
+          pointBorderColor: 'rgba(217, 119, 6,0.4)',
           pointHoverBackgroundColor: 'rgba(217, 119, 6,0.2)',
           pointHoverBorderColor: '#fff',
         },
         {
           data: this.maxByMonth,
           label: `Максимум ${this.maxValue?.year}`,
-          borderColor: 'rgba(22, 163, 74,1)',
+          borderColor: 'rgba(22, 163, 74,0.4)',
           pointBackgroundColor: '#fff',
-          pointBorderColor: 'rgba(22, 163, 74,1)',
+          pointBorderColor: 'rgba(22, 163, 74,0.4)',
           pointHoverBackgroundColor: 'rgba(22, 163, 74,0.8)',
           pointHoverBorderColor: '#fff',
         },

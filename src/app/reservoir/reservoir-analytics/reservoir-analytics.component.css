@@ -4,3 +4,15 @@ td {
 th {
   @apply text-sm max-w-32
 }
+
+.min {
+  @apply text-red-600
+}
+
+.max {
+  @apply text-green-600
+}
+
+.selected {
+  @apply text-purple-600
+}
