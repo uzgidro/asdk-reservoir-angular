@@ -70,17 +70,19 @@ export class ReservoirMonthComponent implements OnInit {
     let month: Date
     let tenDays = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     let elevenDays = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    let firstDecadeLimit = 0
-    let secondDecadeLimit = 0
-    let thirdDecadeLimit = 0
+
 
     for (let i = 0; i < 12; i++) {
+      let firstDecadeLimit = 0
+      let secondDecadeLimit = 0
+      let thirdDecadeLimit = 0
       month = new Date(new Date().getFullYear(), i)
-      if (month.getMonth() !== today.getMonth()) {
+      if (month.getMonth() < today.getMonth()) {
+        const date = month.setFullYear(new Date().getFullYear(), i+1, 0)
         firstDecadeLimit = 10
         secondDecadeLimit = 10
-        thirdDecadeLimit = month.getDate()
-      } else {
+        thirdDecadeLimit = new Date(date).getDate() - 20
+      } else if (month.getMonth() === today.getMonth()) {
         if (today.getDate() < 11) {
           firstDecadeLimit = today.getDate()
         } else if (today.getDate() < 21) {
@@ -91,17 +93,19 @@ export class ReservoirMonthComponent implements OnInit {
           secondDecadeLimit = 10
           thirdDecadeLimit = today.getDate() - 20
         }
-        break
       }
-    }
     this.data.push({
       date: month!!,
       tenDays: tenDays,
       elevenDays: elevenDays,
-      firstDecadeLimit: firstDecadeLimit!!,
-      secondDecadeLimit: secondDecadeLimit!!,
-      thirdDecadeLimit: thirdDecadeLimit!!
+      firstDecadeLimit: firstDecadeLimit,
+      secondDecadeLimit: secondDecadeLimit,
+      thirdDecadeLimit: thirdDecadeLimit
     })
+      if (month.getMonth() === today.getMonth()) {
+        break
+      }
+    }
 
   }
 }

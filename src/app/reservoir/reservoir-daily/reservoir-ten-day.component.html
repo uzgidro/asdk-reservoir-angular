@@ -5,7 +5,7 @@
     <thead>
     <tr>
       <th rowspan="2">Данные</th>
-      <th [colSpan]="daysInDecade.length">{{today.getMonth() | date:'MMMM' | rusMonth}}</th>
+      <th [colSpan]="daysInDecade.length">{{today | date:'MMMM' | rusMonth}}</th>
       <th rowspan="2">Среднее</th>
     </tr>
     <tr>
