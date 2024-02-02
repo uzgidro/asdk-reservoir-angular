@@ -25,7 +25,7 @@ export class ReservoirComponent implements OnInit {
       isOpen: false,
       children: [
         {name: 'Срочные данные', path: '/reservoir/water/current'},
-        {name: '10 дней', path: '/reservoir/water/10-days'},
+        {name: 'Декада', path: '/reservoir/water/decade'},
         {name: 'Пе месяцам', path: '/reservoir/water/month'},
         {name: 'По годам', path: '/reservoir/water/year'},
         {name: 'Аналитика', path: '/reservoir/water/analytics'}

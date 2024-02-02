@@ -5,11 +5,11 @@ import {RegionInfo} from "../../../environments/environment.development";
 import {ReservoirService} from "../reservoir.service";
 
 @Component({
-  selector: 'app-reservoir-daily',
-  templateUrl: './reservoir-ten-day.component.html',
-  styleUrls: ['./reservoir-ten-day.component.css']
+  selector: 'app-reservoir-decade',
+  templateUrl: './reservoir-decade.component.html',
+  styleUrls: ['./reservoir-decade.component.css']
 })
-export class ReservoirTenDayComponent implements OnInit {
+export class ReservoirDecadeComponent implements OnInit {
 
 
   today = new Date();

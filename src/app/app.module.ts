@@ -28,7 +28,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {ResizableModule} from "angular-resizable-element";
 import {ReservoirComponent} from './reservoir/reservoir.component';
 import {ReservoirHourlyComponent} from "./reservoir/reservoir-hourly/reservoir-hourly.component";
-import {ReservoirTenDayComponent} from './reservoir/reservoir-daily/reservoir-ten-day.component';
+import {ReservoirDecadeComponent} from './reservoir/reservoir-decade/reservoir-decade.component';
 import {BlankPageComponent} from './shared/temp/blank-page/blank-page.component';
 import {ReservoirDashboardComponent} from './reservoir/reservoir-dashboard/reservoir-dashboard.component';
 import {NgChartsModule} from "ng2-charts";
@@ -65,7 +65,7 @@ import {RusMonthPipe} from "./shared/pipe/rus-month.pipe";
     LoggerComponent,
     ReservoirComponent,
     ReservoirHourlyComponent,
-    ReservoirTenDayComponent,
+    ReservoirDecadeComponent,
     BlankPageComponent,
     ReservoirDashboardComponent,
     HydroWorksComponent

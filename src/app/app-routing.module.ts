@@ -7,7 +7,7 @@ import {GesComponent} from "./ges/ges.component";
 import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
 import {ReservoirHourlyComponent} from "./reservoir/reservoir-hourly/reservoir-hourly.component";
-import {ReservoirTenDayComponent} from "./reservoir/reservoir-daily/reservoir-ten-day.component";
+import {ReservoirDecadeComponent} from "./reservoir/reservoir-decade/reservoir-decade.component";
 import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reservoir-dashboard.component";
 import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
 import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
@@ -17,7 +17,6 @@ import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
 import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
 import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
-import {LoginComponent} from "./login/login.component";
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 import {WeatherComponent} from "./reservoir/weather/weather.component";
@@ -35,7 +34,7 @@ const routes: Routes = [
           {path: 'water', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ReservoirHourlyComponent},
-              {path: '10-days', component: ReservoirTenDayComponent},
+              {path: 'decade', component: ReservoirDecadeComponent},
               {path: 'month', component: ReservoirMonthComponent},
               {path: 'year', component: ReservoirYearlyComponent},
               {path: 'analytics', component: ReservoirAnalyticsComponent}
@@ -67,9 +66,9 @@ const routes: Routes = [
       // }
     ]
   },
-  {
-    path: 'login', component: LoginComponent
-  },
+  // {
+  //   path: 'login', component: LoginComponent
+  // },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
