@@ -35,6 +35,13 @@
           </tr>
           </thead>
           <tbody>
+          <tr class="text-teal-600">
+            <td>Данные за текущий {{today | date:'yyyy'}}</td>
+            <td *ngFor="let val of currentYearData">{{ val | number: '.0-0' }}</td>
+            <td>{{ (currentYearValue!! * 0.031) | number: '.0-0' }}</td>
+            <td>{{ currentYearValue | number: '.0-0' }}</td>
+            <td>{{ (currentYearValue * 100 / avgValue!!) | number: '.0-0' }}</td>
+          </tr>
           <tr class="text-blue-600">
             <td>Среднее за года {{ this.startYear.getFullYear() }} - {{ this.endYear.getFullYear() }}</td>
             <td *ngFor="let val of avgByMonth">{{ val | number: '.0-0' }}</td>

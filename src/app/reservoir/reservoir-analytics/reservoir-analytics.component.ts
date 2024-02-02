@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, registerables} from "chart.js";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
-import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
+import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
@@ -20,7 +20,8 @@ import {RegionInfo} from "../../../environments/environment.development";
     FormsModule,
     NgIf,
     NgStyle,
-    NgClass
+    NgClass,
+    DatePipe
   ],
   templateUrl: './reservoir-analytics.component.html',
   styleUrl: './reservoir-analytics.component.css'
@@ -95,6 +96,11 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   pastYearByMonth: number[] = []
   selectedYear?: YearValue
   selectedYearValue?: number[] = []
+  today = new Date()
+
+  currentYear: YearValue = {year: this.today.getFullYear(), value: 1776}
+  currentYearData: number[] = []
+  currentYearValue = 0
 
   public lineChartData?: ChartConfiguration['data']
 
@@ -141,6 +147,26 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         this.getAvg()
       }
     })
+    let data: number[] = []
+    for (let i = 0; i < 12; i++) {
+      let value = 0
+      if (i < this.today.getMonth()) {
+        value = this.currentYear.value * Math.floor(Math.random() * (this.randomCoefficient[i].max - this.randomCoefficient[i].min) + this.randomCoefficient[i].min) / 100
+        this.currentYearValue += value
+      }
+      data.push(value)
+    }
+    this.currentYearData = data
+    this.lineChartData?.datasets.push({
+      data: data.filter(item => item !== 0),
+      label: `${this.currentYear.year}`,
+      borderColor: 'rgba(13, 148, 136,1)',
+      pointBackgroundColor: '#fff',
+      pointBorderColor: 'rgba(13, 148, 136,1)',
+      pointHoverBackgroundColor: 'rgba(13, 148, 136,0.8)',
+      pointHoverBorderColor: '#fff',
+    })
+    this.chart?.update()
   }
 
   ngAfterViewInit() {
