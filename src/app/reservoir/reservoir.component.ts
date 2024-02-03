@@ -27,7 +27,7 @@ export class ReservoirComponent implements OnInit {
         {name: 'Срочные данные', path: '/reservoir/water/current'},
         {name: 'Декада', path: '/reservoir/water/decade'},
         {name: 'Пе месяцам', path: '/reservoir/water/month'},
-        {name: 'По годам', path: '/reservoir/water/year'},
+        // {name: 'По годам', path: '/reservoir/water/year'},
         {name: 'Аналитика', path: '/reservoir/water/analytics'}
       ]
     },
@@ -39,8 +39,8 @@ export class ReservoirComponent implements OnInit {
         {name: 'Гидропосты', path: '/reservoir/hydro/posts'},
         {name: 'Водоизмерители', path: '/reservoir/hydro/meter'},
         {name: 'Рейки', path: '/reservoir/hydro/indicator'},
-        {name: 'Журнал и документы', path: '/reservoir/hydro/journal'},
-        {name: 'Контракты', path: '/reservoir/hydro/contract'},
+        // {name: 'Журнал и документы', path: '/reservoir/hydro/journal'},
+        // {name: 'Контракты', path: '/reservoir/hydro/contract'},
         {name: 'Водомерные работы', path: '/reservoir/hydro/works'}
       ]
     },
