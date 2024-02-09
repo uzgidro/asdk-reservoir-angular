@@ -2,6 +2,7 @@ export const environment: EnvInterface = {
   regionId: [
     {
       id: 'and',
+      reservoir_id: 1,
       name: 'Андижан',
       waterIncome: [40, 39, 40, 41, 41, 37, 37, 39, 49, 48, 41, 50, 49],
       waterRelease: [50, 50, 50, 25, 50, 25, 25, 25, 50, 75, 42, 75, 75],
@@ -15,6 +16,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'akh',
+      reservoir_id: 2,
       name: 'Ахангаран',
       waterIncome: [6, 7, 6, 6, 5, 7, 7, 7, 11, 10, 7, 9, 10],
       waterRelease: [10, 11, 10, 9, 9, 10, 10, 9, 10, 10, 10, 10, 10],
@@ -27,6 +29,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'sar',
+      reservoir_id: 3,
       name: 'Сардоба',
       waterIncome: [30, 30, 30, 30, 30, 30, 30, 30, 30, 40, 31, 40, 40],
       waterRelease: [45, 45, 45, 45, 55, 55, 55, 55, 55, 40, 49, 40, 40],
@@ -39,6 +42,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'his',
+      reservoir_id: 4,
       name: 'Гисарак',
       waterIncome: [6, 5, 6, 7, 7, 6, 5, 4, 4, 4, 5, 3, 3],
       waterRelease: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -51,6 +55,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'tup',
+      reservoir_id: 5,
       name: 'Тупаланг',
       waterIncome: [10, 10, 12, 14, 14, 15, 17, 17, 17, 14, 14, 17, 11],
       waterRelease: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -63,6 +68,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'chor',
+      reservoir_id: 6,
       name: 'Чарвак',
       waterIncome: [64, 57, 61, 63, 64, 57, 67, 66, 76, 77, 65, 75, 72],
       waterRelease: [155, 122, 120, 142, 148, 144, 148, 141, 138, 150, 140, 180, 228],
@@ -84,6 +90,7 @@ export interface EnvInterface {
 
 export interface RegionInfo {
   id: string
+  reservoir_id: number
   name: string
   waterIncome: number[]
   waterRelease: number[]

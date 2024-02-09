@@ -1,7 +1,7 @@
 <table class="bg-white rounded-3xl shadow-xl">
   <thead>
   <tr>
-    <th colspan="3" class="text-xl">{{name}}</th>
+    <th colspan="3" class="text-xl">{{ name }}</th>
   </tr>
   <tr>
     <th>Уровень, м</th>
@@ -12,19 +12,25 @@
   <tbody>
   <tr class="fle">
     <td class="border-0">
-      <div class="flex flex-row items-center justify-center"><p>{{level}}</p>
-        <span class="material-symbols-outlined text-green-600">trending_up</span>
-        <p>2</p></div>
+      <div *ngIf="level" class="flex flex-row items-center justify-center"><p>{{ level.latest | number:'.0-0' }}</p>
+          <span *ngIf="level.difference > 0" class="material-symbols-outlined text-green-600">trending_up</span>
+          <span *ngIf="level.difference == 0" class="material-symbols-outlined">trending_flat</span>
+          <span *ngIf="level.difference < 0" class="material-symbols-outlined text-red-600">trending_down</span>
+        <p>{{level.difference | number:'.0-1' }}</p></div>
     </td>
     <td class="border-0">
-      <div class="flex flex-row items-center justify-center"><p>{{volume}}</p>
-        <span class="material-symbols-outlined">trending_flat</span>
-        <p>0</p></div>
+      <div *ngIf="volume" class="flex flex-row items-center justify-center"><p>{{ volume.latest | number:'.0-0' }}</p>
+          <span *ngIf="volume.difference > 0" class="material-symbols-outlined text-green-600">trending_up</span>
+          <span *ngIf="volume.difference == 0" class="material-symbols-outlined">trending_flat</span>
+          <span *ngIf="volume.difference < 0" class="material-symbols-outlined text-red-600">trending_down</span>
+        <p>{{ volume.difference | number:'.0-1' }}</p></div>
     </td>
     <td class="border-0">
-      <div class="flex flex-row items-center justify-center" ><p>{{release}}</p>
-        <span class="material-symbols-outlined text-red-600">trending_down</span>
-        <p>-2</p></div>
+      <div *ngIf="release" class="flex flex-row items-center justify-center"><p>{{ release.latest | number:'.0-0' }}</p>
+          <span *ngIf="release.difference > 0" class="material-symbols-outlined text-green-600">trending_up</span>
+          <span *ngIf="release.difference == 0" class="material-symbols-outlined">trending_flat</span>
+          <span *ngIf="release.difference < 0" class="material-symbols-outlined text-red-600">trending_down</span>
+        <p>{{ release.difference | number:'.0-1' }}</p></div>
     </td>
   </tr>
   </tbody>

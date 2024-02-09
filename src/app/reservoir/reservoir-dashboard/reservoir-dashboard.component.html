@@ -2,7 +2,7 @@
 
   <div class="flex flex-col lg:col-span-4 2xl:col-span-5 2xl:col-start-2 material-card">
     <h2 class="card-title">Приток воды к водохранилищам</h2>
-    <canvas *ngFor="let item of data"
+    <canvas *ngFor="let item of charts"
             (click)="navigateToReservoirCurrent(item.id)"
             style="height: 14vh"
             baseChart
@@ -15,17 +15,17 @@
   <div class="lg:col-span-4 2xl:col-span-5">
     <h2 class="card-title my-2">Данные по водохранилищам</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-      <app-reservoir-current  *ngFor="let res of reservoirs"
+      <app-reservoir-current  *ngFor="let res of reservoirsData"
                               (click)="navigateToReservoirCurrent(res.id)"
-                              [level]="res.currentLevel"
+                              [level]="res.level"
                              [name]="res.name"
-                             [release]="res.currentRelease"
-                             [volume]="res.currentVolume"></app-reservoir-current>
+                             [release]="res.release"
+                             [volume]="res.volume"></app-reservoir-current>
     </div>
 
     <h2 class="card-title my-2">Погода</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
-      <app-weather *ngFor="let res of reservoirs" (click)="navigateToReservoirWeather(res.id)" [name]="res.name"></app-weather>
+<!--      <app-weather *ngFor="let res of reservoirs" (click)="navigateToReservoirWeather(res.id)" [name]="res.name"></app-weather>-->
     </div>
   </div>
 </div>
