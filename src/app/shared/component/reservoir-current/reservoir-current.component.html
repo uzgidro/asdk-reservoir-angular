@@ -16,21 +16,33 @@
           <span *ngIf="level.difference > 0" class="material-symbols-outlined text-green-600">trending_up</span>
           <span *ngIf="level.difference == 0" class="material-symbols-outlined">trending_flat</span>
           <span *ngIf="level.difference < 0" class="material-symbols-outlined text-red-600">trending_down</span>
-        <p>{{level.difference | number:'.0-1' }}</p></div>
+          <span class="inline-flex">
+            <p *ngIf="level.difference > 0">+</p>
+            <p>{{level.difference | number:'.0-1' }}</p>
+          </span>
+        </div>
     </td>
     <td class="border-0">
       <div *ngIf="volume" class="flex flex-row items-center justify-center"><p>{{ volume.latest | number:'.0-0' }}</p>
           <span *ngIf="volume.difference > 0" class="material-symbols-outlined text-green-600">trending_up</span>
           <span *ngIf="volume.difference == 0" class="material-symbols-outlined">trending_flat</span>
           <span *ngIf="volume.difference < 0" class="material-symbols-outlined text-red-600">trending_down</span>
-        <p>{{ volume.difference | number:'.0-1' }}</p></div>
+        <span class="inline-flex">
+            <p *ngIf="volume.difference > 0">+</p>
+            <p>{{volume.difference | number:'.0-1' }}</p>
+          </span>
+      </div>
     </td>
     <td class="border-0">
       <div *ngIf="release" class="flex flex-row items-center justify-center"><p>{{ release.latest | number:'.0-0' }}</p>
           <span *ngIf="release.difference > 0" class="material-symbols-outlined text-green-600">trending_up</span>
           <span *ngIf="release.difference == 0" class="material-symbols-outlined">trending_flat</span>
           <span *ngIf="release.difference < 0" class="material-symbols-outlined text-red-600">trending_down</span>
-        <p>{{ release.difference | number:'.0-1' }}</p></div>
+        <span class="inline-flex">
+            <p *ngIf="release.difference > 0">+</p>
+            <p>{{release.difference | number:'.0-1' }}</p>
+          </span>
+      </div>
     </td>
   </tr>
   </tbody>

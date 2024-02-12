@@ -1,2 +1,15 @@
-<div
-  class="border-x-4 border-x-blue-600 border-y-4 border-y-green-600 rounded-full h-8 w-8 animate-spin"></div>
+<div class="flex justify-center items-center h-full">
+
+  <div
+    class="border-x-4 border-x-blue-600 border-y-4 border-y-green-600 rounded-full animate-spin"
+    [ngClass]="{
+      'h-2 w-2': size == 'xs',
+      'h-4 w-4': size == 'sm',
+      'h-8 w-8': size == 'm',
+      'h-12 w-12': size == 'lg',
+      'h-16 w-16': size == 'xl',
+      'h-20 w-20': size == '2xl',
+      'h-24 w-24': size == '3xl',
+    }"
+  ></div>
+</div>

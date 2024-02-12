@@ -144,6 +144,7 @@ export class ReservoirDashboardComponent implements OnInit {
         }
       })
     }
+    console.log(this.charts)
   }
 
   private setupChartTimeline() {
