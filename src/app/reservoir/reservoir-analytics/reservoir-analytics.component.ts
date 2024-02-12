@@ -5,9 +5,8 @@ import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/c
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
-import {EnvService} from "../../shared/service/env.service";
-import {ReservoirService} from "../reservoir.service";
-import {RegionInfo} from "../../../environments/environment.development";
+import {ApiService} from "../../service/api.service";
+import {ComplexValueResponse} from "../../shared/response/values-response";
 
 @Component({
   selector: 'app-reservoir-analytics',
@@ -28,64 +27,15 @@ import {RegionInfo} from "../../../environments/environment.development";
 })
 export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
-  reservoir?: RegionInfo
+  reservoirId?: number
+  reservoirName?: string
   tableHeight?: number
+  mSecondsInDay = 0.0864
 
-  protected readonly years: YearValue[] = [
-    {year: 1993, value: 2346},
-    {year: 1994, value: 2233},
-    {year: 1995, value: 1575},
-    {year: 1996, value: 1613},
-    {year: 1997, value: 1671},
-    {year: 1998, value: 2596},
-    {year: 1999, value: 1799},
-    {year: 2000, value: 1282},
-    {year: 2001, value: 1151},
-    {year: 2002, value: 2562},
-    {year: 2003, value: 2484},
-    {year: 2004, value: 2099},
-    {year: 2005, value: 2245},
-    {year: 2006, value: 1783},
-    {year: 2007, value: 1709},
-    {year: 2008, value: 1284},
-    {year: 2009, value: 2008},
-    {year: 2010, value: 1893},
-    {year: 2011, value: 1245},
-    {year: 2012, value: 1810},
-    {year: 2013, value: 1400},
-    {year: 2014, value: 1522},
-    {year: 2015, value: 1948},
-    {year: 2016, value: 1921},
-    {year: 2017, value: 1583},
-    {year: 2018, value: 1358},
-    {year: 2019, value: 2269},
-    {year: 2020, value: 1816},
-    {year: 2021, value: 1116},
-    {year: 2022, value: 1376},
-    {year: 2023, value: 1368}
-  ]
+  protected years: YearValue[] = []
 
-  private readonly avgCoefficient = [1.9, 2.1, 5.4, 13.7, 21.3, 22.2, 15.4, 7.5, 3.7, 2.5, 2.3, 2]
-  private readonly minCoefficient = [3, 2.6, 5.1, 12.4, 25.8, 23, 11.9, 6.3, 3.9, 2.5, 1.9, 1.9]
-  private readonly maxCoefficient = [1.2, 2, 2.9, 16.2, 18.8, 19.6, 19.8, 9.1, 4.2, 2.9, 2.2, 1]
-  private readonly pastYearCoefficient = [1.4, 1.5, 8.1, 18.3, 23.3, 18.8, 13.4, 5.2, 3.3, 2.1, 3.1, 1.6]
-  private readonly randomCoefficient: { min: number, max: number }[] = [
-    {min: 1.2, max: 3},
-    {min: 1.5, max: 2.6},
-    {min: 2.9, max: 8.1},
-    {min: 13.7, max: 18.3},
-    {min: 18.8, max: 25.8},
-    {min: 18.8, max: 23},
-    {min: 11.9, max: 19.8},
-    {min: 5.2, max: 9.1},
-    {min: 3.3, max: 4.2},
-    {min: 2.1, max: 2.9},
-    {min: 1.9, max: 3.1},
-    {min: 1, max: 2}
-  ]
-
-  startYear = new Date(1993, 0)
-  endYear = new Date(2023, 0)
+  startYear?: Date
+  endYear?: Date
   pastYear?: YearValue
   avgValue?: number
   minValue?: YearValue
@@ -95,14 +45,15 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   maxByMonth: number[] = []
   pastYearByMonth: number[] = []
   selectedYear?: YearValue
-  selectedYearValue?: number[] = []
+  selectedYearByMonth?: number[] = []
   today = new Date()
 
-  currentYear: YearValue = {year: this.today.getFullYear(), value: 1776}
-  currentYearData: number[] = []
-  currentYearValue = 0
+  // currentYear: YearValue = {year: this.today.getFullYear(), value: 1776}
+  // currentYearData: number[] = []
+  // currentYearValue = 0
 
-  public lineChartData?: ChartConfiguration['data']
+  public chartDataset: any[] = []
+  public chartLabels = ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авн.', 'Сент.', 'Окт.', 'Ноя.', 'Дек']
 
   public lineChartOptions: ChartConfiguration['options'] = {
     elements: {
@@ -111,7 +62,6 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
       },
     },
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
       y: {
         position: 'left',
       }
@@ -132,41 +82,37 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   @ViewChild('infoContainer') infoContainer?: ElementRef
 
-  constructor(private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
     Chart.register(...registerables);
   }
 
   ngOnInit() {
-    this.configureData()
-    this.getPastYearByMonth()
-    this.pastYear = this.years[this.years.length - 1]
-    this.setupChart()
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        // this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
-        this.getAvg()
+        this.reservoirId = value['reservoir']
+        this.configureData(value['reservoir'])
       }
     })
-    let data: number[] = []
-    for (let i = 0; i < 12; i++) {
-      let value = 0
-      if (i < this.today.getMonth()) {
-        value = this.currentYear.value * Math.floor(Math.random() * (this.randomCoefficient[i].max - this.randomCoefficient[i].min) + this.randomCoefficient[i].min) / 100
-        this.currentYearValue += value
-      }
-      data.push(value)
-    }
-    this.currentYearData = data
-    this.lineChartData?.datasets.push({
-      data: data.filter(item => item !== 0),
-      label: `${this.currentYear.year}`,
-      borderColor: 'rgba(13, 148, 136,1)',
-      pointBackgroundColor: 'rgba(13, 148, 136,0.8)',
-      pointBorderColor: 'rgba(13, 148, 136,1)',
-      pointHoverBackgroundColor: 'rgba(13, 148, 136,0.8)',
-      pointHoverBorderColor: '#fff',
-    })
-    this.chart?.update()
+    // let data: number[] = []
+    // for (let i = 0; i < 12; i++) {
+    //   let value = 0
+    //   if (i < this.today.getMonth()) {
+    //     value = this.currentYear.value * Math.floor(Math.random() * (this.randomCoefficient[i].max - this.randomCoefficient[i].min) + this.randomCoefficient[i].min) / 100
+    //     this.currentYearValue += value
+    //   }
+    //   data.push(value)
+    // }
+    // this.currentYearData = data
+    // this.lineChartData?.datasets.push({
+    //   data: data.filter(item => item !== 0),
+    //   label: `${this.currentYear.year}`,
+    //   borderColor: 'rgba(13, 148, 136,1)',
+    //   pointBackgroundColor: 'rgba(13, 148, 136,0.8)',
+    //   pointBorderColor: 'rgba(13, 148, 136,1)',
+    //   pointHoverBackgroundColor: 'rgba(13, 148, 136,0.8)',
+    //   pointHoverBorderColor: '#fff',
+    // })
+    // this.chart?.update()
   }
 
   ngAfterViewInit() {
@@ -183,83 +129,88 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   }
 
   yearSelect(yearValue: YearValue) {
-    let data: number[] = []
-    for (let coef of this.randomCoefficient) {
-      const value = yearValue.value * Math.floor(Math.random() * (coef.max - coef.min) + coef.min) / 100
-      data.push(value)
+    if (this.reservoirId) {
+      this.api.getSelectedYearValues(this.reservoirId, yearValue.year).subscribe({
+        next: (response: ComplexValueResponse) => {
+          if (this.chartDataset.length > 4) {
+            this.chartDataset.pop()
+          }
+          this.selectedYearByMonth = response.data.map(value => value.value * this.mSecondsInDay)
+          this.selectedYear = {
+            year: new Date(response.data[0].date).getFullYear(),
+            value: response.data
+              .map(value => value.value)
+              .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+          }
+          this.chartDataset.push({
+            data: this.selectedYearByMonth,
+            label: `Данные за ${this.selectedYear.year}`,
+            borderColor: 'rgba(147, 51, 234,1)',
+            pointBackgroundColor: 'rgba(147, 51, 234,0.8)',
+            pointBorderColor: 'rgba(147, 51, 234,1)',
+            pointHoverBackgroundColor: 'rgba(147, 51, 234,0.8)',
+            pointHoverBorderColor: '#fff',
+          })
+          this.chart?.update()
+        }
+      })
     }
-    if (this.selectedYear) {
-      this.lineChartData?.datasets.pop()
+  }
+
+  private configureData(reservoirId: number) {
+    if (this.chartDataset) {
+      this.chartDataset = []
     }
-    this.selectedYearValue = data
-    this.selectedYear = yearValue
-    this.lineChartData?.datasets.push({
-      data: data,
-      label: `${yearValue.year}`,
-      borderColor: 'rgba(147, 51, 234,1)',
-      pointBackgroundColor: 'rgba(147, 51, 234,0.8)',
-      pointBorderColor: 'rgba(147, 51, 234,1)',
-      pointHoverBackgroundColor: 'rgba(147, 51, 234,0.8)',
-      pointHoverBorderColor: '#fff',
+    this.getByYears(reservoirId)
+    this.getMax(reservoirId)
+    this.getMin(reservoirId)
+    this.getPastYear(reservoirId)
+  }
+
+
+  private getByYears(reservoirId: number) {
+    this.api.getByYearValues(reservoirId).subscribe({
+      next: (response: ComplexValueResponse) => {
+        this.startYear = new Date(response.data[0].date)
+        this.endYear = new Date(response.data[response.data.length - 1].date)
+        this.years = response.data.flatMap(item => {
+          return {year: new Date(item.date).getFullYear(), value: item.value * this.mSecondsInDay}
+        })
+        this.getAvg(reservoirId)
+      }
     })
-    this.chart?.update()
   }
 
-  private configureData() {
-    this.getAvg()
-    this.getMax()
-    this.getMin()
-    this.getAvgByMonth()
-    this.getMinByMonth()
-    this.getMaxByMonth()
-  }
-
-
-  private getAvg() {
-    const sumOfValues = this.years.reduce((sum, obj) => sum + obj.value, 0);
-    this.avgValue = sumOfValues / this.years.length;
-  }
-
-  private getMin() {
-    this.minValue = this.years.reduce((min, obj) => (obj.value < min.value ? obj : min), this.years[0]);
-  }
-
-  private getMax() {
-    this.maxValue = this.years.reduce((max, obj) => (obj.value > max.value ? obj : max), this.years[0]);
-  }
-
-  private getAvgByMonth() {
-    if (this.avgValue)
-      for (let i = 0; i < 12; i++) {
-        this.avgByMonth[i] = this.avgValue * this.avgCoefficient[i] / 100
+  private getAvg(reservoirId: number) {
+    this.api.getAvgValues(reservoirId).subscribe({
+      next: (response: ComplexValueResponse) => {
+        this.avgByMonth = response.data.map(value => value.value * this.mSecondsInDay)
+        this.avgValue = response.data.map(value => value.value).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        this.chartDataset.push({
+          data: this.avgByMonth,
+          label: `Среднее за года (${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()})`,
+          borderColor: 'rgba(37, 99, 235,0.4)',
+          pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
+          pointBorderColor: 'rgba(37, 99, 235,0.4)',
+          pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
+          pointHoverBorderColor: '#fff',
+        })
+        this.chart?.update()
       }
+    })
   }
 
-  private getMaxByMonth() {
-    if (this.maxValue)
-      for (let i = 0; i < 12; i++) {
-        this.maxByMonth[i] = this.maxValue.value * this.maxCoefficient[i] / 100
-      }
-  }
-
-  private getMinByMonth() {
-    if (this.minValue)
-      for (let i = 0; i < 12; i++) {
-        this.minByMonth[i] = this.minValue.value * this.minCoefficient[i] / 100
-      }
-  }
-
-  private getPastYearByMonth() {
-    if (this.endYear)
-      for (let i = 0; i < 12; i++) {
-        this.pastYearByMonth[i] = this.years[this.years.length - 1].value * this.pastYearCoefficient[i] / 100
-      }
-  }
-
-  private setupChart() {
-    this.lineChartData = {
-      datasets: [
-        {
+  private getMin(reservoirId: number) {
+    this.api.getMinValues(reservoirId).subscribe({
+      next: (response: ComplexValueResponse) => {
+        this.minByMonth = response.data.map(value => value.value * this.mSecondsInDay)
+        this.minValue = {
+          year: new Date(response.data[0].date).getFullYear(),
+          value: response.data
+            .map(value => value.value)
+            .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        }
+        this.chartDataset.push({
           data: this.minByMonth,
           label: `Минимум ${this.minValue?.year}`,
           borderColor: 'rgba(225, 29, 72,0.4)',
@@ -267,26 +218,23 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
           pointBorderColor: 'rgba(225, 29, 72,0.4)',
           pointHoverBackgroundColor: 'rgba(225, 29, 72,0.8)',
           pointHoverBorderColor: '#fff',
-        },
-        {
-          data: this.avgByMonth,
-          label: `Среднее за года (${this.startYear.getFullYear()} - ${this.endYear.getFullYear()})`,
-          borderColor: 'rgba(37, 99, 235,0.4)',
-          pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
-          pointBorderColor: 'rgba(37, 99, 235,0.4)',
-          pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
-          pointHoverBorderColor: '#fff',
-        },
-        {
-          data: this.pastYearByMonth,
-          label: `Данные за прошлый ${this.years[this.years.length - 1].year}`,
-          borderColor: 'rgba(217, 119, 6,0.4)',
-          pointBackgroundColor: 'rgba(217, 119, 6,0.5)',
-          pointBorderColor: 'rgba(217, 119, 6,0.4)',
-          pointHoverBackgroundColor: 'rgba(217, 119, 6,0.2)',
-          pointHoverBorderColor: '#fff',
-        },
-        {
+        })
+        this.chart?.update()
+      }
+    })
+  }
+
+  private getMax(reservoirId: number) {
+    this.api.getMaxValues(reservoirId).subscribe({
+      next: (response: ComplexValueResponse) => {
+        this.maxByMonth = response.data.map(value => value.value * this.mSecondsInDay)
+        this.maxValue = {
+          year: new Date(response.data[0].date).getFullYear(),
+          value: response.data
+            .map(value => value.value)
+            .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        }
+        this.chartDataset.push({
           data: this.maxByMonth,
           label: `Максимум ${this.maxValue?.year}`,
           borderColor: 'rgba(22, 163, 74,0.4)',
@@ -294,10 +242,35 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
           pointBorderColor: 'rgba(22, 163, 74,0.4)',
           pointHoverBackgroundColor: 'rgba(22, 163, 74,0.8)',
           pointHoverBorderColor: '#fff',
-        },
-      ],
-      labels: ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авн.', 'Сент.', 'Окт.', 'Ноя.', 'Дек'],
-    };
+        })
+        this.chart?.update()
+      }
+    })
+  }
+
+
+  private getPastYear(reservoirId: number) {
+    this.api.getSelectedYearValues(reservoirId, new Date().getFullYear() - 1).subscribe({
+      next: (response: ComplexValueResponse) => {
+        this.pastYearByMonth = response.data.map(value => value.value * this.mSecondsInDay)
+        this.pastYear = {
+          year: new Date(response.data[0].date).getFullYear(),
+          value: response.data
+            .map(value => value.value)
+            .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        }
+        this.chartDataset.push({
+          data: this.pastYearByMonth,
+          label: `Данные за прошлый ${this.pastYear.year}`,
+          borderColor: 'rgba(217, 119, 6,0.4)',
+          pointBackgroundColor: 'rgba(217, 119, 6,0.5)',
+          pointBorderColor: 'rgba(217, 119, 6,0.4)',
+          pointHoverBackgroundColor: 'rgba(217, 119, 6,0.2)',
+          pointHoverBorderColor: '#fff',
+        })
+        this.chart?.update()
+      }
+    })
   }
 
 }
