@@ -1,28 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {CalendarModule} from "primeng/calendar";
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {RegionInfo} from "../../../environments/environment.development";
 import {ActivatedRoute} from "@angular/router";
-import {EnvService} from "../../shared/service/env.service";
-import {ReservoirService} from "../reservoir.service";
-import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
+import {ApiService} from "../../service/api.service";
+import {CategorisedValueResponse} from "../../shared/response/values-response";
+import _default from "chart.js/dist/plugins/plugin.tooltip";
+import numbers = _default.defaults.animations.numbers;
 
 @Component({
   selector: 'app-reservoir-month',
-  standalone: true,
-  imports: [
-    CalendarModule,
-    NgForOf,
-    DatePipe,
-    RusMonthPipe,
-    NgIf,
-    DecimalPipe
-  ],
   templateUrl: './reservoir-month.component.html',
   styleUrl: './reservoir-month.component.css'
 })
 export class ReservoirMonthComponent implements OnInit {
-  reservoir?: RegionInfo
+  reservoir?: string
   months: Date[] = []
   data: {
     date: Date
@@ -33,12 +22,18 @@ export class ReservoirMonthComponent implements OnInit {
     thirdDecadeLimit: number
   }[] = []
 
-  constructor(private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
   }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
+        this.api.getMonthReservoirValues(value['reservoir']).subscribe({
+          next: (response: CategorisedValueResponse) => {
+            this.reservoir = response.income.reservoir
+
+          }
+        })
         // this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
       }
     })

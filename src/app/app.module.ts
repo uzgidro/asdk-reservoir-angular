@@ -43,6 +43,7 @@ import {ReservoirCurrentComponent} from "./shared/component/reservoir-current/re
 import {WeatherDetailedComponent} from "./shared/component/wearher-detailed/weather-detailed.component";
 import {RusDatePipe} from "./shared/pipe/rus-date.pipe";
 import {RusMonthPipe} from "./shared/pipe/rus-month.pipe";
+import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import {RusMonthPipe} from "./shared/pipe/rus-month.pipe";
     ReservoirDecadeComponent,
     BlankPageComponent,
     ReservoirDashboardComponent,
-    HydroWorksComponent
+    HydroWorksComponent,
+    ReservoirMonthComponent
   ],
     imports: [
         BrowserModule,

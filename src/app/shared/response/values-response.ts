@@ -1,5 +1,5 @@
 export interface ValueResponse {
-  date: string
+  date: Date
   value: number
 }
 
