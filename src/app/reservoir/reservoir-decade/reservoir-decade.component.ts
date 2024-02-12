@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {EnvService} from "../../shared/service/env.service";
-import {RegionInfo} from "../../../environments/environment.development";
-import {ReservoirService} from "../reservoir.service";
+import {ApiService} from "../../service/api.service";
+import {CategorisedValueResponse} from "../../shared/response/values-response";
 
 @Component({
   selector: 'app-reservoir-decade',
@@ -18,9 +17,10 @@ export class ReservoirDecadeComponent implements OnInit {
   currentYear = this.today.getFullYear()
   decade = this.calculateDecade()
   daysInDecade: number[] = []
+  tableData?: CategorisedValueResponse
   avgIncome?: number
   avgRelease?: number
-  reservoir?: RegionInfo
+  reservoir?: string
 
   data = [
     {
@@ -67,15 +67,21 @@ export class ReservoirDecadeComponent implements OnInit {
     }
   ]
 
-  constructor(private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
   }
 
   ngOnInit() {
     this.setDecade()
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        // this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
-        this.getAvg()
+        this.api.getDecadeReservoirValues(value['reservoir']).subscribe({
+          next: (response: CategorisedValueResponse) => {
+            this.reservoir = response.income.reservoir
+            this.tableData = response
+            this.avgIncome = this.getAvg(this.tableData.income.data.map(item => item.value))
+            this.avgRelease = this.getAvg(this.tableData.release.data.map(item => item.value))
+          }
+        })
       }
     })
 
@@ -122,18 +128,9 @@ export class ReservoirDecadeComponent implements OnInit {
     }
   }
 
-  private getAvg() {
-    const res = this.reservoir
-    const count = this.limitDay
-    let sumIncome = 0, sumRelease = 0
-    if (res) {
-      for (let i = 0; i < count; i++) {
-        sumIncome += res.waterIncome[i]
-        sumRelease += res.waterRelease[i]
-      }
-      this.avgIncome = sumIncome / count
-      this.avgRelease = sumRelease / count
-    }
+  private getAvg(array: number[]) {
+    const sum = array.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    return  sum / array.length;
   }
 
 }

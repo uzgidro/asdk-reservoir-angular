@@ -1,7 +1,7 @@
-<div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
-  <h3 class="text-center text-3xl">{{reservoir?.name}}</h3>
+<div *ngIf="reservoir; else loader"  class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
+  <h3 class="text-center text-3xl">{{reservoir}}</h3>
 
-  <table *ngIf="reservoir">
+  <table>
     <thead>
     <tr>
       <th rowspan="2">Данные</th>
@@ -12,25 +12,29 @@
       <th *ngFor="let day of daysInDecade">{{day}}</th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
+    <tbody *ngIf="tableData">
+    <tr *ngIf="tableData.income">
       <td>Приток, м3/с</td>
-      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterIncome[i]}}</p></td>
+      <td *ngFor="let value of tableData.income.data; index as i">{{value.value}}</td>
+      <td *ngFor="let day of daysInDecade.slice(tableData.income.data.length)"></td>
       <td>{{avgIncome | number: '.0-0'}}</td>
     </tr>
-    <tr>
+    <tr *ngIf="tableData.release">
       <td>Попуск, м3/с</td>
-      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterRelease[i]}}</p></td>
+      <td *ngFor="let value of tableData.release.data">{{value.value}}</td>
+      <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
       <td>{{avgRelease | number: '.0-0'}}</td>
     </tr>
-    <tr>
+    <tr *ngIf="tableData.level">
       <td>Уровень, м</td>
-      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterLevel[i]}}</p></td>
+      <td *ngFor="let value of tableData.level.data">{{value.value}}</td>
+      <td *ngFor="let day of daysInDecade.slice(tableData.level.data.length)"></td>
       <td></td>
     </tr>
-    <tr>
+    <tr *ngIf="tableData.volume">
       <td>Объём, млн. м3</td>
-      <td *ngFor="let value of daysInDecade; index as i"><p *ngIf="i < limitDay">{{reservoir.waterVolume[i]}}</p></td>
+      <td *ngFor="let value of tableData.volume.data">{{value.value}}</td>
+      <td *ngFor="let day of daysInDecade.slice(tableData.volume.data.length)"></td>
       <td></td>
     </tr>
 
@@ -152,3 +156,8 @@
 <!--  </tr>-->
 <!--  </tbody>-->
 <!--</table>-->
+
+
+<ng-template #loader>
+  <app-loader size="xl"></app-loader>
+</ng-template>

@@ -8,6 +8,7 @@ const RESERVOIRS: string = '/reservoirs'
 const DASHBOARD: string = '/dashboard'
 const RESERVOIR_PREFIX: string = '/reservoir'
 const CURRENT: string = '/current'
+const DECADE : string = '/decade'
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,15 @@ export class ApiService {
 
   getCurrentReservoirValues(reservoirId: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + CURRENT).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getDecadeReservoirValues(reservoirId: number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
