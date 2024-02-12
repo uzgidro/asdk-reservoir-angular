@@ -4,6 +4,7 @@ import {MessageService} from "primeng/api";
 import {catchError, Observable} from "rxjs";
 
 const BASE_URL: string = 'http://127.0.0.1:8000'
+const RESERVOIRS: string = '/reservoirs'
 const DASHBOARD: string = '/dashboard'
 const RESERVOIR_PREFIX: string = '/reservoir'
 const CURRENT: string = '/current'
@@ -14,6 +15,15 @@ const CURRENT: string = '/current'
 export class ApiService {
 
   constructor(private http: HttpClient, private messageService: MessageService) {
+  }
+
+  getReservoirs(): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIRS).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
   }
 
   getDashboardValues(): Observable<any> {

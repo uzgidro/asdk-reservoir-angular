@@ -3,6 +3,8 @@ import {MenuItem} from "../shared/interfaces";
 import {DropDownAnimation, SideMenuAnimation} from "../shared/animation/menu-animation";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EnvService} from "../shared/service/env.service";
+import {ApiService} from "../service/api.service";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-reservoir',
@@ -64,14 +66,19 @@ export class ReservoirComponent implements OnInit {
   ];
 
   waterMenuItem =this.menuItems[1]
-  reservoirs = this.env.getRegions()
-  selectedReservoirId: string = ''
+  reservoirs: {id: number, name: string}[] = []
+  selectedReservoirId: number = 0
   sideMenuVisible = false
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private env: EnvService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private api: ApiService) {
   }
 
   ngOnInit() {
+    this.api.getReservoirs().subscribe({
+      next: (response: {id: number, name: string}[]) => {
+        this.reservoirs = response
+      }
+    })
     this.resetActivity(this.menuItems)
     // get url and remove query params to find menu item
     const url = this.router.url.split('?')[0]
@@ -101,7 +108,7 @@ export class ReservoirComponent implements OnInit {
     this.sideMenuVisible = !this.sideMenuVisible
   }
 
-  changeReservoir(id: string) {
+  changeReservoir(id: number) {
     if (this.router.url == '/reservoir/dashboard') {
       this.router.navigate(['/reservoir/water/current'], {
         relativeTo: this.activatedRoute,
