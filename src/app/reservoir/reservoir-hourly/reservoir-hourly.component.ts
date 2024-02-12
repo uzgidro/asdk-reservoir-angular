@@ -1,29 +1,44 @@
 import {Component, OnInit} from '@angular/core';
 import {EnvService} from "../../shared/service/env.service";
 import {ChartConfiguration} from "chart.js";
-import {RegionInfo} from "../../../environments/environment.development";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ReservoirService} from "../reservoir.service";
+import {ApiService} from "../../service/api.service";
+import {
+  CategorisedArrayResponse,
+  CategorisedValueResponse,
+  ComplexValueResponse
+} from "../../shared/response/values-response";
 
 @Component({
   selector: 'app-reservoir-hourly',
   templateUrl: './reservoir-hourly.component.html',
   styleUrls: ['./reservoir-hourly.component.css']
 })
-export class ReservoirHourlyComponent implements OnInit{
+export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
   times: Date[] = []
+  chartTimeline: string[] = []
   reservoirs = this.env.getRegions()
-  queryReservoir? : RegionInfo
-  data: { data: ChartConfiguration['data'], options: ChartConfiguration['options']}[] = []
-  categories: {name: string, type: string}[] = [
-    {name: 'Приток', type: 'м3/с'},
-    {name: 'Попуск', type: 'м3/с'},
-    {name: 'Уровень', type: 'с'},
-    {name: 'Объём', type: 'млн. м3'}
-  ]
+  queryReservoir?: string
+  charts: { data: ChartConfiguration['data'], options: ChartConfiguration['options'] }[] = []
 
-  constructor(private router: Router, private env: EnvService, private activatedRoute: ActivatedRoute, private resService: ReservoirService) {
+  reservoirsData: {
+    id: number,
+    name: string,
+    income?: number[],
+    release?: {latest: number, old: number},
+    level?: {latest: number, old: number},
+    volume?: {latest: number, old: number}
+  }[] = []
+
+  constructor(
+    private router: Router,
+    private env: EnvService,
+    private activatedRoute: ActivatedRoute,
+    private reservoirService: ReservoirService,
+    private api: ApiService
+  ) {
   }
 
   async ngOnInit() {
@@ -31,10 +46,27 @@ export class ReservoirHourlyComponent implements OnInit{
 
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.queryReservoir = this.resService.setReservoir(value, this.env.getRegions())
-        if (this.queryReservoir) {
-          this.setData()
-        }
+        this.api.getCurrentReservoirValues(value['reservoir']).subscribe({
+          next: (response: CategorisedValueResponse) => {
+            this.queryReservoir = response.income.reservoir
+            if (this.queryReservoir) {
+              if (this.charts.length !== 0) {
+                this.charts = []
+                this.chartTimeline = []
+              }
+              this.chartTimeline = this.reservoirService.setupChartTimeline()
+              this.setupChart(response.income)
+              this.setupChart(response.release)
+              this.setupChart(response.level)
+              this.setupChart(response.volume)
+            }
+          }
+        })
+      }
+    })
+    this.api.getDashboardValues().subscribe({
+      next: (response: CategorisedArrayResponse) => {
+        this.setupTable(response)
       }
     })
   }
@@ -45,54 +77,99 @@ export class ReservoirHourlyComponent implements OnInit{
     })
   }
 
-  private setData() {
-    let count = 0
-    let data: number[]
-    for (const item of this.categories) {
-      if (item.name === 'Приток') {
-        data = this.queryReservoir?.waterIncome!!
-      } else if (item.name === 'Попуск') {
-        data = this.queryReservoir?.waterRelease!!
-      } else if (item.name === 'Уровень') {
-        data = this.queryReservoir?.waterLevel!!
-      } else {
-        data = this.queryReservoir?.waterVolume!!
-      }
-        this.data[count++] = {
-        data: {
-          datasets: [
-            {
-              data: data,
-              label: item.name + ' ' + item.type,
-              backgroundColor: 'rgba(148,159,177,0.2)',
-              borderColor: 'rgb(59, 130, 246)',
-              pointBorderColor: '#fff',
-              pointHoverBorderColor: 'white',
-              pointBackgroundColor: 'rgb(59, 130, 246)'
-            }
-          ],
-          labels: this.env.getDataLabels(),
+  navigateToReservoir(id: number) {
+    this.router.navigate([], {
+      queryParams: {reservoir: id}
+    })
+  }
+
+  private setupChart(values: ComplexValueResponse) {
+    let label
+    if (values.category === 'income') {
+      label = 'Приток, м3/с'
+    } else if (values.category === 'release') {
+      label = 'Попуск, м3/с'
+    } else if (values.category === 'level') {
+      label = 'Уровень, м'
+    } else if (values.category === 'volume') {
+      label = 'Объём, млн. м3'
+    } else {
+      return
+    }
+    this.charts.push({
+      data: {
+        datasets: [
+          {
+            data: values.data.map(item => item.value),
+            label: label,
+            backgroundColor: 'rgba(148,159,177,0.2)',
+            borderColor: 'rgb(59, 130, 246)',
+            pointBorderColor: '#fff',
+            pointHoverBorderColor: 'white',
+            pointBackgroundColor: 'rgb(59, 130, 246)'
+          }
+        ],
+        labels: this.chartTimeline,
+      },
+      options: {
+        elements: {
+          line: {
+            tension: 0.5,
+          },
         },
-        options: {
-          elements: {
-            line: {
-              tension: 0.5,
-            },
-          },
-          interaction: {
-            mode: 'index',
-            intersect: false
-          },
-          plugins: {
-            legend: {display: false},
-            title: {
-              display: true,
-              position: "top",
-              align: "center",
-              text: item.name
-            }
+        interaction: {
+          mode: 'index',
+          intersect: false
+        },
+        plugins: {
+          legend: {display: false},
+          title: {
+            display: true,
+            position: "top",
+            align: "center",
+            text: label
           }
         }
+      }
+    })
+  }
+
+  private setupTable(response: CategorisedArrayResponse) {
+    for (let item of response.release) {
+      this.reservoirsData.push({
+        id: item.reservoir_id,
+        name: item.reservoir,
+        release: {
+          latest: item.data[item.data.length - 1].value,
+          old: item.data[item.data.length - 2].value
+        }
+      })
+    }
+    for (let item of response.level) {
+      let data =
+        this.reservoirsData.find(value => value.id === item.reservoir_id)
+      if (data) {
+        data.level = {
+          latest: item.data[item.data.length - 1].value,
+          old: item.data[item.data.length - 2].value
+        }
+      }
+    }
+    for (let item of response.volume) {
+      let data =
+        this.reservoirsData.find(value => value.id === item.reservoir_id)
+      if (data) {
+        data.volume = {
+          latest: item.data[item.data.length - 1].value,
+          old: item.data[item.data.length - 2].value
+        }
+      }
+    }
+    for (let item of response.income) {
+      let data =
+        this.reservoirsData.find(value => value.id === item.reservoir_id)
+      if (data) {
+        data.income = item.data.map(value => value.value).slice(-4)
       }
     }
   }

@@ -4,8 +4,9 @@ import {BaseChartDirective} from "ng2-charts";
 import {EnvService} from "../../shared/service/env.service";
 import {Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
-import {CategorisedValueResponse, ComplexValueResponse} from "../../shared/response/values-response";
+import {CategorisedArrayResponse, ComplexValueResponse} from "../../shared/response/values-response";
 import {MenuItem} from "../../shared/interfaces";
+import {ReservoirService} from "../reservoir.service";
 
 @Component({
   selector: 'app-reservoir-dashboard',
@@ -29,7 +30,7 @@ export class ReservoirDashboardComponent implements OnInit {
     volume?: {latest: number, difference: number}
   }[] = []
 
-  constructor(private env: EnvService, private api: ApiService, private router: Router) {
+  constructor( private api: ApiService, private reservoirService: ReservoirService, private router: Router) {
     Chart.register(...registerables);
   }
 
@@ -51,25 +52,24 @@ export class ReservoirDashboardComponent implements OnInit {
 
   private getData() {
     this.api.getDashboardValues().subscribe({
-      next: (response: CategorisedValueResponse) => {
-
+      next: (response: CategorisedArrayResponse) => {
         this.setupIncome(response)
         this.setupReservoirsData(response)
       }
     })
   }
 
-  private setupIncome(response: CategorisedValueResponse) {
+  private setupIncome(response: CategorisedArrayResponse) {
     for (let item of response.income) {
       this.chartData.push({id: item.reservoir_id, name: item.reservoir, data: item.data.map(value => value.value)})
     }
     if (this.chartData.length > 0) {
-      this.setupChartTimeline()
+      this.chartTimeline = this.reservoirService.setupChartTimeline()
       this.setupChart()
     }
   }
 
-  private setupReservoirsData(response: CategorisedValueResponse) {
+  private setupReservoirsData(response: CategorisedArrayResponse) {
     for (let item of response.release) {
       this.reservoirsData.push({
         id: item.reservoir_id,
@@ -100,7 +100,6 @@ export class ReservoirDashboardComponent implements OnInit {
         }
       }
     }
-    console.log(this.reservoirsData)
   }
 
   // nested functions
@@ -144,29 +143,8 @@ export class ReservoirDashboardComponent implements OnInit {
         }
       })
     }
-    console.log(this.charts)
   }
 
-  private setupChartTimeline() {
-    let now: number
-    if (new Date().getHours() % 2 === 0) {
-      now = new Date().getHours()
-    } else {
-      now = new Date().getHours() - 1
-    }
-    let start = 0
-    let counter = 2
-    while (true) {
 
-      this.chartTimeline.push((now + counter) < 10 ? '0' + (now + counter) + ':00' : (now + counter) + ':00')
-      if (now + counter == 22)
-        break
-      counter += 2
-    }
-    while (start <= now) {
-      this.chartTimeline.push(start < 10 ? '0' + start + ':00' : start + ':00')
-      start += 2
-    }
-  }
 }
 

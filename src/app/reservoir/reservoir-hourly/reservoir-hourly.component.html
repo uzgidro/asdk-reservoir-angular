@@ -1,10 +1,10 @@
-<div class="flex flex-col">
-  <h3 class="text-center my-4 text-3xl">{{ queryReservoir?.name }}</h3>
+<div *ngIf="(charts.length !== 0 && reservoirsData.length !== 0); else loader" class="flex flex-col">
+  <h3 class="text-center my-4 text-3xl">{{ queryReservoir }}</h3>
 
   <div class="px-4 grid grid-cols-12">
     <div class="grid grid-cols-12 gap-4 col-start-2 col-span-10 my-4">
       <div class="flex flex-col material-card col-span-12 2xl:col-span-8">
-        <canvas *ngFor="let item of data"
+        <canvas *ngFor="let item of charts"
                 style="height: 14vh"
                 baseChart
                 class="chart"
@@ -14,10 +14,10 @@
         ></canvas>
       </div>
 
-      <div class="col-span-12 2xl:col-span-4">
-        <app-weather-detailed *ngIf="queryReservoir" (click)="navigateToReservoirWeather(queryReservoir.id)"
-                              [name]="queryReservoir.name"></app-weather-detailed>
-      </div>
+<!--      <div class="col-span-12 2xl:col-span-4">-->
+<!--        <app-weather-detailed *ngIf="queryReservoir" (click)="navigateToReservoirWeather(queryReservoir.id)"-->
+<!--                              [name]="queryReservoir.name"></app-weather-detailed>-->
+<!--      </div>-->
     </div>
 
     <div class="col-start-2 col-span-10 overflow-x-auto">
@@ -35,13 +35,13 @@
           <!--        Level-->
           <th>
             <div class="flex flex-col">
-              <p>{{ times[0] | date:'HH:mm' }}</p>
+              <p>{{ times[1] | date:'HH:mm' }}</p>
               <small>({{ selectedDate | date:'dd-MM' }})</small>
             </div>
           </th>
           <th>
             <div class="flex flex-col">
-              <p>{{ times[1] | date:'HH:mm' }}</p>
+              <p>{{ times[0] | date:'HH:mm' }}</p>
               <small>({{ selectedDate | date:'dd-MM' }})</small>
             </div>
           </th>
@@ -49,13 +49,13 @@
           <!--        Volume-->
           <th>
             <div class="flex flex-col">
-              <p>{{ times[0] | date:'HH:mm' }}</p>
+              <p>{{ times[1] | date:'HH:mm' }}</p>
               <small>({{ selectedDate | date:'dd-MM' }})</small>
             </div>
           </th>
           <th>
             <div class="flex flex-col">
-              <p>{{ times[1] | date:'HH:mm' }}</p>
+              <p>{{ times[0] | date:'HH:mm' }}</p>
               <small>({{ selectedDate | date:'dd-MM' }})</small>
             </div>
           </th>
@@ -63,13 +63,7 @@
           <!--        Income-->
           <th>
             <div class="flex flex-col">
-              <p>{{ times[0] | date:'HH:mm' }}</p>
-              <small>({{ selectedDate | date:'dd-MM' }})</small>
-            </div>
-          </th>
-          <th>
-            <div class="flex flex-col">
-              <p>{{ times[1] | date:'HH:mm' }}</p>
+              <p>{{ times[3] | date:'HH:mm' }}</p>
               <small>({{ selectedDate | date:'dd-MM' }})</small>
             </div>
           </th>
@@ -81,7 +75,13 @@
           </th>
           <th>
             <div class="flex flex-col">
-              <p>{{ times[3] | date:'HH:mm' }}</p>
+              <p>{{ times[1] | date:'HH:mm' }}</p>
+              <small>({{ selectedDate | date:'dd-MM' }})</small>
+            </div>
+          </th>
+          <th>
+            <div class="flex flex-col">
+              <p>{{ times[0] | date:'HH:mm' }}</p>
               <small>({{ selectedDate | date:'dd-MM' }})</small>
             </div>
           </th>
@@ -116,21 +116,18 @@
           <!--      </th>-->
         </tr>
         </thead>
-        <tbody *ngFor="let res of reservoirs">
-        <tr>
+        <tbody *ngFor="let res of reservoirsData">
+        <tr (click)="navigateToReservoir(res.id)">
           <td>{{ res.name }}</td>
-          <td>{{ res.waterLevel[res.waterLevel.length - 1] }}</td>
-          <td>{{ res.waterLevel[res.waterLevel.length - 2] }}</td>
-          <td>{{ res.waterLevel[res.waterLevel.length - 1] - res.waterLevel[res.waterLevel.length - 2] | number: '.0-2' }}</td>
-          <td>{{ res.waterVolume[res.waterVolume.length - 1] }}</td>
-          <td>{{ res.waterVolume[res.waterVolume.length - 2] }}</td>
-          <td>{{ res.waterVolume[res.waterVolume.length - 1] - res.waterVolume[res.waterVolume.length - 2] | number: '.0-2' }}</td>
-          <td>{{ res.waterIncome[res.waterIncome.length - 1] }}</td>
-          <td>{{ res.waterIncome[res.waterIncome.length - 2] }}</td>
-          <td>{{ res.waterIncome[res.waterIncome.length - 3] }}</td>
-          <td>{{ res.waterIncome[res.waterIncome.length - 4] }}</td>
-          <td>{{ res.waterIncome[res.waterIncome.length - 1] - res.waterIncome[res.waterIncome.length - 2] | number: '.0-2' }}</td>
-          <td>{{ res.waterRelease[res.waterRelease.length - 1] }}</td>
+          <td *ngIf="res.level">{{ res.level.old }}</td>
+          <td *ngIf="res.level">{{ res.level.latest }}</td>
+          <td *ngIf="res.level">{{ res.level.latest - res.level.old | number: '.0-2' }}</td>
+          <td *ngIf="res.volume">{{ res.volume.old }}</td>
+          <td *ngIf="res.volume">{{ res.volume.latest }}</td>
+          <td *ngIf="res.volume">{{ res.volume.latest - res.volume.old | number: '.0-2' }}</td>
+          <td *ngFor="let income of res.income">{{ income }}</td>
+          <td *ngIf="res.income">{{ res.income[res.income.length - 1] - res.income[res.income.length - 2] | number: '.0-2' }}</td>
+          <td *ngIf="res.release">{{ res.release.latest }}</td>
           <!--      <td>Ясно</td>-->
           <!--      <td>24</td>-->
           <!--      <td>3, С-В</td>-->
@@ -142,3 +139,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #loader>
+  <app-loader [size]="'xl'"></app-loader>
+</ng-template>

@@ -10,9 +10,16 @@ export interface ComplexValueResponse {
   data: ValueResponse[]
 }
 
-export interface CategorisedValueResponse {
+export interface CategorisedArrayResponse {
   income: ComplexValueResponse[]
   release: ComplexValueResponse[]
   level: ComplexValueResponse[]
   volume: ComplexValueResponse[]
+}
+
+export interface CategorisedValueResponse {
+  income: ComplexValueResponse
+  release: ComplexValueResponse
+  level: ComplexValueResponse
+  volume: ComplexValueResponse
 }

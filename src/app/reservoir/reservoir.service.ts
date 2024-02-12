@@ -1,6 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Params} from "@angular/router";
-import {RegionInfo} from "../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +8,27 @@ export class ReservoirService {
   constructor() {
   }
 
-  setReservoir(params: Params, regions: RegionInfo[]) {
-    const resId = params['reservoir']
-    const res = regions.find(value1 => resId === value1.id)
-    if (res) {
-      return res
+  setupChartTimeline() {
+    let chartTimeline: string[] = []
+    let now: number
+    if (new Date().getHours() % 2 === 0) {
+      now = new Date().getHours()
+    } else {
+      now = new Date().getHours() - 1
     }
-    return undefined
+    let start = 0
+    let counter = 2
+    while (true) {
+
+      chartTimeline.push((now + counter) < 10 ? '0' + (now + counter) + ':00' : (now + counter) + ':00')
+      if (now + counter == 22)
+        break
+      counter += 2
+    }
+    while (start <= now) {
+      chartTimeline.push(start < 10 ? '0' + start + ':00' : start + ':00')
+      start += 2
+    }
+    return chartTimeline
   }
 }
