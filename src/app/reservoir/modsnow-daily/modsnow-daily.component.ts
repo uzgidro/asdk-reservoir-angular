@@ -67,7 +67,7 @@ export class ModsnowDailyComponent implements OnInit {
     Chart.register(...registerables);
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
+        // this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
         this.setupData()
       }
     })

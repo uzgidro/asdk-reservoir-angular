@@ -74,7 +74,7 @@ export class ReservoirDecadeComponent implements OnInit {
     this.setDecade()
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
+        // this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
         this.getAvg()
       }
     })

@@ -32,7 +32,7 @@ export class WeatherComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
+        // this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
         this.date = new Date()
         if (!this.selectedReservoir) {
           this.reservoirs = this.env.getRegions()

@@ -33,7 +33,7 @@ export class ModsnowYearlyComponent implements OnInit{
     Chart.register(...registerables);
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
+        // this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
       }
     })
     this.reservoirs = this.env.getRegions().map(value => value.name);
