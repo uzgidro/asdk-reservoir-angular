@@ -5,6 +5,7 @@ import {catchError, Observable} from "rxjs";
 
 const BASE_URL: string = 'http://127.0.0.1:8000'
 const RESERVOIRS: string = '/reservoirs'
+const RESERVOIR: string = '/reservoir'
 const DASHBOARD: string = '/dashboard'
 const RESERVOIR_PREFIX: string = '/reservoir'
 const CURRENT: string = '/current'
@@ -27,6 +28,15 @@ export class ApiService {
 
   getReservoirs(): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIRS).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getReservoirById(reservoirId: number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR + '/' + reservoirId).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];

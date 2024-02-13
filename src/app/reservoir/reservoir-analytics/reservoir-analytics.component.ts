@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {ComplexValueResponse} from "../../shared/response/values-response";
+import {ReservoirResponse} from "../../shared/response/reservoir-response";
 
 @Component({
   selector: 'app-reservoir-analytics',
@@ -89,10 +90,16 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.reservoirId = value['reservoir']
+        this.api.getReservoirById(value['reservoir']).subscribe({
+          next: (response: ReservoirResponse) => {
+            this.reservoirId = response.id
+            this.reservoirName = response.name
+          }
+        })
         this.configureData(value['reservoir'])
       }
     })
+
     // let data: number[] = []
     // for (let i = 0; i < 12; i++) {
     //   let value = 0

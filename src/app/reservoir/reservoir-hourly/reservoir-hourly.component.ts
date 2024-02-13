@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {EnvService} from "../../shared/service/env.service";
 import {ChartConfiguration} from "chart.js";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ReservoirService} from "../reservoir.service";
@@ -9,6 +8,7 @@ import {
   CategorisedValueResponse,
   ComplexValueResponse
 } from "../../shared/response/values-response";
+import {ReservoirResponse} from "../../shared/response/reservoir-response";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -19,22 +19,20 @@ export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
   times: Date[] = []
   chartTimeline: string[] = []
-  reservoirs = this.env.getRegions()
-  queryReservoir?: string
+  reservoirName?: string
   charts: { data: ChartConfiguration['data'], options: ChartConfiguration['options'] }[] = []
 
   reservoirsData: {
     id: number,
     name: string,
     income?: number[],
-    release?: {latest: number, old: number},
-    level?: {latest: number, old: number},
-    volume?: {latest: number, old: number}
+    release?: { latest: number, old: number },
+    level?: { latest: number, old: number },
+    volume?: { latest: number, old: number }
   }[] = []
 
   constructor(
     private router: Router,
-    private env: EnvService,
     private activatedRoute: ActivatedRoute,
     private reservoirService: ReservoirService,
     private api: ApiService
@@ -46,20 +44,22 @@ export class ReservoirHourlyComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe({
       next: value => {
+        this.api.getReservoirById(value['reservoir']).subscribe({
+          next: (response: ReservoirResponse) => {
+            this.reservoirName = response.name
+          }
+        })
         this.api.getCurrentReservoirValues(value['reservoir']).subscribe({
           next: (response: CategorisedValueResponse) => {
-            this.queryReservoir = response.income.reservoir
-            if (this.queryReservoir) {
-              if (this.charts.length !== 0) {
-                this.charts = []
-                this.chartTimeline = []
-              }
-              this.chartTimeline = this.reservoirService.setupChartTimeline()
-              this.setupChart(response.income)
-              this.setupChart(response.release)
-              this.setupChart(response.level)
-              this.setupChart(response.volume)
+            if (this.charts.length !== 0) {
+              this.charts = []
+              this.chartTimeline = []
             }
+            this.chartTimeline = this.reservoirService.setupChartTimeline()
+            this.setupChart(response.income)
+            this.setupChart(response.release)
+            this.setupChart(response.level)
+            this.setupChart(response.volume)
           }
         })
       }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedValueResponse} from "../../shared/response/values-response";
+import {ReservoirResponse} from "../../shared/response/reservoir-response";
 
 @Component({
   selector: 'app-reservoir-decade',
@@ -20,7 +21,7 @@ export class ReservoirDecadeComponent implements OnInit {
   tableData?: CategorisedValueResponse
   avgIncome?: number
   avgRelease?: number
-  reservoir?: string
+  reservoirName?: string
 
   data = [
     {
@@ -74,9 +75,14 @@ export class ReservoirDecadeComponent implements OnInit {
     this.setDecade()
     this.activatedRoute.queryParams.subscribe({
       next: value => {
+        this.api.getReservoirById(value['reservoir']).subscribe({
+          next: (response: ReservoirResponse) => {
+            this.reservoirName = response.name
+          }
+        })
         this.api.getDecadeReservoirValues(value['reservoir']).subscribe({
           next: (response: CategorisedValueResponse) => {
-            this.reservoir = response.income.reservoir
+            this.reservoirName = response.income.reservoir
             this.tableData = response
             this.avgIncome = this.getAvg(this.tableData.income.data.map(item => item.value))
             this.avgRelease = this.getAvg(this.tableData.release.data.map(item => item.value))

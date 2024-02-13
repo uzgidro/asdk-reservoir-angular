@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "../shared/interfaces";
 import {DropDownAnimation, SideMenuAnimation} from "../shared/animation/menu-animation";
 import {ActivatedRoute, Router} from "@angular/router";
-import {EnvService} from "../shared/service/env.service";
 import {ApiService} from "../service/api.service";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
+import {ReservoirResponse} from "../shared/response/reservoir-response";
 
 @Component({
   selector: 'app-reservoir',
@@ -75,7 +74,7 @@ export class ReservoirComponent implements OnInit {
 
   ngOnInit() {
     this.api.getReservoirs().subscribe({
-      next: (response: {id: number, name: string}[]) => {
+      next: (response: ReservoirResponse[]) => {
         this.reservoirs = response
       }
     })
