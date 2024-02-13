@@ -1,15 +1,34 @@
 <div class="flex flex-col justify-center">
-  <h3 class="text-center my-4 text-3xl">{{reservoirName}}</h3>
+  <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
 
   <div class="grid grid-cols-12 gap-4">
-    <div class="flex flex-col 2xl:col-start-3 col-span-6  max-2xl:col-span-9 h-fit" #infoContainer>
-      <canvas
-        baseChart
-        [datasets]="chartDataset"
-        [labels]="chartLabels"
-        [options]="lineChartOptions"
-        [type]="'line'"
-      ></canvas>
+    <div class="flex flex-col 2xl:col-start-3 col-span-6 max-2xl:col-span-9 h-fit" #infoContainer>
+      <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100">
+        <canvas *ngIf="category.includes('income')"
+                baseChart
+                [datasets]="incomeChartDataset"
+                [labels]="incomeChartLabels"
+                [options]="chartOptions"
+                [type]="'line'"
+        ></canvas>
+        <canvas *ngIf="category.includes('volume')"
+                baseChart
+                [datasets]="volumeChartDataset"
+                [labels]="volumeChartLabels"
+                [options]="chartOptions"
+                [type]="'line'"
+        ></canvas>
+        <div class="flex flex-row space-x-4 p-2">
+          <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category.includes('income')}"
+                  class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
+            Приток
+          </button>
+          <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category.includes('volume')}"
+                  class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
+            Объем
+          </button>
+        </div>
+      </div>
       <div class="overflow-x-auto">
         <table>
           <thead>
@@ -36,15 +55,10 @@
           </tr>
           </thead>
           <tbody>
-<!--          <tr class="text-teal-600">-->
-<!--            <td>Данные за текущий {{today | date:'yyyy'}}</td>-->
-<!--            <td *ngFor="let val of currentYearData">{{ val | number: '.0-0' }}</td>-->
-<!--            <td>{{ (currentYearValue!! * 0.031) | number: '.0-0' }}</td>-->
-<!--            <td>{{ currentYearValue | number: '.0-0' }}</td>-->
-<!--            <td>{{ (currentYearValue * 100 / avgValue!!) | number: '.0-0' }}</td>-->
-<!--          </tr>-->
           <tr *ngIf="startYear && endYear && avgValue && avgByMonth" class="text-blue-600">
-            <td *ngIf="startYear && endYear">Среднее за года {{ startYear.getFullYear() }} - {{ endYear.getFullYear() }}</td>
+            <td *ngIf="startYear && endYear">Среднее за года {{ startYear.getFullYear() }}
+              - {{ endYear.getFullYear() }}
+            </td>
             <td *ngFor="let val of avgByMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (avgValue / 360) | number: '.0-0' }}</td>
             <td>{{ (avgValue * mSecondsInDay) | number: '.0-0' }}</td>
@@ -83,7 +97,7 @@
       </div>
     </div>
     <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto"
-    [ngStyle]="{'max-height.px': tableHeight}">
+         [ngStyle]="{'max-height.px': tableHeight}">
       <table>
         <thead class="sticky top-0">
         <tr>
@@ -93,8 +107,12 @@
         </thead>
         <tbody>
         <tr *ngFor="let item of years" (click)="yearSelect(item)">
-          <td [ngClass]="{'min': minValue?.year == item.year, 'max': maxValue?.year == item.year, 'selected': selectedYear?.year == item.year}">{{ item.year }}</td>
-          <td [ngClass]="{'min': minValue?.year == item.year, 'max': maxValue?.year == item.year, 'selected': selectedYear?.year == item.year}">{{ item.value |number: '.0-0' }}</td>
+          <td
+            [ngClass]="{'min': minValue?.year == item.year, 'max': maxValue?.year == item.year, 'selected': selectedYear?.year == item.year}">{{ item.year }}
+          </td>
+          <td
+            [ngClass]="{'min': minValue?.year == item.year, 'max': maxValue?.year == item.year, 'selected': selectedYear?.year == item.year}">{{ item.value |number: '.0-0' }}
+          </td>
         </tr>
         </tbody>
       </table>

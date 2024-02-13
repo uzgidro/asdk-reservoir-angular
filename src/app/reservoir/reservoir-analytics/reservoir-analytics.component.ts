@@ -33,6 +33,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   reservoirName?: string
   tableHeight?: number
   mSecondsInDay = 0.0864
+  category = 'income'
 
   protected years: YearValue[] = []
 
@@ -51,10 +52,9 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   today = new Date()
   subscribes: Subscription[] = []
 
-  public chartDataset: any[] = []
-  public chartLabels = ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авн.', 'Сент.', 'Окт.', 'Ноя.', 'Дек']
-
-  public lineChartOptions: ChartConfiguration['options'] = {
+  incomeChartDataset: any[] = []
+  incomeChartLabels = ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авн.', 'Сент.', 'Окт.', 'Ноя.', 'Дек']
+  chartOptions: ChartConfiguration['options'] = {
     elements: {
       line: {
         tension: 0.5,
@@ -77,6 +77,10 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
+  volumeChartDataset: any[] = []
+  volumeChartLabels: number[] = []
+
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   @ViewChild('infoContainer') infoContainer?: ElementRef
@@ -116,8 +120,8 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     if (this.reservoirId) {
       this.api.getSelectedYearValues(this.reservoirId, yearValue.year).subscribe({
         next: (response: ComplexValueResponse) => {
-          if (this.chartDataset.length > 4) {
-            this.chartDataset.pop()
+          if (this.incomeChartDataset.length > 4) {
+            this.incomeChartDataset.pop()
           }
           this.selectedYearByMonth = response.data.map(value => value.value * this.mSecondsInDay)
           this.selectedYear = {
@@ -126,7 +130,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
               .map(value => value.value)
               .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
           }
-          this.chartDataset.push({
+          this.incomeChartDataset.push({
             data: this.selectedYearByMonth,
             label: `Данные за ${this.selectedYear.year}`,
             borderColor: 'rgba(147, 51, 234,1)',
@@ -141,9 +145,13 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  changeCategory(category: string) {
+    this.category = category
+  }
+
   private configureData(reservoirId: number) {
-    if (this.chartDataset) {
-      this.chartDataset = []
+    if (this.incomeChartDataset) {
+      this.incomeChartDataset = []
     }
     for (let sub of this.subscribes) {
       sub.unsubscribe()
@@ -163,6 +171,17 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         this.years = response.data.flatMap(item => {
           return {year: new Date(item.date).getFullYear(), value: item.value * this.mSecondsInDay}
         })
+
+        this.volumeChartLabels = response.data.map(item => new Date(item.date).getFullYear())
+        this.volumeChartDataset[0] = {
+          data: response.data.map(item => item.value * this.mSecondsInDay),
+          label: `Приток воды, млн. м3`,
+          borderColor: 'rgba(37, 99, 235,0.4)',
+          pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
+          pointBorderColor: 'rgba(37, 99, 235,0.4)',
+          pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
+          pointHoverBorderColor: '#fff',
+        }
         this.getAvg(reservoirId)
       }
     }))
@@ -173,7 +192,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
       next: (response: ComplexValueResponse) => {
         this.avgByMonth = response.data.map(value => value.value * this.mSecondsInDay)
         this.avgValue = response.data.map(value => value.value).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-        this.chartDataset.push({
+        this.incomeChartDataset.push({
           data: this.avgByMonth,
           label: `Среднее за года (${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()})`,
           borderColor: 'rgba(37, 99, 235,0.4)',
@@ -197,7 +216,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
             .map(value => value.value)
             .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         }
-        this.chartDataset.push({
+        this.incomeChartDataset.push({
           data: this.minByMonth,
           label: `Минимум ${this.minValue?.year}`,
           borderColor: 'rgba(225, 29, 72,0.4)',
@@ -221,7 +240,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
             .map(value => value.value)
             .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         }
-        this.chartDataset.push({
+        this.incomeChartDataset.push({
           data: this.maxByMonth,
           label: `Максимум ${this.maxValue?.year}`,
           borderColor: 'rgba(22, 163, 74,0.4)',
@@ -246,7 +265,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
             .map(value => value.value)
             .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         }
-        this.chartDataset.push({
+        this.incomeChartDataset.push({
           data: this.pastYearByMonth,
           label: `Данные за прошлый ${this.pastYear.year}`,
           borderColor: 'rgba(217, 119, 6,0.4)',
