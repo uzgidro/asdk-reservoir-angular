@@ -8,6 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {ComplexValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-reservoir-analytics',
@@ -48,10 +49,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   selectedYear?: YearValue
   selectedYearByMonth?: number[] = []
   today = new Date()
-
-  // currentYear: YearValue = {year: this.today.getFullYear(), value: 1776}
-  // currentYearData: number[] = []
-  // currentYearValue = 0
+  subscribes: Subscription[] = []
 
   public chartDataset: any[] = []
   public chartLabels = ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авн.', 'Сент.', 'Окт.', 'Ноя.', 'Дек']
@@ -99,27 +97,6 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         this.configureData(value['reservoir'])
       }
     })
-
-    // let data: number[] = []
-    // for (let i = 0; i < 12; i++) {
-    //   let value = 0
-    //   if (i < this.today.getMonth()) {
-    //     value = this.currentYear.value * Math.floor(Math.random() * (this.randomCoefficient[i].max - this.randomCoefficient[i].min) + this.randomCoefficient[i].min) / 100
-    //     this.currentYearValue += value
-    //   }
-    //   data.push(value)
-    // }
-    // this.currentYearData = data
-    // this.lineChartData?.datasets.push({
-    //   data: data.filter(item => item !== 0),
-    //   label: `${this.currentYear.year}`,
-    //   borderColor: 'rgba(13, 148, 136,1)',
-    //   pointBackgroundColor: 'rgba(13, 148, 136,0.8)',
-    //   pointBorderColor: 'rgba(13, 148, 136,1)',
-    //   pointHoverBackgroundColor: 'rgba(13, 148, 136,0.8)',
-    //   pointHoverBorderColor: '#fff',
-    // })
-    // this.chart?.update()
   }
 
   ngAfterViewInit() {
@@ -168,6 +145,9 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     if (this.chartDataset) {
       this.chartDataset = []
     }
+    for (let sub of this.subscribes) {
+      sub.unsubscribe()
+    }
     this.getByYears(reservoirId)
     this.getMax(reservoirId)
     this.getMin(reservoirId)
@@ -176,7 +156,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
 
   private getByYears(reservoirId: number) {
-    this.api.getByYearValues(reservoirId).subscribe({
+    this.subscribes.push(this.api.getByYearValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
         this.startYear = new Date(response.data[0].date)
         this.endYear = new Date(response.data[response.data.length - 1].date)
@@ -185,11 +165,11 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         })
         this.getAvg(reservoirId)
       }
-    })
+    }))
   }
 
   private getAvg(reservoirId: number) {
-    this.api.getAvgValues(reservoirId).subscribe({
+    this.subscribes.push(this.api.getAvgValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
         this.avgByMonth = response.data.map(value => value.value * this.mSecondsInDay)
         this.avgValue = response.data.map(value => value.value).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
@@ -204,11 +184,11 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         })
         this.chart?.update()
       }
-    })
+    }))
   }
 
   private getMin(reservoirId: number) {
-    this.api.getMinValues(reservoirId).subscribe({
+    this.subscribes.push(this.api.getMinValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
         this.minByMonth = response.data.map(value => value.value * this.mSecondsInDay)
         this.minValue = {
@@ -228,11 +208,11 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         })
         this.chart?.update()
       }
-    })
+    }))
   }
 
   private getMax(reservoirId: number) {
-    this.api.getMaxValues(reservoirId).subscribe({
+    this.subscribes.push(this.api.getMaxValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
         this.maxByMonth = response.data.map(value => value.value * this.mSecondsInDay)
         this.maxValue = {
@@ -252,12 +232,12 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         })
         this.chart?.update()
       }
-    })
+    }))
   }
 
 
   private getPastYear(reservoirId: number) {
-    this.api.getSelectedYearValues(reservoirId, new Date().getFullYear() - 1).subscribe({
+    this.subscribes.push(this.api.getSelectedYearValues(reservoirId, new Date().getFullYear() - 1).subscribe({
       next: (response: ComplexValueResponse) => {
         this.pastYearByMonth = response.data.map(value => value.value * this.mSecondsInDay)
         this.pastYear = {
@@ -277,7 +257,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         })
         this.chart?.update()
       }
-    })
+    }))
   }
 
 }
