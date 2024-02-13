@@ -1,5 +1,5 @@
-<div *ngIf="reservoir; else loader" class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
-  <h3 class="text-center text-3xl">{{reservoir}}</h3>
+<div *ngIf="reservoirName && data.length > 0; else loader" class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
+  <h3 class="text-center text-3xl">{{reservoirName}}</h3>
 
   <table>
     <thead>
@@ -46,49 +46,49 @@
       <th>Ср (месяц)</th>
     </tr>
     </thead>
-<!--    <tbody *ngFor="let data of data">-->
-<!--    <tr>-->
-<!--      <td rowspan="4">{{data.date | date: 'MMMM' | rusMonth}}</td>-->
-<!--      <td>Уровень</td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.firstDecadeLimit">{{reservoir.waterLevel[i]}}</p></td>-->
-<!--      <td></td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.secondDecadeLimit">{{reservoir.waterLevel[i]}}</p></td>-->
-<!--      <td></td>-->
-<!--      <td *ngFor="let value of data.elevenDays; index as i"><p *ngIf="i < data.thirdDecadeLimit">{{reservoir.waterLevel[i]}}</p></td>-->
-<!--      <td></td>-->
-<!--      <td></td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>Объём</td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.firstDecadeLimit">{{reservoir.waterVolume[i]}}</p></td>-->
-<!--      <td></td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.secondDecadeLimit">{{reservoir.waterVolume[i]}}</p></td>-->
-<!--      <td></td>-->
-<!--      <td *ngFor="let value of data.elevenDays; index as i"><p *ngIf="i < data.thirdDecadeLimit">{{reservoir.waterVolume[i]}}</p></td>-->
-<!--      <td></td>-->
-<!--      <td></td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>Приток</td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.firstDecadeLimit">{{reservoir.waterIncome[i]}}</p></td>-->
-<!--      <td>{{getAvg(reservoir.waterIncome, data.firstDecadeLimit) | number: '.0-0'}}</td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.secondDecadeLimit">{{reservoir.waterIncome[i]}}</p></td>-->
-<!--      <td>{{getAvg(reservoir.waterIncome, data.secondDecadeLimit) | number: '.0-0'}}</td>-->
-<!--      <td *ngFor="let value of data.elevenDays; index as i"><p *ngIf="i < data.thirdDecadeLimit">{{reservoir.waterIncome[i]}}</p></td>-->
-<!--      <td>{{getAvg(reservoir.waterIncome, data.thirdDecadeLimit) | number: '.0-0'}}</td>-->
-<!--      <td>{{getAvg(reservoir.waterIncome, data.thirdDecadeLimit) | number: '.0-0'}}</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>Попуск</td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.firstDecadeLimit">{{reservoir.waterRelease[i]}}</p></td>-->
-<!--      <td>{{getAvg(reservoir.waterRelease, data.firstDecadeLimit) | number: '.0-0'}}</td>-->
-<!--      <td *ngFor="let value of data.tenDays; index as i"><p *ngIf="i < data.secondDecadeLimit">{{reservoir.waterRelease[i]}}</p></td>-->
-<!--      <td>{{getAvg(reservoir.waterRelease, data.secondDecadeLimit) | number: '.0-0'}}</td>-->
-<!--      <td *ngFor="let value of data.elevenDays; index as i"><p *ngIf="i < data.thirdDecadeLimit">{{reservoir.waterRelease[i]}}</p></td>-->
-<!--      <td>{{getAvg(reservoir.waterRelease, data.thirdDecadeLimit) | number: '.0-0'}}</td>-->
-<!--      <td>{{getAvg(reservoir.waterRelease, data.thirdDecadeLimit) | number: '.0-0'}}</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
+    <tbody *ngFor="let data of data">
+    <tr *ngIf="data.level">
+      <td rowspan="4">{{data.date | date: 'MMMM' | rusMonth}}</td>
+      <td>Уровень</td>
+      <td *ngFor="let value of data.level.slice(0, 10)">{{value}}</td>
+      <td></td>
+      <td *ngFor="let value of data.level.slice(10,20)">{{value}}</td>
+      <td></td>
+      <td *ngFor="let value of data.level.slice(-11)">{{value}}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr *ngIf="data.volume">
+      <td>Объём</td>
+      <td *ngFor="let value of data.volume.slice(0, 10)">{{value}}</td>
+      <td></td>
+      <td *ngFor="let value of data.volume.slice(10,20)">{{value}}</td>
+      <td></td>
+      <td *ngFor="let value of data.volume.slice(-11)">{{value}}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr *ngIf="data.income">
+      <td>Приток</td>
+      <td *ngFor="let value of data.income.slice(0, 10)">{{value}}</td>
+      <td>{{getAvg(data.income.slice(0, 10)) | number: '.0-0'}}</td>
+      <td *ngFor="let value of data.income.slice(10,20)">{{value}}</td>
+      <td>{{getAvg(data.income.slice(10,20)) | number: '.0-0'}}</td>
+      <td *ngFor="let value of data.income.slice(-11)">{{value}}</td>
+      <td>{{getAvg(data.income.slice(-11)) | number: '.0-0'}}</td>
+      <td>{{getAvg(data.income) | number: '.0-0'}}</td>
+    </tr>
+    <tr *ngIf="data.release">
+      <td>Попуск</td>
+      <td *ngFor="let value of data.release.slice(0, 10)">{{value}}</td>
+      <td>{{getAvg(data.release.slice(0, 10)) | number: '.0-0'}}</td>
+      <td *ngFor="let value of data.release.slice(10,20)">{{value}}</td>
+      <td>{{getAvg(data.release.slice(10,20)) | number: '.0-0'}}</td>
+      <td *ngFor="let value of data.release.slice(-11)">{{value}}</td>
+      <td>{{getAvg(data.release.slice(-11)) | number: '.0-0'}}</td>
+      <td>{{getAvg(data.release) | number: '.0-0'}}</td>
+    </tr>
+    </tbody>
   </table>
 </div>
 
