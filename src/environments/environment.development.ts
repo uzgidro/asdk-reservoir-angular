@@ -11,7 +11,7 @@ export const environment: EnvInterface = {
       currentLevel: 895,
       currentRelease: 200,
       currentVolume: 1370,
-      snowCoverage: [82,93,90,92,95,98,100,100,100]
+      snowCoverage: [82, 93, 90, 92, 95, 98, 100, 100, 100]
 
     },
     {
@@ -25,7 +25,7 @@ export const environment: EnvInterface = {
       currentLevel: 1070,
       currentRelease: 30,
       currentVolume: 189,
-      snowCoverage: [52,96,100,100,100,100]
+      snowCoverage: [52, 96, 100, 100, 100, 100]
     },
     {
       id: 'sar',
@@ -51,7 +51,7 @@ export const environment: EnvInterface = {
       currentLevel: 1106,
       currentRelease: 24,
       currentVolume: 128,
-      snowCoverage: [0,72,99,98,100,100,100]
+      snowCoverage: [0, 72, 99, 98, 100, 100, 100]
     },
     {
       id: 'tup',
@@ -64,7 +64,7 @@ export const environment: EnvInterface = {
       currentLevel: 945,
       currentRelease: 70,
       currentVolume: 394,
-      snowCoverage: [27,25,61,95,100,100,100,100]
+      snowCoverage: [27, 25, 61, 95, 100, 100, 100, 100]
     },
     {
       id: 'chor',
@@ -79,13 +79,15 @@ export const environment: EnvInterface = {
       currentVolume: 1986,
       snowCoverage: []
     }],
-  dataLabels: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00']
+  dataLabels: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00'],
+  weatherApiKey: '6c5ef4230fa82235bbc96b67a40684bf',
 };
 
 
 export interface EnvInterface {
   regionId: RegionInfo[]
   dataLabels: string[]
+  weatherApiKey: string
 }
 
 export interface RegionInfo {
@@ -101,3 +103,4 @@ export interface RegionInfo {
   currentRelease: number
   snowCoverage: number[]
 }
+

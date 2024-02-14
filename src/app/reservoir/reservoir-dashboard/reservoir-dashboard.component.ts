@@ -1,12 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, ChartType, registerables} from "chart.js";
 import {BaseChartDirective} from "ng2-charts";
-import {EnvService} from "../../shared/service/env.service";
 import {Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
-import {CategorisedArrayResponse, ComplexValueResponse} from "../../shared/response/values-response";
-import {MenuItem} from "../../shared/interfaces";
+import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {ReservoirService} from "../reservoir.service";
+import {ReservoirResponse} from "../../shared/response/reservoir-response";
 
 @Component({
   selector: 'app-reservoir-dashboard',
@@ -14,6 +13,8 @@ import {ReservoirService} from "../reservoir.service";
   styleUrls: ['./reservoir-dashboard.component.css']
 })
 export class ReservoirDashboardComponent implements OnInit {
+  reservoirs: ReservoirResponse[] = []
+
   public lineChartType: ChartType = 'line';
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
@@ -25,16 +26,17 @@ export class ReservoirDashboardComponent implements OnInit {
   reservoirsData: {
     id: number,
     name: string,
-    release?: {latest: number, difference: number},
-    level?: {latest: number, difference: number},
-    volume?: {latest: number, difference: number}
+    release?: { latest: number, difference: number },
+    level?: { latest: number, difference: number },
+    volume?: { latest: number, difference: number }
   }[] = []
 
-  constructor( private api: ApiService, private reservoirService: ReservoirService, private router: Router) {
+  constructor(private api: ApiService, private reservoirService: ReservoirService, private router: Router) {
     Chart.register(...registerables);
   }
 
   ngOnInit() {
+    this.setupReservoirs()
     this.getData()
   }
 
@@ -44,9 +46,17 @@ export class ReservoirDashboardComponent implements OnInit {
     })
   }
 
-  navigateToReservoirWeather(id: string) {
+  navigateToReservoirWeather(id: number) {
     this.router.navigate(['/reservoir/weather'], {
       queryParams: {reservoir: id}
+    })
+  }
+
+  private setupReservoirs() {
+    this.api.getReservoirs().subscribe({
+      next: (response: ReservoirResponse[]) => {
+        this.reservoirs = response
+      }
     })
   }
 

@@ -1,23 +1,34 @@
-<div class="p-4 flex flex-col items-center material-card">
+<div *ngIf="reservoir && weather; else loader" class="p-4 flex flex-col items-center material-card">
   <h3 class="text-2xl mb-2">
-    {{name}}
+    {{ reservoirName }}
   </h3>
   <div class="flex items-center">
-    <span class="material-symbols-outlined text-5xl">cloudy_snowing</span>
-    <h4 class="text-4xl">-10&#176;</h4>
+    <span class="material-symbols-outlined text-5xl">
+      <img ngSrc="https://openweathermap.org/img/wn/{{weather.weatherIcon}}@2x.png" alt="{{weather.weatherDescription}}"
+           width="100"
+           height="100"
+      ></span>
+    <h4 class="text-4xl">{{ weather.temp | number: '.0-0' }}&#176;</h4>
   </div>
-  <div class="flex font-light mb-4">
-    Ощущается -8&#176;
+  <div class="flex items-center font-light mb-4">
+    Ощущается {{ weather.tempFeelsLike | number: '.0-0' }}&#176;
   </div>
   <div class="flex flex-row justify-evenly w-full items-center">
     <div class="flex">
       <span class="material-symbols-outlined">humidity_percentage</span>
-      <p>58%</p>
+      <p>{{ weather.humidity }}%</p>
     </div>
     <div class="flex">
       <span class="material-symbols-outlined">air</span>
-      <span class="material-symbols-outlined">north_east</span>
-      <p>5 м/с</p>
+      <span class="material-symbols-outlined">{{ weather.windDirection }}</span>
+      <p>{{ weather.windSpeed }} м/с</p>
     </div>
   </div>
 </div>
+
+<ng-template #loader>
+  <div class="p-4 flex flex-col items-center material-card">
+    <app-loader size="lg"></app-loader>
+  </div>
+
+</ng-template>
