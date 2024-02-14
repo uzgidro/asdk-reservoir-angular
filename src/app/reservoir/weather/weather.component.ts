@@ -1,23 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EnvService} from "../../shared/service/env.service";
 import {ReservoirService} from "../reservoir.service";
 import {RegionInfo} from "../../../environments/environment.development";
-import {WeatherDetailedComponent} from "../../shared/component/wearher-detailed/weather-detailed.component";
 
 @Component({
   selector: 'app-weather',
-  standalone: true,
-  imports: [
-    DatePipe,
-    DecimalPipe,
-    NgForOf,
-    NgIf,
-    RusMonthPipe,
-    WeatherDetailedComponent
-  ],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.css'
 })

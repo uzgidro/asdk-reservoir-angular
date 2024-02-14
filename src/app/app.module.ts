@@ -38,12 +38,13 @@ import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
 import {ChartModule} from "primeng/chart";
-import {WeatherComponent} from "./shared/component/weather/weather.component";
+import {WeatherFrameComponent} from "./shared/component/weather/weather-frame.component";
 import {ReservoirCurrentComponent} from "./shared/component/reservoir-current/reservoir-current.component";
-import {WeatherDetailedComponent} from "./shared/component/wearher-detailed/weather-detailed.component";
+import {WeatherDetailedFrameComponent} from "./shared/component/wearher-detailed/weather-detailed-frame.component";
 import {RusDatePipe} from "./shared/pipe/rus-date.pipe";
 import {RusMonthPipe} from "./shared/pipe/rus-month.pipe";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
+import {WeatherComponent} from "./reservoir/weather/weather.component";
 
 @NgModule({
   declarations: [
@@ -70,6 +71,8 @@ import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-mon
     ReservoirDashboardComponent,
     HydroWorksComponent,
     ReservoirMonthComponent,
+    WeatherFrameComponent,
+    WeatherDetailedFrameComponent,
     WeatherComponent
   ],
   imports: [
@@ -86,12 +89,11 @@ import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-mon
     ToastModule,
     ChartModule,
     ReservoirCurrentComponent,
-    WeatherDetailedComponent,
     RusDatePipe,
     RusMonthPipe,
     LoaderComponent
   ],
-    exports: [HttpClientModule],
+  exports: [HttpClientModule],
   providers: [MessageService],
   bootstrap: [AppComponent]
 })

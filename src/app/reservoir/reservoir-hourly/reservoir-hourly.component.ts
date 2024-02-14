@@ -19,7 +19,7 @@ export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
   times: Date[] = []
   chartTimeline: string[] = []
-  reservoirName?: string
+  reservoir?: ReservoirResponse
   charts: { data: ChartConfiguration['data'], options: ChartConfiguration['options'] }[] = []
 
   reservoirsData: {
@@ -46,7 +46,7 @@ export class ReservoirHourlyComponent implements OnInit {
       next: value => {
         this.api.getReservoirById(value['reservoir']).subscribe({
           next: (response: ReservoirResponse) => {
-            this.reservoirName = response.name
+            this.reservoir = response
           }
         })
         this.api.getCurrentReservoirValues(value['reservoir']).subscribe({
@@ -71,7 +71,7 @@ export class ReservoirHourlyComponent implements OnInit {
     })
   }
 
-  navigateToReservoirWeather(id: string) {
+  navigateToReservoirWeather(id: number) {
     this.router.navigate(['/reservoir/weather'], {
       queryParams: {reservoir: id}
     })

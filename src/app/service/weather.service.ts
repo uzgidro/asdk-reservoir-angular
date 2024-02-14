@@ -11,20 +11,20 @@ export class WeatherService {
 
   convertCurrentResponse(response: WeatherCurrentResponse): WeatherCurrentDto {
     let direction: string
-    const dig = response.wind.deg
-    if (dig < 23 || dig > 338) {
+    const deg = response.wind.deg
+    if (deg < 23 || deg > 338) {
       direction = 'north'
-    } else if (dig < 68) {
+    } else if (deg < 68) {
       direction = 'north_east'
-    } else if (dig < 113) {
+    } else if (deg < 113) {
       direction = 'east'
-    } else if (dig < 158) {
+    } else if (deg < 158) {
       direction = 'south_east'
-    } else if (dig < 203) {
+    } else if (deg < 203) {
       direction = 'south'
-    } else if (dig < 248) {
+    } else if (deg < 248) {
       direction = 'south_west'
-    } else if (dig < 293) {
+    } else if (deg < 293) {
       direction = 'west'
     } else {
       direction = 'north_west'
@@ -36,7 +36,8 @@ export class WeatherService {
       weatherDescription: response.weather[0].description,
       weatherIcon: response.weather[0].icon,
       windSpeed: response.wind.speed,
-      windDirection: direction
+      windDirection: direction,
+      time: new Date(response.dt*1000)
     }
   }
 

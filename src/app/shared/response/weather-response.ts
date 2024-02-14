@@ -12,6 +12,7 @@ export interface WeatherCurrentResponse {
     deg: number
     speed: number
   }
+  dt: number
 }
 
 export interface WeatherCurrentDto {
@@ -22,4 +23,5 @@ export interface WeatherCurrentDto {
   weatherIcon: string
   windDirection: string
   windSpeed: number
+  time: Date
 }

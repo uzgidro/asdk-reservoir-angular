@@ -3,11 +3,10 @@
     {{ reservoirName }}
   </h3>
   <div class="flex items-center">
-    <span class="material-symbols-outlined text-5xl">
-      <img ngSrc="https://openweathermap.org/img/wn/{{weather.weatherIcon}}@2x.png" alt="{{weather.weatherDescription}}"
-           width="100"
-           height="100"
-      ></span>
+    <img ngSrc="https://openweathermap.org/img/wn/{{weather.weatherIcon}}@2x.png" alt="{{weather.weatherDescription}}"
+         width="100"
+         height="100"
+    >
     <h4 class="text-4xl">{{ weather.temp | number: '.0-0' }}&#176;</h4>
   </div>
   <div class="flex items-center font-light mb-4">

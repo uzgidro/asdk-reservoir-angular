@@ -5,11 +5,11 @@ import {WeatherCurrentDto, WeatherCurrentResponse} from "../../response/weather-
 import {WeatherService} from "../../../service/weather.service";
 
 @Component({
-  selector: 'app-weather',
-  templateUrl: './weather.component.html',
-  styleUrl: './weather.component.css'
+  selector: 'app-weather-frame',
+  templateUrl: './weather-frame.component.html',
+  styleUrl: './weather-frame.component.css'
 })
-export class WeatherComponent implements OnChanges {
+export class WeatherFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse
   reservoirName?: string
   weather?: WeatherCurrentDto
@@ -22,11 +22,10 @@ export class WeatherComponent implements OnChanges {
     this.reservoirName = res.name
     const lat = res.lat
     const lon = res.lon
-    this.weatherApiService.getCurrent(lat, lon).subscribe({
-      next: (response: WeatherCurrentResponse) => {
-        console.log(response.wind.deg)
-        this.weather = this.weatherService.convertCurrentResponse(response)
-      }
-    })
+    // this.weatherApiService.getCurrent(lat, lon).subscribe({
+    //   next: (response: WeatherCurrentResponse) => {
+    //     this.weather = this.weatherService.convertCurrentResponse(response)
+    //   }
+    // })
   }
 }
