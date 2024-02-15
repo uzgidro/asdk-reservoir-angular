@@ -1,169 +1,174 @@
-<div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center" *ngIf="selectedReservoir; else unselected">
-  <h3 class="text-center text-3xl">Прогноз погоды: {{ selectedReservoir.name }}</h3>
-
-  <div class="grid grid-cols-1 xl:grid-cols-4 2xl:grid-cols-6 gap-4">
-<!--    Current-->
-    <div class="row-span-2 col-span-2  2xl:col-start-2 flex flex-col justify-around text-center material-card">
-      <h2 class="card-title">Текущая погода</h2>
-      <div class="flex flex-row justify-center text-center">
-        <span class="material-symbols-outlined text-5xl">partly_cloudy_day</span>
-        <h4 class="text-4xl">6&#176;</h4>
-      </div>
-      <p class="font-light mb-4 text-center">Малая облачность | Ощущается 7&#176;</p>
-      <div class="flex flex-col lg:flex-row lg:space-x-4">
-        <table>
-          <tbody>
-            <tr>
-              <td>Максимальный УФ индекс</td>
-              <td>2 (низкий)</td>
-            </tr>
-            <tr>
-              <td>Ветер</td>
-              <td>ССВ 9 км/ч</td>
-            </tr>
-            <tr>
-              <td>Порывы ветра</td>
-              <td>16 кс/ч</td>
-            </tr>
-            <tr>
-              <td>Влажность</td>
-              <td>55%</td>
-            </tr>
-            <tr>
-              <td>Влажность в помещении</td>
-              <td>37% (сухо)</td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-            <tr>
-              <td>Точка росы</td>
-              <td>-2&#176; C</td>
-            </tr>
-            <tr>
-              <td>Давление</td>
-              <td>1027 мБар</td>
-            </tr>
-            <tr>
-              <td>Обачность</td>
-              <td>40%</td>
-            </tr>
-            <tr>
-              <td>Видимость</td>
-              <td>16 км</td>
-            </tr>
-            <tr>
-              <td>Облачный потолок</td>
-              <td>9100 м</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-<!--Day-->
-    <div class=" col-span-2 flex flex-col h-fit space-y-4 justify-around text-center material-card">
-      <h2 class="card-title">Погода на день</h2>
-      <div class="flex flex-row justify-center text-center">
-        <span class="material-symbols-outlined text-5xl">partly_cloudy_day</span>
-        <h4 class="text-4xl">12&#176;</h4>
-      </div>
-      <p class="font-light mb-4 text-center">Малая облачность | Ощущается 13&#176;</p>
-      <div class="flex flex-col lg:flex-row lg:space-x-4">
-        <table>
-          <tbody>
-          <tr>
-            <td>Максимальный УФ индекс</td>
-            <td>2 (низкий)</td>
-          </tr>
-          <tr>
-            <td>Ветер</td>
-            <td>Ю 7 км/ч</td>
-          </tr>
-          <tr>
-            <td>Порывы ветра</td>
-            <td>17 кс/ч</td>
-          </tr>
-          <tr>
-            <td>Вероятность осадков</td>
-            <td>5%</td>
-          </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-          <tr>
-            <td>Вероятность грозы</td>
-            <td>0%</td>
-          </tr>
-          <tr>
-            <td>Осадки</td>
-            <td>0.0 мм</td>
-          </tr>
-          <tr>
-            <td>Обачность</td>
-            <td>76%</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-<!--    Night-->
-    <div class=" col-span-2 flex flex-col h-fit space-y-4 justify-around text-center material-card">
-      <h2 class="card-title">Погода на ночь</h2>
-      <div class="flex flex-row justify-center text-center">
-        <span class="material-symbols-outlined text-5xl">partly_cloudy_night</span>
-        <h4 class="text-4xl">2&#176;</h4>
-      </div>
-      <p class="font-light mb-4 text-center">Облачность | Ощущается 3&#176;</p>
-      <div class="flex flex-col lg:flex-row lg:space-x-4">
-        <table>
-          <tbody>
-          <tr>
-            <td>Ветер</td>
-            <td>СВ 7 км/ч</td>
-          </tr>
-          <tr>
-            <td>Порывы ветра</td>
-            <td>16 кс/ч</td>
-          </tr>
-          <tr>
-            <td>Вероятность осадков</td>
-            <td>5%</td>
-          </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-          <tr>
-            <td>Вероятность грозы</td>
-            <td>0%</td>
-          </tr>
-          <tr>
-            <td>Осадки</td>
-            <td>0.0 мм</td>
-          </tr>
-          <tr>
-            <td>Обачность</td>
-            <td>76%</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center pb-20">
+  <h3 class="text-center text-3xl">Прогноз погоды</h3>
+  <div class="grid gap-4 xl:grid-cols-3">
+    <app-weather-detailed *ngFor="let item of reservoirs" [reservoir]="item"></app-weather-detailed>
   </div>
 </div>
 
-<ng-template #unselected>
-  <div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center pb-20">
-    <h3 class="text-center text-3xl">Прогноз погоды</h3>
 
-<!--    <div class="grid gap-4 xl:grid-cols-3">-->
-<!--      <app-weather-detailed *ngFor="let item of reservoirs" [name]="item.name"-->
-<!--                            (click)="select(item.id)"></app-weather-detailed>-->
+<!--<div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center" *ngIf="selectedReservoir; else unselected">-->
+<!--  <h3 class="text-center text-3xl">Прогноз погоды: {{ selectedReservoir.name }}</h3>-->
+
+<!--  <div class="grid grid-cols-1 xl:grid-cols-4 2xl:grid-cols-6 gap-4">-->
+<!--&lt;!&ndash;    Current&ndash;&gt;-->
+<!--    <div class="row-span-2 col-span-2  2xl:col-start-2 flex flex-col justify-around text-center material-card">-->
+<!--      <h2 class="card-title">Текущая погода</h2>-->
+<!--      <div class="flex flex-row justify-center text-center">-->
+<!--        <span class="material-symbols-outlined text-5xl">partly_cloudy_day</span>-->
+<!--        <h4 class="text-4xl">6&#176;</h4>-->
+<!--      </div>-->
+<!--      <p class="font-light mb-4 text-center">Малая облачность | Ощущается 7&#176;</p>-->
+<!--      <div class="flex flex-col lg:flex-row lg:space-x-4">-->
+<!--        <table>-->
+<!--          <tbody>-->
+<!--            <tr>-->
+<!--              <td>Максимальный УФ индекс</td>-->
+<!--              <td>2 (низкий)</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Ветер</td>-->
+<!--              <td>ССВ 9 км/ч</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Порывы ветра</td>-->
+<!--              <td>16 кс/ч</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Влажность</td>-->
+<!--              <td>55%</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Влажность в помещении</td>-->
+<!--              <td>37% (сухо)</td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--        <table>-->
+<!--          <tbody>-->
+<!--            <tr>-->
+<!--              <td>Точка росы</td>-->
+<!--              <td>-2&#176; C</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Давление</td>-->
+<!--              <td>1027 мБар</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Обачность</td>-->
+<!--              <td>40%</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Видимость</td>-->
+<!--              <td>16 км</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>Облачный потолок</td>-->
+<!--              <td>9100 м</td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
 <!--    </div>-->
 
-  </div>
-</ng-template>
+<!--&lt;!&ndash;Day&ndash;&gt;-->
+<!--    <div class=" col-span-2 flex flex-col h-fit space-y-4 justify-around text-center material-card">-->
+<!--      <h2 class="card-title">Погода на день</h2>-->
+<!--      <div class="flex flex-row justify-center text-center">-->
+<!--        <span class="material-symbols-outlined text-5xl">partly_cloudy_day</span>-->
+<!--        <h4 class="text-4xl">12&#176;</h4>-->
+<!--      </div>-->
+<!--      <p class="font-light mb-4 text-center">Малая облачность | Ощущается 13&#176;</p>-->
+<!--      <div class="flex flex-col lg:flex-row lg:space-x-4">-->
+<!--        <table>-->
+<!--          <tbody>-->
+<!--          <tr>-->
+<!--            <td>Максимальный УФ индекс</td>-->
+<!--            <td>2 (низкий)</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Ветер</td>-->
+<!--            <td>Ю 7 км/ч</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Порывы ветра</td>-->
+<!--            <td>17 кс/ч</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Вероятность осадков</td>-->
+<!--            <td>5%</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--        <table>-->
+<!--          <tbody>-->
+<!--          <tr>-->
+<!--            <td>Вероятность грозы</td>-->
+<!--            <td>0%</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Осадки</td>-->
+<!--            <td>0.0 мм</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Обачность</td>-->
+<!--            <td>76%</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--&lt;!&ndash;    Night&ndash;&gt;-->
+<!--    <div class=" col-span-2 flex flex-col h-fit space-y-4 justify-around text-center material-card">-->
+<!--      <h2 class="card-title">Погода на ночь</h2>-->
+<!--      <div class="flex flex-row justify-center text-center">-->
+<!--        <span class="material-symbols-outlined text-5xl">partly_cloudy_night</span>-->
+<!--        <h4 class="text-4xl">2&#176;</h4>-->
+<!--      </div>-->
+<!--      <p class="font-light mb-4 text-center">Облачность | Ощущается 3&#176;</p>-->
+<!--      <div class="flex flex-col lg:flex-row lg:space-x-4">-->
+<!--        <table>-->
+<!--          <tbody>-->
+<!--          <tr>-->
+<!--            <td>Ветер</td>-->
+<!--            <td>СВ 7 км/ч</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Порывы ветра</td>-->
+<!--            <td>16 кс/ч</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Вероятность осадков</td>-->
+<!--            <td>5%</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--        <table>-->
+<!--          <tbody>-->
+<!--          <tr>-->
+<!--            <td>Вероятность грозы</td>-->
+<!--            <td>0%</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Осадки</td>-->
+<!--            <td>0.0 мм</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Обачность</td>-->
+<!--            <td>76%</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<ng-template #unselected>-->
+<!--  <div class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center pb-20">-->
+<!--    <h3 class="text-center text-3xl">Прогноз погоды</h3>-->
+<!--    <div class="grid gap-4 xl:grid-cols-3">-->
+<!--      <app-weather-detailed *ngFor="let item of reservoirs" [reservoir]="item"></app-weather-detailed>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</ng-template>-->

@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {EnvService} from "../../shared/service/env.service";
-import {ReservoirService} from "../reservoir.service";
-import {RegionInfo} from "../../../environments/environment.development";
+import {ReservoirResponse} from "../../shared/response/reservoir-response";
+import {ApiService} from "../../service/api.service";
 
 @Component({
   selector: 'app-weather',
@@ -10,30 +8,41 @@ import {RegionInfo} from "../../../environments/environment.development";
   styleUrl: './weather.component.css'
 })
 export class WeatherComponent implements OnInit {
-  selectedReservoir?: RegionInfo
-  reservoirs?: RegionInfo[]
+  // selectedReservoir?: RegionInfo
+  reservoirs?: ReservoirResponse[]
   date?: Date
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
+  constructor(
+    private api: ApiService,
+    // private router: Router,
+    // private activatedRoute: ActivatedRoute,
+    // private env: EnvService,
+    // private resService: ReservoirService
+  ) {
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe({
-      next: value => {
-        // this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
-        this.date = new Date()
-        if (!this.selectedReservoir) {
-          this.reservoirs = this.env.getRegions()
-        }
+    this.api.getReservoirs().subscribe({
+      next: (response: ReservoirResponse[]) => {
+        this.reservoirs = response
       }
     })
+    // this.activatedRoute.queryParams.subscribe({
+    //   next: value => {
+    //     // this.selectedReservoir = this.resService.setReservoir(value, this.env.getRegions())
+    //     this.date = new Date()
+    //     if (!this.selectedReservoir) {
+    //       this.reservoirs = this.env.getRegions()
+    //     }
+    //   }
+    // })
   }
 
-  select(resId: string) {
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: {reservoir: resId},
-      queryParamsHandling: 'merge'
-    });
-  }
+  // select(resId: string) {
+  //   this.router.navigate([], {
+  //     relativeTo: this.activatedRoute,
+  //     queryParams: {reservoir: resId},
+  //     queryParamsHandling: 'merge'
+  //   });
+  // }
 }
