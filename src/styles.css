@@ -30,7 +30,7 @@
 }
 
 .material-card {
-  @apply border-2 border-slate-500 p-4 bg-white rounded-xl shadow-xl
+  @apply border-2 border-gray-500 p-4 bg-white rounded-xl shadow-xl
 }
 
 .card-title {

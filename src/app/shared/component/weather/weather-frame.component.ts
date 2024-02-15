@@ -22,10 +22,10 @@ export class WeatherFrameComponent implements OnChanges {
     this.reservoirName = res.name
     const lat = res.lat
     const lon = res.lon
-    // this.weatherApiService.getCurrent(lat, lon).subscribe({
-    //   next: (response: WeatherCurrentResponse) => {
-    //     this.weather = this.weatherService.convertCurrentResponse(response)
-    //   }
-    // })
+    this.weatherApiService.getCurrent(lat, lon).subscribe({
+      next: (response: WeatherCurrentResponse) => {
+        this.weather = this.weatherService.convertCurrentResponse(response)
+      }
+    })
   }
 }

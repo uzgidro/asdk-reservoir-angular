@@ -1,6 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe, DecimalPipe, NgForOf} from "@angular/common";
-import {RusDatePipe} from "../../pipe/rus-date.pipe";
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {WeatherApiService} from "../../../service/weather-api.service";
 import {WeatherService} from "../../../service/weather.service";
 import {ReservoirResponse} from "../../response/reservoir-response";
@@ -17,29 +15,54 @@ export class WeatherDetailedFrameComponent implements OnChanges {
   weatherCurrent?: WeatherCurrentDto
   weatherHourly: WeatherCurrentDto[] = []
   weatherDaily: {
-    day: Date,
-    humidityIcon: 'humidity_high' | 'humidity_mid' | 'humidity_low',
-    humidity: number,
-    dayIcon: 'sunny' | 'cloud' | 'partly_cloudy_day' | 'cloudy_snowing' | 'rainy' | 'nights_stay' | 'clear_night',
-    nightIcon: 'sunny' | 'cloud' | 'partly_cloudy_day' | 'cloudy_snowing' | 'rainy' | 'nights_stay' | 'clear_night',
-    dayTemperature: number,
-    nightTemperature: number
+    date: Date
+    dayIcon?: string
+    nightIcon?: string
+    dayIconDescription?: string
+    nightIconDescription?: string
+    dayTemperature?: number
+    nightTemperature?: number
   }[] = []
 
   constructor(private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.weatherHourly = []
     const res = changes['reservoir'].currentValue as ReservoirResponse
     this.reservoirName = res.name
     const lat = res.lat
     const lon = res.lon
+    this.weatherApiService.getCurrent(lat, lon).subscribe({
+      next: (response: WeatherCurrentResponse) => {
+          this.weatherCurrent = this.weatherService.convertCurrentResponse(response)
+      }
+    })
     this.weatherApiService.getForecast(lat, lon).subscribe({
       next: (response) => {
-        console.log(response)
-        for (let weather of response.list.slice(0,6)) {
-        this.weatherHourly.push(this.weatherService.convertCurrentResponse(weather))
+        for (let weather of response.list.slice(0, 7)) {
+          this.weatherHourly.push(this.weatherService.convertCurrentResponse(weather))
         }
+        for (let res of response.list as WeatherCurrentResponse[]) {
+          const weather = this.weatherService.convertCurrentResponse(res)
+          if (weather.time.getDate() !== new Date().getDate()) {
+            let existsElement = this.weatherDaily.find(item => item.date.getDate() === weather.time.getDate())
+            if (!existsElement) {
+              this.weatherDaily.push({date: weather.time})
+            } else {
+              if (weather.time.getHours() === 11) {
+                existsElement.dayIcon = weather.weatherIcon
+                existsElement.dayIconDescription = weather.weatherDescription
+                existsElement.dayTemperature = weather.temp
+              } else if (weather.time.getHours() === 17) {
+                existsElement.nightIcon = weather.weatherIcon
+                existsElement.nightIconDescription = weather.windDirection
+                existsElement.nightTemperature = weather.temp
+              }
+            }
+          }
+        }
+        this.weatherDaily = this.weatherDaily.slice(0,4)
       }
     })
   }

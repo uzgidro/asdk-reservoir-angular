@@ -3,6 +3,10 @@ export interface WeatherCurrentResponse {
     feels_like: number
     temp: number
     humidity: number
+    pressure: number
+  }
+  clouds: {
+    all: number
   }
   weather: {
     description: string
@@ -24,4 +28,6 @@ export interface WeatherCurrentDto {
   windDirection: string
   windSpeed: number
   time: Date
+  pressure: number
+  clouds: number
 }

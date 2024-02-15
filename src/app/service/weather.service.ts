@@ -37,7 +37,9 @@ export class WeatherService {
       weatherIcon: response.weather[0].icon,
       windSpeed: response.wind.speed,
       windDirection: direction,
-      time: new Date(response.dt*1000)
+      time: new Date(response.dt*1000),
+      pressure: response.main.pressure,
+      clouds: response.clouds.all
     }
   }
 
