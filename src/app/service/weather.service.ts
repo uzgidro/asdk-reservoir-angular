@@ -29,12 +29,45 @@ export class WeatherService {
     } else {
       direction = 'north_west'
     }
+    const stockIcon = response.weather[0].icon
+    let icon: string
+    switch (true) {
+      case stockIcon.includes('01') :
+        icon = 'skc_' + stockIcon.slice(-1)
+        break
+      case stockIcon.includes('02') :
+        icon = 'bkn_' + stockIcon.slice(-1)
+        break
+      case stockIcon.includes('03') :
+        icon = 'bkn_' + stockIcon.slice(-1)
+        break
+      case stockIcon.includes('04') :
+        icon = 'ovc'
+        break
+      case stockIcon.includes('09') :
+        icon = 'bkn_+ra_' + stockIcon.slice(-1)
+        break
+      case stockIcon.includes('10') :
+        icon = 'bkn_-ra_' + stockIcon.slice(-1)
+        break
+      case stockIcon.includes('11') :
+        icon = 'ovc_ts'
+        break
+      case stockIcon.includes('13') :
+        icon = 'ovc_sn'
+        break
+      case stockIcon.includes('50') :
+        icon = 'fg_' + stockIcon.slice(-1)
+        break
+      default:
+        icon = 'vlka'
+    }
     return {
       temp: response.main.temp,
       tempFeelsLike: response.main.feels_like,
       humidity: response.main.humidity,
       weatherDescription: response.weather[0].description,
-      weatherIcon: response.weather[0].icon,
+      weatherIcon: `https://yastatic.net/weather/i/icons/funky/dark/${icon}.svg`,
       windSpeed: response.wind.speed,
       windDirection: direction,
       time: new Date(response.dt*1000),
