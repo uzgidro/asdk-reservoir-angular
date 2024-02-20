@@ -89,6 +89,15 @@ export class ApiService {
     )
   }
 
+  getDecadeYearsValues(reservoirId: number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE + YEAR).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
   getByYearValues(reservoirId: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + YEAR, {params: new HttpParams().set('category', 'income')}).pipe(
       catchError((error) => {

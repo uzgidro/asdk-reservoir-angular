@@ -1,72 +1,26 @@
-<div class="w-full px-4 mt-6 flex flex-col">
-
-  <div class="flex w-fit mx-auto p-4 rounded ring-2 ring-slate-300 space-x-5 my-4 text-lg font-medium bg-white">
-    <p-calendar [(ngModel)]="selectedDate" view="year" class="ring-transparent" [maxDate]="maxDate"
-                dateFormat="yy"></p-calendar>
-  </div>
+<div class="w-full px-4 mt-6 flex flex-col space-y-4">
+  <h3 class="text-center text-3xl">{{reservoirName}}</h3>
 
   <table>
     <thead>
     <tr>
-      <th rowspan="2">Месяц</th>
-      <th rowspan="2">Измерение</th>
-      <th colspan="35">Дни</th>
+      <th rowspan="2">Тип</th>
+      <th rowspan="2">Год</th>
+      <th *ngFor="let month of months" colspan="3">{{month}}</th>
     </tr>
     <tr>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>10</th>
-      <th>Ср (10 дней)</th>
-      <th>11</th>
-      <th>12</th>
-      <th>13</th>
-      <th>14</th>
-      <th>15</th>
-      <th>16</th>
-      <th>17</th>
-      <th>18</th>
-      <th>19</th>
-      <th>20</th>
-      <th>Ср (10 дней)</th>
-      <th>21</th>
-      <th>22</th>
-      <th>23</th>
-      <th>24</th>
-      <th>25</th>
-      <th>26</th>
-      <th>27</th>
-      <th>28</th>
-      <th>29</th>
-      <th>30</th>
-      <th>31</th>
-      <th>Ср (10 дней)</th>
-      <th>Ср (месяц)</th>
+      <th *ngFor="let decade of decade">{{decade}}</th>
     </tr>
     </thead>
-    <tbody *ngFor="let month of months">
+    <tbody *ngFor="let table of tableData">
     <tr>
-      <td rowspan="4">{{month}}</td>
-      <td>Уровень</td>
-      <td *ngFor="let i of [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]">{{i}}</td>
+      <td [rowSpan]="table.data.length" class="text-lg">{{table.category}}</td>
+      <td class="text-lg">{{table.data[0][0].date.slice(0,4)}}</td>
+      <td *ngFor="let i of table.data[0]">{{i.value}}</td>
     </tr>
-    <tr>
-      <td>Объём</td>
-      <td *ngFor="let i of [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]">{{i}}</td>
-    </tr>
-    <tr>
-      <td>Приток</td>
-      <td *ngFor="let i of [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]">{{i}}</td>
-    </tr>
-    <tr>
-      <td>Попуск</td>
-      <td *ngFor="let i of [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]">{{i}}</td>
+    <tr *ngFor="let cat of table.data.slice(1)">
+      <td class="text-lg">{{cat[0].date.slice(0,4)}}</td>
+      <td *ngFor="let val of cat">{{val.value}}</td>
     </tr>
     </tbody>
   </table>
