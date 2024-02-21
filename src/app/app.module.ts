@@ -45,6 +45,7 @@ import {RusDatePipe} from "./shared/pipe/rus-date.pipe";
 import {RusMonthPipe} from "./shared/pipe/rus-month.pipe";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 import {WeatherComponent} from "./reservoir/weather/weather.component";
+import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import {WeatherComponent} from "./reservoir/weather/weather.component";
     ReservoirMonthComponent,
     WeatherFrameComponent,
     WeatherDetailedFrameComponent,
-    WeatherComponent
+    WeatherComponent,
+    ReservoirYearlyComponent
   ],
   imports: [
     BrowserModule,
