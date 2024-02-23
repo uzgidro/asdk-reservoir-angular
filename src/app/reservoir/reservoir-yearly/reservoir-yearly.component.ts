@@ -13,6 +13,7 @@ import {Subscription} from "rxjs";
 export class ReservoirYearlyComponent implements OnInit {
   reservoirName?: string
   subscribe?: Subscription
+  category: number = 0
   months = [
     'Январь',
     'Февраль',
@@ -128,6 +129,41 @@ export class ReservoirYearlyComponent implements OnInit {
         })
       }
     })
+  }
+
+  changeMetrics(cat: number) {
+    if (this.category !== cat) {
+      this.category = cat
+      let income = this.tableData.find(val => val.category.includes('Приток'))
+      let release = this.tableData.find(val => val.category.includes('Попуск'))
+      if (cat == 0 && income && release) {
+        income.category = 'Приток, м3/с'
+        income.data.forEach( item => item.forEach(val => val.value /= 0.864))
+        income.stat5.find(item => item /= 0.864)
+        income.stat10.find(item => item /= 0.864)
+        income.stat30.find(item => item /= 0.864)
+        income.statTotal.find(item => item /= 0.864)
+        release.category = 'Попуск, м3/с'
+        release.data.forEach( item => item.forEach(val => val.value /= 0.864))
+        release.stat5.find(item => item /= 0.864)
+        release.stat10.find(item => item /= 0.864)
+        release.stat30.find(item => item /= 0.864)
+        release.statTotal.find(item => item /= 0.864)
+      } else if (cat == 1 && income && release) {
+        income.category = 'Приток, млн. м3'
+        income.data.forEach( item => item.forEach(val => val.value *= 0.864))
+        income.stat5.find(item => item *= 0.864)
+        income.stat10.find(item => item *= 0.864)
+        income.stat30.find(item => item *= 0.864)
+        income.statTotal.find(item => item *= 0.864)
+        release.category = 'Попуск, млн. м3/с'
+        release.data.forEach( item => item.forEach(val => val.value *= 0.864))
+        release.stat5.find(item => item *= 0.864)
+        release.stat10.find(item => item *= 0.864)
+        release.stat30.find(item => item *= 0.864)
+        release.statTotal.find(item => item *= 0.864)
+      }
+    }
   }
 
   private getStatistics(chunked: ValueResponse[][]) {
