@@ -61,13 +61,13 @@
     <tbody *ngFor="let res of totalValues">
     <tr>
       <td>{{res.reservoir}}</td>
-      <td>{{res.avg30}}</td>
-      <td>{{res.avg10}}</td>
-      <td>{{res.lastYear}}</td>
-      <td>{{res.currentYear}}</td>
-      <td>{{ res.avg30 !== 0 ? ((res.currentYear / res.avg30) * 100 | number: '.0-2') : '0' }}</td>
-      <td>{{ res.avg10 !== 0 ? ((res.currentYear / res.avg10) * 100 | number: '.0-2') : '0' }}</td>
-      <td>{{ (res.currentYear / res.lastYear) * 100 | number: '.0-2' }}</td>
+      <td>{{res.avg30}}<br><p class="text-red-600 text-xs">{{ res.decadeAvg30 }}</p></td>
+      <td>{{res.avg10}}<br><p class="text-red-600 text-xs">{{ res.decadeAvg10 }}</p></td>
+      <td>{{res.lastYear}}<br><p class="text-red-600 text-xs">{{ res.decadeLastYear }}</p></td>
+      <td>{{res.currentYear}}<br><p class="text-red-600 text-xs">{{ res.decadeCurrentYear }}</p></td>
+      <td>{{ res.avg30 !== 0 ? ((res.currentYear / res.avg30) * 100 | number: '.0-2') : '0' }}<br><p class="text-red-600 text-xs">{{ res.decadeAvg30 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg30) * 100 | number: '.0-2') : '0' }}</p></td>
+      <td>{{ res.avg10 !== 0 ? ((res.currentYear / res.avg10) * 100 | number: '.0-2') : '0' }}<br><p class="text-red-600 text-xs">{{ res.decadeAvg10 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg10) * 100 | number: '.0-2') : '0' }}</p></td>
+      <td>{{ (res.currentYear / res.lastYear) * 100 | number: '.0-2' }}<br><p class="text-red-600 text-xs">{{ (res.decadeCurrentYear / res.decadeLastYear) * 100 | number: '.0-2' }}</p></td>
     </tr>
     </tbody>
   </table>

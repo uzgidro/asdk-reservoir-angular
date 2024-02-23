@@ -23,6 +23,10 @@ export class ReservoirDecadeComponent implements OnInit {
   reservoirName?: string
   totalValues: {
     reservoir: string
+    decadeAvg30?: any
+    decadeAvg10?: any,
+    decadeLastYear?: any
+    decadeCurrentYear?: any
     avg30?: any
     avg10?: any,
     lastYear?: any
@@ -52,8 +56,9 @@ export class ReservoirDecadeComponent implements OnInit {
         })
         // TODO(): refactor after connect realtime DB
         this.api.getTotalDecadeReservoirValues().subscribe({
-          next: (response: ComplexValueResponse[]) => {
-            for (let item of response) {
+          next: (response: { avg: ComplexValueResponse[], year: ComplexValueResponse[] }) => {
+            console.log(response)
+            for (let item of response.avg) {
               const current = item.data.find(
                 value => new Date(value.date).getFullYear() === new Date().getFullYear() - 1
               )?.value
@@ -76,14 +81,47 @@ export class ReservoirDecadeComponent implements OnInit {
                   value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 11
                 ).map(i => i.value))
               }
+              if (current && lastYear)
               this.totalValues.push({
                 reservoir: item.reservoir,
-                currentYear: current,
-                lastYear: lastYear,
-                avg10: data10,
-                avg30: data30,
+                decadeCurrentYear: Math.round(current * 0.0864),
+                decadeLastYear: Math.round(lastYear * 0.0864),
+                decadeAvg10: Math.round(data10 * 0.0864),
+                decadeAvg30: Math.round(data30 * 0.0864),
               })
             }
+            for (let item of response.year) {
+              const current = item.data.find(
+                value => new Date(value.date).getFullYear() === new Date().getFullYear() - 1
+              )?.value
+
+              const data = item.data.filter(
+                value => new Date(value.date).getFullYear() < new Date().getFullYear() - 1
+              )
+              let lastYear = data.find(
+                value => new Date(value.date).getFullYear() === new Date().getFullYear() - 2
+              )?.value
+              let data30: any = 0
+              let data10: any = 0
+              if (data.length >= 30) {
+                data30 = this.getAvg(data.filter(
+                  value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 31
+                ).map(i => i.value))
+              }
+              if (data.length >= 10) {
+                data10 = this.getAvg(data.filter(
+                  value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 11
+                ).map(i => i.value))
+              }
+              let value = this.totalValues.find(val => val.reservoir === item.reservoir);
+              if (value && current && lastYear) {
+                value.currentYear = Math.round(current * 0.0864)
+                value.lastYear = Math.round(lastYear * 0.0864)
+                value.avg10 = Math.round(data10 * 0.0864)
+                value.avg30 = Math.round(data30 * 0.0864)
+              }
+            }
+            console.log(this.totalValues)
           }
         })
       }

@@ -72,7 +72,7 @@ export class ApiService {
   }
 
   getTotalDecadeReservoirValues(): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIRS + DECADE).pipe(
+    return this.http.get(BASE_URL + RESERVOIRS + DECADE, {params: new HttpParams().set('category', 'income')}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
