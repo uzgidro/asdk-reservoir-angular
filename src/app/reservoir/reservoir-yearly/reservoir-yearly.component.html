@@ -1,7 +1,4 @@
-<div class="absolute top-28 right-10 p-1 bg-gray-400 shadow-lg z-10 grid grid-cols-2 space-x-2 rounded-full">
-  <button class="px-2 py-2 rounded-l-full" [ngClass]="{'bg-gray-200': category == 0}" (click)="changeMetrics(0)">м3/с</button>
-  <button class="px-2 py-2 rounded-r-full" [ngClass]="{'bg-gray-200': category == 1}" (click)="changeMetrics(1)">млн. м3</button>
-</div>
+<app-metric-select (categoryEmitter)="changeMetrics($event)"></app-metric-select>
 <div class="w-full px-4 mt-6 flex flex-col space-y-4 relative max-h-lvh">
   <h3 class="text-center text-3xl">{{reservoirName}}</h3>
 

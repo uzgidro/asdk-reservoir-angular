@@ -46,6 +46,7 @@ import {RusMonthPipe} from "./shared/pipe/rus-month.pipe";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 import {WeatherComponent} from "./reservoir/weather/weather.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
+import {MetricSelectComponent} from "./shared/component/metric-select/metric-select.component";
 
 @NgModule({
   declarations: [
@@ -77,24 +78,25 @@ import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-y
     WeatherComponent,
     ReservoirYearlyComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgOptimizedImage,
-    BrowserAnimationsModule,
-    MatTooltipModule,
-    ResizableModule,
-    NgChartsModule,
-    CalendarModule,
-    FormsModule,
-    ToastModule,
-    ChartModule,
-    ReservoirCurrentComponent,
-    RusDatePipe,
-    RusMonthPipe,
-    LoaderComponent
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgOptimizedImage,
+        BrowserAnimationsModule,
+        MatTooltipModule,
+        ResizableModule,
+        NgChartsModule,
+        CalendarModule,
+        FormsModule,
+        ToastModule,
+        ChartModule,
+        ReservoirCurrentComponent,
+        RusDatePipe,
+        RusMonthPipe,
+        LoaderComponent,
+        MetricSelectComponent
+    ],
   exports: [HttpClientModule],
   providers: [MessageService],
   bootstrap: [AppComponent]

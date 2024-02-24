@@ -3,6 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedValueResponse, ComplexValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
+import {MetricCategory} from "../../shared/enum/metric-category";
+import {ReservoirService} from "../reservoir.service";
 
 @Component({
   selector: 'app-reservoir-decade',
@@ -11,7 +13,7 @@ import {ReservoirResponse} from "../../shared/response/reservoir-response";
 })
 export class ReservoirDecadeComponent implements OnInit {
 
-
+  metrics: MetricCategory = MetricCategory.SPEED
   today = new Date();
   pastYear = this.today.getFullYear() - 1
   currentYear = this.today.getFullYear()
@@ -33,7 +35,9 @@ export class ReservoirDecadeComponent implements OnInit {
     currentYear?: any
   }[] = []
 
-  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
+  protected readonly MetricCategory = MetricCategory;
+
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService, private reservoirService: ReservoirService) {
   }
 
   ngOnInit() {
@@ -54,78 +58,60 @@ export class ReservoirDecadeComponent implements OnInit {
             this.avgRelease = this.getAvg(this.tableData.release.data.map(item => item.value))
           }
         })
-        // TODO(): refactor after connect realtime DB
         this.api.getTotalDecadeReservoirValues().subscribe({
           next: (response: { avg: ComplexValueResponse[], year: ComplexValueResponse[] }) => {
             console.log(response)
             for (let item of response.avg) {
-              const current = item.data.find(
-                value => new Date(value.date).getFullYear() === new Date().getFullYear() - 1
-              )?.value
-
-              const data = item.data.filter(
-                value => new Date(value.date).getFullYear() < new Date().getFullYear() - 1
-              )
-              let lastYear = data.find(
-                value => new Date(value.date).getFullYear() === new Date().getFullYear() - 2
-              )?.value
-              let data30: any = 0
-              let data10: any = 0
-              if (data.length >= 30) {
-                data30 = this.getAvg(data.filter(
-                  value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 31
-                ).map(i => i.value))
-              }
-              if (data.length >= 10) {
-                data10 = this.getAvg(data.filter(
-                  value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 11
-                ).map(i => i.value))
-              }
-              if (current && lastYear)
-              this.totalValues.push({
-                reservoir: item.reservoir,
-                decadeCurrentYear: Math.round(current * 0.0864),
-                decadeLastYear: Math.round(lastYear * 0.0864),
-                decadeAvg10: Math.round(data10 * 0.0864),
-                decadeAvg30: Math.round(data30 * 0.0864),
-              })
+              this.calculateYearly(item)
             }
             for (let item of response.year) {
-              const current = item.data.find(
-                value => new Date(value.date).getFullYear() === new Date().getFullYear() - 1
-              )?.value
-
-              const data = item.data.filter(
-                value => new Date(value.date).getFullYear() < new Date().getFullYear() - 1
-              )
-              let lastYear = data.find(
-                value => new Date(value.date).getFullYear() === new Date().getFullYear() - 2
-              )?.value
-              let data30: any = 0
-              let data10: any = 0
-              if (data.length >= 30) {
-                data30 = this.getAvg(data.filter(
-                  value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 31
-                ).map(i => i.value))
-              }
-              if (data.length >= 10) {
-                data10 = this.getAvg(data.filter(
-                  value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 11
-                ).map(i => i.value))
-              }
-              let value = this.totalValues.find(val => val.reservoir === item.reservoir);
-              if (value && current && lastYear) {
-                value.currentYear = Math.round(current * 0.0864)
-                value.lastYear = Math.round(lastYear * 0.0864)
-                value.avg10 = Math.round(data10 * 0.0864)
-                value.avg30 = Math.round(data30 * 0.0864)
-              }
+              this.calculateYearly(item)
             }
-            console.log(this.totalValues)
           }
         })
       }
     })
+  }
+
+  changeCategory(event: MetricCategory) {
+    this.metrics = event
+    if (this.tableData) {
+      this.reservoirService.convertMetricsValueResponse(this.tableData.income.data, event)
+      this.reservoirService.convertMetricsValueResponse(this.tableData.release.data, event)
+    }
+  }
+
+  private calculateYearly(item: ComplexValueResponse) {
+    const current = item.data.find(
+      value => new Date(value.date).getFullYear() === new Date().getFullYear() - 1
+    )?.value
+
+    const data = item.data.filter(
+      value => new Date(value.date).getFullYear() < new Date().getFullYear() - 1
+    )
+    let lastYear = data.find(
+      value => new Date(value.date).getFullYear() === new Date().getFullYear() - 2
+    )?.value
+    let data30: any = 0
+    let data10: any = 0
+    if (data.length >= 30) {
+      data30 = this.getAvg(data.filter(
+        value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 31
+      ).map(i => i.value))
+    }
+    if (data.length >= 10) {
+      data10 = this.getAvg(data.filter(
+        value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 11
+      ).map(i => i.value))
+    }
+    if (current && lastYear)
+      this.totalValues.push({
+        reservoir: item.reservoir,
+        decadeCurrentYear: Math.round(current * 0.0864),
+        decadeLastYear: Math.round(lastYear * 0.0864),
+        decadeAvg10: Math.round(data10 * 0.0864),
+        decadeAvg30: Math.round(data30 * 0.0864),
+      })
   }
 
   private calculateDecade() {
@@ -170,5 +156,4 @@ export class ReservoirDecadeComponent implements OnInit {
     const sum = array.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     return Math.round(sum / array.length)
   }
-
 }

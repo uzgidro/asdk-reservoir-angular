@@ -4,6 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {CategorisedValueResponse, ValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {Subscription} from "rxjs";
+import {MetricCategory} from "../../shared/enum/metric-category";
+import {ReservoirService} from "../reservoir.service";
 
 @Component({
   selector: 'app-reservoir-yearly',
@@ -54,7 +56,7 @@ export class ReservoirYearlyComponent implements OnInit {
   }[] = []
 
 
-  constructor(private api: ApiService, private activatedRoute: ActivatedRoute) {
+  constructor(private api: ApiService, private reservoirService: ReservoirService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -131,38 +133,22 @@ export class ReservoirYearlyComponent implements OnInit {
     })
   }
 
-  changeMetrics(cat: number) {
-    if (this.category !== cat) {
-      this.category = cat
-      let income = this.tableData.find(val => val.category.includes('Приток'))
-      let release = this.tableData.find(val => val.category.includes('Попуск'))
-      if (cat == 0 && income && release) {
-        income.category = 'Приток, м3/с'
-        income.data.forEach( item => item.forEach(val => val.value /= 0.864))
-        income.stat5.find(item => item /= 0.864)
-        income.stat10.find(item => item /= 0.864)
-        income.stat30.find(item => item /= 0.864)
-        income.statTotal.find(item => item /= 0.864)
-        release.category = 'Попуск, м3/с'
-        release.data.forEach( item => item.forEach(val => val.value /= 0.864))
-        release.stat5.find(item => item /= 0.864)
-        release.stat10.find(item => item /= 0.864)
-        release.stat30.find(item => item /= 0.864)
-        release.statTotal.find(item => item /= 0.864)
-      } else if (cat == 1 && income && release) {
-        income.category = 'Приток, млн. м3'
-        income.data.forEach( item => item.forEach(val => val.value *= 0.864))
-        income.stat5.find(item => item *= 0.864)
-        income.stat10.find(item => item *= 0.864)
-        income.stat30.find(item => item *= 0.864)
-        income.statTotal.find(item => item *= 0.864)
-        release.category = 'Попуск, млн. м3/с'
-        release.data.forEach( item => item.forEach(val => val.value *= 0.864))
-        release.stat5.find(item => item *= 0.864)
-        release.stat10.find(item => item *= 0.864)
-        release.stat30.find(item => item *= 0.864)
-        release.statTotal.find(item => item *= 0.864)
-      }
+  changeMetrics(cat: MetricCategory) {
+    let income = this.tableData.find(val => val.category.includes('Приток'))
+    let release = this.tableData.find(val => val.category.includes('Попуск'))
+    if (income && release) {
+      income.category = cat == MetricCategory.SPEED ? 'Приток, м3/с' : 'Приток, млн. м3'
+      release.category = cat == MetricCategory.SPEED ? 'Попуск, м3/с' : 'Попуск, млн. м3'
+      this.reservoirService.convertMetrics(income.stat5, cat, 'decade')
+      this.reservoirService.convertMetrics(income.stat10, cat, 'decade')
+      this.reservoirService.convertMetrics(income.stat30, cat, 'decade')
+      this.reservoirService.convertMetrics(income.statTotal, cat, 'decade')
+      this.reservoirService.convertMetrics(release.stat5, cat, 'decade')
+      this.reservoirService.convertMetrics(release.stat10, cat, 'decade')
+      this.reservoirService.convertMetrics(release.stat30, cat, 'decade')
+      this.reservoirService.convertMetrics(release.statTotal, cat, 'decade')
+      income.data.forEach(item => this.reservoirService.convertMetricsValueResponse(item, cat, 'decade'))
+      release.data.forEach(item => this.reservoirService.convertMetricsValueResponse(item, cat, 'decade'))
     }
   }
 

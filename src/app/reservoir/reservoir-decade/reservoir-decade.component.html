@@ -1,3 +1,5 @@
+<app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>
+
 <div *ngIf="reservoirName && tableData && totalValues.length !== 0; else loader" class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
   <h3 class="text-center text-3xl">{{reservoirName}}</h3>
 
@@ -14,14 +16,14 @@
     </thead>
     <tbody *ngIf="tableData">
     <tr *ngIf="tableData.income">
-      <td>Приток, м3/с</td>
-      <td *ngFor="let value of tableData.income.data; index as i">{{value.value}}</td>
+      <td>Приток, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
+      <td *ngFor="let value of tableData.income.data; index as i">{{value.value | number:'0.0-0'}}</td>
       <td *ngFor="let day of daysInDecade.slice(tableData.income.data.length)"></td>
       <td>{{avgIncome}}</td>
     </tr>
     <tr *ngIf="tableData.release">
-      <td>Попуск, м3/с</td>
-      <td *ngFor="let value of tableData.release.data">{{value.value}}</td>
+      <td>Попуск, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
+      <td *ngFor="let value of tableData.release.data">{{value.value | number:'0.0-0'}}</td>
       <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
       <td>{{avgRelease}}</td>
     </tr>

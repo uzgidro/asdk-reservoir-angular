@@ -1,0 +1,4 @@
+<div class="absolute top-28 right-10 p-1 bg-gray-400 shadow-lg z-10 grid grid-cols-2 space-x-2 rounded-full">
+  <button class="px-2 py-2 rounded-l-full" [ngClass]="{'bg-gray-200': category == MetricCategory.SPEED}" (click)="changeMetrics(MetricCategory.SPEED)">м3/с</button>
+  <button class="px-2 py-2 rounded-r-full" [ngClass]="{'bg-gray-200': category == MetricCategory.VOLUME}" (click)="changeMetrics(MetricCategory.VOLUME)">млн. м3</button>
+</div>

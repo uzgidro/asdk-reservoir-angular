@@ -3,6 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
+import {MetricCategory} from "../../shared/enum/metric-category";
+import {ReservoirService} from "../reservoir.service";
 
 @Component({
   selector: 'app-reservoir-month',
@@ -11,15 +13,18 @@ import {ReservoirResponse} from "../../shared/response/reservoir-response";
 })
 export class ReservoirMonthComponent implements OnInit {
   reservoirName?: string
+  metrics: MetricCategory = MetricCategory.SPEED
   data: {
     date: Date
-    income?: any[]
-    release?: any[]
-    level?: any[]
-    volume?: any[]
+    income: any[]
+    release: any[]
+    level: any[]
+    volume: any[]
   }[] = []
 
-  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
+  protected readonly MetricCategory = MetricCategory;
+
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService, private reservoirService: ReservoirService) {
   }
 
   ngOnInit() {
@@ -37,6 +42,14 @@ export class ReservoirMonthComponent implements OnInit {
           }
         })
       }
+    })
+  }
+
+  changeCategory(event: MetricCategory) {
+    this.metrics = event
+    this.data.forEach(month => {
+      this.reservoirService.convertMetrics(month.income, event)
+      this.reservoirService.convertMetrics(month.release, event)
     })
   }
 
@@ -58,7 +71,10 @@ export class ReservoirMonthComponent implements OnInit {
       } else {
         this.data[valueDate.getMonth()] = {
           date: valueDate,
-          income: [income.value]
+          income: [income.value],
+          release: [],
+          level: [],
+          volume: []
         }
       }
     }

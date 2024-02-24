@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {MetricCategory} from "../shared/enum/metric-category";
+import {ValueResponse} from "../shared/response/values-response";
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +8,21 @@ import {Injectable} from '@angular/core';
 export class ReservoirService {
 
   constructor() {
+  }
+
+  convertMetrics(array: any[], category: MetricCategory, type: 'day'|'decade' = 'day') {
+    const coefficient = type  === 'day' ? 0.0864 : 0.864
+    const multiply = category === MetricCategory.VOLUME ? coefficient : 1/coefficient
+    array.forEach((element, index, array) => {
+      if (typeof array[index] === 'number')
+      array[index] *= multiply
+    })
+  }
+
+  convertMetricsValueResponse(array: ValueResponse[], category: MetricCategory, type: 'day'|'decade' = 'day') {
+    const coefficient = type  === 'day' ? 0.0864 : 0.864
+    const multiply = category === MetricCategory.VOLUME ? coefficient : 1/coefficient
+    array.forEach(item => item.value *= multiply)
   }
 
   setupChartTimeline() {
