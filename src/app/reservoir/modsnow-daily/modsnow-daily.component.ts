@@ -28,23 +28,17 @@ import {Chart, ChartConfiguration, registerables} from "chart.js";
   styleUrl: './modsnow-daily.component.css'
 })
 export class ModsnowDailyComponent implements OnInit {
-  reservoirs: string[] = [];
+  reservoirs: {
+    name: string
+    chartData: ChartConfiguration['data']
+  }[] = [];
   responsiveOptions: any[] = []
-
-  reservoir?: RegionInfo
-  public lineChartData?: ChartConfiguration['data']
 
   public lineChartOptions: ChartConfiguration['options'] = {
     elements: {
       line: {
         tension: 0.5,
       },
-    },
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      y: {
-        position: 'left',
-      }
     },
     interaction: {
       mode: 'index',
@@ -60,19 +54,12 @@ export class ModsnowDailyComponent implements OnInit {
   }
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  constructor(private activatedRoute: ActivatedRoute, private env: EnvService, private resService: ReservoirService) {
+  constructor(private env: EnvService) {
   }
 
   ngOnInit() {
     Chart.register(...registerables);
-    this.activatedRoute.queryParams.subscribe({
-      next: value => {
-        // this.reservoir = this.resService.setReservoir(value, this.env.getRegions())
-        this.setupData()
-      }
-    })
-
-    this.reservoirs = this.env.getRegions().map(value => value.name);
+    this.setupData()
 
     this.responsiveOptions = [
       {
@@ -89,30 +76,32 @@ export class ModsnowDailyComponent implements OnInit {
   }
 
   setupData() {
-    let height : number[] = []
+    this.env.getRegions().forEach(reservoir => {
+    let height: number[] = []
     let heightValue = 1000
-    if (this.reservoir) {
-      for (let i of this.reservoir.snowCoverage) {
+      reservoir.snowCoverage.forEach(snow => {
         height.push(heightValue)
         heightValue += 500
-      }
-      this.lineChartData = {
-        datasets: [
-          {
-            data: this.reservoir.snowCoverage,
-            label: `Покрытие снегом, %`,
-            backgroundColor: 'rgba(37, 99, 235,0.2)',
-            borderColor: 'rgba(37, 99, 235,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderColor: 'rgba(37, 99, 235,1)',
-            pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
-            pointHoverBorderColor: '#fff',
-            fill: 'origin'
-          },
-
-        ],
-        labels: height,
-      };
-    }
+      })
+      this.reservoirs.push({
+        name: reservoir.name,
+        chartData: {
+          datasets: [
+            {
+              data: reservoir.snowCoverage,
+              label: `Покрытие снегом, %`,
+              backgroundColor: 'rgba(37, 99, 235,0.2)',
+              borderColor: 'rgba(37, 99, 235,1)',
+              pointBackgroundColor: '#fff',
+              pointBorderColor: 'rgba(37, 99, 235,1)',
+              pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
+              pointHoverBorderColor: '#fff',
+              fill: 'origin'
+            },
+          ],
+          labels: height,
+        }
+      })
+    })
   }
 }
