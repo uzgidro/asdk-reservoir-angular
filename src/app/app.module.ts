@@ -47,6 +47,7 @@ import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-mon
 import {WeatherComponent} from "./reservoir/weather/weather.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
 import {MetricSelectComponent} from "./shared/component/metric-select/metric-select.component";
+import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import {MetricSelectComponent} from "./shared/component/metric-select/metric-sel
     WeatherFrameComponent,
     WeatherDetailedFrameComponent,
     WeatherComponent,
-    ReservoirYearlyComponent
+    ReservoirYearlyComponent,
+    ReservoirAnalyticsComponent
   ],
     imports: [
         BrowserModule,

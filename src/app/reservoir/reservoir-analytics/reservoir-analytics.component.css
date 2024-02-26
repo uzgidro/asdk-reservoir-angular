@@ -16,3 +16,7 @@ th {
 .selected {
   @apply text-purple-600
 }
+
+.past {
+  @apply text-amber-600
+}
