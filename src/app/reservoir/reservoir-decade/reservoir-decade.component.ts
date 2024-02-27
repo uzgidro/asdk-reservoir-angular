@@ -62,10 +62,25 @@ export class ReservoirDecadeComponent implements OnInit {
           next: (response: { avg: ComplexValueResponse[], year: ComplexValueResponse[] }) => {
             console.log(response)
             for (let item of response.avg) {
-              this.calculateYearly(item)
+              const data = this.parseYearlyResponse(item)
+              if (data.current && data.lastYear)
+                this.totalValues.push({
+                  reservoir: item.reservoir,
+                  decadeCurrentYear: Math.round(data.current * 0.0864),
+                  decadeLastYear: Math.round(data.lastYear * 0.0864),
+                  decadeAvg10: Math.round(data.data10 * 0.0864),
+                  decadeAvg30: Math.round(data.data30 * 0.0864),
+                })
             }
             for (let item of response.year) {
-              this.calculateYearly(item)
+              const data = this.parseYearlyResponse(item)
+              let value = this.totalValues.find(val => val.reservoir === item.reservoir);
+              if (value && data.current && data.lastYear) {
+                value.currentYear = Math.round(data.current * 0.0864)
+                value.lastYear = Math.round(data.lastYear * 0.0864)
+                value.avg10 = Math.round(data.data10 * 0.0864)
+                value.avg30 = Math.round(data.data30 * 0.0864)
+              }
             }
           }
         })
@@ -78,15 +93,17 @@ export class ReservoirDecadeComponent implements OnInit {
     if (this.tableData) {
       this.reservoirService.convertMetricsValueResponse(this.tableData.income.data, event)
       this.reservoirService.convertMetricsValueResponse(this.tableData.release.data, event)
+      this.avgIncome = this.getAvg(this.tableData.income.data.map(item => item.value))
+      this.avgRelease = this.getAvg(this.tableData.release.data.map(item => item.value))
     }
   }
 
-  private calculateYearly(item: ComplexValueResponse) {
-    const current = item.data.find(
+  private parseYearlyResponse(response: ComplexValueResponse) {
+    const current = response.data.find(
       value => new Date(value.date).getFullYear() === new Date().getFullYear() - 1
     )?.value
 
-    const data = item.data.filter(
+    const data = response.data.filter(
       value => new Date(value.date).getFullYear() < new Date().getFullYear() - 1
     )
     let lastYear = data.find(
@@ -104,14 +121,12 @@ export class ReservoirDecadeComponent implements OnInit {
         value => new Date(value.date).getFullYear() >= new Date().getFullYear() - 11
       ).map(i => i.value))
     }
-    if (current && lastYear)
-      this.totalValues.push({
-        reservoir: item.reservoir,
-        decadeCurrentYear: Math.round(current * 0.0864),
-        decadeLastYear: Math.round(lastYear * 0.0864),
-        decadeAvg10: Math.round(data10 * 0.0864),
-        decadeAvg30: Math.round(data30 * 0.0864),
-      })
+    return {
+      current: current,
+      lastYear: lastYear,
+      data10: data10,
+      data30: data30
+    }
   }
 
   private calculateDecade() {

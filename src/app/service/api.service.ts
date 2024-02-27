@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {catchError, Observable} from "rxjs";
 
-const BASE_URL: string = 'http://speedwagon.uz'
+const BASE_URL: string = 'https://speedwagon.uz'
 const RESERVOIRS: string = '/reservoirs'
 const RESERVOIR: string = '/reservoir'
 const DASHBOARD: string = '/dashboard'

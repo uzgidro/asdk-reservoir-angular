@@ -11,10 +11,6 @@
   @apply bg-gray-300
 }
 
-.chart-container {
-  @apply block w-full px-6 pb-6
-}
-
 .region {
   @apply stroke-black fill-gray-500
 }
