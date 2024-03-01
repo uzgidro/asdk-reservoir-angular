@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center">
+<div class="flex flex-col">
   <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
 
   <div class="grid grid-cols-12 gap-4">
@@ -29,9 +29,9 @@
           </button>
         </div>
       </div>
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto overflow-y-auto max-h-96">
         <table>
-          <thead>
+          <thead class="sticky top-0">
           <tr>
             <th rowspan="2">Года</th>
             <th colspan="12">Месяца, млн. м3</th>
@@ -54,43 +54,43 @@
             <th>Дек.</th>
           </tr>
           </thead>
-          <tbody>
-          <tr *ngIf="startYear && endYear && avgValue && avgByMonth" class="text-blue-600">
+          <tbody *ngIf="avg">
+          <tr *ngIf="startYear && endYear" (click)="changeVisibility(avg.id)" [ngClass]="{'text-blue-600': avg.display, 'text-blue-600/60': !avg.display}"  class="text-blue-600">
             <td *ngIf="startYear && endYear">Среднее за года {{ startYear.getFullYear() }}
               - {{ endYear.getFullYear() }}
             </td>
-            <td *ngFor="let val of avgByMonth">{{ val | number: '.0-0' }}</td>
-            <td>{{ (avgValue / 360) | number: '.0-0' }}</td>
-            <td>{{ (avgValue) | number: '.0-0' }}</td>
+            <td *ngFor="let val of avg.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td>{{ (avg.value) | number: '.0-0' }}</td>
             <td>100</td>
           </tr>
-          <tr *ngIf="maxValue && maxByMonth && avgValue" class="text-green-600">
-            <td>Максимальное значение {{ maxValue.year }}</td>
-            <td *ngFor="let val of maxByMonth">{{ val | number: '.0-0' }}</td>
-            <td>{{ (maxValue.value / 360) | number: '.0-0' }}</td>
-            <td>{{ (maxValue.value) | number: '.0-0' }}</td>
-            <td>{{ (maxValue.value * 100 / avgValue) | number: '.0-0' }}</td>
+          <tr *ngIf="max" (click)="changeVisibility(max.id)" [ngClass]="{'text-green-600': max.display, 'text-green-600/60': !max.display}"  class="text-green-600">
+            <td>Максимальное значение {{ max.year }}</td>
+            <td *ngFor="let val of max.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td>{{ (max.value) | number: '.0-0' }}</td>
+            <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="minValue && minByMonth && avgValue" class="text-rose-600">
-            <td>Минимальное значение {{ minValue.year }}</td>
-            <td *ngFor="let val of minByMonth">{{ val | number: '.0-0' }}</td>
-            <td>{{ (minValue.value / 360) | number: '.0-0' }}</td>
-            <td>{{ (minValue.value) | number: '.0-0' }}</td>
-            <td>{{ (minValue.value * 100 / avgValue) | number: '.0-0' }}</td>
+          <tr *ngIf="min" (click)="changeVisibility(min.id)" [ngClass]="{'text-rose-600': min.display, 'text-rose-600/60': !min.display}"  class="text-rose-600">
+            <td>Минимальное значение {{ min.year }}</td>
+            <td *ngFor="let val of min.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td>{{ (min.value) | number: '.0-0' }}</td>
+            <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="pastYear && pastYearByMonth && avgValue" class="text-amber-600">
-            <td>Значение за прошлый {{ pastYear.year }}</td>
-            <td *ngFor="let val of pastYearByMonth">{{ val | number: '.0-0' }}</td>
-            <td>{{ (pastYear.value / 360) | number: '.0-0' }}</td>
-            <td>{{ (pastYear.value) | number: '.0-0' }}</td>
-            <td>{{ (pastYear.value * 100 / avgValue) | number: '.0-0' }}</td>
+          <tr *ngIf="past" (click)="changeVisibility(past.id)" [ngClass]="{'text-amber-600': past.display, 'text-amber-600/60': !past.display}"  class="text-amber-600">
+            <td>Значение за прошлый {{ past.year }}</td>
+            <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td>{{ (past.value) | number: '.0-0' }}</td>
+            <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="selectedYear && selectedYearByMonth && avgValue" class="text-purple-600">
-            <td>Значение за {{ selectedYear.year }}</td>
-            <td *ngFor="let val of selectedYearByMonth">{{ val | number: '.0-0' }}</td>
-            <td>{{ (selectedYear.value / 360) | number: '.0-0' }}</td>
-            <td>{{ (selectedYear.value) | number: '.0-0' }}</td>
-            <td>{{ (selectedYear.value * 100 / avgValue) | number: '.0-0' }}</td>
+          <tr *ngFor="let item of selected" (click)="changeVisibility(item.id)" [ngStyle]="{'color': item.color}">
+            <td>Значение за {{ item.year }}</td>
+            <td *ngFor="let val of item.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (item.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td>{{ (item.value) | number: '.0-0' }}</td>
+            <td>{{ (item.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
           </tbody>
         </table>
@@ -106,12 +106,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of years" (click)="yearSelect(item)">
+        <tr *ngFor="let item of years" (click)="yearSelect(item.year)">
           <td
-            [ngClass]="{'min': minValue?.year == item.year, 'max': maxValue?.year == item.year, 'selected': selectedYear?.year == item.year, 'past': pastYear?.year == item.year}">{{ item.year }}
+            [ngStyle]="{'color': getColor(item)}"
+            [ngClass]="{
+            'min': min?.year == item.year,
+            'max': max?.year == item.year,
+            'past': past?.year == item.year,
+            }">{{ item.year }}
           </td>
           <td
-            [ngClass]="{'min': minValue?.year == item.year, 'max': maxValue?.year == item.year, 'selected': selectedYear?.year == item.year, 'past': pastYear?.year == item.year}">{{ item.value |number: '.0-0' }}
+            [ngStyle]="{'color': getColor(item)}"
+            [ngClass]="{
+            'min': min?.year == item.year,
+            'max': max?.year == item.year,
+            'past': past?.year == item.year
+            }">{{ item.value |number: '.0-0' }}
           </td>
         </tr>
         </tbody>

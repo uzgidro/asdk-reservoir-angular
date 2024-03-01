@@ -14,16 +14,160 @@ import {Subscription} from "rxjs";
 })
 export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
-  private mSecondsInDay = 0.0864
+  protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
+  private colors: { main: string, sub: string }[] = [
+    {
+      main: 'rgba(147, 51, 234,1)',
+      sub: 'rgba(147, 51, 234,0.8)'
+    },
+    {
+      main: 'rgba(220, 38, 38,1)',
+      sub: 'rgba(220, 38, 38,0.8)'
+    },
+    {
+      main: 'rgba(234, 88, 12,1)',
+      sub: 'rgba(234, 88, 12,0.8)'
+    },
+    {
+      main: 'rgba(202, 138, 4,1)',
+      sub: 'rgba(202, 138, 4,0.8)'
+    },
+    {
+      main: 'rgba(101, 163, 13,1)',
+      sub: 'rgba(101, 163, 13,0.8)'
+    },
+    {
+      main: 'rgba(5, 150, 105,1)',
+      sub: 'rgba(5, 150, 105,0.8)'
+    },
+    {
+      main: 'rgba(13, 148, 136,1)',
+      sub: 'rgba(13, 148, 136,0.8)'
+    },
+    {
+      main: 'rgba(8, 145, 178,1)',
+      sub: 'rgba(8, 145, 178,0.8)'
+    },
+    {
+      main: 'rgba(2, 132, 199,1)',
+      sub: 'rgba(2, 132, 199,0.8)'
+    },
+    {
+      main: 'rgba(79, 70, 229,1)',
+      sub: 'rgba(79, 70, 229,0.8)'
+    },
+    {
+      main: 'rgba(124, 58, 237,1)',
+      sub: 'rgba(124, 58, 237,0.8)'
+    },
+    {
+      main: 'rgba(192, 38, 211,1)',
+      sub: 'rgba(192, 38, 211,0.8)'
+    },
+    {
+      main: 'rgba(219, 39, 119,1)',
+      sub: 'rgba(219, 39, 119,0.8)'
+    }
+  ]
+  private colorsCounter = 0
 
   private _incomeChart: {
     id: string
     data: any
+    year?: YearValue
+    valuesByMonth: number[]
+    avgValue?: number
+    color?: string
+    display: boolean
   }[] = []
 
+  get displayCharts() {
+    return this._incomeChart.filter(i => i.display)
+  }
+
   get incomeChart() {
-    return this._incomeChart.map(item => item.data);
+    return this.displayCharts.map(item => item.data);
+  }
+
+  get avg() {
+    const exists = this._incomeChart.find(item => item.id.includes('avg'))
+    if (exists && exists.avgValue) {
+      const item: Values = {
+        id: exists.id,
+        value: exists.avgValue,
+        byMonth: exists.valuesByMonth,
+        display: exists.display
+      }
+      return item
+    }
+    return
+  }
+
+  get min() {
+    const exists = this._incomeChart.find(item => item.id.includes('min'))
+    if (exists && exists.year) {
+      const item: Values = {
+        id: exists.id,
+        value: exists.year.value,
+        byMonth: exists.valuesByMonth,
+        year: exists.year.year,
+        display: exists.display
+      }
+      return item
+    }
+    return
+  }
+
+  get max() {
+    const exists = this._incomeChart.find(item => item.id.includes('max'))
+    if (exists && exists.year) {
+      const item: Values = {
+        id: exists.id,
+        value: exists.year.value,
+        byMonth: exists.valuesByMonth,
+        year: exists.year.year,
+        display: exists.display
+      }
+      return item
+    }
+    return
+  }
+
+  get past() {
+    const exists = this._incomeChart.find(item => item.id.includes('past'))
+    if (exists && exists.year) {
+      const item: Values = {
+        id: exists.id,
+        value: exists.year.value,
+        byMonth: exists.valuesByMonth,
+        year: exists.year.year,
+        display: exists.display
+      }
+      return item
+    }
+    return
+  }
+
+  get selected() {
+    const exists = this.displayCharts.filter(
+      item =>
+        !item.id.includes('past') &&
+        !item.id.includes('min') &&
+        !item.id.includes('max') &&
+        !item.id.includes('avg'))
+    if (exists.length > 0) {
+      let map: Values[] = exists.map(item => ({
+        id: item.id,
+        value: item.year ? item.year.value : 0,
+        byMonth: item.valuesByMonth,
+        year: item.year ? item.year.year : 0,
+        color: item.color ? item.color : '',
+        display: item.display
+      }));
+      return map
+    }
+    return
   }
 
   reservoirId?: number
@@ -34,16 +178,6 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
   startYear?: Date
   endYear?: Date
-  pastYear?: YearValue
-  avgValue?: number
-  minValue?: YearValue
-  maxValue?: YearValue
-  avgByMonth: number[] = []
-  minByMonth: number[] = []
-  maxByMonth: number[] = []
-  pastYearByMonth: number[] = []
-  selectedYear?: YearValue
-  selectedYearByMonth?: number[] = []
   subscribes: Subscription[] = []
 
   incomeChartLabels = ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.']
@@ -78,6 +212,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         this.api.getReservoirById(value['reservoir']).subscribe({
@@ -104,35 +239,41 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  yearSelect(yearValue: YearValue) {
+  yearSelect(year: number | undefined) {
+    // if year is undefined or year is already selected and changed visibility
+    if (!year || this.changeVisibility(year.toString())) return;
+
     if (this.reservoirId) {
-      this.api.getSelectedYearValues(this.reservoirId, yearValue.year).subscribe({
+      this.api.getSelectedYearValues(this.reservoirId, year).subscribe({
         next: (response: ComplexValueResponse) => {
-          if (this._incomeChart.length > 4) {
-            this._incomeChart.pop()
-          }
-          this.selectedYearByMonth = this.calculateMonthlyValues(response)
-          this.selectedYear = {
+          const selectedYearByMonth = this.calculateMonthlyValues(response)
+          const selectedYear = {
             year: this.getResponseYear(response),
             value: this.calculateMonthlySum(response)
           }
+          if (this.colorsCounter > this.colors.length - 1) this.colorsCounter = 0
+          const colors = this.colors[this.colorsCounter++]
           this._incomeChart.push({
-            id: yearValue.year.toString(),
+            id: year.toString(),
             data: {
-              data: this.selectedYearByMonth,
+              data: selectedYearByMonth,
               label:
-                `Данные за ${this.selectedYear.year}`,
+                `Данные за ${selectedYear.year}`,
               borderColor:
-                'rgba(147, 51, 234,1)',
+              colors.main,
               pointBackgroundColor:
-                'rgba(147, 51, 234,0.8)',
+              colors.sub,
               pointBorderColor:
-                'rgba(147, 51, 234,1)',
+              colors.main,
               pointHoverBackgroundColor:
-                'rgba(147, 51, 234,0.8)',
+              colors.sub,
               pointHoverBorderColor:
                 '#fff',
-            }
+            },
+            valuesByMonth: selectedYearByMonth,
+            year: selectedYear,
+            color: colors.main,
+            display: true
           })
           this.chart?.update()
         }
@@ -140,8 +281,24 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  changeVisibility(id: string) {
+    let find = this._incomeChart.find(i => i.id == id);
+    if (find) {
+      find.display = !find.display
+      return true
+    }
+    return false
+  }
+
   changeCategory(category: string) {
     this.category = category
+  }
+
+  getColor(yearValue: YearValue) {
+    if (this.selected) {
+      return this.selected.find(i => i.year == yearValue.year)?.color
+    }
+    return
   }
 
   private configureData(reservoirId: number) {
@@ -185,19 +342,22 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   private getAvg(reservoirId: number) {
     this.subscribes.push(this.api.getAvgValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
-        this.avgByMonth = this.calculateMonthlyValues(response)
-        this.avgValue = this.calculateMonthlySum(response)
+        const avgByMonth = this.calculateMonthlyValues(response)
+        const avgValue = this.calculateMonthlySum(response)
         this._incomeChart.push({
           id: 'avg',
           data: {
-            data: this.avgByMonth,
+            data: avgByMonth,
             label: `Среднее за года (${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()})`,
             borderColor: 'rgba(37, 99, 235,0.4)',
             pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
             pointBorderColor: 'rgba(37, 99, 235,0.4)',
             pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
             pointHoverBorderColor: '#fff',
-          }
+          },
+          valuesByMonth: avgByMonth,
+          avgValue: avgValue,
+          display: true
         })
         this.chart?.update()
       }
@@ -207,22 +367,25 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   private getMin(reservoirId: number) {
     this.subscribes.push(this.api.getMinValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
-        this.minByMonth = this.calculateMonthlyValues(response)
-        this.minValue = {
+        const minByMonth = this.calculateMonthlyValues(response)
+        const minValue = {
           year: this.getResponseYear(response),
           value: this.calculateMonthlySum(response)
         }
         this._incomeChart.push({
           id: 'min',
           data: {
-            data: this.minByMonth,
-            label: `Минимум ${this.minValue?.year}`,
+            data: minByMonth,
+            label: `Минимум ${minValue.year}`,
             borderColor: 'rgba(225, 29, 72,0.4)',
             pointBackgroundColor: 'rgba(225, 29, 72,0.5)',
             pointBorderColor: 'rgba(225, 29, 72,0.4)',
             pointHoverBackgroundColor: 'rgba(225, 29, 72,0.8)',
             pointHoverBorderColor: '#fff',
-          }
+          },
+          valuesByMonth: minByMonth,
+          year: minValue,
+          display: true
         })
         this.chart?.update()
       }
@@ -232,22 +395,25 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   private getMax(reservoirId: number) {
     this.subscribes.push(this.api.getMaxValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
-        this.maxByMonth = this.calculateMonthlyValues(response)
-        this.maxValue = {
+        const maxByMonth = this.calculateMonthlyValues(response)
+        const maxValue = {
           year: this.getResponseYear(response),
           value: this.calculateMonthlySum(response)
         }
         this._incomeChart.push({
           id: 'max',
           data: {
-            data: this.maxByMonth,
-            label: `Максимум ${this.maxValue?.year}`,
+            data: maxByMonth,
+            label: `Максимум ${maxValue.year}`,
             borderColor: 'rgba(22, 163, 74,0.4)',
             pointBackgroundColor: 'rgba(22, 163, 74,0.5)',
             pointBorderColor: 'rgba(22, 163, 74,0.4)',
             pointHoverBackgroundColor: 'rgba(22, 163, 74,0.8)',
             pointHoverBorderColor: '#fff',
-          }
+          },
+          valuesByMonth: maxByMonth,
+          year: maxValue,
+          display: true
         })
         this.chart?.update()
       }
@@ -258,22 +424,25 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   private getPastYear(reservoirId: number) {
     this.subscribes.push(this.api.getSelectedYearValues(reservoirId, new Date().getFullYear() - 1).subscribe({
       next: (response: ComplexValueResponse) => {
-        this.pastYearByMonth = this.calculateMonthlyValues(response)
-        this.pastYear = {
+        const pastYearByMonth = this.calculateMonthlyValues(response)
+        const pastYear = {
           year: this.getResponseYear(response),
           value: this.calculateMonthlySum(response)
         }
         this._incomeChart.push({
           id: 'past',
           data: {
-            data: this.pastYearByMonth,
-            label: `Данные за прошлый ${this.pastYear.year}`,
+            data: pastYearByMonth,
+            label: `Данные за прошлый ${pastYear.year}`,
             borderColor: 'rgba(217, 119, 6,0.4)',
             pointBackgroundColor: 'rgba(217, 119, 6,0.5)',
             pointBorderColor: 'rgba(217, 119, 6,0.4)',
             pointHoverBackgroundColor: 'rgba(217, 119, 6,0.2)',
             pointHoverBorderColor: '#fff',
-          }
+          },
+          valuesByMonth: pastYearByMonth,
+          year: pastYear,
+          display: true
         })
         this.chart?.update()
       }
@@ -297,9 +466,25 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     return Math.round(value.value * this.mSecondsInDay)
   }
 
+  private shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
 }
 
 interface YearValue {
   year: number
   value: number
+}
+
+interface Values {
+  id: string
+  value: number
+  byMonth: number[]
+  year?: number
+  color?: string
+  display: boolean
 }
