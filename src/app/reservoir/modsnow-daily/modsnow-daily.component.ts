@@ -5,10 +5,7 @@ import {ButtonModule} from "primeng/button";
 import {NgOptimizedImage} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
 import {EnvService} from "../../shared/service/env.service";
-import {ReservoirService} from "../reservoir.service";
-import {RegionInfo} from "../../../environments/environment.development";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
 import {Chart, ChartConfiguration, registerables} from "chart.js";
 
@@ -29,6 +26,7 @@ import {Chart, ChartConfiguration, registerables} from "chart.js";
 })
 export class ModsnowDailyComponent implements OnInit {
   reservoirs: {
+    id: string
     name: string
     chartData: ChartConfiguration['data']
   }[] = [];
@@ -79,11 +77,12 @@ export class ModsnowDailyComponent implements OnInit {
     this.env.getRegions().forEach(reservoir => {
     let height: number[] = []
     let heightValue = 1000
-      reservoir.snowCoverage.forEach(snow => {
+      reservoir.snowCoverage.forEach(() => {
         height.push(heightValue)
         heightValue += 500
       })
       this.reservoirs.push({
+        id: reservoir.id,
         name: reservoir.name,
         chartData: {
           datasets: [
