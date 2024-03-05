@@ -5,7 +5,8 @@ import {ApiService} from "../../service/api.service";
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-  styleUrl: './weather.component.css'
+  styleUrl: './weather.component.css',
+
 })
 export class WeatherComponent implements OnInit {
   // selectedReservoir?: RegionInfo

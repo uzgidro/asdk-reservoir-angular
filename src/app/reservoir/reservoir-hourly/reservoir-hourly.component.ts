@@ -13,7 +13,18 @@ import {ReservoirResponse} from "../../shared/response/reservoir-response";
 @Component({
   selector: 'app-reservoir-hourly',
   templateUrl: './reservoir-hourly.component.html',
-  styleUrls: ['./reservoir-hourly.component.css']
+  styleUrls: ['./reservoir-hourly.component.css'],
+  // imports: [
+  //   NgIf,
+  //   AppModule,
+  //   NgChartsModule,
+  //   NgForOf,
+  //   DatePipe,
+  //   DecimalPipe,
+  //   LoaderComponent
+  // ],
+  // standalone: true
+
 })
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()

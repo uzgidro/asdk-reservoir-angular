@@ -6,11 +6,23 @@ import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {Subscription} from "rxjs";
 import {MetricCategory} from "../../shared/enum/metric-category";
 import {ReservoirService} from "../reservoir.service";
+import {MetricSelectComponent} from "../../shared/component/metric-select/metric-select.component";
+import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-reservoir-yearly',
   templateUrl: './reservoir-yearly.component.html',
-  styleUrl: './reservoir-yearly.component.css'
+  styleUrl: './reservoir-yearly.component.css',
+  imports: [
+    MetricSelectComponent,
+    NgForOf,
+    NgClass,
+    NgIf,
+    DecimalPipe,
+    DatePipe
+  ],
+  standalone: true
+
 })
 export class ReservoirYearlyComponent implements OnInit {
   reservoirName?: string
