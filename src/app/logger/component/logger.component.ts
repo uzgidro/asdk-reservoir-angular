@@ -1,7 +1,10 @@
+// noinspection JSUnusedGlobalSymbols
+
 import {Component} from '@angular/core';
 import {LoggerRef} from "../logger-ref";
 import {ResizableModule, ResizeEvent} from "angular-resizable-element";
 
+// noinspection JSUnusedGlobalSymbols
 @Component({
   selector: 'app-component',
   templateUrl: './logger.component.html',
@@ -30,7 +33,7 @@ export class LoggerComponent {
     }
   }
 
-  close() {
+  close(){
     this.loggerRef.close();
   }
 }

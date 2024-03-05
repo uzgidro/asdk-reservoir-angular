@@ -1,3 +1,5 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import {Component, OnInit} from '@angular/core';
 import {ChartConfiguration} from "chart.js";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -96,12 +98,14 @@ export class ReservoirHourlyComponent implements OnInit {
   }
 
   navigateToReservoirWeather(id: number) {
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(['/reservoir/weather'], {
       queryParams: {reservoir: id}
     })
   }
 
   navigateToReservoir(id: number) {
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate([], {
       queryParams: {reservoir: id}
     })

@@ -1,3 +1,5 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, ChartType, registerables} from "chart.js";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
@@ -54,12 +56,14 @@ export class ReservoirDashboardComponent implements OnInit {
   }
 
   navigateToReservoirCurrent(id: number) {
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(['/reservoir/water/current'], {
       queryParams: {reservoir: id}
     })
   }
 
   navigateToReservoirWeather(id: number) {
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(['/reservoir/weather'], {
       queryParams: {reservoir: id}
     })

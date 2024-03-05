@@ -2,13 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {ApiService} from "../../service/api.service";
 import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.css',
   imports: [
-    WeatherDetailedFrameComponent
+    WeatherDetailedFrameComponent,
+    NgForOf
   ],
   standalone: true
 

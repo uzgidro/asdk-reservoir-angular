@@ -13,10 +13,6 @@ th {
   @apply text-green-600
 }
 
-.selected {
-  @apply text-purple-600
-}
-
 .past {
   @apply text-amber-600
 }
