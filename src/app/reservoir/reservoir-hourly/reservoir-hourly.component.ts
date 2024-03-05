@@ -9,11 +9,24 @@ import {
   ComplexValueResponse
 } from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
+import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {NgChartsModule} from "ng2-charts";
+import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
+import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-reservoir-hourly',
   templateUrl: './reservoir-hourly.component.html',
   styleUrls: ['./reservoir-hourly.component.css'],
+  imports: [
+    NgForOf,
+    NgIf,
+    NgChartsModule,
+    WeatherDetailedFrameComponent,
+    DatePipe,
+    DecimalPipe,
+    LoaderComponent
+  ],
   // imports: [
   //   NgIf,
   //   AppModule,
@@ -23,7 +36,7 @@ import {ReservoirResponse} from "../../shared/response/reservoir-response";
   //   DecimalPipe,
   //   LoaderComponent
   // ],
-  // standalone: true
+  standalone: true
 
 })
 export class ReservoirHourlyComponent implements OnInit {

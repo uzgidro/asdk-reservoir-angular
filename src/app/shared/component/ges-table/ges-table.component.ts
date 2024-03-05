@@ -1,11 +1,24 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GesService} from "../../service/ges.service";
 import {GesValues} from "../../interfaces";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {DecimalPipe, LowerCasePipe, NgForOf} from "@angular/common";
+import {RouterLink} from "@angular/router";
+import {AggregateTableFieldComponent} from "../aggregate-table-field/aggregate-table-field.component";
 
 @Component({
   selector: 'app-ges-table',
   templateUrl: './ges-table.component.html',
-  styleUrls: ['./ges-table.component.css']
+  styleUrls: ['./ges-table.component.css'],
+  imports: [
+    MatTooltipModule,
+    NgForOf,
+    RouterLink,
+    LowerCasePipe,
+    AggregateTableFieldComponent,
+    DecimalPipe
+  ],
+  standalone: true
 })
 export class GesTableComponent implements OnInit{
 

@@ -2,12 +2,31 @@ import {Component, OnInit} from '@angular/core';
 import {TimeService} from "../shared/service/time.service";
 import {RegionService} from "../shared/service/region.service";
 import {Region} from "../shared/interfaces";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
+import {DatePipe, DecimalPipe, NgClass, NgIf} from "@angular/common";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {AggregateTableFieldComponent} from "../shared/component/aggregate-table-field/aggregate-table-field.component";
+import {GesVerticalTableComponent} from "../shared/component/get-vertical-table/ges-vertical-table.component";
+import {ChartsTempComponent} from "../shared/temp/charts-temp/charts-temp.component";
+import {LoaderComponent} from "../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
-  styleUrls: ['./region.component.css']
+  styleUrls: ['./region.component.css'],
+  imports: [
+    NgIf,
+    MatTooltipModule,
+    AggregateTableFieldComponent,
+    DatePipe,
+    DecimalPipe,
+    RouterLink,
+    NgClass,
+    GesVerticalTableComponent,
+    ChartsTempComponent,
+    LoaderComponent
+  ],
+  standalone: true
 })
 export class RegionComponent implements OnInit {
 

@@ -5,12 +5,27 @@ import {CategorisedValueResponse, ComplexValueResponse} from "../../shared/respo
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {MetricCategory} from "../../shared/enum/metric-category";
 import {ReservoirService} from "../reservoir.service";
+import {MetricSelectComponent} from "../../shared/component/metric-select/metric-select.component";
+import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
+import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-reservoir-decade',
   templateUrl: './reservoir-decade.component.html',
-  styleUrls: ['./reservoir-decade.component.css']
+  styleUrls: ['./reservoir-decade.component.css'],
+  imports: [
+    MetricSelectComponent,
+    NgIf,
+    DatePipe,
+    RusMonthPipe,
+    LoaderComponent,
+    DecimalPipe,
+    NgForOf
+  ],
+  standalone: true
 })
+
 export class ReservoirDecadeComponent implements OnInit {
 
   metrics: MetricCategory = MetricCategory.SPEED
