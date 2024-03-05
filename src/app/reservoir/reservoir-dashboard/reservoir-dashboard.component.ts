@@ -1,16 +1,29 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, ChartType, registerables} from "chart.js";
-import {BaseChartDirective} from "ng2-charts";
+import {BaseChartDirective, NgChartsModule} from "ng2-charts";
 import {Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {ReservoirService} from "../reservoir.service";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
+import {NgForOf, NgIf} from "@angular/common";
+import {ReservoirCurrentComponent} from "../../shared/component/reservoir-current/reservoir-current.component";
+import {WeatherFrameComponent} from "../../shared/component/weather/weather-frame.component";
+import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-reservoir-dashboard',
   templateUrl: './reservoir-dashboard.component.html',
-  styleUrls: ['./reservoir-dashboard.component.css']
+  styleUrls: ['./reservoir-dashboard.component.css'],
+  imports: [
+    NgIf,
+    NgForOf,
+    NgChartsModule,
+    ReservoirCurrentComponent,
+    WeatherFrameComponent,
+    LoaderComponent
+  ],
+  standalone: true
 })
 export class ReservoirDashboardComponent implements OnInit {
   reservoirs: ReservoirResponse[] = []

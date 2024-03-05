@@ -3,11 +3,24 @@ import {WeatherApiService} from "../../../service/weather-api.service";
 import {WeatherService} from "../../../service/weather.service";
 import {ReservoirResponse} from "../../response/reservoir-response";
 import {WeatherCurrentDto, WeatherCurrentResponse} from "../../response/weather-response";
+import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
+import {RusDatePipe} from "../../pipe/rus-date.pipe";
+import {LoaderComponent} from "../loader/loader.component";
 
 @Component({
   selector: 'app-weather-detailed',
   templateUrl: './weather-detailed-frame.component.html',
-  styleUrl: './weather-detailed-frame.component.css'
+  styleUrl: './weather-detailed-frame.component.css',
+  imports: [
+    NgIf,
+    NgOptimizedImage,
+    DecimalPipe,
+    DatePipe,
+    NgForOf,
+    RusDatePipe,
+    LoaderComponent
+  ],
+  standalone: true
 })
 export class WeatherDetailedFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse

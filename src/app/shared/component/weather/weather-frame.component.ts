@@ -3,11 +3,20 @@ import {ReservoirResponse} from "../../response/reservoir-response";
 import {WeatherApiService} from "../../../service/weather-api.service";
 import {WeatherCurrentDto, WeatherCurrentResponse} from "../../response/weather-response";
 import {WeatherService} from "../../../service/weather.service";
+import {DecimalPipe, NgIf, NgOptimizedImage} from "@angular/common";
+import {LoaderComponent} from "../loader/loader.component";
 
 @Component({
   selector: 'app-weather-frame',
   templateUrl: './weather-frame.component.html',
-  styleUrl: './weather-frame.component.css'
+  styleUrl: './weather-frame.component.css',
+  imports: [
+    NgIf,
+    NgOptimizedImage,
+    DecimalPipe,
+    LoaderComponent
+  ],
+  standalone: true
 })
 export class WeatherFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse

@@ -1,15 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "../shared/interfaces";
 import {DropDownAnimation, SideMenuAnimation} from "../shared/animation/menu-animation";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {ApiService} from "../service/api.service";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-reservoir',
   templateUrl: './reservoir.component.html',
   styleUrls: ['./reservoir.component.css'],
-  animations: [DropDownAnimation, SideMenuAnimation]
+  animations: [DropDownAnimation, SideMenuAnimation],
+  imports: [
+    NgForOf,
+    NgClass,
+    NgIf,
+    RouterLink,
+    RouterOutlet
+  ],
+  standalone: true
 })
 export class ReservoirComponent implements OnInit {
 

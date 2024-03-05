@@ -5,7 +5,8 @@ import {Piezometer} from "../../interfaces";
 @Component({
   selector: 'app-geslol',
   templateUrl: './geslol.component.html',
-  styleUrls: ['./geslol.component.css']
+  styleUrls: ['./geslol.component.css'],
+  standalone:true
 })
 export class GeslolComponent implements OnInit{
 

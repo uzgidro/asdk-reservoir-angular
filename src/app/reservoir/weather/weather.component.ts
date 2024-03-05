@@ -1,11 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {ApiService} from "../../service/api.service";
+import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.css',
+  imports: [
+    WeatherDetailedFrameComponent
+  ],
+  standalone: true
+
 
 })
 export class WeatherComponent implements OnInit {

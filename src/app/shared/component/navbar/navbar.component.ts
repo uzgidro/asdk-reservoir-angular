@@ -4,11 +4,20 @@ import {LoggerService} from "../../../logger/logger.service";
 import {LoggerComponent} from "../../../logger/component/logger.component";
 import {LoggerRef} from "../../../logger/logger-ref";
 import {Subscription} from "rxjs";
+import {RouterLink, RouterLinkActive} from "@angular/router";
+import {DatePipe, NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    NgClass,
+    DatePipe
+  ],
+  standalone: true
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   currentTime?: Date

@@ -4,7 +4,8 @@ import {Chart, registerables} from "chart.js";
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css']
+  styleUrls: ['./chart.component.css'],
+  standalone:true
 })
 export class ChartComponent implements OnInit {
   chart?: Chart
