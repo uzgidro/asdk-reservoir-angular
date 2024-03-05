@@ -5,11 +5,25 @@ import {CategorisedValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {MetricCategory} from "../../shared/enum/metric-category";
 import {ReservoirService} from "../reservoir.service";
+import {MetricSelectComponent} from "../../shared/component/metric-select/metric-select.component";
+import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
+import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-reservoir-month',
   templateUrl: './reservoir-month.component.html',
-  styleUrl: './reservoir-month.component.css'
+  styleUrl: './reservoir-month.component.css',
+  imports: [
+    MetricSelectComponent,
+    NgForOf,
+    NgIf,
+    DecimalPipe,
+    DatePipe,
+    RusMonthPipe,
+    LoaderComponent
+  ],
+  standalone: true
 })
 export class ReservoirMonthComponent implements OnInit {
   reservoirName?: string

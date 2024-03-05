@@ -1,3 +1,5 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import {Component} from '@angular/core';
 import {InputTextModule} from "primeng/inputtext";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -30,6 +32,7 @@ export class LoginComponent {
   login() {
     if (this.authControl.valid) {
       this.successLogin()
+      // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(['/'])
     } else {
       this.warningLogin()

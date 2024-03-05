@@ -1,10 +1,15 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {Chart, registerables} from "chart.js";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-charts-temp',
   templateUrl: './charts-temp.component.html',
-  styleUrls: ['./charts-temp.component.css']
+  styleUrls: ['./charts-temp.component.css'],
+  imports: [
+    NgClass
+  ],
+  standalone: true
 })
 export class ChartsTempComponent implements OnInit {
 

@@ -1,11 +1,25 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GesService} from "../../service/ges.service";
 import {GesValues} from "../../interfaces";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {DecimalPipe, LowerCasePipe, NgForOf, NgIf} from "@angular/common";
+import {RouterLink} from "@angular/router";
+import {AggregateTableFieldComponent} from "../aggregate-table-field/aggregate-table-field.component";
 
 @Component({
   selector: 'app-ges-table',
   templateUrl: './ges-table.component.html',
-  styleUrls: ['./ges-table.component.css']
+  styleUrls: ['./ges-table.component.css'],
+  imports: [
+    MatTooltipModule,
+    NgForOf,
+    RouterLink,
+    LowerCasePipe,
+    AggregateTableFieldComponent,
+    DecimalPipe,
+    NgIf
+  ],
+  standalone: true
 })
 export class GesTableComponent implements OnInit{
 
@@ -22,26 +36,6 @@ export class GesTableComponent implements OnInit{
       this.gesList = this._gesService.gesValues
     } else {
       this.gesList = this._gesService.gesValues.slice(0,5)
-    }
-  }
-
-  sortByName(event: any, thead: any) {
-    this.resetArrow(event, thead)
-    this.isAscSort(event)
-    this._gesService.sortByName(this.ascSort!!)
-  }
-
-  sortByActivePower(event: any, thead: any) {
-    this.resetArrow(event, thead)
-    this.isAscSort(event)
-    this._gesService.sortByPower(this.ascSort!!)
-  }
-
-  changeArrow(element: any) {
-    if (this.ascSort) {
-      element.data = '../../assets/icons/arrow_up.svg'
-    } else {
-      element.data = '../../assets/icons/arrow_down.svg'
     }
   }
 

@@ -1,15 +1,28 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "../shared/interfaces";
 import {DropDownAnimation, SideMenuAnimation} from "../shared/animation/menu-animation";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {ApiService} from "../service/api.service";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-reservoir',
   templateUrl: './reservoir.component.html',
   styleUrls: ['./reservoir.component.css'],
-  animations: [DropDownAnimation, SideMenuAnimation]
+  animations: [DropDownAnimation, SideMenuAnimation],
+  imports: [
+    NgForOf,
+    NgClass,
+    NgIf,
+    RouterLink,
+    RouterOutlet,
+    RouterLinkActive,
+    RouterLinkActive
+  ],
+  standalone: true
 })
 export class ReservoirComponent implements OnInit {
 
@@ -109,6 +122,7 @@ export class ReservoirComponent implements OnInit {
 
   changeReservoir(id: number) {
     if (this.router.url == '/reservoir/dashboard') {
+      // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(['/reservoir/water/current'], {
         relativeTo: this.activatedRoute,
         queryParams: {reservoir: id},
@@ -121,12 +135,14 @@ export class ReservoirComponent implements OnInit {
       this.sideMenuVisible = true
     } else {
       if (id === this.selectedReservoirId) {
+        // noinspection JSIgnoredPromiseFromCall
         this.router.navigate([], {
           relativeTo: this.activatedRoute,
           queryParams: {reservoir: null},
           queryParamsHandling: 'merge',
         });
       } else {
+        // noinspection JSIgnoredPromiseFromCall
         this.router.navigate([], {
           relativeTo: this.activatedRoute,
           queryParams: {reservoir: id},

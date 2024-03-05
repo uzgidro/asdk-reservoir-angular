@@ -1,16 +1,26 @@
 import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration, registerables} from "chart.js";
-import {BaseChartDirective} from "ng2-charts";
+import {BaseChartDirective, NgChartsModule} from "ng2-charts";
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {ComplexValueResponse, ValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {Subscription} from "rxjs";
+import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-reservoir-analytics',
   templateUrl: './reservoir-analytics.component.html',
-  styleUrl: './reservoir-analytics.component.css'
+  styleUrl: './reservoir-analytics.component.css',
+  imports: [
+    NgChartsModule,
+    NgClass,
+    NgStyle,
+    NgForOf,
+    NgIf,
+    DecimalPipe
+  ],
+  standalone: true
 })
 export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
@@ -488,3 +498,5 @@ interface Values {
   color?: string
   display: boolean
 }
+
+

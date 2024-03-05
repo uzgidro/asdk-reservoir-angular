@@ -6,7 +6,8 @@ import {PizeoService} from "../../service/pizeo.service";
 @Component({
   selector: 'app-piezo',
   templateUrl: './piezo.component.html',
-  styleUrls: ['./piezo.component.css']
+  styleUrls: ['./piezo.component.css'],
+  standalone:true
 })
 export class PiezoComponent implements OnInit {
 
