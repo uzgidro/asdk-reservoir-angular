@@ -29,15 +29,7 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
     DecimalPipe,
     LoaderComponent
   ],
-  // imports: [
-  //   NgIf,
-  //   AppModule,
-  //   NgChartsModule,
-  //   NgForOf,
-  //   DatePipe,
-  //   DecimalPipe,
-  //   LoaderComponent
-  // ],
+
   standalone: true
 
 })
