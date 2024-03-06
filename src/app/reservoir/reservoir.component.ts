@@ -95,12 +95,18 @@ export class ReservoirComponent implements OnInit {
     // get url and remove query params to find menu item
     const url = this.router.url.split('?')[0]
     const selectedItem = this.findMenuByPath(url)
+
+
     if (selectedItem) {
-      this.selectItem(selectedItem)
+      this.selectItem(selectedItem);
     }
+
     if (!url.includes('dashboard')) {
-      this.sideMenuVisible = true
+      this.sideMenuVisible = true;
+    }else if(url.includes('dashboard')){
+      this.menuItems[1].isOpen=false
     }
+
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         this.selectedReservoirId = value['reservoir']
@@ -111,6 +117,8 @@ export class ReservoirComponent implements OnInit {
         }
         if (!url.includes('dashboard')) {
           this.sideMenuVisible = true
+        }else if(url.includes('dashboard')){
+         this.menuItems[1].isOpen=false
         }
       }
     })
@@ -123,7 +131,7 @@ export class ReservoirComponent implements OnInit {
   changeReservoir(id: number) {
     if (this.router.url == '/reservoir/dashboard') {
       // noinspection JSIgnoredPromiseFromCall
-      this.router.navigate(['/reservoir/water/current'], {
+        this.router.navigate(['/reservoir/water/current'], {
         relativeTo: this.activatedRoute,
         queryParams: {reservoir: id},
         queryParamsHandling: 'merge'
@@ -159,6 +167,7 @@ export class ReservoirComponent implements OnInit {
       }
 
       if (menuItem.children) {
+        console.log(menuItem.children)
         const foundInChildren = this.findMenuByPath(path, menuItem.children);
         if (foundInChildren) {
           return foundInChildren; // Найден элемент во вложенных детях
