@@ -77,8 +77,8 @@ export class ReservoirComponent implements OnInit {
     }
   ];
 
-  waterMenuItem =this.menuItems[1]
-  reservoirs: {id: number, name: string}[] = []
+  waterMenuItem = this.menuItems[1]
+  reservoirs: { id: number, name: string }[] = []
   selectedReservoirId: number = 0
   sideMenuVisible = false
 
@@ -93,14 +93,7 @@ export class ReservoirComponent implements OnInit {
     })
     this.resetActivity(this.menuItems)
     // get url and remove query params to find menu item
-    const url = this.router.url.split('?')[0]
-    const selectedItem = this.findMenuByPath(url)
-    if (selectedItem) {
-      this.selectItem(selectedItem)
-    }
-    if (!url.includes('dashboard')) {
-      this.sideMenuVisible = true
-    }
+
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         this.selectedReservoirId = value['reservoir']
@@ -111,6 +104,8 @@ export class ReservoirComponent implements OnInit {
         }
         if (!url.includes('dashboard')) {
           this.sideMenuVisible = true
+        } else if (url.includes('dashboard')) {
+          this.menuItems.forEach(i => i.isOpen = false)
         }
       }
     })
