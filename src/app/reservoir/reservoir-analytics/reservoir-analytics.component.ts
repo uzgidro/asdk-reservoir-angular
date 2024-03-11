@@ -24,6 +24,7 @@ import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 })
 export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
+
   protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
   private colors: { main: string, sub: string }[] = [
@@ -498,5 +499,8 @@ interface Values {
   color?: string
   display: boolean
 }
+
+
+
 
 

@@ -55,7 +55,8 @@
           </tr>
           </thead>
           <tbody *ngIf="avg">
-          <tr *ngIf="startYear && endYear" (click)="changeVisibility(avg.id)" [ngClass]="{'text-blue-600': avg.display, 'text-blue-600/60': !avg.display}"  class="text-blue-600">
+          <tr *ngIf="startYear && endYear && avg.display" (click)="changeVisibility(avg.id)"
+              [ngClass]="{'text-blue-600': avg.display}" class="text-blue-600">
             <td *ngIf="startYear && endYear">Среднее за года {{ startYear.getFullYear() }}
               - {{ endYear.getFullYear() }}
             </td>
@@ -64,21 +65,24 @@
             <td>{{ (avg.value) | number: '.0-0' }}</td>
             <td>100</td>
           </tr>
-          <tr *ngIf="max" (click)="changeVisibility(max.id)" [ngClass]="{'text-green-600': max.display, 'text-green-600/60': !max.display}"  class="text-green-600">
+          <tr *ngIf="max && max.display" (click)="changeVisibility(max.id)"
+              [ngClass]="{'text-green-600': max.display}" class="text-green-600">
             <td>Максимальное значение {{ max.year }}</td>
             <td *ngFor="let val of max.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
             <td>{{ (max.value) | number: '.0-0' }}</td>
             <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="min" (click)="changeVisibility(min.id)" [ngClass]="{'text-rose-600': min.display, 'text-rose-600/60': !min.display}"  class="text-rose-600">
+          <tr *ngIf="min && min.display" (click)="changeVisibility(min.id)"
+              [ngClass]="{'text-rose-600': min.display}" class="text-rose-600">
             <td>Минимальное значение {{ min.year }}</td>
             <td *ngFor="let val of min.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
             <td>{{ (min.value) | number: '.0-0' }}</td>
             <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="past" (click)="changeVisibility(past.id)" [ngClass]="{'text-amber-600': past.display, 'text-amber-600/60': !past.display}"  class="text-amber-600">
+          <tr *ngIf="past && past.display" (click)="changeVisibility(past.id)"
+              [ngClass]="{'text-amber-600': past.display}" class="text-amber-600">
             <td>Значение за прошлый {{ past.year }}</td>
             <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
@@ -96,36 +100,80 @@
         </table>
       </div>
     </div>
-    <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto"
-         [ngStyle]="{'max-height.px': tableHeight}">
-      <table>
-        <thead class="sticky top-0">
-        <tr>
-          <th>Год</th>
-          <th>Приток воды, млн. м3</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of years" (click)="yearSelect(item.year)">
-          <td
-            [ngStyle]="{'color': getColor(item)}"
-            [ngClass]="{
+
+
+    <div class="flex flex-col gap-2.5 col-span-2 max-2xl:col-span-3 mb-40 h-[830px]">
+      <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto flex-1 h-fit"
+           [ngStyle]="{'max-height.px': tableHeight}">
+        <table>
+          <thead class="sticky top-0">
+          <tr>
+            <th>Год</th>
+            <th>Приток воды, млн. м3</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of years" (click)="yearSelect(item.year)">
+            <td
+              [ngStyle]="{'color': getColor(item)}"
+              [ngClass]="{
             'min': min?.year == item.year,
             'max': max?.year == item.year,
             'past': past?.year == item.year,
             }">{{ item.year }}
-          </td>
-          <td
-            [ngStyle]="{'color': getColor(item)}"
-            [ngClass]="{
+            </td>
+            <td
+              [ngStyle]="{'color': getColor(item)}"
+              [ngClass]="{
             'min': min?.year == item.year,
             'max': max?.year == item.year,
             'past': past?.year == item.year
             }">{{ item.value |number: '.0-0' }}
-          </td>
-        </tr>
-        </tbody>
-      </table>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto flex-1 mb-14 h-fit"
+           [ngStyle]="{'max-height.px': tableHeight}">
+        <table>
+          <thead class="sticky top-0">
+          <tr>
+
+            <th>Год</th>
+            <th>Годовой приток, млн. м3</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="avg">
+          <tr *ngIf="startYear && endYear" (click)="changeVisibility(avg.id) "
+
+              [ngClass]="{'text-blue-600': avg.display,'text-blue-600/60': !avg.display}" class="text-blue-600">
+            <td *ngIf="startYear && endYear">{{ startYear.getFullYear() }}
+              - {{ endYear.getFullYear() }}
+            </td>
+            <td>{{ (avg.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="max" (click)="changeVisibility(max.id)"
+              [ngClass]="{'text-green-600': max.display,  'text-green-600/60': !max.display}" class="text-green-600">
+
+            <td>{{ max.year }}</td>
+            <td>{{ (max.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="min" (click)="changeVisibility(min.id)"
+              [ngClass]="{'text-rose-600': min.display, 'text-rose-600/60': !min.display}" class="text-rose-600">
+            <td>{{ min.year }}</td>
+            <td>{{ (min.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="past" (click)="changeVisibility(past.id)"
+              [ngClass]="{'text-amber-600': past.display, 'text-amber-600/60': !past.display}" class="text-amber-600">
+            <td> {{ past.year }}</td>
+            <td>{{ (past.value) | number: '.0-0' }}</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
     </div>
   </div>
 </div>
