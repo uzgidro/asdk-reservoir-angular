@@ -1,3 +1,4 @@
+<!--suppress JSUnusedGlobalSymbols -->
 <app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>
 
 <div *ngIf="reservoirName && tableData && totalValues.length !== 0; else loader" class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
@@ -24,6 +25,7 @@
     <tr *ngIf="tableData.release">
       <td>Попуск, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
       <td *ngFor="let value of tableData.release.data">{{value.value | number:'0.0-0'}}</td>
+      <!--suppress JSUnusedGlobalSymbols, JSUnusedGlobalSymbols -->
       <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
       <td>{{avgRelease}}</td>
     </tr>
