@@ -6,41 +6,41 @@
       </a>
       <p>{{currentTime | date: 'HH:mm:ss, dd.MM.yyyy'}}</p>
     </div>
-    <div class="flex flex-row space-x-2 mr-4">
-      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/dashboard"
-         routerLinkActive="active">
-        <object class="w-6 h-6" data="assets/icons/grid.svg"></object>
-        <span class="ml-2 text-sm font-medium">Главная</span>
-      </a>
-      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/region"
-         routerLinkActive="active">
-        <object class="w-6 h-6" data="assets/icons/map.svg"></object>
-        <span class="ml-2 text-sm font-medium">Регионы</span>
-      </a>
-      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/ges"
-         routerLinkActive="active">
-        <object class="w-6 h-6" data="assets/icons/meter.svg"></object>
-        <span class="ml-2 text-sm font-medium">ГЭС</span>
-      </a>
-      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/reservoir"
-         routerLinkActive="active">
-        <object class="w-6 h-6" data="assets/icons/bridge.svg"></object>
-        <span class="ml-2 text-sm font-medium">Водохранилища</span>
-      </a>
-      <div class="border border-gray-400 my-1"></div>
-      <button
-        [ngClass]="{
-        'bg-gray-600': loggerRef
-        }"
-        class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" (click)="openLogger()">
-        <object class="w-6 h-6" data="assets/icons/event.svg"></object>
-        <span class="ml-2 text-sm font-medium">Лог</span>
-      </button>
-      <div class="border border-gray-400 my-1"></div>
-      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/admin"
-         routerLinkActive="active">
-        <img class="w-8 h-8" ngSrc="assets/icons/profile.svg" alt="" height="24" width="24">
-      </a>
-    </div>
+    <!--    <div class="flex flex-row space-x-2 mr-4">-->
+    <!--      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/dashboard"-->
+    <!--         routerLinkActive="active">-->
+    <!--        <object class="w-6 h-6" data="assets/icons/grid.svg"></object>-->
+    <!--        <span class="ml-2 text-sm font-medium">Главная</span>-->
+    <!--      </a>-->
+    <!--      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/region"-->
+    <!--         routerLinkActive="active">-->
+    <!--        <object class="w-6 h-6" data="assets/icons/map.svg"></object>-->
+    <!--        <span class="ml-2 text-sm font-medium">Регионы</span>-->
+    <!--      </a>-->
+    <!--      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/ges"-->
+    <!--         routerLinkActive="active">-->
+    <!--        <object class="w-6 h-6" data="assets/icons/meter.svg"></object>-->
+    <!--        <span class="ml-2 text-sm font-medium">ГЭС</span>-->
+    <!--      </a>-->
+    <!--      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/reservoir"-->
+    <!--         routerLinkActive="active">-->
+    <!--        <object class="w-6 h-6" data="assets/icons/bridge.svg"></object>-->
+    <!--        <span class="ml-2 text-sm font-medium">Водохранилища</span>-->
+    <!--      </a>-->
+    <!--      <div class="border border-gray-400 my-1"></div>-->
+    <!--      <button-->
+    <!--        [ngClass]="{-->
+    <!--        'bg-gray-600': loggerRef-->
+    <!--        }"-->
+    <!--        class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" (click)="openLogger()">-->
+    <!--        <object class="w-6 h-6" data="assets/icons/event.svg"></object>-->
+    <!--        <span class="ml-2 text-sm font-medium">Лог</span>-->
+    <!--      </button>-->
+    <!--      <div class="border border-gray-400 my-1"></div>-->
+    <!--      <a class="flex items-center w-full h-10 px-3 rounded active:bg-gray-400 hover:bg-gray-500" routerLink="/admin"-->
+    <!--         routerLinkActive="active">-->
+    <!--        <img class="w-8 h-8" ngSrc="assets/icons/profile.svg" alt="" height="24" width="24">-->
+    <!--      </a>-->
+    <!--    </div>-->
   </div>
 </nav>
