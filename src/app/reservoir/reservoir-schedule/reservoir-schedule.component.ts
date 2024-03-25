@@ -7,6 +7,7 @@ import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {CategorisedValueResponse} from "../../shared/response/values-response";
 import {Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-reservoir-schedule',
@@ -15,7 +16,8 @@ import {Decade} from "../../shared/interfaces";
     DatePipe,
     DecimalPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    FormsModule
   ],
   templateUrl: './reservoir-schedule.component.html',
   styleUrl: './reservoir-schedule.component.css'
@@ -29,6 +31,9 @@ export class ReservoirScheduleComponent implements OnInit {
   release?: Decade
   level?: Decade
   volume?: Decade
+  incomeForecast: number[] = new Array(18).fill(0)
+  incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' = 'perLast'
+  incomePercent = 80
   private subscribe?: Subscription
 
   constructor(private decadeService: DecadeService, private api: ApiService, private activatedRoute: ActivatedRoute) {
@@ -58,5 +63,32 @@ export class ReservoirScheduleComponent implements OnInit {
         })
       }
     })
+  }
+
+  changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min') {
+    this.incomeForecastCategory = category
+    this.setPercentForecast()
+    if (this.income) {
+      if (this.incomeForecastCategory == 'five') {
+        this.incomeForecast = this.income.stat5
+      } else if (this.incomeForecastCategory == 'ten') {
+        this.incomeForecast = this.income.stat10
+      } else if (this.incomeForecastCategory == 'last') {
+        this.incomeForecast = this.income.statLastYear
+      }
+    }
+  }
+
+  changeIncomePercent(event: any) {
+    this.incomePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
+    this.setPercentForecast()
+  }
+
+  private setPercentForecast() {
+    if (this.incomeForecastCategory == 'perAvg' && this.income) {
+      this.incomeForecast = this.income?.statTotal.map(item => Math.round(item * this.incomePercent / 100))
+    } else if (this.incomeForecastCategory == 'perLast' && this.income) {
+      this.incomeForecast = this.income?.statLastYear.map(item => Math.round(item * this.incomePercent / 100))
+    }
   }
 }

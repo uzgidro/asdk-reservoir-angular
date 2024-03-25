@@ -1,72 +1,105 @@
 <div class="w-full px-4 mt-6 flex flex-col space-y-4 relative max-h-lvh">
   <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
 
-  <table class="h-full">
-    <thead class="sticky top-0">
-    <tr>
-      <th rowspan="2" colspan="2">Индикаторы</th>
-      <th rowspan="2">Измерение</th>
-      <th *ngFor="let month of months" colspan="3">{{ month }}</th>
-    </tr>
-    <tr>
-      <th *ngFor="let decade of decade">{{ decade }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td colspan="2">Средний приток за все время</td>
-      <td rowspan="3">м3/с</td>
-      <td *ngFor="let value of income?.statTotal">{{value}}</td>
-    </tr>
-    <tr>
-      <td colspan="2">Приток в 2023</td>
-      <td *ngFor="let value of income?.statLastYear">{{value}}</td>
-    </tr>
-    <tr>
-      <td colspan="2">Приток в 2024 (Прогноз)</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td colspan="2">Объём в 2023</td>
-      <td rowspan="3">млн. м3</td>
-      <td *ngFor="let value of volume?.statLastYear">{{value}}</td>
-    </tr>
-    <tr>
-      <td rowspan="2">Объём в 2024 (Прогноз)</td>
-      <td>Начало декады</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>Конец декады</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td colspan="2">Уровень на конец декады</td>
-      <td rowspan="2">м</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td colspan="2">Дневное изменение</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td colspan="2">Средний попуск за все время</td>
-      <td rowspan="3">м3/с</td>
-      <td *ngFor="let value of release?.statTotal">{{value}}</td>
-    </tr>
-    <tr>
-      <td colspan="2">Попуск в 2023</td>
-      <td *ngFor="let value of release?.statLastYear">{{value}}</td>
-    </tr>
-    <tr>
-      <td colspan="2">Попуск в 2024 (Прогноз)</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td colspan="2">Выработка электроэнергии</td>
-      <td>млн. КВт/ч</td>
-      <td>0</td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="flex flex-row h-full space-x-4">
+    <table class="h-full">
+      <thead class="sticky top-0">
+      <tr>
+        <th rowspan="2" colspan="2">Индикаторы</th>
+        <th rowspan="2">Измерение</th>
+        <th *ngFor="let month of months" colspan="3">{{ month }}</th>
+      </tr>
+      <tr>
+        <th *ngFor="let decade of decade">{{ decade }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="2">Средний приток за все время</td>
+        <td rowspan="3">м3/с</td>
+        <td *ngFor="let value of income?.statTotal">{{ value }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">Приток в 2023</td>
+        <td *ngFor="let value of income?.statLastYear">{{ value }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">Приток в 2024 (Прогноз)</td>
+        <td *ngFor="let value of incomeForecast">{{value}}</td>
+      </tr>
+      <tr>
+        <td colspan="2">Объём в 2023</td>
+        <td rowspan="3">млн. м3</td>
+        <td *ngFor="let value of volume?.statLastYear">{{ value }}</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Объём в 2024 (Прогноз)</td>
+        <td>Начало декады</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>Конец декады</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td colspan="2">Уровень на конец декады</td>
+        <td rowspan="2">м</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td colspan="2">Дневное изменение</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td colspan="2">Средний попуск за все время</td>
+        <td rowspan="3">м3/с</td>
+        <td *ngFor="let value of release?.statTotal">{{ value }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">Попуск в 2023</td>
+        <td *ngFor="let value of release?.statLastYear">{{ value }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">Попуск в 2024 (Прогноз)</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td colspan="2">Выработка электроэнергии</td>
+        <td>млн. КВт/ч</td>
+        <td>0</td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+      <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
+        <span class="flex flex-row">
+          <input type="radio" name="asd" (click)="changeIncomeForecast('perAvg')">
+          <label class="mr-2">% к среднему</label>
+          <input type="radio" name="asd" (click)="changeIncomeForecast('perLast')">
+          <label>% к прошлому году</label>
+        </span>
+        <input class="w-full" type="number" value="80" (input)="changeIncomePercent($event)">
+        <span class="flex flex-row">
+          <input type="radio" name="asd" (click)="changeIncomeForecast('ten')">
+          <label>Среднее за 10 лет</label>
+        </span>
+        <span class="flex flex-row">
+          <input type="radio" name="asd" (click)="changeIncomeForecast('five')">
+          <label>Среднее за 5 лет</label>
+        </span>
+        <span class="flex flex-row">
+          <input type="radio" name="asd" (click)="changeIncomeForecast('last')">
+          <label>2023</label>
+        </span>
+        <span class="flex flex-row">
+          <input type="radio" name="asd" (click)="changeIncomeForecast('max')">
+          <label>Максимум</label>
+        </span>
+        <span class="flex flex-row">
+          <input type="radio" name="asd" (click)="changeIncomeForecast('min')">
+          <label>Минимум</label>
+        </span>
+      </form>
+    </div>
+  </div>
 </div>
