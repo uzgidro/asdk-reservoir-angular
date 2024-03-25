@@ -16,6 +16,7 @@ const MAX: string = '/max'
 const MIN: string = '/min'
 const YEAR: string = '/year'
 const SELECTED: string = '/selected'
+const VEGETATIVE: string = '/vegetative'
 
 
 @Injectable({
@@ -91,6 +92,15 @@ export class ApiService {
 
   getDecadeYearsValues(reservoirId: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE + YEAR).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getVegetativeDecadeYearsValues(reservoirId: number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE + VEGETATIVE).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];

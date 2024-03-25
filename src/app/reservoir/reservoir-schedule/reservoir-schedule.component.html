@@ -16,11 +16,11 @@
     <tr>
       <td colspan="2">Средний приток за все время</td>
       <td rowspan="3">м3/с</td>
-      <td>0</td>
+      <td *ngFor="let value of income?.statTotal">{{value}}</td>
     </tr>
     <tr>
       <td colspan="2">Приток в 2023</td>
-      <td>0</td>
+      <td *ngFor="let value of income?.statLastYear">{{value}}</td>
     </tr>
     <tr>
       <td colspan="2">Приток в 2024 (Прогноз)</td>
@@ -29,7 +29,7 @@
     <tr>
       <td colspan="2">Объём в 2023</td>
       <td rowspan="3">млн. м3</td>
-      <td>0</td>
+      <td *ngFor="let value of volume?.statLastYear">{{value}}</td>
     </tr>
     <tr>
       <td rowspan="2">Объём в 2024 (Прогноз)</td>
@@ -52,11 +52,11 @@
     <tr>
       <td colspan="2">Средний попуск за все время</td>
       <td rowspan="3">м3/с</td>
-      <td>0</td>
+      <td *ngFor="let value of release?.statTotal">{{value}}</td>
     </tr>
     <tr>
       <td colspan="2">Попуск в 2023</td>
-      <td>0</td>
+      <td *ngFor="let value of release?.statLastYear">{{value}}</td>
     </tr>
     <tr>
       <td colspan="2">Попуск в 2024 (Прогноз)</td>
@@ -68,36 +68,5 @@
       <td>0</td>
     </tr>
     </tbody>
-    <!--    <tbody *ngFor="let table of tableData">-->
-    <!--    <tr>-->
-    <!--      <td [rowSpan]="table.data.length" class="text-lg">{{table.category}}</td>-->
-    <!--      <td class="text-lg bg-gray-300">{{table.data[0][0].date.slice(0,4)}}</td>-->
-    <!--      <td *ngFor="let i of table.data[0]" class=" bg-gray-300">{{i.value | number: '0.0-0'}}</td>-->
-    <!--    </tr>-->
-    <!--    <tr *ngFor="let cat of table.data.slice(1); index as i">-->
-    <!--      <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" class="text-lg">{{cat[0].date.slice(0,4)}}</td>-->
-    <!--      <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" *ngFor="let val of cat">{{val.value | number: '0.0-0'}}</td>-->
-    <!--    </tr>-->
-    <!--    <tr *ngIf="table.statStart && table.statEnd && table.statTotal.length > 0">-->
-    <!--      <td colspan="2">-->
-    <!--        Среднее за {{table.statStart | date:'yyyy'}} - {{table.statEnd | date: 'yyyy'}} ({{table.statEnd.getFullYear() - table.statStart.getFullYear() + 1}})</td>-->
-    <!--      <td *ngFor="let val of table.statTotal">{{val | number: '0.0-0'}}</td>-->
-    <!--    </tr>-->
-    <!--    <tr *ngIf="table.statEnd && table.stat30.length > 0">-->
-    <!--      <td colspan="2">-->
-    <!--        Среднее за {{table.statEnd.getFullYear() - 29}} - {{table.statEnd | date: 'yyyy'}} (30)</td>-->
-    <!--      <td *ngFor="let val of table.stat30">{{val | number: '0.0-0'}}</td>-->
-    <!--    </tr>-->
-    <!--    <tr *ngIf="table.statEnd && table.stat10.length > 0">-->
-    <!--      <td colspan="2">-->
-    <!--        Среднее за {{table.statEnd.getFullYear() - 9}} - {{table.statEnd | date: 'yyyy'}} (10)</td>-->
-    <!--      <td *ngFor="let val of table.stat10">{{val | number: '0.0-0'}}</td>-->
-    <!--    </tr>-->
-    <!--    <tr *ngIf="table.statEnd && table.stat5.length > 0">-->
-    <!--      <td colspan="2">-->
-    <!--        Среднее за {{table.statEnd.getFullYear() - 4}} - {{table.statEnd | date: 'yyyy'}} (5)</td>-->
-    <!--      <td *ngFor="let val of table.stat5">{{val | number: '0.0-0'}}</td>-->
-    <!--    </tr>-->
-    <!--    </tbody>-->
   </table>
 </div>
