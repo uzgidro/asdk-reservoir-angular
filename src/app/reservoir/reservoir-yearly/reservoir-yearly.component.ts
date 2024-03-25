@@ -42,19 +42,19 @@ export class ReservoirYearlyComponent implements OnInit {
     'Ноябрь',
     'Декабрь'
   ]
-  decade = [
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
-    1, 2, 3,
+  decade: string[] = [
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
   ]
   tableData: {
     category: string
