@@ -65,7 +65,7 @@
             <td>{{ (avg.value) | number: '.0-0' }}</td>
             <td>100</td>
           </tr>
-          <tr *ngIf="max&&max.display" (click)="changeVisibility(max.id)"
+          <tr *ngIf="max && max.display" (click)="changeVisibility(max.id)"
               [ngClass]="{'text-green-600': max.display}" class="text-green-600">
             <td>Максимальное значение {{ max.year }}</td>
             <td *ngFor="let val of max.byMonth">{{ val | number: '.0-0' }}</td>
@@ -73,7 +73,7 @@
             <td>{{ (max.value) | number: '.0-0' }}</td>
             <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="min&&min.display" (click)="changeVisibility(min.id)"
+          <tr *ngIf="min && min.display" (click)="changeVisibility(min.id)"
               [ngClass]="{'text-rose-600': min.display}" class="text-rose-600">
             <td>Минимальное значение {{ min.year }}</td>
             <td *ngFor="let val of min.byMonth">{{ val | number: '.0-0' }}</td>
@@ -81,7 +81,7 @@
             <td>{{ (min.value) | number: '.0-0' }}</td>
             <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="past&&past.display" (click)="changeVisibility(past.id)"
+          <tr *ngIf="past && past.display" (click)="changeVisibility(past.id)"
               [ngClass]="{'text-amber-600': past.display}" class="text-amber-600">
             <td>Значение за прошлый {{ past.year }}</td>
             <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
