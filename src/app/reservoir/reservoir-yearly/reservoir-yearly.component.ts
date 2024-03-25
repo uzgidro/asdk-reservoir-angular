@@ -8,6 +8,7 @@ import {MetricCategory} from "../../shared/enum/metric-category";
 import {ReservoirService} from "../reservoir.service";
 import {MetricSelectComponent} from "../../shared/component/metric-select/metric-select.component";
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {DecadeService} from "../decade.service";
 
 @Component({
   selector: 'app-reservoir-yearly',
@@ -28,34 +29,7 @@ export class ReservoirYearlyComponent implements OnInit {
   reservoirName?: string
   subscribe?: Subscription
   category: number = 0
-  months = [
-    'Январь',
-    'Февраль',
-    'Март',
-    'Апрель',
-    'Май',
-    'Июнь',
-    'Июль',
-    'Август',
-    'Сентябрь',
-    'Октябрь',
-    'Ноябрь',
-    'Декабрь'
-  ]
-  decade: string[] = [
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-    "I", "II", "III",
-  ]
+
   tableData: {
     category: string
     data: ValueResponse[][]
@@ -66,9 +40,13 @@ export class ReservoirYearlyComponent implements OnInit {
     stat30: number[]
     statTotal: number[]
   }[] = []
+  months: string[] = this.decadeService.months;
+  decade: string[] = this.decadeService.decade;
 
 
-  constructor(private api: ApiService, private reservoirService: ReservoirService, private activatedRoute: ActivatedRoute) {
+
+
+  constructor(private api: ApiService, private reservoirService: ReservoirService, private decadeService: DecadeService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {

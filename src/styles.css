@@ -25,7 +25,7 @@
     @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-4
   }
   tbody tr td {
-    @apply px-4 py-2 border-b border-gray-500 text-center
+    @apply px-4 py-2 border-b border-gray-500 text-center break-words max-w-20
   }
 }
 

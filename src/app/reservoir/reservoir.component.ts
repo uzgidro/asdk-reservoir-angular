@@ -42,7 +42,8 @@ export class ReservoirComponent implements OnInit {
         {name: 'Декада', path: '/reservoir/water/decade'},
         {name: 'Пе месяцам', path: '/reservoir/water/month'},
         {name: 'По годам', path: '/reservoir/water/year'},
-        {name: 'Аналитика', path: '/reservoir/water/analytics'}
+        {name: 'Аналитика', path: '/reservoir/water/analytics'},
+        {name: 'График', path: '/reservoir/water/schedule'},
       ]
     },
     {
