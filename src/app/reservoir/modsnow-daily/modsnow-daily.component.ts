@@ -74,10 +74,10 @@ export class ModsnowDailyComponent implements OnInit {
   }
 
   setupData() {
-    this.env.getRegions().forEach(reservoir => {
+    this.env.getRegions().filter(item => item.snowCoverage !== undefined).forEach(reservoir => {
     let height: number[] = []
     let heightValue = 1000
-      reservoir.snowCoverage.forEach(() => {
+      reservoir.snowCoverage!.forEach(() => {
         height.push(heightValue)
         heightValue += 500
       })
@@ -87,7 +87,7 @@ export class ModsnowDailyComponent implements OnInit {
         chartData: {
           datasets: [
             {
-              data: reservoir.snowCoverage,
+              data: reservoir.snowCoverage!,
               label: `Покрытие снегом, %`,
               backgroundColor: 'rgba(37, 99, 235,0.2)',
               borderColor: 'rgba(37, 99, 235,1)',

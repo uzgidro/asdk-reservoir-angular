@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ValueResponse} from "../shared/response/values-response";
 import {Decade} from "../shared/interfaces";
 
@@ -35,10 +35,13 @@ export class DecadeService {
     "I", "II", "III",
     "I", "II", "III",
   ]
-  constructor() { }
+
+  constructor() {
+  }
 
   setDecade(category: string, values: ValueResponse[], isNormal: boolean = true): Decade {
     const chunked = this.chunkArray(values, isNormal)
+    console.log(chunked)
     const stat = this.getStatistics(chunked)
 
     return {
@@ -56,9 +59,15 @@ export class DecadeService {
 
   private chunkArray(array: ValueResponse[], isNormal: boolean) {
     // remove 1st element if it's not january
-    while (new Date(array[0].date).getMonth() !== 0 && isNormal) {
-      array = array.slice(1)
-    }
+    if (isNormal)
+      while (new Date(array[0].date).getMonth() !== 0) {
+        array = array.slice(1)
+      }
+    // remove 1st element if it's not april on vegetative table
+    else
+      while (new Date(array[0].date).getMonth() !== 3) {
+        array = array.slice(1)
+      }
     // 12 months with 3 decades = 36
     const size = this.decade.length
     return Array.from(
@@ -75,7 +84,7 @@ export class DecadeService {
     let stat10: number[] = []
     let stat30: number[] = []
     let statTotal: number[] = []
-    let statLastYear: number[] = chunked[chunked.length-1].map(item => item.value)
+    let statLastYear: number[] = chunked[chunked.length - 1].map(item => item.value)
     for (let i = 0; i < this.decade.length; i++) {
       // get all data by this decade
       const dateData = chunked

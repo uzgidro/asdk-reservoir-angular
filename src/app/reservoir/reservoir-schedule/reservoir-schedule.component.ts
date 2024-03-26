@@ -8,6 +8,7 @@ import {CategorisedValueResponse} from "../../shared/response/values-response";
 import {Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
 import {FormsModule} from "@angular/forms";
+import {EnvService} from "../../shared/service/env.service";
 
 @Component({
   selector: 'app-reservoir-schedule',
@@ -34,9 +35,19 @@ export class ReservoirScheduleComponent implements OnInit {
   incomeForecast: number[] = new Array(18).fill(0)
   incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' = 'perLast'
   incomePercent = 80
+  releaseForecast: number[] = new Array(18).fill(0)
+  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' = 'perLast'
+  releasePercent = 80
+  volumeForecastStart: number[] = new Array(18).fill(0)
+  volumeForecastEnd: number[] = new Array(18).fill(0)
   private subscribe?: Subscription
 
-  constructor(private decadeService: DecadeService, private api: ApiService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private decadeService: DecadeService,
+    private api: ApiService,
+    private env: EnvService,
+    private activatedRoute: ActivatedRoute
+  ) {
   }
 
   ngOnInit() {
@@ -67,7 +78,7 @@ export class ReservoirScheduleComponent implements OnInit {
 
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min') {
     this.incomeForecastCategory = category
-    this.setPercentForecast()
+    this.setIncomePercentForecast()
     if (this.income) {
       if (this.incomeForecastCategory == 'five') {
         this.incomeForecast = this.income.stat5
@@ -77,18 +88,64 @@ export class ReservoirScheduleComponent implements OnInit {
         this.incomeForecast = this.income.statLastYear
       }
     }
+    this.setVolumeForecast()
+  }
+
+  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min') {
+    this.releaseForecastCategory = category
+    this.setReleasePercentForecast()
+    if (this.release) {
+      if (this.releaseForecastCategory == 'five') {
+        this.releaseForecast = this.release.stat5
+      } else if (this.releaseForecastCategory == 'ten') {
+        this.releaseForecast = this.release.stat10
+      } else if (this.releaseForecastCategory == 'last') {
+        this.releaseForecast = this.release.statLastYear
+      }
+    }
+    this.setVolumeForecast()
   }
 
   changeIncomePercent(event: any) {
     this.incomePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
-    this.setPercentForecast()
+    this.setIncomePercentForecast()
+    this.setVolumeForecast()
   }
 
-  private setPercentForecast() {
+  changeReleasePercent(event: any) {
+    this.releasePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
+    this.setReleasePercentForecast()
+    this.setVolumeForecast()
+  }
+
+  private setVolumeForecast() {
+    const forecast: number[] = []
+    this.volumeForecastStart = []
+    this.volumeForecastEnd = []
+    forecast.push(this.env.getRegionByName(this.reservoirName!)?.vegetateVolume!)
+    for (let i = 0; i < this.incomeForecast.length; i++) {
+      // 11 days at third decade of may, july and august
+      let days = i == 5 || i == 11 || i == 13 ? 11 : 10
+      const change = this.incomeForecast[i] * 0.0864 * days - this.releaseForecast[i] * 0.0864 * days
+      forecast.push(forecast[i] + change)
+    }
+    this.volumeForecastStart = forecast.slice(0, 18)
+    this.volumeForecastEnd = forecast.slice(1, 19)
+  }
+
+  private setIncomePercentForecast() {
     if (this.incomeForecastCategory == 'perAvg' && this.income) {
       this.incomeForecast = this.income?.statTotal.map(item => Math.round(item * this.incomePercent / 100))
     } else if (this.incomeForecastCategory == 'perLast' && this.income) {
       this.incomeForecast = this.income?.statLastYear.map(item => Math.round(item * this.incomePercent / 100))
+    }
+  }
+
+  private setReleasePercentForecast() {
+    if (this.releaseForecastCategory == 'perAvg' && this.release) {
+      this.releaseForecast = this.release?.statTotal.map(item => Math.round(item * this.releasePercent / 100))
+    } else if (this.incomeForecastCategory == 'perLast' && this.release) {
+      this.releaseForecast = this.release?.statLastYear.map(item => Math.round(item * this.releasePercent / 100))
     }
   }
 }
