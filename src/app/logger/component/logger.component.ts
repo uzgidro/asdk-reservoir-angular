@@ -23,7 +23,6 @@ export class LoggerComponent {
 
   onResizeEnd(event: ResizeEvent): void {
     let height = event.rectangle.height
-    console.log(height)
     if (height!! >= 150) {
       this.windowHeight = `height: 150px`
     } else if (height!! <= 45) {

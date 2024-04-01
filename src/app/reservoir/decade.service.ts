@@ -35,14 +35,14 @@ export class DecadeService {
     "I", "II", "III",
     "I", "II", "III",
   ]
+  private readonly vegetateDecadesCount = 18
 
   constructor() {
   }
 
-  setDecade(category: string, values: ValueResponse[], isNormal: boolean = true): Decade {
-    const chunked = this.chunkArray(values, isNormal)
-    console.log(chunked)
-    const stat = this.getStatistics(chunked)
+  setDecade(category: string, values: ValueResponse[], isVegetate: boolean = false): Decade {
+    const chunked = this.chunkArray(values, isVegetate)
+    const stat = this.getStatistics(chunked, isVegetate)
 
     return {
       category: category,
@@ -57,27 +57,37 @@ export class DecadeService {
     }
   }
 
-  private chunkArray(array: ValueResponse[], isNormal: boolean) {
+  private chunkArray(array: ValueResponse[], isVegetate: boolean) {
     // remove 1st element if it's not january
-    if (isNormal)
+    if (!isVegetate) {
       while (new Date(array[0].date).getMonth() !== 0) {
         array = array.slice(1)
       }
+      // 12 months with 3 decades = 36
+      const size = this.decade.length
+      return Array.from(
+        {length: Math.ceil(array.length / size)},
+        (_, index) =>
+          array.slice(index * size, index * size + size)
+      );
+    }
     // remove 1st element if it's not april on vegetative table
-    else
+    else {
       while (new Date(array[0].date).getMonth() !== 3) {
         array = array.slice(1)
       }
-    // 12 months with 3 decades = 36
-    const size = this.decade.length
-    return Array.from(
-      {length: Math.ceil(array.length / size)},
-      (_, index) =>
-        array.slice(index * size, index * size + size)
-    );
+      // 12 months with 3 decades = 36
+      const size = this.vegetateDecadesCount
+      return Array.from(
+        {length: Math.ceil(array.length / size)},
+        (_, index) =>
+          array.slice(index * size, index * size + size)
+      );
+    }
   }
 
-  private getStatistics(chunked: ValueResponse[][]) {
+  private getStatistics(chunked: ValueResponse[][], isVegetate: boolean) {
+    const arraySize = isVegetate ? this.vegetateDecadesCount : this.decade.length
     let start
     let end
     let stat5: number[] = []
@@ -85,7 +95,7 @@ export class DecadeService {
     let stat30: number[] = []
     let statTotal: number[] = []
     let statLastYear: number[] = chunked[chunked.length - 1].map(item => item.value)
-    for (let i = 0; i < this.decade.length; i++) {
+    for (let i = 0; i < arraySize; i++) {
       // get all data by this decade
       const dateData = chunked
         .map(sub => sub[i])

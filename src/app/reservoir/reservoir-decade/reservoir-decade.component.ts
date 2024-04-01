@@ -75,7 +75,6 @@ export class ReservoirDecadeComponent implements OnInit {
         })
         this.api.getTotalDecadeReservoirValues().subscribe({
           next: (response: { avg: ComplexValueResponse[], year: ComplexValueResponse[] }) => {
-            console.log(response)
             for (let item of response.avg) {
               const data = this.parseYearlyResponse(item)
               if (data.current && data.lastYear)

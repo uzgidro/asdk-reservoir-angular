@@ -41,13 +41,11 @@ export class PiezoComponent implements OnInit {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     (event.currentTarget as HTMLElement).className += " active";
-    console.log(group)
     let st = this.groupMap[group] || this._service.st1;
     this.drawChart(st)
   }
 
   drawChart(datasets: Dataset[]) {
-    console.log("draw")
     // destroy shown charts
     if (this.piezoChart !== undefined) {
       this.piezoChart.destroy()

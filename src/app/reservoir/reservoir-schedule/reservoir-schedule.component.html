@@ -25,7 +25,7 @@
       </tr>
       <tr>
         <td colspan="2">Приток в 2024 (Прогноз)</td>
-        <td *ngFor="let value of incomeForecast">{{value}}</td>
+        <td *ngFor="let value of incomeForecast">{{ value }}</td>
       </tr>
       <tr>
         <td colspan="2">Объём в 2023</td>
@@ -61,17 +61,18 @@
       </tr>
       <tr>
         <td colspan="2">Попуск в 2024 (Прогноз)</td>
-        <td *ngFor="let value of releaseForecast">{{value}}</td>
+        <td *ngFor="let value of releaseForecast">{{ value }}</td>
       </tr>
-<!--      <tr>-->
-<!--        <td colspan="2">Выработка электроэнергии</td>-->
-<!--        <td>млн. КВт/ч</td>-->
-<!--        <td>0</td>-->
-<!--      </tr>-->
+      <!--      <tr>-->
+      <!--        <td colspan="2">Выработка электроэнергии</td>-->
+      <!--        <td>млн. КВт/ч</td>-->
+      <!--        <td>0</td>-->
+      <!--      </tr>-->
       </tbody>
     </table>
-    <div>
+    <div class="space-y-8">
       <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
+        <h3>Приток</h3>
         <span class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('perAvg')">
           <label class="mr-2">% к среднему</label>
@@ -91,17 +92,18 @@
           <input type="radio" name="income" (click)="changeIncomeForecast('last')">
           <label>2023</label>
         </span>
-<!--        <span class="flex flex-row">-->
-<!--          <input type="radio" name="asd" (click)="changeIncomeForecast('max')">-->
-<!--          <label>Максимум</label>-->
-<!--        </span>-->
-<!--        <span class="flex flex-row">-->
-<!--          <input type="radio" name="asd" (click)="changeIncomeForecast('min')">-->
-<!--          <label>Минимум</label>-->
-<!--        </span>-->
+        <!--        <span class="flex flex-row">-->
+        <!--          <input type="radio" name="asd" (click)="changeIncomeForecast('max')">-->
+        <!--          <label>Максимум</label>-->
+        <!--        </span>-->
+        <!--        <span class="flex flex-row">-->
+        <!--          <input type="radio" name="asd" (click)="changeIncomeForecast('min')">-->
+        <!--          <label>Минимум</label>-->
+        <!--        </span>-->
       </form>
       <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
-         <span class="flex flex-row">
+        <h3>Попуск</h3>
+        <span class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('perAvg')">
           <label class="mr-2">% к среднему</label>
           <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">

@@ -26,8 +26,22 @@ import {EnvService} from "../../shared/service/env.service";
 export class ReservoirScheduleComponent implements OnInit {
 
   reservoirName?: string
-  months: string[] = this.decadeService.months.splice(3, 6);
-  decade: string[] = this.decadeService.decade.splice(0, 18);
+  months = [
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+  ]
+  decade: string[] = [
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+    "I", "II", "III",
+  ]
   income?: Decade
   release?: Decade
   level?: Decade
@@ -66,10 +80,10 @@ export class ReservoirScheduleComponent implements OnInit {
 
         this.subscribe = this.api.getVegetativeDecadeYearsValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
-            this.income = this.decadeService.setDecade('', response.income.data, false)
-            this.release = this.decadeService.setDecade('', response.release.data, false)
-            this.level = this.decadeService.setDecade('', response.level.data, false)
-            this.volume = this.decadeService.setDecade('', response.volume.data, false)
+            this.income = this.decadeService.setDecade('', response.income.data, true)
+            this.release = this.decadeService.setDecade('', response.release.data, true)
+            this.level = this.decadeService.setDecade('', response.level.data, true)
+            this.volume = this.decadeService.setDecade('', response.volume.data, true)
           }
         })
       }
