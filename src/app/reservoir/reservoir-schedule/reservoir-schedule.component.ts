@@ -26,6 +26,7 @@ import {EnvService} from "../../shared/service/env.service";
 export class ReservoirScheduleComponent implements OnInit {
 
   reservoirName?: string
+  reservoirId?:any
   months = [
     'Апрель',
     'Май',
@@ -54,6 +55,7 @@ export class ReservoirScheduleComponent implements OnInit {
   releasePercent = 80
   volumeForecastStart: number[] = new Array(18).fill(0)
   volumeForecastEnd: number[] = new Array(18).fill(0)
+  levelForecast: number[] = new Array(18).fill(0)
   private subscribe?: Subscription
 
   constructor(
@@ -75,6 +77,8 @@ export class ReservoirScheduleComponent implements OnInit {
         this.api.getReservoirById(reservoir).subscribe({
           next: (response: ReservoirResponse) => {
             this.reservoirName = response.name
+            this.reservoirId=response.id
+
           }
         })
 
@@ -142,9 +146,11 @@ export class ReservoirScheduleComponent implements OnInit {
       let days = i == 5 || i == 11 || i == 13 ? 11 : 10
       const change = this.incomeForecast[i] * 0.0864 * days - this.releaseForecast[i] * 0.0864 * days
       forecast.push(forecast[i] + change)
+
     }
     this.volumeForecastStart = forecast.slice(0, 18)
-    this.volumeForecastEnd = forecast.slice(1, 19)
+    this.volumeForecastEnd = forecast.slice(1, 19)    
+    this.calcLevelForecast(this.reservoirId,forecast)
   }
 
   private setIncomePercentForecast() {
@@ -161,5 +167,16 @@ export class ReservoirScheduleComponent implements OnInit {
     } else if (this.incomeForecastCategory == 'perLast' && this.release) {
       this.releaseForecast = this.release?.statLastYear.map(item => Math.round(item * this.releasePercent / 100))
     }
+  }
+
+  private calcLevelForecast(id:number, forecast:number[]){
+    this.api.getLevelForecast(id,forecast).subscribe({
+      next:values=>{
+        console.log(values);
+        this.levelForecast=values.slice(1,19)
+
+
+      }
+    })
   }
 }

@@ -44,7 +44,7 @@
       <tr>
         <td colspan="2">Уровень на конец декады</td>
         <td rowspan="2">м</td>
-        <td>0</td>
+        <td *ngFor="let value of levelForecast">{{value}}</td>
       </tr>
       <tr>
         <td colspan="2">Дневное изменение</td>

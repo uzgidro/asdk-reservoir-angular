@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
-import {catchError, Observable} from "rxjs";
+import {catchError, forkJoin, Observable, ObservableInput, throwError} from "rxjs";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const RESERVOIRS: string = '/reservoirs'
@@ -17,6 +17,7 @@ const MIN: string = '/min'
 const YEAR: string = '/year'
 const SELECTED: string = '/selected'
 const VEGETATIVE: string = '/vegetative'
+const LEVEL: string = '/level'
 
 
 @Injectable({
@@ -152,4 +153,23 @@ export class ApiService {
       })
     )
   }
-}
+
+
+
+  getLevelForecast(reservoirId: number, forecast: number[]): Observable<any> {
+
+    let params = new HttpParams().set('forecast', forecast.join(','));
+
+
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + LEVEL, { params: params }).pipe(
+      catchError((error) => {
+        this.messageService.add({ severity: 'error', summary: 'Ошибка', detail: error.message });
+        return [];
+      })
+    )
+  }
+
+  }
+
+
+
