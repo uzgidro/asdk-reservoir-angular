@@ -39,7 +39,7 @@
       </tr>
       <tr>
         <td class="bg-gray-300" rowspan="2">Объём в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" >Начало декады</td>
+        <td class="bg-gray-300">Начало декады</td>
         <td class="bg-gray-300" *ngFor="let value of volumeForecastStart">{{ value | number: '.0-1' }}</td>
       </tr>
       <tr>
@@ -47,13 +47,13 @@
         <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">{{ value | number: '.0-1' }}</td>
       </tr>
       <tr>
-        <td  colspan="2" class="bg-gray-400/60">Уровень на конец декады</td>
+        <td colspan="2" class="bg-gray-400/60">Уровень на конец декады</td>
         <td rowspan="2">м</td>
-        <td *ngFor="let value of levelForecast" class="bg-gray-400/60">{{value}}</td>
+        <td *ngFor="let value of levelForecast" class="bg-gray-400/60">{{ value }}</td>
       </tr>
       <tr>
         <td colspan="2" class="bg-gray-400/60">Дневное изменение</td>
-        <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-400/60">{{i!==0?i.toFixed(2):i}}</td>
+        <td *ngFor="let i of levelForecastChange" class="bg-gray-400/60">{{ i | number: '.0-1' }}</td>
       </tr>
       <tr>
         <td colspan="2">Средний попуск за все время</td>
@@ -65,7 +65,7 @@
         <td *ngFor="let value of release?.statLastYear">{{ value }}</td>
       </tr>
       <tr>
-        <td class="bg-gray-300"  colspan="2">Попуск в 2024 (Прогноз)</td>
+        <td class="bg-gray-300" colspan="2">Попуск в 2024 (Прогноз)</td>
         <td class="bg-gray-300" *ngFor="let value of releaseForecast">{{ value }}</td>
       </tr>
       <!--      <tr>-->
@@ -81,13 +81,11 @@
         <span class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('perAvg')">
           <label class="mr-2">% </label>
-          <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
-          <label>% к прошлому году</label> -->
          <input class="w-full" type="number" value="80" (input)="changeIncomePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
-          <input type="radio" name="income" (input)="changeSelectedIncomeValue(incomeYear)" >
-          <input type="number" value="2023" #incomeYear   class="w-full">
+          <input type="radio" name="income" (input)="changeSelectedIncomeValue(incomeYear)">
+          <input type="number" value="2023" #incomeYear class="w-full">
         </span>
         <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('30')">
@@ -101,11 +99,11 @@
           <input type="radio" name="income" (click)="changeIncomeForecast('last')">
           <label>Среднее за 5 лет</label>
         </span>
-          <span class="flex flex-row">
+        <span class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('max')">
           <label>Максимум</label>
           </span>
-          <span class="flex flex-row">
+        <span class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('min')">
            <label>Минимум</label>
           </span>
@@ -115,13 +113,11 @@
         <span class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('perAvg')">
           <label class="mr-2">% </label>
-          <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
-          <label>% к прошлому году</label> -->
         <input class="w-full" type="number" value="80" (input)="changeReleasePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
           <input type="radio" name="release" (input)="changeSelectedReleaseValue(releaseYear)">
-          <input type="number" value="2023" #releaseYear  class="w-full">
+          <input type="number" value="2023" #releaseYear class="w-full">
         </span>
         <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('30')">
@@ -139,7 +135,7 @@
           <input type="radio" name="release" (click)="changeReleaseForecast('max')">
           <label>Максимум</label>
           </span>
-          <span class="flex flex-row">
+        <span class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('min')">
            <label>Минимум</label>
           </span>
