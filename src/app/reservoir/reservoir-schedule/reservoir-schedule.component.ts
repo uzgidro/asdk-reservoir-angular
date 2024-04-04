@@ -215,7 +215,7 @@ export class ReservoirScheduleComponent implements OnInit {
         const differences=values
         this.changelevelForecast = []
         for (let i = 1; i < differences.length; i++) {
-          let days = i == 5 || i == 11 || i == 13 ? 11 : 10
+          let days = i == 6 || i == 12 || i == 14 ? 11 : 10
           const difference = (differences[i] - differences[i-1]) / days;
           this.changelevelForecast.push(difference)
         }
