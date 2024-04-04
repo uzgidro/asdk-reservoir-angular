@@ -118,8 +118,8 @@ export class ApiService {
     )
   }
 
-  getMaxValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MAX, {params: new HttpParams().set('category', 'income')}).pipe(
+  getMaxValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MAX, {params: new HttpParams().set('category', category)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -127,8 +127,9 @@ export class ApiService {
     )
   }
 
-  getMinValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MIN, {params: new HttpParams().set('category', 'income')}).pipe(
+
+  getMinValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MIN, {params: new HttpParams().set('category', category)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -159,8 +160,6 @@ export class ApiService {
   getLevelForecast(reservoirId: number, forecast: number[]): Observable<any> {
 
     let params = new HttpParams().set('forecast', forecast.join(','));
-
-
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + LEVEL, { params: params }).pipe(
       catchError((error) => {
         this.messageService.add({ severity: 'error', summary: 'Ошибка', detail: error.message });

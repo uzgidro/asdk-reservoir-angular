@@ -17,7 +17,7 @@
       <tr>
         <td colspan="2">Средний приток за все время</td>
         <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of income?.statTotal">{{ value }}</td>
+        <td *ngFor="let value of income?.stat10">{{ value }}</td>
       </tr>
       <tr>
         <td colspan="2">Приток в 2023</td>
@@ -42,13 +42,13 @@
         <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">{{ value | number: '.0-1' }}</td>
       </tr>
       <tr>
-        <td colspan="2">Уровень на конец декады</td>
+        <td  colspan="2" class="bg-gray-300">Уровень на конец декады</td>
         <td rowspan="2">м</td>
-        <td *ngFor="let value of levelForecast">{{value}}</td>
+        <td *ngFor="let value of levelForecast" class="bg-gray-300">{{value}}</td>
       </tr>
       <tr>
-        <td colspan="2">Дневное изменение</td>
-        <td *ngFor="let i of changelevelForecast.slice(0,18)">{{i!==0?i.toFixed(2):i}}</td>
+        <td colspan="2" class="bg-gray-300">Дневное изменение</td>
+        <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-300">{{i!==0?i.toFixed(2):i}}</td>
       </tr>
       <tr>
         <td colspan="2">Средний попуск за все время</td>
@@ -75,53 +75,61 @@
         <h3>Приток</h3>
         <span class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('perAvg')">
-          <label class="mr-2">% к среднему</label>
-          <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
-          <label>% к прошлому году</label>
-        </span>
+          <label class="mr-2">% </label>
+          <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
+          <label>% к прошлому году</label> -->
         <input class="w-full" type="number" value="80" (input)="changeIncomePercent($event)">
+        </span>
+        <span *ngIf="income?.stat30 !== undefined" class="flex flex-row">
+          <input type="radio" name="income" (click)="changeIncomeForecast('30')">
+          <label>Среднее за 30 лет</label>
+        </span>
         <span *ngIf="income?.stat10 !== undefined" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('ten')">
           <label>Среднее за 10 лет</label>
         </span>
-        <span *ngIf="income?.stat5 !== undefined" class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('five')">
+        <span *ngIf="income?.stat30 !== undefined" class="flex flex-row">
+          <input type="radio" name="income" (click)="changeIncomeForecast('last')">
           <label>Среднее за 5 лет</label>
         </span>
-        <span class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('last')">
-          <label>2023</label>
-        </span>
-        <!--        <span class="flex flex-row">-->
-        <!--          <input type="radio" name="asd" (click)="changeIncomeForecast('max')">-->
-        <!--          <label>Максимум</label>-->
-        <!--        </span>-->
-        <!--        <span class="flex flex-row">-->
-        <!--          <input type="radio" name="asd" (click)="changeIncomeForecast('min')">-->
-        <!--          <label>Минимум</label>-->
-        <!--        </span>-->
+          <span class="flex flex-row">
+          <input type="radio" name="income" (click)="changeIncomeForecast('max')">
+          <label>Максимум</label>
+          </span>
+          <span class="flex flex-row">
+          <input type="radio" name="income" (click)="changeIncomeForecast('min')">
+           <label>Минимум</label>
+          </span>
       </form>
       <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
         <h3>Попуск</h3>
         <span class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('perAvg')">
-          <label class="mr-2">% к среднему</label>
-          <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
-          <label>% к прошлому году</label>
-        </span>
+          <label class="mr-2">% </label>
+          <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
+          <label>% к прошлому году</label> -->
         <input class="w-full" type="number" value="80" (input)="changeReleasePercent($event)">
+        </span>
+        <span *ngIf="release?.stat30 !== undefined" class="flex flex-row">
+          <input type="radio" name="release" (click)="changeReleaseForecast('30')">
+          <label>Среднее за 30 лет</label>
+        </span>
         <span *ngIf="release?.stat10 !== undefined" class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('ten')">
           <label>Среднее за 10 лет</label>
         </span>
-        <span *ngIf="release?.stat5 !== undefined" class="flex flex-row">
+        <span class="flex flex-row" *ngIf="release?.stat5 !== undefined">
           <input type="radio" name="release" (click)="changeReleaseForecast('five')">
           <label>Среднее за 5 лет</label>
         </span>
         <span class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('last')">
-          <label>2023</label>
-        </span>
+          <input type="radio" name="income" (click)="changeReleaseForecast('max')">
+          <label>Максимум</label>
+          </span>
+          <span class="flex flex-row">
+          <input type="radio" name="income" (click)="changeReleaseForecast('min')">
+           <label>Минимум</label>
+          </span>
       </form>
     </div>
   </div>

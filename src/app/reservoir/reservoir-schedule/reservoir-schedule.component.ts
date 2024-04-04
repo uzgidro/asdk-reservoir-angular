@@ -48,10 +48,10 @@ export class ReservoirScheduleComponent implements OnInit {
   level?: Decade
   volume?: Decade
   incomeForecast: number[] = new Array(18).fill(0)
-  incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' = 'perLast'
+  incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min'|'30' = 'perLast'
   incomePercent = 80
   releaseForecast: number[] = new Array(18).fill(0)
-  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' = 'perLast'
+  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min'|'30' = 'perLast'
   releasePercent = 80
   volumeForecastStart: number[] = new Array(18).fill(0)
   volumeForecastEnd: number[] = new Array(18).fill(0)
@@ -95,7 +95,7 @@ export class ReservoirScheduleComponent implements OnInit {
     })
   }
 
-  changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min') {
+  changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min'|'30') {
     this.incomeForecastCategory = category
     this.setIncomePercentForecast()
     if (this.income) {
@@ -105,12 +105,36 @@ export class ReservoirScheduleComponent implements OnInit {
         this.incomeForecast = this.income.stat10
       } else if (this.incomeForecastCategory == 'last') {
         this.incomeForecast = this.income.statLastYear
+      }else if (this.incomeForecastCategory == '30') {
+        this.incomeForecast = this.income.stat30
+      }else if (this.incomeForecastCategory == 'max') {
+         this.api.getMaxValues(this.reservoirId).subscribe({
+          next:values=>{
+            this.incomeForecast=values.data.value
+            console.log(values);
+
+          }
+         })
       }
+      else if (this.incomeForecastCategory == 'min') {
+        if(this.reservoirId){
+          this.api.getMinValues(this.reservoirId).subscribe({
+            next:values=>{
+              console.log(values);
+              this.incomeForecast=values.data.value
+
+            }
+           })
+        }
+
+     }
+
+
     }
     this.setVolumeForecast()
   }
 
-  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min') {
+  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' |'30'| 'last' | 'max' | 'min') {
     this.releaseForecastCategory = category
     this.setReleasePercentForecast()
     if (this.release) {
@@ -120,6 +144,20 @@ export class ReservoirScheduleComponent implements OnInit {
         this.releaseForecast = this.release.stat10
       } else if (this.releaseForecastCategory == 'last') {
         this.releaseForecast = this.release.statLastYear
+      }else if(this.releaseForecastCategory == '30'){
+        this.releaseForecast = this.release.stat30
+      }else if(this.releaseForecastCategory=='max'){
+        this.api.getMaxValues(this.reservoirId,'release').subscribe({
+          next:values=>{
+            this.releaseForecast=values.data.value
+          }
+         })
+      }else if(this.releaseForecastCategory=='min'){
+        this.api.getMinValues(this.reservoirId,'release').subscribe({
+          next:values=>{
+            this.incomeForecast=values.data.value
+          }
+         })
       }
     }
     this.setVolumeForecast()
