@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import {DecadeService} from "../decade.service";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {ApiService} from "../../service/api.service";
@@ -170,9 +170,23 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setReleasePercentForecast()
     this.setVolumeForecast()
   }
-  changeSelectedValue(event:any){
-    console.log(event.target.value);
-    this.api.getVegetativeSelectedValues(this.reservoirId,'income',event.target.value).subscribe({
+
+
+  changeSelectedIncomeValue(inputEl:any){
+    this.api.getVegetativeSelectedValues(this.reservoirId,'income',inputEl.value).subscribe({
+      next:(values: ComplexValueResponse)=>{
+        console.log(values);
+        this.incomeForecast=values.data.map(item => item.value)
+      },
+      complete: () => this.setVolumeForecast()
+    })
+
+
+
+
+  }
+  changeSelectedReleaseValue(inputEl:any){
+    this.api.getVegetativeSelectedValues(this.reservoirId,'release',inputEl.value).subscribe({
       next:(values: ComplexValueResponse)=>{
         console.log(values);
         this.incomeForecast=values.data.map(item => item.value)
