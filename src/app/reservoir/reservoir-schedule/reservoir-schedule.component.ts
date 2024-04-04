@@ -60,6 +60,8 @@ export class ReservoirScheduleComponent implements OnInit {
   private subscribe?: Subscription
   selectedIncome?:boolean
   selectedRelease?:boolean
+  selectedYearIncome?:string='2023'
+  selectedYearRelease?:string='2023'
 
   constructor(
     private decadeService: DecadeService,
@@ -175,16 +177,26 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setVolumeForecast()
   }
 
-  changeSelectedIncomeInput(value:any){
-    console.log(value);
-    this.selectedIncome=value
+  changeSelectedIncomeInput(isChecked:any){
+    this.selectedIncome = isChecked;
+    if (isChecked) {
+      if (this.selectedYearIncome) {
+        this.changeSelectedIncomeValue({ target: { value: this.selectedYearIncome } });
+      }
+    }
   }
-  changeSelectedReleaseInput(value:any){
-    console.log(value);
-    this.selectedRelease=value
+  changeSelectedReleaseInput(isChecked:any){
+    this.selectedRelease = isChecked;
+    if (isChecked) {
+      if (this.selectedYearRelease) {
+        this.changeSelectedReleaseValue({ target: { value: this.selectedYearRelease } });
+      }
+    }
   }
 
   changeSelectedIncomeValue(input:any){
+    const inputValue = input.target.value;
+     this.selectedYearIncome = inputValue;
     if(this.selectedIncome){
       this.api.getVegetativeSelectedValues(this.reservoirId,'income',input.target.value).subscribe({
         next:(values: ComplexValueResponse)=>{
@@ -197,6 +209,8 @@ export class ReservoirScheduleComponent implements OnInit {
 
   }
   changeSelectedReleaseValue(input:any){
+    const inputValue = input.target.value;
+    this.selectedYearRelease = inputValue;
     if (this.selectedRelease) {
       this.api.getVegetativeSelectedValues(this.reservoirId,'release',input.target.value).subscribe({
         next:(values: ComplexValueResponse)=>{
