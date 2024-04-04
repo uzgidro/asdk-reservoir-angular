@@ -75,6 +75,10 @@ export class ReservoirScheduleComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe({
       next: value => {
+        this.volumeForecastStart= new Array(18).fill(0)
+        this.volumeForecastEnd= new Array(18).fill(0)
+        this.levelForecast= new Array(18).fill(0)
+        this.changelevelForecast=new Array(18).fill(0)
         const reservoir = value['reservoir']
         if (this.subscribe) {
           this.subscribe.unsubscribe()
@@ -206,7 +210,6 @@ export class ReservoirScheduleComponent implements OnInit {
         complete: () => this.setVolumeForecast()
       })
     }
-
   }
   changeSelectedReleaseValue(input:any){
     const inputValue = input.target.value;
