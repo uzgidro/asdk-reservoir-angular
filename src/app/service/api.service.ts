@@ -101,7 +101,7 @@ export class ApiService {
   }
 
   getVegetativeDecadeYearsValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE + VEGETATIVE).pipe(
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -160,9 +160,35 @@ export class ApiService {
   getLevelForecast(reservoirId: number, forecast: number[]): Observable<any> {
 
     let params = new HttpParams().set('forecast', forecast.join(','));
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + LEVEL, { params: params }).pipe(
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + LEVEL, { params: params }).pipe(
       catchError((error) => {
         this.messageService.add({ severity: 'error', summary: 'Ошибка', detail: error.message });
+        return [];
+      })
+    )
+  }
+
+  getVegetativeMinValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MIN, {params: new HttpParams().set('category', category)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+  getVegetativeMaxValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MAX, {params: new HttpParams().set('category', category)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getVegetativeSelectedValues(reservoirId: number, category: string = 'income',year:number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params: new HttpParams().set('category', category).set('year',year)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
       })
     )

@@ -4,7 +4,7 @@ import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {ApiService} from "../../service/api.service";
 import {ActivatedRoute} from "@angular/router";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
-import {CategorisedValueResponse} from "../../shared/response/values-response";
+import {CategorisedValueResponse, ComplexValueResponse} from "../../shared/response/values-response";
 import {Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
 import {FormsModule} from "@angular/forms";
@@ -108,21 +108,17 @@ export class ReservoirScheduleComponent implements OnInit {
       }else if (this.incomeForecastCategory == '30') {
         this.incomeForecast = this.income.stat30
       }else if (this.incomeForecastCategory == 'max') {
-         this.api.getMaxValues(this.reservoirId).subscribe({
-          next:values=>{
-            this.incomeForecast=values.data.value
-            console.log(values);
-
+         this.api.getVegetativeMaxValues(this.reservoirId).subscribe({
+          next:(values:ComplexValueResponse)=>{
+            this.incomeForecast=values.data.map(item=>item.value)
           }
          })
       }
       else if (this.incomeForecastCategory == 'min') {
         if(this.reservoirId){
-          this.api.getMinValues(this.reservoirId).subscribe({
-            next:values=>{
-              console.log(values);
-              this.incomeForecast=values.data.value
-
+          this.api.getVegetativeMinValues(this.reservoirId).subscribe({
+            next:(values:ComplexValueResponse)=>{
+              this.incomeForecast=values.data.map(item=>item.value)
             }
            })
         }
@@ -147,15 +143,15 @@ export class ReservoirScheduleComponent implements OnInit {
       }else if(this.releaseForecastCategory == '30'){
         this.releaseForecast = this.release.stat30
       }else if(this.releaseForecastCategory=='max'){
-        this.api.getMaxValues(this.reservoirId,'release').subscribe({
-          next:values=>{
-            this.releaseForecast=values.data.value
+        this.api.getVegetativeMaxValues(this.reservoirId,'release').subscribe({
+          next:(values:ComplexValueResponse)=>{
+            this.releaseForecast=values.data.map(item=>item.value)
           }
          })
       }else if(this.releaseForecastCategory=='min'){
-        this.api.getMinValues(this.reservoirId,'release').subscribe({
-          next:values=>{
-            this.incomeForecast=values.data.value
+        this.api.getVegetativeMinValues(this.reservoirId,'release').subscribe({
+          next:(values:ComplexValueResponse)=>{
+            this.releaseForecast=values.data.map(item=>item.value)
           }
          })
       }
@@ -173,6 +169,20 @@ export class ReservoirScheduleComponent implements OnInit {
     this.releasePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setReleasePercentForecast()
     this.setVolumeForecast()
+  }
+  changeSelectedValue(event:any){
+    console.log(event.target.value);
+    this.api.getVegetativeSelectedValues(this.reservoirId,'income',event.target.value).subscribe({
+      next:(values: ComplexValueResponse)=>{
+        console.log(values);
+        this.incomeForecast=values.data.map(item => item.value)
+      },
+      complete: () => this.setVolumeForecast()
+    })
+
+
+
+
   }
 
   private setVolumeForecast() {

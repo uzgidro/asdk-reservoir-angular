@@ -14,10 +14,15 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
+      <tr *ngIf="income?.stat10?.length!==0">
         <td colspan="2">Средний приток за все время</td>
         <td rowspan="3">м3/с</td>
         <td *ngFor="let value of income?.stat10">{{ value }}</td>
+      </tr>
+      <tr *ngIf="income?.stat10?.length===0">
+        <td colspan="2">Средний приток за все время</td>
+        <td rowspan="3">м3/с</td>
+        <td *ngFor="let value of income?.stat5">{{ value }}</td>
       </tr>
       <tr>
         <td colspan="2">Приток в 2023</td>
@@ -78,17 +83,20 @@
           <label class="mr-2">% </label>
           <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
           <label>% к прошлому году</label> -->
-        <input class="w-full" type="number" value="80" (input)="changeIncomePercent($event)">
+         <input class="w-full" type="number" value="80" (input)="changeIncomePercent($event)">
         </span>
-        <span *ngIf="income?.stat30 !== undefined" class="flex flex-row">
+        <span>
+          <input type="number" value="2023"  (input)="changeSelectedValue($event)">
+        </span>
+        <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('30')">
           <label>Среднее за 30 лет</label>
         </span>
-        <span *ngIf="income?.stat10 !== undefined" class="flex flex-row">
+        <span *ngIf="income?.stat10?.length!==0" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('ten')">
           <label>Среднее за 10 лет</label>
         </span>
-        <span *ngIf="income?.stat30 !== undefined" class="flex flex-row">
+        <span *ngIf="income?.stat5?.length!==0" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('last')">
           <label>Среднее за 5 лет</label>
         </span>
@@ -110,15 +118,15 @@
           <label>% к прошлому году</label> -->
         <input class="w-full" type="number" value="80" (input)="changeReleasePercent($event)">
         </span>
-        <span *ngIf="release?.stat30 !== undefined" class="flex flex-row">
+        <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('30')">
           <label>Среднее за 30 лет</label>
         </span>
-        <span *ngIf="release?.stat10 !== undefined" class="flex flex-row">
+        <span *ngIf="release?.stat10?.length!==0" class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('ten')">
           <label>Среднее за 10 лет</label>
         </span>
-        <span class="flex flex-row" *ngIf="release?.stat5 !== undefined">
+        <span class="flex flex-row" *ngIf="release?.stat5?.length!==0">
           <input type="radio" name="release" (click)="changeReleaseForecast('five')">
           <label>Среднее за 5 лет</label>
         </span>
