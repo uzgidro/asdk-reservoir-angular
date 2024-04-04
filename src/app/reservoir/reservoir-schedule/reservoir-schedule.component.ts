@@ -56,6 +56,7 @@ export class ReservoirScheduleComponent implements OnInit {
   volumeForecastStart: number[] = new Array(18).fill(0)
   volumeForecastEnd: number[] = new Array(18).fill(0)
   levelForecast: number[] = new Array(18).fill(0)
+  changelevelForecast: number[]=new Array(18).fill(0)
   private subscribe?: Subscription
 
   constructor(
@@ -149,7 +150,7 @@ export class ReservoirScheduleComponent implements OnInit {
 
     }
     this.volumeForecastStart = forecast.slice(0, 18)
-    this.volumeForecastEnd = forecast.slice(1, 19)    
+    this.volumeForecastEnd = forecast.slice(1, 19)
     this.calcLevelForecast(this.reservoirId,forecast)
   }
 
@@ -172,10 +173,14 @@ export class ReservoirScheduleComponent implements OnInit {
   private calcLevelForecast(id:number, forecast:number[]){
     this.api.getLevelForecast(id,forecast).subscribe({
       next:values=>{
-        console.log(values);
         this.levelForecast=values.slice(1,19)
-
-
+        const differences=values
+        this.changelevelForecast = []
+        for (let i = 1; i < differences.length; i++) {
+          let days = i == 5 || i == 11 || i == 13 ? 11 : 10
+          const difference = (differences[i] - differences[i-1]) / days;
+          this.changelevelForecast.push(difference)
+        }
       }
     })
   }
