@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DecadeService} from "../decade.service";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {ApiService} from "../../service/api.service";
@@ -26,7 +26,7 @@ import {EnvService} from "../../shared/service/env.service";
 export class ReservoirScheduleComponent implements OnInit {
 
   reservoirName?: string
-  reservoirId?:any
+  reservoirId?: any
   months = [
     'Апрель',
     'Май',
@@ -48,20 +48,24 @@ export class ReservoirScheduleComponent implements OnInit {
   level?: Decade
   volume?: Decade
   incomeForecast: number[] = new Array(18).fill(0)
-  incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min'|'30' = 'perLast'
+  incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   incomePercent = 80
   releaseForecast: number[] = new Array(18).fill(0)
-  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min'|'30' = 'perLast'
+  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   releasePercent = 80
   volumeForecastStart: number[] = new Array(18).fill(0)
   volumeForecastEnd: number[] = new Array(18).fill(0)
   levelForecast: number[] = new Array(18).fill(0)
-  changelevelForecast: number[]=new Array(18).fill(0)
+  changelevelForecast: number[] = new Array(18).fill(0)
+  selectedIncome?: boolean
+  selectedRelease?: boolean
+  selectedYearIncome?: string = '2023'
+  selectedYearRelease?: string = '2023'
+  gesPower: number[] = new Array(18).fill(0)
+  lowerLevel?: number
+  gesCoefficient?: number
   private subscribe?: Subscription
-  selectedIncome?:boolean
-  selectedRelease?:boolean
-  selectedYearIncome?:string='2023'
-  selectedYearRelease?:string='2023'
+  private readonly G_POWER = 9.81
 
   constructor(
     private decadeService: DecadeService,
@@ -72,13 +76,12 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.volumeForecastStart= new Array(18).fill(0)
-        this.volumeForecastEnd= new Array(18).fill(0)
-        this.levelForecast= new Array(18).fill(0)
-        this.changelevelForecast=new Array(18).fill(0)
+        this.volumeForecastStart = new Array(18).fill(0)
+        this.volumeForecastEnd = new Array(18).fill(0)
+        this.levelForecast = new Array(18).fill(0)
+        this.changelevelForecast = new Array(18).fill(0)
         const reservoir = value['reservoir']
         if (this.subscribe) {
           this.subscribe.unsubscribe()
@@ -87,8 +90,10 @@ export class ReservoirScheduleComponent implements OnInit {
         this.api.getReservoirById(reservoir).subscribe({
           next: (response: ReservoirResponse) => {
             this.reservoirName = response.name
-            this.reservoirId=response.id
+            this.reservoirId = response.id
 
+            this.lowerLevel = this.env.getRegionByName(response.name)?.lowerLevel
+            this.gesCoefficient = this.env.getRegionByName(response.name)?.gesCoefficient
           }
         })
 
@@ -102,10 +107,9 @@ export class ReservoirScheduleComponent implements OnInit {
         })
       }
     })
-
   }
 
-  changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min'|'30') {
+  changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30') {
     this.incomeForecastCategory = category
     this.setIncomePercentForecast()
     if (this.income) {
@@ -115,32 +119,28 @@ export class ReservoirScheduleComponent implements OnInit {
         this.incomeForecast = this.income.stat10
       } else if (this.incomeForecastCategory == 'last') {
         this.incomeForecast = this.income.statLastYear
-      }else if (this.incomeForecastCategory == '30') {
+      } else if (this.incomeForecastCategory == '30') {
         this.incomeForecast = this.income.stat30
-      }else if (this.incomeForecastCategory == 'max') {
-         this.api.getVegetativeMaxValues(this.reservoirId).subscribe({
-          next:(values:ComplexValueResponse)=>{
-            this.incomeForecast=values.data.map(item=>item.value)
+      } else if (this.incomeForecastCategory == 'max') {
+        this.api.getVegetativeMaxValues(this.reservoirId).subscribe({
+          next: (values: ComplexValueResponse) => {
+            this.incomeForecast = values.data.map(item => item.value)
           }
-         })
-      }
-      else if (this.incomeForecastCategory == 'min') {
-        if(this.reservoirId){
+        })
+      } else if (this.incomeForecastCategory == 'min') {
+        if (this.reservoirId) {
           this.api.getVegetativeMinValues(this.reservoirId).subscribe({
-            next:(values:ComplexValueResponse)=>{
-              this.incomeForecast=values.data.map(item=>item.value)
+            next: (values: ComplexValueResponse) => {
+              this.incomeForecast = values.data.map(item => item.value)
             }
-           })
+          })
         }
-
-     }
-
-
+      }
     }
     this.setVolumeForecast()
   }
 
-  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' |'30'| 'last' | 'max' | 'min') {
+  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min') {
     this.releaseForecastCategory = category
     this.setReleasePercentForecast()
     if (this.release) {
@@ -150,20 +150,20 @@ export class ReservoirScheduleComponent implements OnInit {
         this.releaseForecast = this.release.stat10
       } else if (this.releaseForecastCategory == 'last') {
         this.releaseForecast = this.release.statLastYear
-      }else if(this.releaseForecastCategory == '30'){
+      } else if (this.releaseForecastCategory == '30') {
         this.releaseForecast = this.release.stat30
-      }else if(this.releaseForecastCategory=='max'){
-        this.api.getVegetativeMaxValues(this.reservoirId,'release').subscribe({
-          next:(values:ComplexValueResponse)=>{
-            this.releaseForecast=values.data.map(item=>item.value)
+      } else if (this.releaseForecastCategory == 'max') {
+        this.api.getVegetativeMaxValues(this.reservoirId, 'release').subscribe({
+          next: (values: ComplexValueResponse) => {
+            this.releaseForecast = values.data.map(item => item.value)
           }
-         })
-      }else if(this.releaseForecastCategory=='min'){
-        this.api.getVegetativeMinValues(this.reservoirId,'release').subscribe({
-          next:(values:ComplexValueResponse)=>{
-            this.releaseForecast=values.data.map(item=>item.value)
+        })
+      } else if (this.releaseForecastCategory == 'min') {
+        this.api.getVegetativeMinValues(this.reservoirId, 'release').subscribe({
+          next: (values: ComplexValueResponse) => {
+            this.releaseForecast = values.data.map(item => item.value)
           }
-         })
+        })
       }
     }
     this.setVolumeForecast()
@@ -181,44 +181,44 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setVolumeForecast()
   }
 
-  changeSelectedIncomeInput(isChecked:any){
+  changeSelectedIncomeInput(isChecked: any) {
     this.selectedIncome = isChecked;
     if (isChecked) {
       if (this.selectedYearIncome) {
-        this.changeSelectedIncomeValue({ target: { value: this.selectedYearIncome } });
-      }
-    }
-  }
-  changeSelectedReleaseInput(isChecked:any){
-    this.selectedRelease = isChecked;
-    if (isChecked) {
-      if (this.selectedYearRelease) {
-        this.changeSelectedReleaseValue({ target: { value: this.selectedYearRelease } });
+        this.changeSelectedIncomeValue({target: {value: this.selectedYearIncome}});
       }
     }
   }
 
-  changeSelectedIncomeValue(input:any){
-    const inputValue = input.target.value;
-     this.selectedYearIncome = inputValue;
-    if(this.selectedIncome){
-      this.api.getVegetativeSelectedValues(this.reservoirId,'income',input.target.value).subscribe({
-        next:(values: ComplexValueResponse)=>{
+  changeSelectedReleaseInput(isChecked: any) {
+    this.selectedRelease = isChecked;
+    if (isChecked) {
+      if (this.selectedYearRelease) {
+        this.changeSelectedReleaseValue({target: {value: this.selectedYearRelease}});
+      }
+    }
+  }
+
+  changeSelectedIncomeValue(input: any) {
+    this.selectedYearIncome = input.target.value;
+    if (this.selectedIncome) {
+      this.api.getVegetativeSelectedValues(this.reservoirId, 'income', input.target.value).subscribe({
+        next: (values: ComplexValueResponse) => {
           console.log(values);
-          this.incomeForecast=values.data.map(item => item.value)
+          this.incomeForecast = values.data.map(item => item.value)
         },
         complete: () => this.setVolumeForecast()
       })
     }
   }
-  changeSelectedReleaseValue(input:any){
-    const inputValue = input.target.value;
-    this.selectedYearRelease = inputValue;
+
+  changeSelectedReleaseValue(input: any) {
+    this.selectedYearRelease = input.target.value;
     if (this.selectedRelease) {
-      this.api.getVegetativeSelectedValues(this.reservoirId,'release',input.target.value).subscribe({
-        next:(values: ComplexValueResponse)=>{
+      this.api.getVegetativeSelectedValues(this.reservoirId, 'release', input.target.value).subscribe({
+        next: (values: ComplexValueResponse) => {
           console.log(values);
-          this.releaseForecast=values.data.map(item => item.value)
+          this.releaseForecast = values.data.map(item => item.value)
         },
         complete: () => this.setVolumeForecast()
       })
@@ -239,7 +239,8 @@ export class ReservoirScheduleComponent implements OnInit {
     }
     this.volumeForecastStart = forecast.slice(0, 18)
     this.volumeForecastEnd = forecast.slice(1, 19)
-    this.calcLevelForecast(this.reservoirId,forecast)
+    this.calcLevelForecast(this.reservoirId, forecast)
+    this.calcGesPower()
   }
 
   private setIncomePercentForecast() {
@@ -258,18 +259,29 @@ export class ReservoirScheduleComponent implements OnInit {
     }
   }
 
-  private calcLevelForecast(id:number, forecast:number[]){
-    this.api.getLevelForecast(id,forecast).subscribe({
-      next:values=>{
-        this.levelForecast=values.slice(1,19)
-        const differences=values
+  private calcLevelForecast(id: number, forecast: number[]) {
+    this.api.getLevelForecast(id, forecast).subscribe({
+      next: values => {
+        this.levelForecast = values.slice(1, 19)
+        const differences = values
         this.changelevelForecast = []
         for (let i = 1; i < differences.length; i++) {
           let days = i == 6 || i == 12 || i == 14 ? 11 : 10
-          const difference = (differences[i] - differences[i-1]) / days;
+          const difference = (differences[i] - differences[i - 1]) / days;
           this.changelevelForecast.push(difference)
         }
       }
     })
+  }
+
+  private calcGesPower() {
+    if (this.lowerLevel && this.gesCoefficient) {
+      this.gesPower = []
+      for (let i = 0; i < this.releaseForecast.length; i++) {
+        let days = i == 5 || i == 11 || i == 13 ? 11 : 10
+        if (this.levelForecast[i] <= 0) this.gesPower.push(0)
+        else this.gesPower.push((this.G_POWER * (this.levelForecast[i] - this.lowerLevel) * this.releaseForecast[i] * this.gesCoefficient) * 24 * days / 1000)
+      }
+    }
   }
 }

@@ -68,11 +68,11 @@
         <td class="bg-gray-300"  colspan="2">Попуск в 2024 (Прогноз)</td>
         <td class="bg-gray-300" *ngFor="let value of releaseForecast">{{ value }}</td>
       </tr>
-      <!--      <tr>-->
-      <!--        <td colspan="2">Выработка электроэнергии</td>-->
-      <!--        <td>млн. КВт/ч</td>-->
-      <!--        <td>0</td>-->
-      <!--      </tr>-->
+            <tr *ngIf="gesCoefficient && lowerLevel">
+              <td colspan="2">Выработка электроэнергии</td>
+              <td>тыс. КВт</td>
+              <td *ngFor="let value of gesPower">{{value | number:'0.0-2'}}</td>
+            </tr>
       </tbody>
     </table>
     <div class="space-y-8">
