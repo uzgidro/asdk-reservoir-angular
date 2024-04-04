@@ -58,7 +58,7 @@
       <tr>
         <td colspan="2">Средний попуск за все время</td>
         <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of release?.statTotal">{{ value }}</td>
+        <td *ngFor="let value of release?.stat10">{{ value }}</td>
       </tr>
       <tr>
         <td colspan="2">Попуск в 2023</td>
@@ -86,8 +86,8 @@
          <input class="w-full" type="number" value="80" (input)="changeIncomePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
-          <input type="radio" name="income" (input)="changeSelectedIncomeValue(incomeYear)" >
-          <input type="number" value="2023" #incomeYear   class="w-full">
+          <input type="radio" name="income" #incomeYear (change)="changeSelectedIncomeInput(incomeYear.checked)">
+          <input type="number"   (change)="changeSelectedIncomeValue($event)"  class="w-full">
         </span>
         <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('30')">
@@ -120,8 +120,8 @@
         <input class="w-full" type="number" value="80" (input)="changeReleasePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
-          <input type="radio" name="release" (input)="changeSelectedReleaseValue(releaseYear)">
-          <input type="number" value="2023" #releaseYear  class="w-full">
+          <input type="radio" name="release"#releaseYear  (change)="changeSelectedReleaseInput(releaseYear.checked)" >
+          <input type="number"  (change)="changeSelectedReleaseValue($event)" class="w-full">
         </span>
         <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('30')">

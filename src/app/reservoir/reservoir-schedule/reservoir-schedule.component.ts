@@ -58,6 +58,8 @@ export class ReservoirScheduleComponent implements OnInit {
   levelForecast: number[] = new Array(18).fill(0)
   changelevelForecast: number[]=new Array(18).fill(0)
   private subscribe?: Subscription
+  selectedIncome?:boolean
+  selectedRelease?:boolean
 
   constructor(
     private decadeService: DecadeService,
@@ -68,6 +70,7 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         const reservoir = value['reservoir']
@@ -93,6 +96,7 @@ export class ReservoirScheduleComponent implements OnInit {
         })
       }
     })
+
   }
 
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min'|'30') {
@@ -171,32 +175,37 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setVolumeForecast()
   }
 
+  changeSelectedIncomeInput(value:any){
+    console.log(value);
+    this.selectedIncome=value
+  }
+  changeSelectedReleaseInput(value:any){
+    console.log(value);
+    this.selectedRelease=value
+  }
 
-  changeSelectedIncomeValue(inputEl:any){
-    this.api.getVegetativeSelectedValues(this.reservoirId,'income',inputEl.value).subscribe({
-      next:(values: ComplexValueResponse)=>{
-        console.log(values);
-        this.incomeForecast=values.data.map(item => item.value)
-      },
-      complete: () => this.setVolumeForecast()
-    })
-
-
-
+  changeSelectedIncomeValue(input:any){
+    if(this.selectedIncome){
+      this.api.getVegetativeSelectedValues(this.reservoirId,'income',input.target.value).subscribe({
+        next:(values: ComplexValueResponse)=>{
+          console.log(values);
+          this.incomeForecast=values.data.map(item => item.value)
+        },
+        complete: () => this.setVolumeForecast()
+      })
+    }
 
   }
-  changeSelectedReleaseValue(inputEl:any){
-    this.api.getVegetativeSelectedValues(this.reservoirId,'release',inputEl.value).subscribe({
-      next:(values: ComplexValueResponse)=>{
-        console.log(values);
-        this.releaseForecast=values.data.map(item => item.value)
-      },
-      complete: () => this.setVolumeForecast()
-    })
-
-
-
-
+  changeSelectedReleaseValue(input:any){
+    if (this.selectedRelease) {
+      this.api.getVegetativeSelectedValues(this.reservoirId,'release',input.target.value).subscribe({
+        next:(values: ComplexValueResponse)=>{
+          console.log(values);
+          this.releaseForecast=values.data.map(item => item.value)
+        },
+        complete: () => this.setVolumeForecast()
+      })
+    }
   }
 
   private setVolumeForecast() {
