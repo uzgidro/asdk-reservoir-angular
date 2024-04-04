@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
-import {catchError, Observable} from "rxjs";
+import {catchError, forkJoin, Observable, ObservableInput, throwError} from "rxjs";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const RESERVOIRS: string = '/reservoirs'
@@ -16,6 +16,8 @@ const MAX: string = '/max'
 const MIN: string = '/min'
 const YEAR: string = '/year'
 const SELECTED: string = '/selected'
+const VEGETATIVE: string = '/vegetative'
+const LEVEL: string = '/level'
 
 
 @Injectable({
@@ -98,6 +100,15 @@ export class ApiService {
     )
   }
 
+  getVegetativeDecadeYearsValues(reservoirId: number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
   getByYearValues(reservoirId: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + YEAR, {params: new HttpParams().set('category', 'income')}).pipe(
       catchError((error) => {
@@ -107,8 +118,8 @@ export class ApiService {
     )
   }
 
-  getMaxValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MAX, {params: new HttpParams().set('category', 'income')}).pipe(
+  getMaxValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MAX, {params: new HttpParams().set('category', category)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -116,8 +127,9 @@ export class ApiService {
     )
   }
 
-  getMinValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MIN, {params: new HttpParams().set('category', 'income')}).pipe(
+
+  getMinValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MIN, {params: new HttpParams().set('category', category)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -142,4 +154,47 @@ export class ApiService {
       })
     )
   }
-}
+
+
+
+  getLevelForecast(reservoirId: number, forecast: number[]): Observable<any> {
+
+    let params = new HttpParams().set('forecast', forecast.join(','));
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + LEVEL, { params: params }).pipe(
+      catchError((error) => {
+        this.messageService.add({ severity: 'error', summary: 'Ошибка', detail: error.message });
+        return [];
+      })
+    )
+  }
+
+  getVegetativeMinValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MIN, {params: new HttpParams().set('category', category)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+  getVegetativeMaxValues(reservoirId: number, category: string = 'income'): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MAX, {params: new HttpParams().set('category', category)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getVegetativeSelectedValues(reservoirId: number, category: string = 'income',year:number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params: new HttpParams().set('category', category).set('year',year)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  }
+
+
+

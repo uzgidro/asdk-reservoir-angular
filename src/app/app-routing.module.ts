@@ -20,6 +20,7 @@ import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicat
 import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 import {WeatherComponent} from "./reservoir/weather/weather.component";
+import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservoir-schedule.component";
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
               {path: 'decade', component: ReservoirDecadeComponent},
               {path: 'month', component: ReservoirMonthComponent},
               {path: 'year', component: ReservoirYearlyComponent},
-              {path: 'analytics', component: ReservoirAnalyticsComponent}
+              {path: 'analytics', component: ReservoirAnalyticsComponent},
+              {path: 'schedule', component: ReservoirScheduleComponent},
             ]},
           {path: 'snow', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},

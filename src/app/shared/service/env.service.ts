@@ -11,6 +11,10 @@ export class EnvService {
     return this.environment.regionId;
   }
 
+  getRegionByName(name: string) {
+    return this.environment.regionId.find(item => item.name == name)
+  }
+
   getWeatherKey() {
     return this.environment.weatherApiKey
   }
