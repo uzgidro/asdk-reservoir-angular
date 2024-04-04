@@ -4,13 +4,17 @@ export const environment: EnvInterface = {
       id: 'and',
       name: 'Андижан',
       snowCoverage: [9.7, 60.9, 90.4, 93.1, 95.9, 98.5, 98.7, 100],
-      vegetateVolume: 1009
+      vegetateVolume: 1009,
+      lowerLevel: 793.8,
+      gesCoefficient: 0.874,
     },
     {
       id: 'akh',
       name: 'Ахангаран',
       snowCoverage: [58.4, 100, 100, 100, 100, 100],
-      vegetateVolume: 62.7
+      vegetateVolume: 62.7,
+      lowerLevel: 1004.9,
+      gesCoefficient: 0.874,
     },
     {
       id: 'psk',
@@ -21,13 +25,17 @@ export const environment: EnvInterface = {
       id: 'his',
       name: 'Гисарак',
       snowCoverage: [0, 39.8, 94.7, 100, 100, 100, 100],
-      vegetateVolume: 41.2
+      vegetateVolume: 41.2,
+      lowerLevel: 987.2,
+      gesCoefficient: 0.874,
     },
     {
       id: 'tup',
       name: 'Тупаланг',
       snowCoverage: [24.5, 55.2, 96.3, 100, 100, 100, 100],
-      vegetateVolume: 124.5
+      vegetateVolume: 124.5,
+      lowerLevel: 792.1,
+      gesCoefficient: 0.884,
     },
     {
       id: 'sar',
@@ -36,7 +44,9 @@ export const environment: EnvInterface = {
     }, {
       id: 'chor',
       name: 'Чарвак',
-      vegetateVolume: 890
+      vegetateVolume: 890,
+      lowerLevel: 742,
+      gesCoefficient: 0.893,
     },
     {
       id: 'chi',
@@ -59,5 +69,7 @@ export interface RegionInfo {
   name: string
   snowCoverage?: number[]
   vegetateVolume?: number
+  gesCoefficient?: number
+  lowerLevel?: number
 }
 
