@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
-import {catchError, forkJoin, Observable, ObservableInput, throwError} from "rxjs";
+import {catchError,  Observable} from "rxjs";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const RESERVOIRS: string = '/reservoirs'
