@@ -204,7 +204,6 @@ export class ReservoirScheduleComponent implements OnInit {
     if (this.selectedIncome) {
       this.api.getVegetativeSelectedValues(this.reservoirId, 'income', input.target.value).subscribe({
         next: (values: ComplexValueResponse) => {
-          console.log(values);
           this.incomeForecast = values.data.map(item => item.value)
         },
         complete: () => this.setVolumeForecast()
@@ -217,7 +216,6 @@ export class ReservoirScheduleComponent implements OnInit {
     if (this.selectedRelease) {
       this.api.getVegetativeSelectedValues(this.reservoirId, 'release', input.target.value).subscribe({
         next: (values: ComplexValueResponse) => {
-          console.log(values);
           this.releaseForecast = values.data.map(item => item.value)
         },
         complete: () => this.setVolumeForecast()
