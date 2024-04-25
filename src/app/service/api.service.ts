@@ -61,7 +61,13 @@ export class ApiService {
   }
   getDashboardCurrentValues(id:any): Observable<any> {
 
-    return this.http.get(CURRENT_URL+WATER+DAILY+`?id=${id}&limit=${LIMIT}`).pipe(
+
+    return this.http.get(CURRENT_URL+WATER+DAILY,
+      {
+        params: new HttpParams()
+        .set('id',id)
+        .set('limit',LIMIT)
+      }).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
