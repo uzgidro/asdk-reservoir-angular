@@ -12,7 +12,7 @@ export class EnvService {
   }
 
   getReservoirs() {
-    return this.environment.regionId.filter(item => item.lowerLevel != null)
+    return this.environment.regionId.filter(item => item.serialNumber)
   }
 
   getRegionByName(name: string) {

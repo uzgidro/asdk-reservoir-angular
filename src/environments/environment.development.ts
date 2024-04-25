@@ -2,6 +2,7 @@ export const environment: EnvInterface = {
   regionId: [
     {
       id: 'and',
+      serialNumber: '1',
       name: 'Андижан',
       snowCoverage: [9.7, 60.9, 90.4, 93.1, 95.9, 98.5, 98.7, 100],
       vegetateVolume: 1009,
@@ -10,6 +11,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'akh',
+      serialNumber: '2',
       name: 'Ахангаран',
       snowCoverage: [58.4, 100, 100, 100, 100, 100],
       vegetateVolume: 62.7,
@@ -23,6 +25,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'his',
+      serialNumber: '3',
       name: 'Гисарак',
       snowCoverage: [0, 39.8, 94.7, 100, 100, 100, 100],
       vegetateVolume: 41.2,
@@ -31,6 +34,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'tup',
+      serialNumber: '4',
       name: 'Тупаланг',
       snowCoverage: [24.5, 55.2, 96.3, 100, 100, 100, 100],
       vegetateVolume: 124.5,
@@ -39,10 +43,12 @@ export const environment: EnvInterface = {
     },
     {
       id: 'sar',
+      serialNumber: '5',
       name: 'Сардоба',
       vegetateVolume: 312.5
     }, {
       id: 'chor',
+      serialNumber: '6',
       name: 'Чарвак',
       vegetateVolume: 890,
       lowerLevel: 742,
@@ -66,6 +72,7 @@ export interface EnvInterface {
 
 export interface RegionInfo {
   id: string
+  serialNumber?: string
   name: string
   snowCoverage?: number[]
   vegetateVolume?: number
