@@ -19,6 +19,11 @@ const SELECTED: string = '/selected'
 const VEGETATIVE: string = '/vegetative'
 const LEVEL: string = '/level'
 
+const CURRENT_URL:string='https://static.uz/api'
+const WATER:string='/water'
+const DAILY:string='/daily'
+const LIMIT='12'
+
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +53,15 @@ export class ApiService {
 
   getDashboardValues(): Observable<any> {
     return this.http.get(BASE_URL + DASHBOARD).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+  getDashboardCurrentValues(id:any): Observable<any> {
+
+    return this.http.get(CURRENT_URL+WATER+DAILY+`?id=${id}&limit=${LIMIT}`).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];

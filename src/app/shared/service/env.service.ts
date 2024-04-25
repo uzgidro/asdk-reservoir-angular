@@ -11,6 +11,10 @@ export class EnvService {
     return this.environment.regionId;
   }
 
+  getReservoirs() {
+    return this.environment.regionId.filter(item => item.lowerLevel != null)
+  }
+
   getRegionByName(name: string) {
     return this.environment.regionId.find(item => item.name == name)
   }

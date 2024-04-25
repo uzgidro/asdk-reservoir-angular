@@ -12,6 +12,8 @@ import {NgForOf, NgIf} from "@angular/common";
 import {ReservoirCurrentComponent} from "../../shared/component/reservoir-current/reservoir-current.component";
 import {WeatherFrameComponent} from "../../shared/component/weather/weather-frame.component";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import { response } from 'express';
+import { EnvService } from 'src/app/shared/service/env.service';
 
 @Component({
   selector: 'app-reservoir-dashboard',
@@ -46,7 +48,7 @@ export class ReservoirDashboardComponent implements OnInit {
     volume?: { latest: number, difference: number }
   }[] = []
 
-  constructor(private api: ApiService, private reservoirService: ReservoirService, private router: Router) {
+  constructor(private api: ApiService, private reservoirService: ReservoirService, private router: Router,private envService:EnvService) {
     Chart.register(...registerables);
   }
 
@@ -77,13 +79,24 @@ export class ReservoirDashboardComponent implements OnInit {
     })
   }
 
-  private getData() {
-    this.api.getDashboardValues().subscribe({
-      next: (response: CategorisedArrayResponse) => {
-        this.setupIncome(response)
-        this.setupReservoirsData(response)
-      }
-    })
+  // private getData() {
+  //   this.api.getDashboardValues().subscribe({
+  //     next: (response: CategorisedArrayResponse) => {
+  //       this.setupIncome(response)
+  //       this.setupReservoirsData(response)
+  //     }
+  //   })
+  // }
+  private getData(){
+    this.envService.getReservoirs().forEach(item =>
+      this.api.getDashboardCurrentValues(item.id).subscribe({
+        next:(response:CategorisedArrayResponse)=>{
+          this.setupIncome(response)
+          this.setupReservoirsData(response)
+        }
+      })
+    )
+
   }
 
   private setupIncome(response: CategorisedArrayResponse) {
