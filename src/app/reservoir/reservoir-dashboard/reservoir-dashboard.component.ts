@@ -89,7 +89,7 @@ export class ReservoirDashboardComponent implements OnInit {
   // }
   private getData(){
     this.envService.getReservoirs().forEach(item =>
-      this.api.getDashboardCurrentValues(item.id).subscribe({
+      this.api.getDashboardCurrentValues(item.serialNumber).subscribe({
         next:(response:CategorisedArrayResponse)=>{
           this.setupIncome(response)
           this.setupReservoirsData(response)
