@@ -94,10 +94,11 @@ export class DecadeService {
     let stat10: number[] = []
     let stat30: number[] = []
     let statTotal: number[] = []
-    let statLastYear: number[] = chunked[chunked.length - 1].map(item => item.value)
+    let statLastYear: number[] = chunked[chunked.length - 2].map(item => item.value)
+    // let splice = chunked.splice(chunked.length - 1);
     for (let i = 0; i < arraySize; i++) {
       // get all data by this decade
-      const dateData = chunked
+      let dateData = chunked
         .map(sub => sub[i])
         .sort(
           (a, b) => {
@@ -108,6 +109,7 @@ export class DecadeService {
             else
               return 0
           })
+      dateData = dateData.slice(0, dateData.length-1)
       if (i == 0) {
         start = new Date(dateData[0].date)
         end = new Date(dateData[dateData.length - 1].date)
@@ -130,6 +132,15 @@ export class DecadeService {
       const data = dateData.reduce((acc, currentValue) => acc + currentValue.value, 0)
       statTotal.push(Math.round(data / dateData.length))
     }
+    console.log({
+      start: start,
+      end: end,
+      stat5: stat5,
+      stat10: stat10,
+      stat30: stat30,
+      statTotal: statTotal,
+      statLastYear: statLastYear,
+    })
     return {
       start: start,
       end: end,

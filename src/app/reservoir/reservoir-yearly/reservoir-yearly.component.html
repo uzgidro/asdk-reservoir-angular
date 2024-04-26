@@ -22,6 +22,7 @@
     <tr *ngFor="let cat of table.data.slice(1); index as i">
       <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" class="text-lg">{{cat[0].date.slice(0,4)}}</td>
       <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" *ngFor="let val of cat">{{val.value | number: '0.0-0'}}</td>
+      <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" *ngFor="let val of decade.slice(cat.length)"></td>
     </tr>
     <tr *ngIf="table.statStart && table.statEnd && table.statTotal.length > 0">
       <td colspan="2">
@@ -42,6 +43,11 @@
       <td colspan="2">
         Среднее за {{table.statEnd.getFullYear() - 4}} - {{table.statEnd | date: 'yyyy'}} (5)</td>
       <td *ngFor="let val of table.stat5">{{val | number: '0.0-0'}}</td>
+    </tr>
+    <tr *ngIf="table.statEnd && table.statLastYear.length > 0">
+      <td colspan="2">
+        Среднее за прошлый год</td>
+      <td *ngFor="let val of table.statLastYear">{{val | number: '0.0-0'}}</td>
     </tr>
     </tbody>
   </table>

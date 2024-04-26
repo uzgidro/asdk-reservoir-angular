@@ -61,6 +61,7 @@ export class ReservoirYearlyComponent implements OnInit {
 
         this.subscribe = this.api.getDecadeYearsValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
+            console.log(response)
             this.tableData.push(
               this.decadeService.setDecade('Приток, м3/с', response.income.data, false),
               this.decadeService.setDecade('Попуск, м3/с', response.release.data, false),
