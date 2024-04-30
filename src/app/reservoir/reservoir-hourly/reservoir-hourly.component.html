@@ -119,15 +119,15 @@
         <tbody *ngFor="let res of reservoirsData">
         <tr (click)="navigateToReservoir(res.id)">
           <td>{{ res.name }}</td>
-          <td *ngIf="res.level">{{ res.level.old }}</td>
-          <td *ngIf="res.level">{{ res.level.latest }}</td>
+          <td *ngIf="res.level">{{ res.level.old | number: '.0-2' }}</td>
+          <td *ngIf="res.level">{{ res.level.latest | number: '.0-2' }}</td>
           <td *ngIf="res.level">{{ res.level.latest - res.level.old | number: '.0-2' }}</td>
-          <td *ngIf="res.volume">{{ res.volume.old }}</td>
-          <td *ngIf="res.volume">{{ res.volume.latest }}</td>
+          <td *ngIf="res.volume">{{ res.volume.old | number: '.0-2' }}</td>
+          <td *ngIf="res.volume">{{ res.volume.latest | number: '.0-2' }}</td>
           <td *ngIf="res.volume">{{ res.volume.latest - res.volume.old | number: '.0-2' }}</td>
-          <td *ngFor="let income of res.income">{{ income }}</td>
+          <td *ngFor="let income of res.income">{{ income | number: '.0-2' }}</td>
           <td *ngIf="res.income">{{ res.income[res.income.length - 1] - res.income[res.income.length - 2] | number: '.0-2' }}</td>
-          <td *ngIf="res.release">{{ res.release.latest }}</td>
+          <td *ngIf="res.release">{{ res.release.latest | number: '.0-2' }}</td>
           <!--      <td>Ясно</td>-->
           <!--      <td>24</td>-->
           <!--      <td>3, С-В</td>-->
