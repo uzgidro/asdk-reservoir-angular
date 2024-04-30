@@ -129,7 +129,6 @@
             'min': min?.year == item.year,
             'max': max?.year == item.year,
             'past': past?.year == item.year,
-            'current': current?.year == item.year,
             }">{{ item.year }}
             </td>
             <td
@@ -137,8 +136,7 @@
               [ngClass]="{
             'min': min?.year == item.year,
             'max': max?.year == item.year,
-            'past': past?.year == item.year,
-            'current': current?.year == item.year,
+            'past': past?.year == item.year
             }">{{ item.value |number: '.0-0' }}
             </td>
           </tr>
@@ -180,11 +178,6 @@
               [ngClass]="{'text-amber-600': past.display, 'text-amber-600/60': !past.display}" class="text-amber-600">
             <td> {{ past.year }}</td>
             <td>{{ (past.value) | number: '.0-0' }}</td>
-          </tr>
-          <tr *ngIf="current" (click)="changeVisibility(current.id)"
-              [ngClass]="{'text-purple-600': current.display, 'text-purple-600/60': !current.display}" class="text-purple-600">
-            <td> {{ current.year }}</td>
-            <td>{{ (current.value) | number: '.0-0' }}</td>
           </tr>
           </tbody>
         </table>
