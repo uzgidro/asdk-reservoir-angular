@@ -29,10 +29,6 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   protected years: YearValue[] = []
   private colors: { main: string, sub: string }[] = [
     {
-      main: 'rgba(147, 51, 234,1)',
-      sub: 'rgba(147, 51, 234,0.8)'
-    },
-    {
       main: 'rgba(220, 38, 38,1)',
       sub: 'rgba(220, 38, 38,0.8)'
     },
@@ -160,12 +156,28 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     return
   }
 
+  get current() {
+    const exists = this._incomeChart.find(item => item.id.includes('current'))
+    if (exists && exists.year) {
+      const item: Values = {
+        id: exists.id,
+        value: exists.year.value,
+        byMonth: exists.valuesByMonth,
+        year: exists.year.year,
+        display: exists.display
+      }
+      return item
+    }
+    return
+  }
+
   get selected() {
     const exists = this.displayCharts.filter(
       item =>
         !item.id.includes('past') &&
         !item.id.includes('min') &&
         !item.id.includes('max') &&
+        !item.id.includes('current') &&
         !item.id.includes('avg'))
     if (exists.length > 0) {
       let map: Values[] = exists.map(item => ({
@@ -323,6 +335,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     this.getMax(reservoirId)
     this.getMin(reservoirId)
     this.getPastYear(reservoirId)
+    this.getCurrentYear(reservoirId)
   }
 
 
@@ -453,6 +466,34 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
           },
           valuesByMonth: pastYearByMonth,
           year: pastYear,
+          display: true
+        })
+        this.chart?.update()
+      }
+    }))
+  }
+
+  private getCurrentYear(reservoirId: number) {
+    this.subscribes.push(this.api.getSelectedYearValues(reservoirId, new Date().getFullYear()).subscribe({
+      next: (response: ComplexValueResponse) => {
+        const currentYearByMonth = this.calculateMonthlyValues(response)
+        const currentYear = {
+          year: this.getResponseYear(response),
+          value: this.calculateMonthlySum(response)
+        }
+        this._incomeChart.push({
+          id: 'current',
+          data: {
+            data: currentYearByMonth,
+            label: `Данные за прошлый ${currentYear.year}`,
+            borderColor: 'rgba(147, 51, 234,0.4)',
+            pointBackgroundColor: 'rgba(147, 51, 234,0.5)',
+            pointBorderColor: 'rgba(147, 51, 234,0.4)',
+            pointHoverBackgroundColor: 'rgba(147, 51, 234,0.2)',
+            pointHoverBorderColor: '#fff',
+          },
+          valuesByMonth: currentYearByMonth,
+          year: currentYear,
           display: true
         })
         this.chart?.update()

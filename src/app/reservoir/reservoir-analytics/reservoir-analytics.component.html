@@ -89,6 +89,15 @@
             <td>{{ (past.value) | number: '.0-0' }}</td>
             <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
+          <tr *ngIf="current && current.display" (click)="changeVisibility(current.id)"
+              [ngClass]="{'text-purple-600': current.display}" class="text-purple-600">
+            <td>Значение за текущий {{ current.year }}</td>
+            <td *ngFor="let val of current.byMonth">{{ val | number: '.0-0' }}</td>
+            <td *ngFor="let _ of incomeChartLabels.slice(current.byMonth.length)"></td>
+            <td>{{ (current.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td>{{ (current.value) | number: '.0-0' }}</td>
+            <td>{{ (current.value * 100 / avg.value) | number: '.0-0' }}</td>
+          </tr>
           <tr *ngFor="let item of selected" (click)="changeVisibility(item.id)" [ngStyle]="{'color': item.color}">
             <td>Значение за {{ item.year }}</td>
             <td *ngFor="let val of item.byMonth">{{ val | number: '.0-0' }}</td>
@@ -120,6 +129,7 @@
             'min': min?.year == item.year,
             'max': max?.year == item.year,
             'past': past?.year == item.year,
+            'current': current?.year == item.year,
             }">{{ item.year }}
             </td>
             <td
@@ -127,7 +137,8 @@
               [ngClass]="{
             'min': min?.year == item.year,
             'max': max?.year == item.year,
-            'past': past?.year == item.year
+            'past': past?.year == item.year,
+            'current': current?.year == item.year,
             }">{{ item.value |number: '.0-0' }}
             </td>
           </tr>
@@ -169,6 +180,11 @@
               [ngClass]="{'text-amber-600': past.display, 'text-amber-600/60': !past.display}" class="text-amber-600">
             <td> {{ past.year }}</td>
             <td>{{ (past.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="current" (click)="changeVisibility(current.id)"
+              [ngClass]="{'text-purple-600': current.display, 'text-purple-600/60': !current.display}" class="text-purple-600">
+            <td> {{ current.year }}</td>
+            <td>{{ (current.value) | number: '.0-0' }}</td>
           </tr>
           </tbody>
         </table>
