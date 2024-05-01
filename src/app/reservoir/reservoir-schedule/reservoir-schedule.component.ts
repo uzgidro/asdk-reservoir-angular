@@ -53,7 +53,7 @@ export class ReservoirScheduleComponent implements OnInit {
   incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   incomePercent = 80
   releaseForecast: number[] = new Array(18).fill(0)
-  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
+  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30'|'2024' = 'perLast'
   releasePercent = 80
   volumeForecastStart: number[] = new Array(18).fill(0)
   volumeForecastEnd: number[] = new Array(18).fill(0)
@@ -142,7 +142,7 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setVolumeForecast()
   }
 
-  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min') {
+  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min'|'2024') {
     this.releaseForecastCategory = category
     this.setReleasePercentForecast()
     if (this.release) {
@@ -164,6 +164,12 @@ export class ReservoirScheduleComponent implements OnInit {
         this.api.getVegetativeMinValues(this.reservoirId, 'release').subscribe({
           next: (values: ComplexValueResponse) => {
             this.releaseForecast = values.data.map(item => item.value)
+          }
+        })
+      }else if(this.releaseForecastCategory=='2024'){
+        this.api.getVegetativeSelectedValues(this.reservoirId,'release',2024).subscribe({
+          next:(values:ComplexValueResponse)=>{
+            this.releaseForecast=values.data.map(item=>item.value)
           }
         })
       }

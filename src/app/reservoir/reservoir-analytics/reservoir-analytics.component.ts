@@ -267,7 +267,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     if (!year || this.changeVisibility(year.toString())) return;
 
     if (this.reservoirId) {
-      this.api.getSelectedYearValues(this.reservoirId, year).subscribe({
+      this.api.getSelectedYearValues(this.reservoirId,year).subscribe({
         next: (response: ComplexValueResponse) => {
           const selectedYearByMonth = this.calculateMonthlyValues(response)
           const selectedYear = {
