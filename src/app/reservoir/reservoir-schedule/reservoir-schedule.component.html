@@ -97,7 +97,7 @@
               <td colspan="2">Выработка электроэнергии</td>
               <td>тыс. КВт</td>
               <td *ngFor="let value of gesPower">
-          <span [ngClass]="{'text-red-400': value==0}">{{value | number:'0.0-2'}}</span>
+              <span [ngClass]="{'text-red-400': value==0}">{{value.toFixed(0)}}</span>
               </td>
             </tr>
       </tbody>
