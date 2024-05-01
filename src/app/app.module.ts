@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {LoaderComponent} from './shared/component/loader/loader.component';
-import {NgOptimizedImage} from '@angular/common';
+import { NgOptimizedImage, CommonModule } from '@angular/common';
 import {
   AggregateValuesTableComponent
 } from './shared/component/aggregate-values-table/aggregate-values-table.component';
@@ -28,6 +28,7 @@ import {MetricSelectComponent} from './shared/component/metric-select/metric-sel
     AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DecadeService} from "../decade.service";
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {CommonModule, DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {ApiService} from "../../service/api.service";
 import {ActivatedRoute} from "@angular/router";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
@@ -18,7 +18,9 @@ import {EnvService} from "../../shared/service/env.service";
     DecimalPipe,
     NgForOf,
     NgIf,
-    FormsModule
+    NgClass,
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './reservoir-schedule.component.html',
   styleUrl: './reservoir-schedule.component.css'

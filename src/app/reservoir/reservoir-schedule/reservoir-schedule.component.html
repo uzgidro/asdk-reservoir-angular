@@ -15,63 +15,90 @@
       </thead>
       <tbody>
       <tr *ngIf="income?.stat10?.length!==0">
-        <td colspan="2">Средний приток за все время</td>
+        <td colspan="2">Многолетний/Средний приток </td>
         <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of income?.stat10">{{ value }}</td>
+        <td *ngFor="let value of income?.stat10">
+          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
+        </td>
       </tr>
       <tr *ngIf="income?.stat10?.length===0">
         <td colspan="2">Средний приток за все время</td>
         <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of income?.stat5">{{ value }}</td>
+        <td *ngFor="let value of income?.stat5">
+          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
+        </td>
       </tr>
       <tr>
         <td colspan="2">Приток в 2023</td>
-        <td *ngFor="let value of income?.statLastYear">{{ value }}</td>
+        <td *ngFor="let value of income?.statLastYear">
+          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
+        </td>
       </tr>
       <tr>
         <td class="bg-gray-300" colspan="2">Приток в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of incomeForecast">{{ value }}</td>
+        <td class="bg-gray-300" *ngFor="let value of incomeForecast">
+          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
+        </td>
       </tr>
       <tr>
         <td colspan="2">Объём в 2023</td>
         <td rowspan="3">млн. м3</td>
-        <td *ngFor="let value of volume?.statLastYear">{{ value }}</td>
+        <td *ngFor="let value of volume?.statLastYear" >
+          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+        </td>
       </tr>
       <tr>
         <td class="bg-gray-300" rowspan="2">Объём в 2024 (Прогноз)</td>
         <td class="bg-gray-300" >Начало декады</td>
-        <td class="bg-gray-300" *ngFor="let value of volumeForecastStart">{{ value | number: '.0-1' }}</td>
+        <td class="bg-gray-300" *ngFor="let value of volumeForecastStart">
+          <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }}
+          </span>
+        </td>
       </tr>
       <tr>
         <td class="bg-gray-300">Конец декады</td>
-        <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">{{ value | number: '.0-1' }}</td>
+        <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">
+          <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }} </span>
+          </td>
       </tr>
       <tr>
         <td  colspan="2" class="bg-gray-400/60">Уровень на конец декады</td>
         <td rowspan="2">м</td>
-        <td *ngFor="let value of levelForecast" class="bg-gray-400/60">{{value}}</td>
+        <td *ngFor="let value of levelForecast" class="bg-gray-400/60">
+          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+        </td>
       </tr>
       <tr>
         <td colspan="2" class="bg-gray-400/60">Дневное изменение</td>
         <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-400/60">{{i!==0?i.toFixed(2):i}}</td>
       </tr>
       <tr>
-        <td colspan="2">Средний попуск за все время</td>
+        <td colspan="2">Многолетний/Средний попуск</td>
         <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of release?.stat10">{{ value }}</td>
+        <td *ngFor="let value of release?.stat10">
+          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+        </td>
       </tr>
       <tr>
         <td colspan="2">Попуск в 2023</td>
-        <td *ngFor="let value of release?.statLastYear">{{ value }}</td>
+        <td *ngFor="let value of release?.statLastYear">
+          <span [ngClass]="{'text-red-400': value==0}">
+          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+          </span>
+        </td>
       </tr>
       <tr>
         <td class="bg-gray-300"  colspan="2">Попуск в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of releaseForecast">{{ value }}</td>
+        <td class="bg-gray-300" *ngFor="let value of releaseForecast">
+          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+        </td>
       </tr>
             <tr *ngIf="gesCoefficient && lowerLevel">
               <td colspan="2">Выработка электроэнергии</td>
               <td>тыс. КВт</td>
-              <td *ngFor="let value of gesPower">{{value | number:'0.0-2'}}</td>
+              <td *ngFor="let value of gesPower">
+          <span [ngClass]="{'text-red-400': value==0}">{{value | number:'0.0-2'}}</span>
+              </td>
             </tr>
       </tbody>
     </table>
