@@ -36,14 +36,14 @@
       </tr>
       <tr>
         <td class="bg-gray-300" colspan="2">Приток в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of incomeForecast">
+        <td class="bg-gray-300" *ngFor="let value of income?.statLastYear">
           <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
         </td>
       </tr>
       <tr>
         <td colspan="2">Объём в 2023</td>
         <td rowspan="3">млн. м3</td>
-        <td *ngFor="let value of volume?.statLastYear" >
+        <td *ngFor="let value of volume?.statThisYear" >
           <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
         </td>
       </tr>
@@ -51,14 +51,15 @@
         <td class="bg-gray-300" rowspan="2">Объём в 2024 (Прогноз)</td>
         <td class="bg-gray-300" >Начало декады</td>
         <td class="bg-gray-300" *ngFor="let value of volumeForecastStart">
-          <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }}
+          <span [ngClass]="{'text-red-400': value==0}">
+            {{ value | number: '.0-1' }}
           </span>
         </td>
       </tr>
       <tr>
         <td class="bg-gray-300">Конец декады</td>
         <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">
-          <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }} </span>
+          <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }}</span>
           </td>
       </tr>
       <tr>

@@ -53,7 +53,8 @@ export class DecadeService {
       stat10: stat.stat10,
       stat30: stat.stat30,
       statTotal: stat.statTotal,
-      statLastYear: stat.statLastYear
+      statLastYear: stat.statLastYear,
+      statThisYear: stat.statThisYear,
     }
   }
 
@@ -95,6 +96,7 @@ export class DecadeService {
     let stat30: number[] = []
     let statTotal: number[] = []
     let statLastYear: number[] = chunked[chunked.length - 2].map(item => item.value)
+    let statThisYear: number[] = chunked[chunked.length - 3].map(item => item.value)
     // let splice = chunked.splice(chunked.length - 1);
     for (let i = 0; i < arraySize; i++) {
       // get all data by this decade
@@ -140,6 +142,7 @@ export class DecadeService {
       stat30: stat30,
       statTotal: statTotal,
       statLastYear: statLastYear,
+      statThisYear: statThisYear,
     })
     return {
       start: start,
@@ -149,6 +152,8 @@ export class DecadeService {
       stat30: stat30,
       statTotal: statTotal,
       statLastYear: statLastYear,
+      statThisYear: statThisYear,
+
     }
   }
 }
