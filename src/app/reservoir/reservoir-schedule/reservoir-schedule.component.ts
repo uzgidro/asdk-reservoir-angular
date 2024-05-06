@@ -110,7 +110,7 @@ export class ReservoirScheduleComponent implements OnInit {
         })
 
 
-    this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
+         this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
       next: (response:any) => {
         this.volumeForecastStart = new Array(18).fill(0)
         this.incomeForecast = new Array(18).fill(0)
@@ -139,7 +139,7 @@ export class ReservoirScheduleComponent implements OnInit {
              })
            })
         }
-       })
+         })
       }
     })
   }
