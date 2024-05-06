@@ -68,5 +68,4 @@ export interface Decade {
   stat30: number[]
   statTotal: number[]
   statLastYear: number[]
-  statThisYear: number[]
 }
