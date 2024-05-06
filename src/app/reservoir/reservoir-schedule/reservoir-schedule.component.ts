@@ -96,12 +96,10 @@ export class ReservoirScheduleComponent implements OnInit {
           next: (response: ReservoirResponse) => {
             this.reservoirName = response.name
             this.reservoirId = response.id
-
             this.lowerLevel = this.env.getRegionByName(response.name)?.lowerLevel
             this.gesCoefficient = this.env.getRegionByName(response.name)?.gesCoefficient
           }
         })
-
         this.subscribe = this.api.getVegetativeDecadeYearsValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
             this.income = this.decadeService.setDecade('', response.income.data, true)

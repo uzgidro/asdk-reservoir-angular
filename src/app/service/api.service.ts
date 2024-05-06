@@ -194,7 +194,7 @@ export class ApiService {
     )
   }
 
-  
+
   getThisYearValues(reservoirId: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
       catchError((error) => {
@@ -203,8 +203,6 @@ export class ApiService {
       })
     )
   }
-
-
 
 
 
