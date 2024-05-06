@@ -111,7 +111,7 @@
           <label class="mr-2">% </label>
           <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
           <label>% к прошлому году</label> -->
-         <input class="w-full" type="number" value="80" (input)="changeIncomePercent($event)">
+         <input class="w-full" type="number" value="80"  max="200" (input)="changeIncomePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
           <input type="radio" name="income" #incomeYear (change)="changeSelectedIncomeInput(incomeYear.checked)">
@@ -145,7 +145,7 @@
           <label class="mr-2">% </label>
           <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
           <label>% к прошлому году</label> -->
-        <input class="w-full" type="number" value="80" (input)="changeReleasePercent($event)">
+        <input class="w-full" type="number" value="80" max="200" (input)="changeReleasePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
           <input type="radio" name="release" #releaseYear  (change)="changeSelectedReleaseInput(releaseYear.checked)" >
