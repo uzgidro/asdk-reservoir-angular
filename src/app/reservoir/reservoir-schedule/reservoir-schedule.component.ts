@@ -123,21 +123,17 @@ export class ReservoirScheduleComponent implements OnInit {
         dataThisYear.forEach((elem:ValueResponse) => {
          switch(dataType){
            case 'income':
-            this.incomeForecast.unshift(elem.value);
-            this.incomeForecast = this.incomeForecast.splice(0, 18);
+            this.incomeForecast = [elem.value, ...this.incomeForecast.slice(0, 17)];
             break;
            case 'volume':
-            this.volumeForecastStart.unshift(elem.value);
-            this.volumeForecastStart = this.volumeForecastStart.splice(0, 18);
+            this.volumeForecastStart = [elem.value, ...this.volumeForecastStart.slice(0, 17)];
             this.volumeForecastEnd = [...this.volumeForecastStart.slice(1), 0];
             break;
            case 'release':
-            this.releaseForecast.unshift(elem.value);
-            this.releaseForecast = this.releaseForecast.splice(0, 18);
+            this.releaseForecast = [elem.value, ...this.releaseForecast.slice(0, 17)];
              break;
            case 'level':
-            this.levelForecast.unshift(elem.value);
-            this.levelForecast = this.levelForecast.splice(0, 18);
+            this.levelForecast = [elem.value, ...this.levelForecast.slice(0, 17)];
             break;
             }
              })
