@@ -111,17 +111,17 @@ export class ReservoirScheduleComponent implements OnInit {
 
 
          this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
-      next: (response:any) => {
-        this.volumeForecastStart = new Array(18).fill(0)
-        this.incomeForecast = new Array(18).fill(0)
-        this.levelForecast = new Array(18).fill(0)
-        this.releaseForecast=new Array(18).fill(0)
-        const currentYear = new Date().getFullYear();
-        this.inputMin=response.income.data[0].date.slice(0,4);
-       ['income', 'volume', 'release', 'level'].forEach((dataType:string) => {
-        const dataThisYear = response[dataType].data.filter((el:ValueResponse) => el.date.includes(`${currentYear}`));
-        dataThisYear.forEach((elem:ValueResponse) => {
-         switch(dataType){
+          next: (response:any) => {
+            this.volumeForecastStart = new Array(18).fill(0)
+            this.incomeForecast = new Array(18).fill(0)
+            this.levelForecast = new Array(18).fill(0)
+            this.releaseForecast=new Array(18).fill(0)
+            const currentYear = new Date().getFullYear();
+            this.inputMin=response.income.data[0].date.slice(0,4);
+            ['income', 'volume', 'release', 'level'].forEach((dataType:string) => {
+            const dataThisYear = response[dataType].data.filter((el:ValueResponse) => el.date.includes(`${currentYear}`));
+          dataThisYear.forEach((elem:ValueResponse) => {
+          switch(dataType){
            case 'income':
             this.incomeForecast = [elem.value, ...this.incomeForecast.slice(0, 17)];
             break;
@@ -138,7 +138,7 @@ export class ReservoirScheduleComponent implements OnInit {
             }
              })
            })
-        }
+         }
          })
       }
     })
