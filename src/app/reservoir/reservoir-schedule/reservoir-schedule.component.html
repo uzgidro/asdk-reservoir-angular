@@ -115,7 +115,7 @@
         </span>
         <span class="flex gap-2 flex-row">
           <input type="radio" name="income" #incomeYear (change)="changeSelectedIncomeInput(incomeYear.checked)">
-          <input type="number" [value]="this.selectedYearIncome" max="2023" [min]="this.inputLimit" (change)="changeSelectedIncomeValue($event)"  class="w-full">
+          <input type="number" [value]="this.selectedYearIncome" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedIncomeValue($event)"  class="w-full">
         </span>
         <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('30')">
@@ -149,7 +149,7 @@
         </span>
         <span class="flex gap-2 flex-row">
           <input type="radio" name="release" #releaseYear  (change)="changeSelectedReleaseInput(releaseYear.checked)" >
-          <input type="number" [value]="this.selectedYearRelease" max="2023" [min]="this.inputLimit" (change)="changeSelectedReleaseValue($event)" class="w-full">
+          <input type="number" [value]="this.selectedYearRelease" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedReleaseValue($event)" class="w-full">
         </span>
         <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
           <input type="radio" name="release" (click)="changeReleaseForecast('30')">
