@@ -9,6 +9,7 @@ import {Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
 import {FormsModule} from "@angular/forms";
 import {EnvService} from "../../shared/service/env.service";
+import { response } from 'express';
 
 @Component({
   selector: 'app-reservoir-schedule',
@@ -99,6 +100,8 @@ export class ReservoirScheduleComponent implements OnInit {
           }
         })
 
+
+
         this.subscribe = this.api.getVegetativeDecadeYearsValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
             this.income = this.decadeService.setDecade('', response.income.data, true)
@@ -107,9 +110,48 @@ export class ReservoirScheduleComponent implements OnInit {
             this.volume = this.decadeService.setDecade('', response.volume.data, true)
           }
         })
+
+
+    this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
+      next: (response:any) => {
+        this.volumeForecastStart = new Array(18).fill(0)
+        this.incomeForecast = new Array(18).fill(0)
+        this.levelForecast = new Array(18).fill(0)
+        this.releaseForecast=new Array(18).fill(0)
+
+       const currentYear = new Date().getFullYear();
+       ['income', 'volume', 'release', 'level'].forEach((dataType) => {
+       const dataThisYear = response[dataType].data.filter((el:any) => el.date.includes(`${currentYear}`));
+       dataThisYear.forEach((elem:any) => {
+       switch(dataType){
+           case 'income':
+            this.incomeForecast.unshift(elem.value);
+            this.incomeForecast = this.incomeForecast.splice(0, 18);
+            break;
+           case 'volume':
+            this.volumeForecastStart.unshift(elem.value);
+            this.volumeForecastStart = this.volumeForecastStart.splice(0, 18);
+            break;
+           case 'release':
+            this.releaseForecast.unshift(elem.value);
+            this.releaseForecast = this.releaseForecast.splice(0, 18);
+             break;
+           case 'level':
+            this.levelForecast.unshift(elem.value);
+            this.levelForecast = this.levelForecast.splice(0, 18);
+            break;
+            }
+             })
+           })
+        }
+
+       })
       }
     })
   }
+
+
+
 
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30') {
     this.incomeForecastCategory = category
@@ -140,6 +182,8 @@ export class ReservoirScheduleComponent implements OnInit {
       }
     }
     this.setVolumeForecast()
+
+
   }
 
   changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min'|'this') {
@@ -290,4 +334,10 @@ export class ReservoirScheduleComponent implements OnInit {
       }
     }
   }
+
+
+
+
+
+
 }
