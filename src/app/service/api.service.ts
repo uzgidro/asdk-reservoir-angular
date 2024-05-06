@@ -194,17 +194,7 @@ export class ApiService {
     )
   }
 
-
-
-  getVegetativeSelectedThisYearValues(reservoirId: number, category: string = 'income',year:number=new Date().getFullYear()): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params: new HttpParams().set('category', category).set('year',year)}).pipe(
-      catchError((error) => {
-        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
-      })
-    )
-  }
-
+  
   getThisYearValues(reservoirId: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
       catchError((error) => {

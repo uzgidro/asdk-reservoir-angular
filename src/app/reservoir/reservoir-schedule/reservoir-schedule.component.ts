@@ -56,7 +56,7 @@ export class ReservoirScheduleComponent implements OnInit {
   incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   incomePercent = 80
   releaseForecast: number[] = new Array(18).fill(0)
-  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30'|'this' = 'perLast'
+  releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   releasePercent = 80
   volumeForecastStart: number[] = new Array(18).fill(0)
   volumeForecastEnd: number[] = new Array(18).fill(0)
@@ -102,8 +102,6 @@ export class ReservoirScheduleComponent implements OnInit {
           }
         })
 
-
-
         this.subscribe = this.api.getVegetativeDecadeYearsValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
             this.income = this.decadeService.setDecade('', response.income.data, true)
@@ -147,7 +145,6 @@ export class ReservoirScheduleComponent implements OnInit {
              })
            })
         }
-
        })
       }
     })
@@ -189,7 +186,7 @@ export class ReservoirScheduleComponent implements OnInit {
 
   }
 
-  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min'|'this') {
+  changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min') {
     this.releaseForecastCategory = category
     this.setReleasePercentForecast()
     if (this.release) {
@@ -211,12 +208,6 @@ export class ReservoirScheduleComponent implements OnInit {
         this.api.getVegetativeMinValues(this.reservoirId, 'release').subscribe({
           next: (values: ComplexValueResponse) => {
             this.releaseForecast = values.data.map(item => item.value)
-          }
-        })
-      }else if(this.releaseForecastCategory=='this'){
-        this.api.getVegetativeSelectedValues(this.reservoirId,'release',new Date().getFullYear()).subscribe({
-          next:(values:ComplexValueResponse)=>{
-            this.releaseForecast=values.data.map(item=>item.value)
           }
         })
       }
