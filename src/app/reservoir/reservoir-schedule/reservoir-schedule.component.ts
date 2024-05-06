@@ -133,6 +133,7 @@ export class ReservoirScheduleComponent implements OnInit {
            case 'volume':
             this.volumeForecastStart.unshift(elem.value);
             this.volumeForecastStart = this.volumeForecastStart.splice(0, 18);
+            this.volumeForecastEnd = [...this.volumeForecastStart.slice(1), 0];
             break;
            case 'release':
             this.releaseForecast.unshift(elem.value);
