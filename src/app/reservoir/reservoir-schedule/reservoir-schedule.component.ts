@@ -322,8 +322,6 @@ export class ReservoirScheduleComponent implements OnInit {
 
   getSumOfArr(array:any) {
       return array.reduce((sum:any, value:any) => sum + value, 0);
-
-
     }
 
 
