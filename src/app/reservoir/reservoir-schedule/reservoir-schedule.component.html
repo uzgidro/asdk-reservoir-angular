@@ -8,9 +8,11 @@
         <th rowspan="2" colspan="2">Индикаторы</th>
         <th rowspan="2">Измерение</th>
         <th *ngFor="let month of months" colspan="3">{{ month }}</th>
+        <th></th>
       </tr>
       <tr>
         <th *ngFor="let decade of decade">{{ decade }}</th>
+        <th>Всего</th>
       </tr>
       </thead>
       <tbody>
@@ -20,6 +22,7 @@
         <td *ngFor="let value of income?.stat10">
           <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
         </td>
+        <td>{{getSumOfArr(income?.stat10)}}</td>
       </tr>
       <tr *ngIf="income?.stat10?.length===0">
         <td colspan="2">Средний приток за все время</td>
@@ -27,18 +30,21 @@
         <td *ngFor="let value of income?.stat5">
           <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
         </td>
+        <td>{{getSumOfArr(income?.stat5)}}</td>
       </tr>
       <tr>
         <td colspan="2">Приток в 2023</td>
         <td *ngFor="let value of income?.statLastYear">
           <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
         </td>
+        <td>{{getSumOfArr(income?.statLastYear)}}</td>
       </tr>
       <tr>
         <td class="bg-gray-300" colspan="2">Приток в 2024 (Прогноз)</td>
         <td class="bg-gray-300" *ngFor="let value of incomeForecast">
           <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
         </td>
+        <td class="bg-gray-300" >{{getSumOfArr(incomeForecast)}}</td>
       </tr>
       <tr>
         <td colspan="2">Объём в 2023</td>
@@ -46,6 +52,7 @@
         <td *ngFor="let value of volume?.statLastYear" >
           <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
         </td>
+        <td></td>
       </tr>
       <tr>
         <td class="bg-gray-300" rowspan="2">Объём в 2024 (Прогноз)</td>
@@ -55,23 +62,29 @@
             {{ value | number: '.0-1' }}
           </span>
         </td>
+        <td class="bg-gray-300"></td>
       </tr>
       <tr>
         <td class="bg-gray-300">Конец декады</td>
         <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">
           <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }}</span>
           </td>
+          <td class="bg-gray-300"></td>
       </tr>
+
       <tr>
         <td  colspan="2" class="bg-gray-400/60">Уровень на конец декады</td>
         <td rowspan="2">м</td>
         <td *ngFor="let value of levelForecast" class="bg-gray-400/60">
           <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
         </td>
+        <td class="bg-gray-400/60"></td>
+
       </tr>
       <tr>
         <td colspan="2" class="bg-gray-400/60">Дневное изменение</td>
         <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-400/60">{{i!==0?i.toFixed(2):i}}</td>
+        <td class="bg-gray-400/60"></td>
       </tr>
       <tr>
         <td colspan="2">Многолетний/Средний попуск</td>
@@ -79,6 +92,8 @@
         <td *ngFor="let value of release?.stat10">
           <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
         </td>
+        <td>{{getSumOfArr(release?.stat10)}}</td>
+
       </tr>
       <tr>
         <td colspan="2">Попуск в 2023</td>
@@ -87,12 +102,15 @@
           <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
           </span>
         </td>
+        <td>{{getSumOfArr(release?.statLastYear)}}</td>
+
       </tr>
       <tr>
         <td class="bg-gray-300"  colspan="2">Попуск в 2024 (Прогноз)</td>
         <td class="bg-gray-300" *ngFor="let value of releaseForecast">
           <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
         </td>
+        <td class="bg-gray-300">{{getSumOfArr(releaseForecast)}}</td>
       </tr>
             <tr *ngIf="gesCoefficient && lowerLevel">
               <td colspan="2">Выработка электроэнергии</td>
@@ -100,6 +118,7 @@
               <td *ngFor="let value of gesPower">
               <span [ngClass]="{'text-red-400': value==0}">{{value.toFixed(0)}}</span>
               </td>
+              <td></td>
             </tr>
       </tbody>
     </table>
@@ -111,7 +130,7 @@
           <label class="mr-2">% </label>
           <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
           <label>% к прошлому году</label> -->
-         <input class="w-full" type="number" value="80"  max="200" (input)="changeIncomePercent($event)">
+         <input class="w-full" type="number" value="80"  min="0" max="200" (input)="changeIncomePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
           <input type="radio" name="income" #incomeYear (change)="changeSelectedIncomeInput(incomeYear.checked)">
@@ -145,7 +164,7 @@
           <label class="mr-2">% </label>
           <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
           <label>% к прошлому году</label> -->
-        <input class="w-full" type="number" value="80" max="200" (input)="changeReleasePercent($event)">
+        <input class="w-full" type="number" value="80" max="200"  min="0" (input)="changeReleasePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
           <input type="radio" name="release" #releaseYear  (change)="changeSelectedReleaseInput(releaseYear.checked)" >

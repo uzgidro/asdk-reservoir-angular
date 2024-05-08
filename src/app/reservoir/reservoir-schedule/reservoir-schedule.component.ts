@@ -9,7 +9,6 @@ import {Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
 import {FormsModule} from "@angular/forms";
 import {EnvService} from "../../shared/service/env.service";
-import { response } from 'express';
 
 @Component({
   selector: 'app-reservoir-schedule',
@@ -108,9 +107,7 @@ export class ReservoirScheduleComponent implements OnInit {
             this.volume = this.decadeService.setDecade('', response.volume.data, true)
           }
         })
-
-
-         this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
+        this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
           next: (response:any) => {
             this.volumeForecastStart = new Array(18).fill(0)
             this.incomeForecast = new Array(18).fill(0)
@@ -118,20 +115,20 @@ export class ReservoirScheduleComponent implements OnInit {
             this.releaseForecast=new Array(18).fill(0)
             const currentYear = new Date().getFullYear();
             this.inputMin=response.income.data[0].date.slice(0,4);
-            ['income', 'volume', 'release', 'level'].forEach((dataType:string) => {
+            ['income', 'volume', 'release', 'level'].forEach((dataType:string)=>{
             const dataThisYear = response[dataType].data.filter((el:ValueResponse) => el.date.includes(`${currentYear}`));
-          dataThisYear.forEach((elem:ValueResponse) => {
-          switch(dataType){
-           case 'income':
-            this.incomeForecast = [elem.value, ...this.incomeForecast.slice(0, 17)];
-            break;
+            dataThisYear.forEach((elem:ValueResponse) =>{
+            switch(dataType){
+            case 'income':
+              this.incomeForecast = [elem.value, ...this.incomeForecast.slice(0, 17)];
+              break;
            case 'volume':
-            this.volumeForecastStart = [elem.value, ...this.volumeForecastStart.slice(0, 17)];
-            this.volumeForecastEnd = [...this.volumeForecastStart.slice(1), 0];
-            break;
+              this.volumeForecastStart = [elem.value, ...this.volumeForecastStart.slice(0, 17)];
+              this.volumeForecastEnd = [...this.volumeForecastStart.slice(1), 0];
+              break;
            case 'release':
             this.releaseForecast = [elem.value, ...this.releaseForecast.slice(0, 17)];
-             break;
+            break;
            case 'level':
             this.levelForecast = [elem.value, ...this.levelForecast.slice(0, 17)];
             break;
@@ -323,4 +320,12 @@ export class ReservoirScheduleComponent implements OnInit {
     }
   }
 
-}
+  getSumOfArr(array:any) {
+      return array.reduce((sum:any, value:any) => sum + value, 0);
+
+
+    }
+
+
+
+  }
