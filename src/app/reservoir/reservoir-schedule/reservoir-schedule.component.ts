@@ -111,6 +111,7 @@ export class ReservoirScheduleComponent implements OnInit {
             this.release = this.decadeService.setDecade('', response.release.data, true)
             this.level = this.decadeService.setDecade('', response.level.data, true)
             this.volume = this.decadeService.setDecade('', response.volume.data, true)
+
           }
         })
         this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
@@ -145,9 +146,17 @@ export class ReservoirScheduleComponent implements OnInit {
            case 'release':
             this.releaseForecast = [elem.value, ...this.releaseForecast.slice(0, 17)];
             break;
-           case 'level':
-            this.levelForecast = [elem.value, ...this.levelForecast.slice(0, 17)];
-            break;
+            case 'level':
+              this.levelForecast = [elem.value, ...this.levelForecast.slice(0, 17)];
+              const differences = [];
+              for (let i = 1; i < this.levelForecast.length; i++) {
+                let days = i === 6 || i === 12 || i === 14 ? 11 : 10;
+                const difference = (this.levelForecast[i] - this.levelForecast[i - 1]) / days;
+                differences.push(difference);
+              }
+              this.changelevelForecast = differences;
+              break;
+
             }
              })
            })
@@ -234,14 +243,14 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setVolumeForecast()
   }
 
-  changeSelectedIncomeInput(isChecked: any) {
-    this.selectedIncome = isChecked;
-    if (isChecked) {
-      if (this.selectedYearIncome) {
-        this.changeSelectedIncomeValue({target: {value: this.selectedYearIncome}});
-      }
-    }
-  }
+  // changeSelectedIncomeInput(isChecked: any) {
+  //   this.selectedIncome = isChecked;
+  //   if (isChecked) {
+  //     if (this.selectedYearIncome) {
+  //       this.changeSelectedIncomeValue({target: {value: this.selectedYearIncome}});
+  //     }
+  //   }
+  // }
 
   // changeSelectedReleaseInput(isChecked: any) {
   //   this.selectedRelease = isChecked;
@@ -252,29 +261,29 @@ export class ReservoirScheduleComponent implements OnInit {
   //   }
   // }
 
-  changeSelectedIncomeValue(input: any) {
-    this.selectedYearIncome = input.target.value;
-    if (this.selectedIncome) {
-      this.api.getVegetativeSelectedValues(this.reservoirId, 'income', input.target.value).subscribe({
-        next: (values: ComplexValueResponse) => {
-          this.incomeForecast = values.data.map(item => item.value)
-        },
-        complete: () => this.setVolumeForecast()
-      })
-    }
-  }
+  // changeSelectedIncomeValue(input: any) {
+  //   this.selectedYearIncome = input.target.value;
+  //   if (this.selectedIncome) {
+  //     this.api.getVegetativeSelectedValues(this.reservoirId, 'income', input.target.value).subscribe({
+  //       next: (values: ComplexValueResponse) => {
+  //         this.incomeForecast = values.data.map(item => item.value)
+  //       },
+  //       complete: () => this.setVolumeForecast()
+  //     })
+  //   }
+  // }
 
-  changeSelectedReleaseValue(input: any) {
-    this.selectedYearRelease = input.target.value;
-    if (this.selectedRelease) {
-      this.api.getVegetativeSelectedValues(this.reservoirId, 'release', input.target.value).subscribe({
-        next: (values: ComplexValueResponse) => {
-          this.releaseForecast = values.data.map(item => item.value)
-        },
-        complete: () => this.setVolumeForecast()
-      })
-    }
-  }
+  // changeSelectedReleaseValue(input: any) {
+  //   this.selectedYearRelease = input.target.value;
+  //   if (this.selectedRelease) {
+  //     this.api.getVegetativeSelectedValues(this.reservoirId, 'release', input.target.value).subscribe({
+  //       next: (values: ComplexValueResponse) => {
+  //         this.releaseForecast = values.data.map(item => item.value)
+  //       },
+  //       complete: () => this.setVolumeForecast()
+  //     })
+  //   }
+  // }
 
   private setVolumeForecast() {
     const forecast: number[] = []
@@ -336,13 +345,13 @@ export class ReservoirScheduleComponent implements OnInit {
     }
   }
 
-  getSumOfArr(array:any) {
-      return array.reduce((sum:number, value:number) => sum + value, 0);
-    }
+       getSumOfArr(array:any) {
+       return array.reduce((sum:number, value:number) => sum + value, 0);
+       }
 
 
-    extractYears(data: any[]): number[] {
-      return data.map(entry => new Date(entry.date).getFullYear())
+          extractYears(data: any[]): number[] {
+                return data.map(entry => new Date(entry.date).getFullYear())
                  .filter((value, index, self) => self.indexOf(value) === index);
     }
 
@@ -356,6 +365,7 @@ export class ReservoirScheduleComponent implements OnInit {
         complete: () => this.setVolumeForecast()
       })
     }
+
 
      changeSelectedReleaseForecast(event: MatSelectChange): void {
       this.selectedReleaseYears = event.value;
