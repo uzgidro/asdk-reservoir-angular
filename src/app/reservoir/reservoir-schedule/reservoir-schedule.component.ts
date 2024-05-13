@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import {DecadeService} from "../decade.service";
 import {CommonModule, DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {ApiService} from "../../service/api.service";
@@ -20,7 +21,8 @@ import {EnvService} from "../../shared/service/env.service";
     NgIf,
     NgClass,
     FormsModule,
-    CommonModule
+    CommonModule,
+    MatSelectModule
   ],
   templateUrl: './reservoir-schedule.component.html',
   styleUrl: './reservoir-schedule.component.css'
@@ -29,6 +31,10 @@ export class ReservoirScheduleComponent implements OnInit {
 
   reservoirName?: string
   reservoirId?: any
+  existingIncomeYears:any
+  existingReleaseYears:any
+  selectedIncomeYears: number[] = [];
+  selectedReleaseYears: number[] = [];
   months = [
     'Апрель',
     'Май',
@@ -117,6 +123,16 @@ export class ReservoirScheduleComponent implements OnInit {
             this.inputMin=response.income.data[0].date.slice(0,4);
             ['income', 'volume', 'release', 'level'].forEach((dataType:string)=>{
             const dataThisYear = response[dataType].data.filter((el:ValueResponse) => el.date.includes(`${currentYear}`));
+
+
+
+            const allIncomeYearData = response['income'].data.filter((el:ValueResponse) => !el.date.includes(`${currentYear}`));
+            const allReleaseYearData = response['release'].data.filter((el:ValueResponse) => !el.date.includes(`${currentYear}`));
+            //All years
+            this.existingIncomeYears = this.extractYears(allIncomeYearData);
+            this.existingReleaseYears=this.extractYears(allReleaseYearData)
+
+
             dataThisYear.forEach((elem:ValueResponse) =>{
             switch(dataType){
             case 'income':
@@ -324,6 +340,21 @@ export class ReservoirScheduleComponent implements OnInit {
       return array.reduce((sum:number, value:number) => sum + value, 0);
     }
 
+
+    extractYears(data: any[]): number[] {
+      return data.map(entry => new Date(entry.date).getFullYear())
+                 .filter((value, index, self) => self.indexOf(value) === index);
+    }
+
+    onIncomeYearsSelectionChange(event: MatSelectChange): void {
+      this.selectedIncomeYears = event.value;
+      console.log('Selected income years:', this.selectedIncomeYears);
+    }
+
+    onReleaseYearsSelectionChange(event: MatSelectChange): void {
+      this.selectedReleaseYears = event.value;
+      console.log('Selected release years:', this.selectedReleaseYears);
+    }
 
 
   }
