@@ -138,7 +138,7 @@
           <!-- <input type="number" [value]="this.selectedYearIncome" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedIncomeValue($event)"  class="w-full"> -->
           <mat-form-field class="w-[120px]  h-[63px]"   appearance="fill" >
             <!-- <mat-label>Select Years</mat-label> -->
-            <mat-select  multiple [(value)]="selectedIncomeYears" (selectionChange)="onIncomeYearsSelectionChange($event)"  >
+            <mat-select  multiple [(value)]="selectedIncomeYears" (selectionChange)=" changeSelectedIncomeForecast($event)"  >
               <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500"  *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -180,7 +180,7 @@
 
           <mat-form-field class="w-[120px]  h-[63px]"   appearance="fill">
             <!-- <mat-label>Select Years</mat-label> -->
-            <mat-select multiple [(value)]="selectedReleaseYears" (selectionChange)="onReleaseYearsSelectionChange($event)" >
+            <mat-select multiple [(value)]="selectedReleaseYears" (selectionChange)=" changeSelectedReleaseForecast($event)" >
               <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500" *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
             </mat-select>
           </mat-form-field>

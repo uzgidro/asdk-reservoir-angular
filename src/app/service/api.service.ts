@@ -185,24 +185,30 @@ export class ApiService {
     )
   }
 
-  getVegetativeSelectedValues(reservoirId: number, category: string = 'income',year:number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params: new HttpParams().set('category', category).set('year',year)}).pipe(
-      catchError((error) => {
-        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
-      })
-    )
-  }
+   getVegetativeSelectedValues(reservoirId: number, category: string = 'income',year:number[]): Observable<any> {
+    let params = new HttpParams();
+      params = params.append('category', category)
+      year.forEach((item, index) => {
+        const paramName = `year[${index}]`;
+        params = params.append(paramName, item);
+      });
+      return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params}).pipe(
+        catchError((error) => {
+          this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+          return [];
+        })
+      )
+    }
 
 
-  getThisYearValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
-      catchError((error) => {
-        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
-      })
-    )
-  }
+      getThisYearValues(reservoirId: number): Observable<any> {
+         return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
+         catchError((error) => {
+          this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+          return [];
+          })
+          )
+        }
 
 
 

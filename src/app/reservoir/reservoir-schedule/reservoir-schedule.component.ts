@@ -243,14 +243,14 @@ export class ReservoirScheduleComponent implements OnInit {
     }
   }
 
-  changeSelectedReleaseInput(isChecked: any) {
-    this.selectedRelease = isChecked;
-    if (isChecked) {
-      if (this.selectedYearRelease) {
-        this.changeSelectedReleaseValue({target: {value: this.selectedYearRelease}});
-      }
-    }
-  }
+  // changeSelectedReleaseInput(isChecked: any) {
+  //   this.selectedRelease = isChecked;
+  //   if (isChecked) {
+  //     if (this.selectedYearRelease) {
+  //       this.changeSelectedReleaseValue({target: {value: this.selectedYearRelease}});
+  //     }
+  //   }
+  // }
 
   changeSelectedIncomeValue(input: any) {
     this.selectedYearIncome = input.target.value;
@@ -346,14 +346,27 @@ export class ReservoirScheduleComponent implements OnInit {
                  .filter((value, index, self) => self.indexOf(value) === index);
     }
 
-    onIncomeYearsSelectionChange(event: MatSelectChange): void {
+    changeSelectedIncomeForecast(event: MatSelectChange): void {
       this.selectedIncomeYears = event.value;
       console.log('Selected income years:', this.selectedIncomeYears);
+      this.api.getVegetativeSelectedValues(this.reservoirId,'income',this.selectedIncomeYears).subscribe({
+        next: (values: ComplexValueResponse) => {
+          this.incomeForecast = values.data.map(item => item.value)
+        },
+        complete: () => this.setVolumeForecast()
+      })
     }
 
-    onReleaseYearsSelectionChange(event: MatSelectChange): void {
+     changeSelectedReleaseForecast(event: MatSelectChange): void {
       this.selectedReleaseYears = event.value;
       console.log('Selected release years:', this.selectedReleaseYears);
+      this.api.getVegetativeSelectedValues(this.reservoirId,'release',this.selectedReleaseYears).subscribe({
+        next: (values: ComplexValueResponse) => {
+          this.releaseForecast = values.data.map(item => item.value)
+        },
+        complete: () => this.setVolumeForecast()
+      })
+
     }
 
 
