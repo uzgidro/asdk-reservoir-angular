@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 import {DecadeService} from "../decade.service";
 import {CommonModule, DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {ApiService} from "../../service/api.service";
 import {ActivatedRoute} from "@angular/router";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
-import {CategorisedValueResponse, ComplexValueResponse, ValueResponse} from "../../shared/response/values-response";
+import {CategorisedValueResponse, ComplexValueResponse} from "../../shared/response/values-response";
 import {Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
 import {FormsModule} from "@angular/forms";
@@ -31,8 +31,8 @@ export class ReservoirScheduleComponent implements OnInit {
 
   reservoirName?: string
   reservoirId?: any
-  existingIncomeYears:any
-  existingReleaseYears:any
+  existingIncomeYears: any
+  existingReleaseYears: any
   selectedIncomeYears: number[] = [];
   selectedReleaseYears: number[] = [];
   months = [
@@ -51,27 +51,27 @@ export class ReservoirScheduleComponent implements OnInit {
     "I", "II", "III",
     "I", "II", "III",
   ]
-  inputMin?:string
-  inputMax:string=`${new Date().getFullYear()-1}`
+  inputMin?: string
+  inputMax: string = `${new Date().getFullYear() - 1}`
   income?: Decade
   release?: Decade
   level?: Decade
   volume?: Decade
-  incomeForecast: number[] = new Array(18).fill(0)
+  incomeForecast: number[] = []
   incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   incomePercent = 80
-  releaseForecast: number[] = new Array(18).fill(0)
+  releaseForecast: number[] = []
   releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   releasePercent = 80
-  volumeForecastStart: number[] = new Array(18).fill(0)
-  volumeForecastEnd: number[] = new Array(18).fill(0)
-  levelForecast: number[] = new Array(18).fill(0)
-  changelevelForecast: number[] = new Array(18).fill(0)
+  volumeForecastStart: number[] = []
+  volumeForecastEnd: number[] = []
+  levelForecast: number[] = []
+  changelevelForecast: number[] = []
   selectedIncome?: boolean
   selectedRelease?: boolean
   selectedYearIncome?: string = '2023'
   selectedYearRelease?: string = '2023'
-  gesPower: number[] = new Array(18).fill(0)
+  gesPower: number[] = []
   lowerLevel?: number
   gesCoefficient?: number
   private subscribe?: Subscription
@@ -114,56 +114,31 @@ export class ReservoirScheduleComponent implements OnInit {
 
           }
         })
-        this.subscribe=this.api.getThisYearValues(reservoir).subscribe({
-          next: (response:any) => {
-            this.volumeForecastStart = new Array(18).fill(0)
-            this.incomeForecast = new Array(18).fill(0)
-            this.levelForecast = new Array(18).fill(0)
-            this.releaseForecast=new Array(18).fill(0)
-            const currentYear = new Date().getFullYear();
-            this.inputMin=response.income.data[0].date.slice(0,4);
-            ['income', 'volume', 'release', 'level'].forEach((dataType:string)=>{
-            const dataThisYear = response[dataType].data.filter((el:ValueResponse) => el.date.includes(`${currentYear}`));
-            const allIncomeYearData = response['income'].data.filter((el:ValueResponse) => !el.date.includes(`${currentYear}`));
-            const allReleaseYearData = response['release'].data.filter((el:ValueResponse) => !el.date.includes(`${currentYear}`));
+        this.subscribe = this.api.getThisYearValues(reservoir).subscribe({
+          next: (response: CategorisedValueResponse) => {
+            const currentYear = new Date().getFullYear().toString();
+
+            this.incomeForecast = response.income.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
+            this.releaseForecast = response.release.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
+            this.volumeForecastStart = response.volume.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
+            this.volumeForecastEnd = this.volumeForecastStart.slice(1)
+            this.levelForecast = response.level.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
+            this.changelevelForecast = [0]
+            for (let i = 1; i <= this.levelForecast.length - 1; i++) {
+              let days = i == 6 || i == 12 || i == 14 ? 11 : 10
+              const difference = (this.levelForecast[i] - this.levelForecast[i - 1]) / days;
+              this.changelevelForecast.push(difference)
+            }
+            const allIncomeYearData = response.income.data.filter(el => !el.date.includes(currentYear));
+            const allReleaseYearData = response.release.data.filter(el => !el.date.includes(currentYear));
             //All years
             this.existingIncomeYears = this.extractYears(allIncomeYearData);
-            this.existingReleaseYears=this.extractYears(allReleaseYearData)
-
-
-            dataThisYear.forEach((elem:ValueResponse) =>{
-            switch(dataType){
-            case 'income':
-              this.incomeForecast = [elem.value, ...this.incomeForecast.slice(0, 17)];
-              break;
-            case 'volume':
-              this.volumeForecastStart = [elem.value, ...this.volumeForecastStart.slice(0, 17)];
-              this.volumeForecastEnd = [...this.volumeForecastStart.slice(1), 0];
-              break;
-            case 'release':
-            this.releaseForecast = [elem.value, ...this.releaseForecast.slice(0, 17)];
-            break;
-            case 'level':
-              this.levelForecast = [elem.value, ...this.levelForecast.slice(0, 17)];
-              const differences = [];
-              for (let i = 1; i < this.levelForecast.length; i++) {
-                let days = i === 6 || i === 12 || i === 14 ? 11 : 10;
-                const difference = (this.levelForecast[i] - this.levelForecast[i - 1]) / days;
-                differences.push(difference);
-              }
-              this.changelevelForecast = differences;
-              break;
-
-            }
-             })
-           })
-         }
-         })
+            this.existingReleaseYears = this.extractYears(allReleaseYearData)
+          }
+        })
       }
     })
   }
-
-
 
 
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30') {
@@ -342,39 +317,39 @@ export class ReservoirScheduleComponent implements OnInit {
     }
   }
 
-       getSumOfArr(array:any) {
-       return array.reduce((sum:number, value:number) => sum + value, 0);
-       }
+  getSumOfArr(array: any) {
+    return array.reduce((sum: number, value: number) => sum + value, 0);
+  }
 
 
-          extractYears(data: any[]): number[] {
-                return data.map(entry => new Date(entry.date).getFullYear())
-                 .filter((value, index, self) => self.indexOf(value) === index);
-    }
+  extractYears(data: any[]): number[] {
+    return data.map(entry => new Date(entry.date).getFullYear())
+      .filter((value, index, self) => self.indexOf(value) === index);
+  }
 
-    changeSelectedIncomeForecast(event: MatSelectChange): void {
-      this.selectedIncomeYears = event.value;
-      console.log('Selected income years:', this.selectedIncomeYears);
-      this.api.getVegetativeSelectedValues(this.reservoirId,'income',this.selectedIncomeYears).subscribe({
-        next: (values: ComplexValueResponse) => {
-          this.incomeForecast = values.data.map(item => item.value)
-        },
-        complete: () => this.setVolumeForecast()
-      })
-    }
+  changeSelectedIncomeForecast(event: MatSelectChange): void {
+    this.selectedIncomeYears = event.value;
+    console.log('Selected income years:', this.selectedIncomeYears);
+    this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
+      next: (values: ComplexValueResponse) => {
+        this.incomeForecast = values.data.map(item => item.value)
+      },
+      complete: () => this.setVolumeForecast()
+    })
+  }
 
 
-     changeSelectedReleaseForecast(event: MatSelectChange): void {
-      this.selectedReleaseYears = event.value;
-      console.log('Selected release years:', this.selectedReleaseYears);
-      this.api.getVegetativeSelectedValues(this.reservoirId,'release',this.selectedReleaseYears).subscribe({
-        next: (values: ComplexValueResponse) => {
-          this.releaseForecast = values.data.map(item => item.value)
-        },
-        complete: () => this.setVolumeForecast()
-      })
-
-    }
-
+  changeSelectedReleaseForecast(event: MatSelectChange): void {
+    this.selectedReleaseYears = event.value;
+    console.log('Selected release years:', this.selectedReleaseYears);
+    this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
+      next: (values: ComplexValueResponse) => {
+        this.releaseForecast = values.data.map(item => item.value)
+      },
+      complete: () => this.setVolumeForecast()
+    })
 
   }
+
+
+}

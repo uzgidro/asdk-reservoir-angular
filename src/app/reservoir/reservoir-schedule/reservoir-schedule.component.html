@@ -41,9 +41,8 @@
       </tr>
       <tr>
         <td class="bg-gray-300" colspan="2">Приток в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of incomeForecast">
-          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
-        </td>
+        <td class="bg-gray-300" *ngFor="let value of incomeForecast">{{ value }}</td>
+        <td class="bg-gray-300" *ngFor="let day of decade.slice(incomeForecast.length)"></td>
         <td class="bg-gray-300" >{{getSumOfArr(incomeForecast)}}</td>
       </tr>
       <tr>
@@ -62,6 +61,7 @@
             {{ value | number: '.0-1' }}
           </span>
         </td>
+        <td class="bg-gray-300" *ngFor="let day of decade.slice(volumeForecastStart.length)"></td>
         <td class="bg-gray-300"></td>
       </tr>
       <tr>
@@ -69,6 +69,7 @@
         <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">
           <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }}</span>
           </td>
+        <td class="bg-gray-300" *ngFor="let day of decade.slice(volumeForecastEnd.length)"></td>
           <td class="bg-gray-300"></td>
       </tr>
 
@@ -78,12 +79,14 @@
         <td *ngFor="let value of levelForecast" class="bg-gray-400/60">
           <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
         </td>
+        <td class="bg-gray-400/60" *ngFor="let day of decade.slice(levelForecast.length)"></td>
         <td class="bg-gray-400/60"></td>
 
       </tr>
       <tr>
         <td colspan="2" class="bg-gray-400/60">Дневное изменение</td>
         <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-400/60">{{i!==0?i.toFixed(2):i}}</td>
+        <td class="bg-gray-400/60" *ngFor="let day of decade.slice(changelevelForecast.length)"></td>
         <td class="bg-gray-400/60"></td>
       </tr>
       <tr>
@@ -107,9 +110,8 @@
       </tr>
       <tr>
         <td class="bg-gray-300"  colspan="2">Попуск в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of releaseForecast">
-          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
-        </td>
+        <td class="bg-gray-300" *ngFor="let value of releaseForecast">{{ value }}</td>
+        <td class="bg-gray-300" *ngFor="let day of decade.slice(releaseForecast.length)"></td>
         <td class="bg-gray-300">{{getSumOfArr(releaseForecast)}}</td>
       </tr>
             <tr *ngIf="gesCoefficient && lowerLevel">
@@ -118,7 +120,8 @@
               <td *ngFor="let value of gesPower">
               <span [ngClass]="{'text-red-400': value==0}">{{value.toFixed(0)}}</span>
               </td>
-              <td></td>
+              <td class="bg-gray-300" *ngFor="let day of decade.slice(gesPower.length)"></td>
+              <td class="bg-gray-300"></td>
             </tr>
       </tbody>
     </table>
