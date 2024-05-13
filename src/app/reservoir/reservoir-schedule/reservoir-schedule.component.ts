@@ -124,9 +124,6 @@ export class ReservoirScheduleComponent implements OnInit {
             this.inputMin=response.income.data[0].date.slice(0,4);
             ['income', 'volume', 'release', 'level'].forEach((dataType:string)=>{
             const dataThisYear = response[dataType].data.filter((el:ValueResponse) => el.date.includes(`${currentYear}`));
-
-
-
             const allIncomeYearData = response['income'].data.filter((el:ValueResponse) => !el.date.includes(`${currentYear}`));
             const allReleaseYearData = response['release'].data.filter((el:ValueResponse) => !el.date.includes(`${currentYear}`));
             //All years
@@ -139,11 +136,11 @@ export class ReservoirScheduleComponent implements OnInit {
             case 'income':
               this.incomeForecast = [elem.value, ...this.incomeForecast.slice(0, 17)];
               break;
-           case 'volume':
+            case 'volume':
               this.volumeForecastStart = [elem.value, ...this.volumeForecastStart.slice(0, 17)];
               this.volumeForecastEnd = [...this.volumeForecastStart.slice(1), 0];
               break;
-           case 'release':
+            case 'release':
             this.releaseForecast = [elem.value, ...this.releaseForecast.slice(0, 17)];
             break;
             case 'level':
