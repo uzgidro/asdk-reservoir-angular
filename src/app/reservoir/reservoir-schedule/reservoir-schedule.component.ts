@@ -66,7 +66,7 @@ export class ReservoirScheduleComponent implements OnInit {
   volumeForecastStart: number[] = []
   volumeForecastEnd: number[] = []
   levelForecast: number[] = []
-  changelevelForecast: number[] = []
+  changelevelForecast: { value: number, error: boolean }[] = []
   selectedIncome?: boolean
   selectedRelease?: boolean
   selectedYearIncome?: string = '2023'
@@ -122,11 +122,11 @@ export class ReservoirScheduleComponent implements OnInit {
             this.volumeForecastStart = response.volume.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
             this.volumeForecastEnd = this.volumeForecastStart.slice(1)
             this.levelForecast = response.level.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
-            this.changelevelForecast = [0]
+            this.changelevelForecast = [{value: 0, error: false}]
             for (let i = 1; i <= this.levelForecast.length - 1; i++) {
               let days = i == 6 || i == 12 || i == 14 ? 11 : 10
-              const difference = (this.levelForecast[i] - this.levelForecast[i - 1]) / days;
-              this.changelevelForecast.push(difference)
+              const difference = (this.levelForecast[i - 1] - this.levelForecast[i - 1]) / days;
+              this.setupChangeLevelForecastWithConstraints(response.level.reservoir_id, difference, i)
             }
             const allIncomeYearData = response.income.data.filter(el => !el.date.includes(currentYear));
             const allReleaseYearData = response.release.data.filter(el => !el.date.includes(currentYear));
@@ -143,7 +143,7 @@ export class ReservoirScheduleComponent implements OnInit {
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30') {
     this.incomeForecastCategory = category
     this.setIncomePercentForecast()
-    if (this.income){
+    if (this.income) {
       if (this.incomeForecastCategory == 'five') {
         this.incomeForecast = this.income.stat5
       } else if (this.incomeForecastCategory == 'ten') {
@@ -258,7 +258,8 @@ export class ReservoirScheduleComponent implements OnInit {
         for (let i = 1; i < differences.length; i++) {
           let days = i == 6 || i == 12 || i == 14 ? 11 : 10
           const difference = (differences[i] - differences[i - 1]) / days;
-          this.changelevelForecast.push(difference)
+
+          this.setupChangeLevelForecastWithConstraints(id, difference, i)
         }
       }
     })
@@ -308,6 +309,62 @@ export class ReservoirScheduleComponent implements OnInit {
       complete: () => this.setVolumeForecast()
     })
 
+  }
+
+  private setupChangeLevelForecastWithConstraints(id: number, difference: number, i: number) {
+    switch (id) {
+      case 1: {
+        if ((this.levelForecast[i - 1] <= 891 && difference >= -1 && difference <= 1) ||
+          (this.levelForecast[i - 1] <= 901 && difference >= -0.5 && difference <= 0.5) ||
+          (this.levelForecast[i - 1] <= 906 && difference >= -0.3 && difference <= 0.3)) {
+          this.changelevelForecast.push({value: difference, error: false})
+        } else {
+          this.changelevelForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 2: {
+        if ((this.levelForecast[i - 1] >= 1010 && this.levelForecast[i - 1] <= 1070.5 && difference >= -1) ||
+          (this.levelForecast[i - 1] <= 1080.5 && difference >= -0.5 && difference <= 0.5)) {
+          this.changelevelForecast.push({value: difference, error: false})
+        } else {
+          this.changelevelForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 3: {
+        if (this.levelForecast[i - 1] >= 277 && this.levelForecast[i - 1] <= 289 && difference >= -0.05 && difference <= 0.07) {
+          this.changelevelForecast.push({value: difference, error: false})
+        } else {
+          this.changelevelForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 4: {
+        if ((this.levelForecast[i - 1] >= 1060 && this.levelForecast[i - 1] <= 1100 && difference >= -1 && difference <= 1) ||
+          (this.levelForecast[i - 1] <= 1118 && difference >= -0.3 && difference <= 0.4)) {
+          this.changelevelForecast.push({value: difference, error: false})
+        } else {
+          this.changelevelForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 5: {
+        if ((this.levelForecast[i - 1] <= 891 && difference >= -1 && difference <= 1) ||
+          (this.levelForecast[i - 1] <= 925 && difference >= -0.5 && difference <= 1) ||
+          (this.levelForecast[i - 1] <= 945 && difference >= -0.3 && difference <= 0.5) ||
+          (this.levelForecast[i - 1] <= 960 && difference >= -0.3 && difference <= 0.5)) {
+          this.changelevelForecast.push({value: difference, error: false})
+        } else {
+          this.changelevelForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      default: {
+        this.changelevelForecast.push({value: difference, error: false})
+        break
+      }
+    }
   }
 
 
