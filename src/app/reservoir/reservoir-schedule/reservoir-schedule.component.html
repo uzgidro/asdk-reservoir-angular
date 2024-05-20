@@ -120,8 +120,8 @@
               <td *ngFor="let value of gesPower">
               <span >{{value.toFixed(0)}}</span>
               </td>
-              <td class="bg-gray-300" *ngFor="let day of decade.slice(gesPower.length)"></td>
-              <td class="bg-gray-300"></td>
+              <td  *ngFor="let day of decade.slice(gesPower.length)"></td>
+              <td></td>
       </tr>
       </tbody>
     </table>

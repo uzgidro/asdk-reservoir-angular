@@ -269,8 +269,11 @@ export class ReservoirScheduleComponent implements OnInit {
       this.gesPower = []
       for (let i = 0; i < this.releaseForecast.length; i++) {
         let days = i == 5 || i == 11 || i == 13 ? 11 : 10
-        if (this.levelForecast[i] <= 0) this.gesPower.push(0)
-        else this.gesPower.push((this.G_POWER * (this.levelForecast[i] - this.lowerLevel) * this.releaseForecast[i] * this.gesCoefficient) * 24 * days / 1000)
+        if (this.levelForecast[i] <= 0){
+          this.gesPower.push(0)
+        }else{
+        this.gesPower.push((this.G_POWER * (this.levelForecast[i] - this.lowerLevel) * this.releaseForecast[i] * this.gesCoefficient) * 24 * days / 1000)
+        }
       }
     }
   }
