@@ -188,10 +188,7 @@ export class ApiService {
    getVegetativeSelectedValues(reservoirId: number, category: string = 'income',year:number[]): Observable<any> {
     let params = new HttpParams();
       params = params.append('category', category)
-      year.forEach((item, index) => {
-        const paramName = `year[${index}]`;
-        params = params.append(paramName, item);
-      });
+      params = params.append('year', year.join(','));
       return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params}).pipe(
         catchError((error) => {
           this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
