@@ -15,6 +15,7 @@ const AVG: string = '/avg'
 const MAX: string = '/max'
 const MIN: string = '/min'
 const YEAR: string = '/year'
+const APPROVED: string = '/approved'
 const SELECTED: string = '/selected'
 const VEGETATIVE: string = '/vegetative'
 const LEVEL: string = '/level'
@@ -148,6 +149,15 @@ export class ApiService {
 
   getSelectedYearValues(reservoirId: number, year: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + SELECTED, {params: new HttpParams().set('category', 'income').set('year', year)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getApprovedSchedule(reservoirId: number): Observable<any> {
+    return this.http.get(BASE_URL+RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + APPROVED).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];

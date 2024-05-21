@@ -88,10 +88,6 @@ export class ReservoirScheduleComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        this.volumeForecastStart = new Array(18).fill(0)
-        this.volumeForecastEnd = new Array(18).fill(0)
-        this.levelForecast = new Array(18).fill(0)
-        this.changelevelForecast = new Array(18).fill(0)
         const reservoir = value['reservoir']
         if (this.subscribe) {
           this.subscribe.unsubscribe()
@@ -114,7 +110,7 @@ export class ReservoirScheduleComponent implements OnInit {
 
           }
         })
-        this.subscribe = this.api.getThisYearValues(reservoir).subscribe({
+        this.api.getThisYearValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
             const currentYear = new Date().getFullYear().toString();
             this.incomeForecast = response.income.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
@@ -133,6 +129,11 @@ export class ReservoirScheduleComponent implements OnInit {
             //All years
             this.existingIncomeYears = this.extractYears(allIncomeYearData);
             this.existingReleaseYears = this.extractYears(allReleaseYearData)
+          }
+        })
+        this.api.getApprovedSchedule(reservoir).subscribe({
+          next: (response) => {
+            console.log(response)
           }
         })
       }
