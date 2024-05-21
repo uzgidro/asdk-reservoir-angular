@@ -293,8 +293,16 @@ console.log(event);
     }
   }
 
-  getSumOfArr(array: any) {
-    return array.reduce((sum: number, value: number) => sum + value, 0);
+  getSumOfArr(array?: number[]) {
+    if (array != null && array.length > 0) {
+      let sum = array.reduce((sum: number, value: number) => sum + value, 0);
+      let days = array.length * 10;
+      if (array.length >= 13) days += 3
+      else if (array.length >= 11) days += 2
+      else if (array.length >= 5) days += 1
+      return (sum / array.length) * 0.0864 * days
+    }
+    return 0
   }
 
 
