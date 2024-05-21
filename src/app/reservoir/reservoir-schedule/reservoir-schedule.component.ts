@@ -143,6 +143,7 @@ console.log(event);
             this.existingReleaseYears = this.extractYears(allReleaseYearData)
           }
         })
+    
       }
     })
   }
@@ -330,7 +331,6 @@ console.log(event);
       },
       complete: () => this.setVolumeForecast()
     })
-
   }
 
   private setupChangeLevelForecastWithConstraints(id: number, difference: number, i: number) {
