@@ -1,214 +1,249 @@
-<div *ngIf="reservoirName" class="w-full px-4 mt-6 flex flex-col space-y-4 relative max-h-lvh">
-  <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
+<div class="absolute top-20 right-10 p-1 bg-gray-400 shadow-lg z-10 grid grid-cols-2 space-x-2 rounded-full">
+  <button class="px-2 py-2 rounded-l-full"  (click)="changePeriod('decade')" [ngClass]="{'bg-gray-200': selectedPeriod==='decade'}"> декады</button>
+  <button class="px-2 py-2 rounded-r-full"   (click)="changePeriod('daily')"   [ngClass]="{'bg-gray-200': selectedPeriod==='daily'}">день</button>
+</div>
 
-  <div class="flex flex-row h-full space-x-4">
-    <table class="h-full">
-      <thead class="sticky top-0">
-      <tr>
-        <th rowspan="2" colspan="2">Индикаторы</th>
-        <th rowspan="2">Измерение</th>
-        <th *ngFor="let month of months" colspan="3">{{ month }}</th>
-        <th></th>
-      </tr>
-      <tr>
-        <th *ngFor="let decade of decade">{{ decade }}</th>
-        <th>Всего</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngIf="income?.stat10?.length!==0">
-        <td colspan="2">Многолетний/Средний приток </td>
-        <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of income?.stat10">
-          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
-        </td>
-        <td>{{getSumOfArr(income?.stat10) | number:'0.0-0'}}</td>
-      </tr>
-      <tr *ngIf="income?.stat10?.length===0">
-        <td colspan="2">Средний приток за все время</td>
-        <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of income?.stat5">
-          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
-        </td>
-        <td>{{getSumOfArr(income?.stat5) | number:'0.0-0'}}</td>
-      </tr>
-      <tr>
-        <td colspan="2">Приток в 2023</td>
-        <td *ngFor="let value of income?.statLastYear">
-          <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
-        </td>
-        <td>{{getSumOfArr(income?.statLastYear) | number:'0.0-0'}}</td>
-      </tr>
-      <tr>
-        <td class="bg-gray-300" colspan="2">Приток в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of incomeForecast">{{ value }}</td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(incomeForecast.length)"></td>
-        <td class="bg-gray-300" >{{getSumOfArr(incomeForecast) | number:'0.0-0'}}</td>
-      </tr>
-      <tr>
-        <td colspan="2">Объём в 2023</td>
-        <td rowspan="3">млн. м3</td>
-        <td *ngFor="let value of volume?.statLastYear" >
-          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td class="bg-gray-300" rowspan="2">Объём в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" >Начало декады</td>
-        <td class="bg-gray-300" *ngFor="let value of volumeForecastStart">
-          <span [ngClass]="{'text-red-400': value==0}">
-            {{ value | number: '.0-1' }}
-          </span>
-        </td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(volumeForecastStart.length)"></td>
-        <td class="bg-gray-300"></td>
-      </tr>
-      <tr>
-        <td class="bg-gray-300">Конец декады</td>
-        <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">
-          <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }}</span>
+<ng-container *ngIf="selectedPeriod==='decade'">
+  <div *ngIf="reservoirName" class="w-full px-4 mt-6 flex flex-col space-y-4 relative max-h-lvh">
+    <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
+
+    <div class="flex flex-row h-full space-x-4 overflow-x-auto">
+      <table class="h-full">
+        <thead class="sticky top-0">
+        <tr>
+          <th rowspan="2" colspan="2">Индикаторы</th>
+          <th rowspan="2">Измерение</th>
+          <th *ngFor="let month of months" colspan="3">{{ month }}</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th *ngFor="let decade of decade">{{ decade }}</th>
+          <th>Всего</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="income?.stat10?.length!==0">
+          <td colspan="2">Многолетний/Средний приток </td>
+          <td rowspan="3">м3/с</td>
+          <td *ngFor="let value of income?.stat10">
+            <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
           </td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(volumeForecastEnd.length)"></td>
+          <td>{{getSumOfArr(income?.stat10) | number:'0.0-0'}}</td>
+        </tr>
+        <tr *ngIf="income?.stat10?.length===0">
+          <td colspan="2">Средний приток за все время</td>
+          <td rowspan="3">м3/с</td>
+          <td *ngFor="let value of income?.stat5">
+            <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
+          </td>
+          <td>{{getSumOfArr(income?.stat5) | number:'0.0-0'}}</td>
+        </tr>
+        <tr>
+          <td colspan="2">Приток в 2023</td>
+          <td *ngFor="let value of income?.statLastYear">
+            <span [ngClass]="{'text-red-400':value==0}">{{ value }}</span>
+          </td>
+          <td>{{getSumOfArr(income?.statLastYear) | number:'0.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="bg-gray-300" colspan="2">Приток в 2024 (Прогноз)</td>
+          <td class="bg-gray-300" *ngFor="let value of incomeForecast">{{ value }}</td>
+          <td class="bg-gray-300" *ngFor="let day of decade.slice(incomeForecast.length)"></td>
+          <td class="bg-gray-300" >{{getSumOfArr(incomeForecast) | number:'0.0-0'}}</td>
+        </tr>
+        <tr>
+          <td colspan="2">Объём в 2023</td>
+          <td rowspan="3">млн. м3</td>
+          <td *ngFor="let value of volume?.statLastYear" >
+            <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="bg-gray-300" rowspan="2">Объём в 2024 (Прогноз)</td>
+          <td class="bg-gray-300" >Начало декады</td>
+          <td class="bg-gray-300" *ngFor="let value of volumeForecastStart">
+            <span [ngClass]="{'text-red-400': value==0}">
+              {{ value | number: '.0-1' }}
+            </span>
+          </td>
+          <td class="bg-gray-300" *ngFor="let day of decade.slice(volumeForecastStart.length)"></td>
           <td class="bg-gray-300"></td>
-      </tr>
+        </tr>
+        <tr>
+          <td class="bg-gray-300">Конец декады</td>
+          <td class="bg-gray-300" *ngFor="let value of volumeForecastEnd">
+            <span [ngClass]="{'text-red-400': value==0}">{{ value | number: '.0-1' }}</span>
+            </td>
+          <td class="bg-gray-300" *ngFor="let day of decade.slice(volumeForecastEnd.length)"></td>
+            <td class="bg-gray-300"></td>
+        </tr>
 
-      <tr>
-        <td  colspan="2" class="bg-gray-400/60">Уровень на конец декады</td>
-        <td rowspan="2">м</td>
-        <td *ngFor="let value of levelForecast" class="bg-gray-400/60">
-          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
-        </td>
-        <td class="bg-gray-400/60" *ngFor="let day of decade.slice(levelForecast.length)"></td>
-        <td class="bg-gray-400/60"></td>
+        <tr>
+          <td  colspan="2" class="bg-gray-400/60">Уровень на конец декады</td>
+          <td rowspan="2">м</td>
+          <td *ngFor="let value of levelForecast" class="bg-gray-400/60">
+            <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+          </td>
+          <td class="bg-gray-400/60" *ngFor="let day of decade.slice(levelForecast.length)"></td>
+          <td class="bg-gray-400/60"></td>
 
-      </tr>
-      <tr>
-        <td colspan="2" class="bg-gray-400/60">Дневное изменение</td>
-        <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-400/60" [ngClass]="{'text-red-400': i.error}">{{i.value | number:'0.0-2'}}</td>
-        <td class="bg-gray-400/60" *ngFor="let day of decade.slice(changelevelForecast.length)"></td>
-        <td class="bg-gray-400/60"></td>
-      </tr>
-      <tr>
-        <td colspan="2">Многолетний/Средний попуск</td>
-        <td rowspan="3">м3/с</td>
-        <td *ngFor="let value of release?.stat10">
-          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
-        </td>
-        <td>{{getSumOfArr(release?.stat10) | number:'0.0-0'}}</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="bg-gray-400/60">Дневное изменение</td>
+          <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-400/60" [ngClass]="{'text-red-400': i.error}">{{i.value | number:'0.0-2'}}</td>
+          <td class="bg-gray-400/60" *ngFor="let day of decade.slice(changelevelForecast.length)"></td>
+          <td class="bg-gray-400/60"></td>
+        </tr>
+        <tr>
+          <td colspan="2">Многолетний/Средний попуск</td>
+          <td rowspan="3">м3/с</td>
+          <td *ngFor="let value of release?.stat10">
+            <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+          </td>
+          <td>{{getSumOfArr(release?.stat10) | number:'0.0-0'}}</td>
 
-      </tr>
-      <tr>
-        <td colspan="2">Попуск в 2023</td>
-        <td *ngFor="let value of release?.statLastYear">
-          <span [ngClass]="{'text-red-400': value==0}">
-          <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
-          </span>
-        </td>
-        <td>{{getSumOfArr(release?.statLastYear) | number:'0.0-0'}}</td>
+        </tr>
+        <tr>
+          <td colspan="2">Попуск в 2023</td>
+          <td *ngFor="let value of release?.statLastYear">
+            <span [ngClass]="{'text-red-400': value==0}">
+            <span [ngClass]="{'text-red-400': value==0}">{{ value }}</span>
+            </span>
+          </td>
+          <td>{{getSumOfArr(release?.statLastYear) | number:'0.0-0'}}</td>
 
-      </tr>
-      <tr>
-        <td class="bg-gray-300"  colspan="2">Попуск в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of releaseForecast">{{ value }}</td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(releaseForecast.length)"></td>
-        <td class="bg-gray-300">{{getSumOfArr(releaseForecast) | number:'0.0-0'}}</td>
-      </tr>
-            <tr *ngIf="gesCoefficient && lowerLevel">
-              <td colspan="2">Выработка электроэнергии</td>
-              <td>МВт</td>
-              <td *ngFor="let value of gesPower">
-              {{value | number:'0.0-0'}}
-              </td>
-              <td *ngFor="let day of decade.slice(gesPower.length)"></td>
-              <td></td>
-            </tr>
-      </tbody>
-    </table>
-    <div class="space-y-8">
-      <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
-        <h3>Приток</h3>
-        <span class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('perAvg')">
-          <label class="mr-2">% </label>
-          <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
-          <label>% к прошлому году</label> -->
-         <input class="w-full" type="number" value="80"  min="0" max="200" (input)="changeIncomePercent($event)">
-        </span>
-        <span class="flex gap-2 flex-row">
-          <!-- INCOME YEAR ( Приток )-->
-          <!-- <input type="radio" name="income" #incomeYear (change)="changeSelectedIncomeInput(incomeYear.checked)"> -->
-          <!-- <input type="number" [value]="this.selectedYearIncome" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedIncomeValue($event)"  class="w-full"> -->
-          <mat-form-field class="w-[120px]  h-[63px]"   appearance="fill" >
-            <!-- <mat-label>Select Years</mat-label> -->
-            <mat-select  multiple [(value)]="selectedIncomeYears" (selectionChange)=" changeSelectedIncomeForecast($event)"  >
-              <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500"  *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </span>
-        <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('30')">
-          <label>Среднее за 30 лет</label>
-        </span>
-        <span *ngIf="income?.stat10?.length!==0" class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('ten')">
-          <label>Среднее за 10 лет</label>
-        </span>
-        <span *ngIf="income?.stat5?.length!==0" class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('last')">
-          <label>Среднее за 5 лет</label>
-        </span>
+        </tr>
+        <tr>
+          <td class="bg-gray-300"  colspan="2">Попуск в 2024 (Прогноз)</td>
+          <td class="bg-gray-300" *ngFor="let value of releaseForecast">{{ value }}</td>
+          <td class="bg-gray-300" *ngFor="let day of decade.slice(releaseForecast.length)"></td>
+          <td class="bg-gray-300">{{getSumOfArr(releaseForecast) | number:'0.0-0'}}</td>
+        </tr>
+              <tr *ngIf="gesCoefficient && lowerLevel">
+                <td colspan="2">Выработка электроэнергии</td>
+                <td>МВт</td>
+                <td *ngFor="let value of gesPower">
+                {{value | number:'0.0-0'}}
+                </td>
+                <td *ngFor="let day of decade.slice(gesPower.length)"></td>
+                <td></td>
+              </tr>
+        </tbody>
+      </table>
+      <div class="space-y-8">
+        <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
+          <h3>Приток</h3>
           <span class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('max')">
-          <label>Максимум</label>
+            <input type="radio" name="income" (click)="changeIncomeForecast('perAvg')">
+            <label class="mr-2">% </label>
+            <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
+            <label>% к прошлому году</label> -->
+           <input class="w-full" type="number" value="80"  min="0" max="200" (input)="changeIncomePercent($event)">
           </span>
+          <span class="flex gap-2 flex-row">
+            <!-- INCOME YEAR ( Приток )-->
+            <!-- <input type="radio" name="income" #incomeYear (change)="changeSelectedIncomeInput(incomeYear.checked)"> -->
+            <!-- <input type="number" [value]="this.selectedYearIncome" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedIncomeValue($event)"  class="w-full"> -->
+            <mat-form-field class="w-[120px]  h-[63px]"   appearance="fill" >
+              <!-- <mat-label>Select Years</mat-label> -->
+              <mat-select  multiple [(value)]="selectedIncomeYears" (selectionChange)=" changeSelectedIncomeForecast($event)"  >
+                <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500"  *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </span>
+          <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
+            <input type="radio" name="income" (click)="changeIncomeForecast('30')">
+            <label>Среднее за 30 лет</label>
+          </span>
+          <span *ngIf="income?.stat10?.length!==0" class="flex flex-row">
+            <input type="radio" name="income" (click)="changeIncomeForecast('ten')">
+            <label>Среднее за 10 лет</label>
+          </span>
+          <span *ngIf="income?.stat5?.length!==0" class="flex flex-row">
+            <input type="radio" name="income" (click)="changeIncomeForecast('last')">
+            <label>Среднее за 5 лет</label>
+          </span>
+            <span class="flex flex-row">
+            <input type="radio" name="income" (click)="changeIncomeForecast('max')">
+            <label>Максимум</label>
+            </span>
+            <span class="flex flex-row">
+            <input type="radio" name="income" (click)="changeIncomeForecast('min')">
+             <label>Минимум</label>
+            </span>
+        </form>
+        <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
+          <h3>Попуск</h3>
           <span class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('min')">
-           <label>Минимум</label>
+            <input type="radio" name="release" (click)="changeReleaseForecast('perAvg')">
+            <label class="mr-2">% </label>
+            <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
+            <label>% к прошлому году</label> -->
+          <input class="w-full" type="number" value="80" max="200"  min="0" (input)="changeReleasePercent($event)">
           </span>
-      </form>
-      <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
-        <h3>Попуск</h3>
-        <span class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('perAvg')">
-          <label class="mr-2">% </label>
-          <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
-          <label>% к прошлому году</label> -->
-        <input class="w-full" type="number" value="80" max="200"  min="0" (input)="changeReleasePercent($event)">
-        </span>
-        <span class="flex gap-2 flex-row">
-          <!-- RELEASE YEAR (Попуск )-->
-          <!-- <input type="radio" name="release" #releaseYear  (change)="changeSelectedReleaseInput(releaseYear.checked)" >
-          <input type="number" [value]="this.selectedYearRelease" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedReleaseValue($event)" class="w-full"> -->
+          <span class="flex gap-2 flex-row">
+            <!-- RELEASE YEAR (Попуск )-->
+            <!-- <input type="radio" name="release" #releaseYear  (change)="changeSelectedReleaseInput(releaseYear.checked)" >
+            <input type="number" [value]="this.selectedYearRelease" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedReleaseValue($event)" class="w-full"> -->
 
-          <mat-form-field class="w-[120px]  h-[63px]"   appearance="fill">
-            <!-- <mat-label>Select Years</mat-label> -->
-            <mat-select multiple [(value)]="selectedReleaseYears" (selectionChange)=" changeSelectedReleaseForecast($event)" >
-              <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500" *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </span>
-        <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('30')">
-          <label>Среднее за 30 лет</label>
-        </span>
-        <span *ngIf="release?.stat10?.length!==0" class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('ten')">
-          <label>Среднее за 10 лет</label>
-        </span>
-        <span class="flex flex-row" *ngIf="release?.stat5?.length!==0">
-          <input type="radio" name="release" (click)="changeReleaseForecast('five')">
-          <label>Среднее за 5 лет</label>
-        </span>
-        <span class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('max')">
-          <label>Максимум</label>
+            <mat-form-field class="w-[120px]  h-[63px]"   appearance="fill">
+              <!-- <mat-label>Select Years</mat-label> -->
+              <mat-select multiple [(value)]="selectedReleaseYears" (selectionChange)=" changeSelectedReleaseForecast($event)" >
+                <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500" *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </span>
+          <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
+            <input type="radio" name="release" (click)="changeReleaseForecast('30')">
+            <label>Среднее за 30 лет</label>
+          </span>
+          <span *ngIf="release?.stat10?.length!==0" class="flex flex-row">
+            <input type="radio" name="release" (click)="changeReleaseForecast('ten')">
+            <label>Среднее за 10 лет</label>
+          </span>
+          <span class="flex flex-row" *ngIf="release?.stat5?.length!==0">
+            <input type="radio" name="release" (click)="changeReleaseForecast('five')">
+            <label>Среднее за 5 лет</label>
           </span>
           <span class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('min')">
-           <label>Минимум</label>
-          </span>
-      </form>
+            <input type="radio" name="release" (click)="changeReleaseForecast('max')">
+            <label>Максимум</label>
+            </span>
+            <span class="flex flex-row">
+            <input type="radio" name="release" (click)="changeReleaseForecast('min')">
+             <label>Минимум</label>
+            </span>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+
+</ng-container>
+
+<ng-container *ngIf="selectedPeriod==='daily'">
+  <div *ngIf="reservoirName" class="w-full px-4 mt-6 flex flex-col space-y-4 relative max-h-lvh">
+    <div class="flex flex-row h-full space-x-4 overflow-x-auto">
+      <table class="h-full">
+        <thead class="sticky top-0">
+          <tr>
+          </tr>
+        </thead>
+
+
+      </table>
+
+
+
+    </div>
+
+
+  </div>
+
+</ng-container>
+
+
+
+
+
+

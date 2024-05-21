@@ -10,25 +10,33 @@ import {Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
 import {FormsModule} from "@angular/forms";
 import {EnvService} from "../../shared/service/env.service";
+import { MetricSelectComponent } from "../../shared/component/metric-select/metric-select.component";
 
 @Component({
-  selector: 'app-reservoir-schedule',
-  standalone: true,
-  imports: [
-    DatePipe,
-    DecimalPipe,
-    NgForOf,
-    NgIf,
-    NgClass,
-    FormsModule,
-    CommonModule,
-    MatSelectModule
-  ],
-  templateUrl: './reservoir-schedule.component.html',
-  styleUrl: './reservoir-schedule.component.css'
+    selector: 'app-reservoir-schedule',
+    standalone: true,
+    templateUrl: './reservoir-schedule.component.html',
+    styleUrl: './reservoir-schedule.component.css',
+    imports: [
+        DatePipe,
+        DecimalPipe,
+        NgForOf,
+        NgIf,
+        NgClass,
+        FormsModule,
+        CommonModule,
+        MatSelectModule,
+        MetricSelectComponent
+    ]
 })
 export class ReservoirScheduleComponent implements OnInit {
+changeMetrics(event: any) {
+throw new Error('Method not implemented.');
+console.log(event);
 
+}
+
+  selectedPeriod?:string='decade'
   reservoirName?: string
   reservoirId?: any
   existingIncomeYears: any
@@ -137,6 +145,12 @@ export class ReservoirScheduleComponent implements OnInit {
         })
       }
     })
+  }
+
+
+
+  changePeriod(period:string){
+    this.selectedPeriod=period
   }
 
 
