@@ -69,6 +69,12 @@ export class ReservoirScheduleComponent implements OnInit {
   private subscribe?: Subscription
   private readonly G_POWER = 9.81
 
+  approvedIncome: number[] = []
+  approvedRelease: number[] = []
+  approvedLevel: number[] = []
+  approvedVolumeStart: number[] = []
+  approvedVolumeEnd: number[] = []
+
 
   flowForecast: { income: number[], release: number[] } = {income: [], release: []}
   flowForecastObs: Subject<{ income: number[], release: number[] }> = new Subject<{
@@ -131,9 +137,12 @@ export class ReservoirScheduleComponent implements OnInit {
           }
         })
         this.api.getApprovedSchedule(reservoir).subscribe({
-          next: (response) => {
-            // TODO(): implement!!!
-            console.log(response)
+          next: (response: {income: number, release: number, level: number, volumeStart: number, volumeEnd: number}[]) => {
+            this.approvedIncome = response.map(m => m.income)
+            this.approvedRelease = response.map(m => m.release)
+            this.approvedLevel = response.map(m => m.level)
+            this.approvedVolumeStart = response.map(m => m.volumeStart)
+            this.approvedVolumeEnd = response.map(m => m.volumeEnd)
           }
         })
       }

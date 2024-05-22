@@ -132,15 +132,6 @@ export class DecadeService {
       const data = dateData.reduce((acc, currentValue) => acc + currentValue.value, 0)
       statTotal.push(Math.round(data / dateData.length))
     }
-    console.log({
-      start: start,
-      end: end,
-      stat5: stat5,
-      stat10: stat10,
-      stat30: stat30,
-      statTotal: statTotal,
-      statLastYear: statLastYear,
-    })
     return {
       start: start,
       end: end,
