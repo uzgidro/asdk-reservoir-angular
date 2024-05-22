@@ -6,7 +6,7 @@ import {ApiService} from "../../service/api.service";
 import {ActivatedRoute} from "@angular/router";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {CategorisedValueResponse, ComplexValueResponse} from "../../shared/response/values-response";
-import {Subscription} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {Decade} from "../../shared/interfaces";
 import {FormsModule} from "@angular/forms";
 import {EnvService} from "../../shared/service/env.service";
@@ -31,8 +31,8 @@ export class ReservoirScheduleComponent implements OnInit {
 
   reservoirName?: string
   reservoirId?: any
-  existingIncomeYears: any
-  existingReleaseYears: any
+  existingIncomeYears: number[] = []
+  existingReleaseYears: number[] = []
   selectedIncomeYears: number[] = [];
   selectedReleaseYears: number[] = [];
   months = [
@@ -51,31 +51,37 @@ export class ReservoirScheduleComponent implements OnInit {
     "I", "II", "III",
     "I", "II", "III",
   ]
-  inputMin?: string
-  inputMax: string = `${new Date().getFullYear() - 1}`
   income?: Decade
   release?: Decade
   level?: Decade
   volume?: Decade
-  incomeForecast: number[] = []
   incomeForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   incomePercent = 80
-  releaseForecast: number[] = []
   releaseForecastCategory: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30' = 'perLast'
   releasePercent = 80
   volumeForecastStart: number[] = []
   volumeForecastEnd: number[] = []
-  levelForecast: number[] = []
-  changelevelForecast: { value: number, error: boolean }[] = []
-  selectedIncome?: boolean
-  selectedRelease?: boolean
-  selectedYearIncome?: string = '2023'
-  selectedYearRelease?: string = '2023'
+  levelForecast: Subject<number[]> = new Subject<number[]>()
+  levelDifferenceForecast: { value: number, error: boolean }[] = []
   gesPower: number[] = []
   lowerLevel?: number
   gesCoefficient?: number
   private subscribe?: Subscription
   private readonly G_POWER = 9.81
+
+
+  flowForecast: { income: number[], release: number[] } = {income: [], release: []}
+  flowForecastObs: Subject<{ income: number[], release: number[] }> = new Subject<{
+    income: number[],
+    release: number[]
+  }>()
+
+  releaseLevelForecast: { release: number[], level: number[] } = {release: [], level: []}
+  releaseLevelForecastObs: Subject<{ release: number[], level: number[] }> = new Subject<{
+    release: number[];
+    level: number[]
+  }>()
+
 
   constructor(
     private decadeService: DecadeService,
@@ -88,7 +94,7 @@ export class ReservoirScheduleComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        const reservoir = value['reservoir']
+        const reservoir = value['reservoir'] as number
         if (this.subscribe) {
           this.subscribe.unsubscribe()
           this.subscribe = undefined
@@ -113,17 +119,10 @@ export class ReservoirScheduleComponent implements OnInit {
         this.api.getThisYearValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
             const currentYear = new Date().getFullYear().toString();
-            this.incomeForecast = response.income.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
-            this.releaseForecast = response.release.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
-            this.volumeForecastStart = response.volume.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
-            this.volumeForecastEnd = this.volumeForecastStart.slice(1)
-            this.levelForecast = response.level.data.filter(m => m.date.includes(currentYear)).map(m => m.value)
-            this.changelevelForecast = [{value: 0, error: false}]
-            for (let i = 1; i <= this.levelForecast.length - 1; i++) {
-              let days = i == 6 || i == 12 || i == 14 ? 11 : 10
-              const difference = (this.levelForecast[i - 1] - this.levelForecast[i - 1]) / days;
-              this.setupChangeLevelForecastWithConstraints(response.level.reservoir_id, difference, i)
-            }
+            this.setFlowForecast(
+              response.income.data.filter(m => m.date.includes(currentYear)).map(m => m.value),
+              response.release.data.filter(m => m.date.includes(currentYear)).map(m => m.value),
+            )
             const allIncomeYearData = response.income.data.filter(el => !el.date.includes(currentYear));
             const allReleaseYearData = response.release.data.filter(el => !el.date.includes(currentYear));
             //All years
@@ -133,11 +132,14 @@ export class ReservoirScheduleComponent implements OnInit {
         })
         this.api.getApprovedSchedule(reservoir).subscribe({
           next: (response) => {
+            // TODO(): implement!!!
             console.log(response)
           }
         })
       }
     })
+
+    this.subscribeSubjects()
   }
 
 
@@ -146,32 +148,29 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setIncomePercentForecast()
     if (this.income) {
       if (this.incomeForecastCategory == 'five') {
-        this.incomeForecast = this.income.stat5
+        this.setFlowForecast(this.income.stat5)
       } else if (this.incomeForecastCategory == 'ten') {
-        this.incomeForecast = this.income.stat10
+        this.setFlowForecast(this.income.stat10)
       } else if (this.incomeForecastCategory == 'last') {
-        this.incomeForecast = this.income.statLastYear
+        this.setFlowForecast(this.income.statLastYear)
       } else if (this.incomeForecastCategory == '30') {
-        this.incomeForecast = this.income.stat30
+        this.setFlowForecast(this.income.stat30)
       } else if (this.incomeForecastCategory == 'max') {
         this.api.getVegetativeMaxValues(this.reservoirId).subscribe({
           next: (values: ComplexValueResponse) => {
-            this.incomeForecast = values.data.map(item => item.value)
+            this.setFlowForecast(values.data.map(item => item.value))
           }
         })
       } else if (this.incomeForecastCategory == 'min') {
         if (this.reservoirId) {
           this.api.getVegetativeMinValues(this.reservoirId).subscribe({
             next: (values: ComplexValueResponse) => {
-              this.incomeForecast = values.data.map(item => item.value)
+              this.setFlowForecast(values.data.map(item => item.value))
             }
           })
         }
       }
     }
-    this.setVolumeForecast()
-
-
   }
 
   changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min') {
@@ -179,108 +178,40 @@ export class ReservoirScheduleComponent implements OnInit {
     this.setReleasePercentForecast()
     if (this.release) {
       if (this.releaseForecastCategory == 'five') {
-        this.releaseForecast = this.release.stat5
+        this.setFlowForecast(undefined, this.release.stat5)
       } else if (this.releaseForecastCategory == 'ten') {
-        this.releaseForecast = this.release.stat10
+        this.setFlowForecast(undefined, this.release.stat10)
       } else if (this.releaseForecastCategory == 'last') {
-        this.releaseForecast = this.release.statLastYear
+        this.setFlowForecast(undefined, this.release.statLastYear)
       } else if (this.releaseForecastCategory == '30') {
-        this.releaseForecast = this.release.stat30
+        this.setFlowForecast(undefined, this.release.stat30)
       } else if (this.releaseForecastCategory == 'max') {
         this.api.getVegetativeMaxValues(this.reservoirId, 'release').subscribe({
           next: (values: ComplexValueResponse) => {
-            this.releaseForecast = values.data.map(item => item.value)
+            this.setFlowForecast(undefined, values.data.map(item => item.value))
           }
         })
       } else if (this.releaseForecastCategory == 'min') {
         this.api.getVegetativeMinValues(this.reservoirId, 'release').subscribe({
           next: (values: ComplexValueResponse) => {
-            this.releaseForecast = values.data.map(item => item.value)
+            this.setFlowForecast(undefined, values.data.map(item => item.value))
           }
         })
       }
     }
-    this.setVolumeForecast()
   }
 
   changeIncomePercent(event: any) {
     this.incomePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setIncomePercentForecast()
-    this.setVolumeForecast()
   }
 
   changeReleasePercent(event: any) {
     this.releasePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setReleasePercentForecast()
-    this.setVolumeForecast()
   }
 
-
-  private setVolumeForecast() {
-    const forecast: number[] = []
-    this.volumeForecastStart = []
-    this.volumeForecastEnd = []
-    forecast.push(this.env.getRegionByName(this.reservoirName!)?.vegetateVolume!)
-    for (let i = 0; i < this.incomeForecast.length; i++) {
-      // 11 days at third decade of may, july and august
-      let days = i == 5 || i == 11 || i == 13 ? 11 : 10
-      const change = this.incomeForecast[i] * 0.0864 * days - this.releaseForecast[i] * 0.0864 * days
-      forecast.push(forecast[i] + change)
-
-    }
-    this.volumeForecastStart = forecast.slice(0, 18)
-    this.volumeForecastEnd = forecast.slice(1, 19)
-    this.calcLevelForecast(this.reservoirId, forecast)
-    this.calcGesPower()
-  }
-
-  private setIncomePercentForecast() {
-    if (this.incomeForecastCategory == 'perAvg' && this.income) {
-      this.incomeForecast = this.income?.statTotal.map(item => Math.round(item * this.incomePercent / 100))
-    } else if (this.incomeForecastCategory == 'perLast' && this.income) {
-      this.incomeForecast = this.income?.statLastYear.map(item => Math.round(item * this.incomePercent / 100))
-    }
-  }
-
-  private setReleasePercentForecast() {
-    if (this.releaseForecastCategory == 'perAvg' && this.release) {
-      this.releaseForecast = this.release?.statTotal.map(item => Math.round(item * this.releasePercent / 100))
-    } else if (this.incomeForecastCategory == 'perLast' && this.release) {
-      this.releaseForecast = this.release?.statLastYear.map(item => Math.round(item * this.releasePercent / 100))
-    }
-  }
-
-  private calcLevelForecast(id: number, forecast: number[]) {
-    this.api.getLevelForecast(id, forecast).subscribe({
-      next: values => {
-        this.levelForecast = values.slice(1, 19)
-        const differences = values
-        this.changelevelForecast = []
-        for (let i = 1; i < differences.length; i++) {
-          let days = i == 6 || i == 12 || i == 14 ? 11 : 10
-          const difference = (differences[i] - differences[i - 1]) / days;
-
-          this.setupChangeLevelForecastWithConstraints(id, difference, i)
-        }
-      }
-    })
-  }
-
-  private calcGesPower() {
-    if (this.lowerLevel && this.gesCoefficient) {
-      this.gesPower = []
-      for (let i = 0; i < this.releaseForecast.length; i++) {
-        let days = i == 5 || i == 11 || i == 13 ? 11 : 10
-        if (this.levelForecast[i] <= 0){
-          this.gesPower.push(0)
-        }else{
-        this.gesPower.push((this.G_POWER * (this.levelForecast[i] - this.lowerLevel) * this.releaseForecast[i] * this.gesCoefficient) * 24 * days / 1000)
-        }
-      }
-    }
-  }
-
-  getSumOfArr(array?: number[]) {
+  calcFlowVolume(array?: number[]) {
     if (array != null && array.length > 0) {
       let sum = array.reduce((sum: number, value: number) => sum + value, 0);
       let days = array.length * 10;
@@ -292,7 +223,6 @@ export class ReservoirScheduleComponent implements OnInit {
     return 0
   }
 
-
   extractYears(data: any[]): number[] {
     return data.map(entry => new Date(entry.date).getFullYear())
       .filter((value, index, self) => self.indexOf(value) === index);
@@ -302,79 +232,175 @@ export class ReservoirScheduleComponent implements OnInit {
     this.selectedIncomeYears = event.value;
     this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
       next: (values: ComplexValueResponse) => {
-        this.incomeForecast = values.data.map(item => item.value)
+        this.setFlowForecast(values.data.map(item => item.value))
       },
-      complete: () => this.setVolumeForecast()
     })
   }
-
 
   changeSelectedReleaseForecast(event: MatSelectChange): void {
     this.selectedReleaseYears = event.value;
     this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
       next: (values: ComplexValueResponse) => {
-        this.releaseForecast = values.data.map(item => item.value)
+        this.setFlowForecast(undefined, values.data.map(item => item.value))
       },
-      complete: () => this.setVolumeForecast()
     })
-
   }
 
-  private setupChangeLevelForecastWithConstraints(id: number, difference: number, i: number) {
-    switch (id) {
-      case 1: {
-        if ((this.levelForecast[i - 1] <= 891 && difference >= -1 && difference <= 1) ||
-          (this.levelForecast[i - 1] <= 901 && difference >= -0.5 && difference <= 0.5) ||
-          (this.levelForecast[i - 1] <= 906 && difference >= -0.3 && difference <= 0.3)) {
-          this.changelevelForecast.push({value: difference, error: false})
-        } else {
-          this.changelevelForecast.push({value: difference, error: true})
-        }
-        break
+  private subscribeSubjects() {
+    this.flowForecastObs.subscribe({
+      next: forecast => {
+        this.setReleaseLevelForecast(forecast.release)
+        if (forecast.income?.length == forecast.release?.length)
+          this.setVolumeForecast(forecast.income, forecast.release)
       }
-      case 2: {
-        if ((this.levelForecast[i - 1] >= 1010 && this.levelForecast[i - 1] <= 1070.5 && difference >= -1) ||
-          (this.levelForecast[i - 1] <= 1080.5 && difference >= -0.5 && difference <= 0.5)) {
-          this.changelevelForecast.push({value: difference, error: false})
-        } else {
-          this.changelevelForecast.push({value: difference, error: true})
+    })
+    this.levelForecast.subscribe({
+      next: forecast => {
+        this.levelDifferenceForecast = []
+        this.setReleaseLevelForecast(undefined, forecast)
+        this.levelDifferenceForecast.push({value: 0, error: false})
+        for (let i = 1; i <= forecast.length - 1; i++) {
+          let days = i == 6 || i == 12 || i == 14 ? 11 : 10
+          const difference = (forecast[i] - forecast[i-1]) / days;
+          this.setupLevelDifferenceForecastWithConstraints(forecast[i-1], difference)
         }
-        break
       }
-      case 3: {
-        if (this.levelForecast[i - 1] >= 277 && this.levelForecast[i - 1] <= 289 && difference >= -0.05 && difference <= 0.07) {
-          this.changelevelForecast.push({value: difference, error: false})
+    })
+    this.releaseLevelForecastObs.subscribe({
+      next: value => {
+        if (value.release.length == value.level.length)
+          this.calcGesPower(value.release, value.level)
+      }
+    })
+  }
+
+  private setVolumeForecast(incomeForecast: number[], releaseForecast: number[]) {
+    const volumeForecast: number[] = []
+    this.volumeForecastStart = []
+    this.volumeForecastEnd = []
+    volumeForecast.push(this.env.getRegionByName(this.reservoirName!)?.vegetateVolume!)
+    for (let i = 0; i < incomeForecast.length; i++) {
+      // 11 days at third decade of may, july and august
+      let days = i == 5 || i == 11 || i == 13 ? 11 : 10
+      const change = incomeForecast[i] * 0.0864 * days - releaseForecast[i] * 0.0864 * days
+      volumeForecast.push(volumeForecast[i] + change)
+    }
+    this.volumeForecastStart = volumeForecast.slice(0, 18)
+    this.volumeForecastEnd = volumeForecast.slice(1, 19)
+    this.calcLevelForecast(this.volumeForecastEnd)
+  }
+
+  private setIncomePercentForecast() {
+    if (this.incomeForecastCategory == 'perAvg' && this.income) {
+      this.setFlowForecast(this.income?.statTotal.map(item => Math.round(item * this.incomePercent / 100)))
+    } else if (this.incomeForecastCategory == 'perLast' && this.income) {
+      this.setFlowForecast(this.income?.statLastYear.map(item => Math.round(item * this.incomePercent / 100)))
+    }
+  }
+
+  private setReleasePercentForecast() {
+    if (this.releaseForecastCategory == 'perAvg' && this.release) {
+      this.setFlowForecast(undefined, this.release?.statTotal.map(item => Math.round(item * this.releasePercent / 100)))
+    } else if (this.releaseForecastCategory == 'perLast' && this.release) {
+      this.setFlowForecast(undefined, this.release?.statLastYear.map(item => Math.round(item * this.releasePercent / 100)))
+    }
+  }
+
+  private calcLevelForecast(volumeForecast: number[]) {
+    this.api.getLevelForecast(this.reservoirId, volumeForecast).subscribe({
+      next: values => {
+        this.levelForecast.next(values)
+      }
+    })
+  }
+
+  private calcGesPower(releaseForecast: number[], levelForecast: number[]) {
+    if (this.lowerLevel && this.gesCoefficient) {
+      this.gesPower = []
+      for (let i = 0; i < releaseForecast.length; i++) {
+        let days = i == 5 || i == 11 || i == 13 ? 11 : 10
+        if (levelForecast[i] <= 0) {
+          this.gesPower.push(0)
         } else {
-          this.changelevelForecast.push({value: difference, error: true})
+          this.gesPower.push((this.G_POWER * (levelForecast[i] - this.lowerLevel) * releaseForecast[i] * this.gesCoefficient) * 24 * days / 1000)
         }
-        break
-      }
-      case 4: {
-        if ((this.levelForecast[i - 1] >= 1060 && this.levelForecast[i - 1] <= 1100 && difference >= -1 && difference <= 1) ||
-          (this.levelForecast[i - 1] <= 1118 && difference >= -0.3 && difference <= 0.4)) {
-          this.changelevelForecast.push({value: difference, error: false})
-        } else {
-          this.changelevelForecast.push({value: difference, error: true})
-        }
-        break
-      }
-      case 5: {
-        if ((this.levelForecast[i - 1] <= 891 && difference >= -1 && difference <= 1) ||
-          (this.levelForecast[i - 1] <= 925 && difference >= -0.5 && difference <= 1) ||
-          (this.levelForecast[i - 1] <= 945 && difference >= -0.3 && difference <= 0.5) ||
-          (this.levelForecast[i - 1] <= 960 && difference >= -0.3 && difference <= 0.5)) {
-          this.changelevelForecast.push({value: difference, error: false})
-        } else {
-          this.changelevelForecast.push({value: difference, error: true})
-        }
-        break
-      }
-      default: {
-        this.changelevelForecast.push({value: difference, error: false})
-        break
       }
     }
   }
 
+  private setReleaseLevelForecast(release?: number[], level?: number[]): void {
+    if (release != undefined) {
+      this.releaseLevelForecast.release = release
+    }
+    if (level != undefined) {
+      this.releaseLevelForecast.level = level
+    }
+    this.releaseLevelForecastObs.next(this.releaseLevelForecast)
+  }
 
+  private setFlowForecast(income?: number[], release?: number[]): void {
+    if (income != undefined) {
+      this.flowForecast.income = income
+    }
+    if (release != undefined) {
+      this.flowForecast.release = release
+    }
+    this.flowForecastObs.next(this.flowForecast)
+  }
+
+  private setupLevelDifferenceForecastWithConstraints(level: number, difference: number) {
+    switch (this.reservoirId) {
+      case 1: {
+        if ((level <= 891 && difference >= -1 && difference <= 1) ||
+          (level <= 901 && difference >= -0.5 && difference <= 0.5) ||
+          (level <= 906 && difference >= -0.3 && difference <= 0.3)) {
+          this.levelDifferenceForecast.push({value: difference, error: false})
+        } else {
+          this.levelDifferenceForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 2: {
+        if ((level >= 1010 && level <= 1070.5 && difference >= -1) ||
+          (level <= 1080.5 && difference >= -0.5 && difference <= 0.5)) {
+          this.levelDifferenceForecast.push({value: difference, error: false})
+        } else {
+          this.levelDifferenceForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 3: {
+        if (level >= 277 && level <= 289 && difference >= -0.05 && difference <= 0.07) {
+          this.levelDifferenceForecast.push({value: difference, error: false})
+        } else {
+          this.levelDifferenceForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 4: {
+        if ((level >= 1060 && level <= 1100 && difference >= -1 && difference <= 1) ||
+          (level <= 1118 && difference >= -0.3 && difference <= 0.4)) {
+          this.levelDifferenceForecast.push({value: difference, error: false})
+        } else {
+          this.levelDifferenceForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      case 5: {
+        if ((level <= 891 && difference >= -1 && difference <= 1) ||
+          (level <= 925 && difference >= -0.5 && difference <= 1) ||
+          (level <= 945 && difference >= -0.3 && difference <= 0.5) ||
+          (level <= 960 && difference >= -0.3 && difference <= 0.5)) {
+          this.levelDifferenceForecast.push({value: difference, error: false})
+        } else {
+          this.levelDifferenceForecast.push({value: difference, error: true})
+        }
+        break
+      }
+      default: {
+        this.levelDifferenceForecast.push({value: difference, error: false})
+        break
+      }
+    }
+  }
 }

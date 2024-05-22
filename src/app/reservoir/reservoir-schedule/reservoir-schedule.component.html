@@ -20,24 +20,24 @@
         <td colspan="2">Многолетний cредний приток</td>
         <td rowspan="3">м3/с</td>
         <td *ngFor="let value of income?.stat10">{{ value }}</td>
-        <td>{{ getSumOfArr(income?.stat10) | number:'0.0-0' }}</td>
+        <td>{{ calcFlowVolume(income?.stat10) | number:'0.0-0' }}</td>
       </tr>
       <tr *ngIf="income?.stat10?.length===0">
         <td colspan="2">Средний приток за все время</td>
         <td rowspan="3">м3/с</td>
         <td *ngFor="let value of income?.stat5">{{ value }}</td>
-        <td>{{ getSumOfArr(income?.stat5) | number:'0.0-0' }}</td>
+        <td>{{ calcFlowVolume(income?.stat5) | number:'0.0-0' }}</td>
       </tr>
       <tr>
         <td colspan="2">Приток в 2023</td>
         <td *ngFor="let value of income?.statLastYear">{{ value }}</td>
-        <td>{{ getSumOfArr(income?.statLastYear) | number:'0.0-0' }}</td>
+        <td>{{ calcFlowVolume(income?.statLastYear) | number:'0.0-0' }}</td>
       </tr>
-      <tr>
+      <tr *ngIf="flowForecastObs | async as forecast">
         <td class="bg-gray-300" colspan="2">Приток в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of incomeForecast">{{ value }}</td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(incomeForecast.length)"></td>
-        <td class="bg-gray-300">{{ getSumOfArr(incomeForecast) | number:'0.0-0' }}</td>
+        <td class="bg-gray-300" *ngFor="let value of forecast.income">{{ value }}</td>
+        <td class="bg-gray-300" *ngFor="let day of decade.slice(forecast.income.length)"></td>
+        <td class="bg-gray-300">{{ calcFlowVolume(forecast.income) | number:'0.0-0' }}</td>
       </tr>
       <tr>
         <td colspan="2">Объём в 2023</td>
@@ -59,41 +59,39 @@
         <td class="bg-gray-300"></td>
       </tr>
 
-      <tr>
+      <tr *ngIf="levelForecast | async as levelForecast">
         <td colspan="2" class="bg-gray-400/60">Уровень на конец декады</td>
         <td rowspan="2">м</td>
-        <td *ngFor="let value of levelForecast" class="bg-gray-400/60"
-            [ngClass]="{'text-red-400': value==0}">{{ value }}
-        </td>
+        <td *ngFor="let value of levelForecast" class="bg-gray-400/60">{{ value }}</td>
         <td class="bg-gray-400/60" *ngFor="let day of decade.slice(levelForecast.length)"></td>
         <td class="bg-gray-400/60"></td>
 
       </tr>
       <tr>
         <td colspan="2" class="bg-gray-400/60">Дневное изменение</td>
-        <td *ngFor="let i of changelevelForecast.slice(0,18)" class="bg-gray-400/60"
+        <td *ngFor="let i of levelDifferenceForecast.slice(0,18)" class="bg-gray-400/60"
             [ngClass]="{'text-red-400': i.error}">{{ i.value | number:'0.0-2' }}
         </td>
-        <td class="bg-gray-400/60" *ngFor="let day of decade.slice(changelevelForecast.length)"></td>
+        <td class="bg-gray-400/60" *ngFor="let day of decade.slice(levelDifferenceForecast.length)"></td>
         <td class="bg-gray-400/60"></td>
       </tr>
       <tr>
         <td colspan="2">Многолетний cредний попуск</td>
         <td rowspan="3">м3/с</td>
         <td *ngFor="let value of release?.stat10">{{ value }}</td>
-        <td>{{ getSumOfArr(release?.stat10) | number:'0.0-0' }}</td>
+        <td>{{ calcFlowVolume(release?.stat10) | number:'0.0-0' }}</td>
 
       </tr>
       <tr>
         <td colspan="2">Попуск в 2023</td>
         <td *ngFor="let value of release?.statLastYear">{{ value }}</td>
-        <td>{{ getSumOfArr(release?.statLastYear) | number:'0.0-0' }}</td>
+        <td>{{ calcFlowVolume(release?.statLastYear) | number:'0.0-0' }}</td>
       </tr>
-      <tr>
+      <tr *ngIf="flowForecastObs | async as forecast">
         <td class="bg-gray-300" colspan="2">Попуск в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of releaseForecast">{{ value }}</td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(releaseForecast.length)"></td>
-        <td class="bg-gray-300">{{ getSumOfArr(releaseForecast) | number:'0.0-0' }}</td>
+        <td class="bg-gray-300" *ngFor="let value of forecast.release">{{ value }}</td>
+        <td class="bg-gray-300" *ngFor="let day of decade.slice(forecast.release.length)"></td>
+        <td class="bg-gray-300">{{ calcFlowVolume(forecast.release) | number:'0.0-0' }}</td>
       </tr>
       <tr *ngIf="gesCoefficient && lowerLevel">
         <td colspan="2">Выработка электроэнергии</td>
