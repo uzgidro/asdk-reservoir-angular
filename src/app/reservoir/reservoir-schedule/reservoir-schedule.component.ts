@@ -286,8 +286,7 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   changeSelectedIncomeForecast(event: MatSelectChange): void {
-    this.selectedIncomeRadio = null;
-    this.selectedIncomePercent = null;
+    this.selectedIncomeRadio = null
     this.selectedIncomeYears = event.value;
     if (this.isIncomeRadioSelected&&this.selectedIncomeYears.length>0){
       this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
@@ -300,7 +299,6 @@ export class ReservoirScheduleComponent implements OnInit {
 
   changeSelectedReleaseForecast(event: any): void {
     this.selectedReleaseRadio = null;
-    this.selectedReleasePercent = null;
     this.selectedReleaseYears = event.value;
     if (this.isReleaseRadioSelected&&this.selectedReleaseYears.length>0){
       this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({

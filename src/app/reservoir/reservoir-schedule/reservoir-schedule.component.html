@@ -144,8 +144,6 @@
         <span class="flex flex-row">
           <input type="radio" [checked]="selectedIncomeRadio==='perAvg'"  name="income" (click)="changeIncomeForecast('perAvg')">
           <label class="mr-2">% </label>
-          <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
-          <label>% к прошлому году</label> -->
          <input class="w-full" type="number"  [value]="selectedIncomePercent" min="0" max="200" (input)="changeIncomePercent($event)">
         </span>
         <div class="flex gap-2 items-center">
@@ -187,8 +185,6 @@
         <span class="flex flex-row">
           <input type="radio" [checked]="selectedReleaseRadio === 'perAvg'"  name="release" (click)="changeReleaseForecast('perAvg')">
           <label class="mr-2">% </label>
-          <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
-          <label>% к прошлому году</label> -->
         <input class="w-full" type="number"  [value]="selectedReleasePercent"   max="200" min="0" (input)="changeReleasePercent($event)" >
         </span>
         <div class="flex items-center gap-2">
