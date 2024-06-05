@@ -2,7 +2,7 @@
   <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
 
   <div class="grid grid-cols-12 gap-4">
-    <div class="flex flex-col 2xl:col-start-3 col-span-6 max-2xl:col-span-9 h-fit" #infoContainer>
+    <div class="flex flex-col 2xl:col-start-2 col-span-8 max-2xl:col-span-9 h-fit" #infoContainer>
       <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100">
         <canvas *ngIf="category.includes('income')"
                 baseChart
@@ -57,8 +57,10 @@
           <tbody *ngIf="avg">
           <tr *ngIf="startYear && endYear && avg.display" (click)="changeVisibility(avg.id)"
               [ngClass]="{'text-blue-600': avg.display}" class="text-blue-600">
-            <td *ngIf="startYear && endYear">Среднее за года {{ startYear.getFullYear() }}
-              - {{ endYear.getFullYear() }}
+            <td *ngIf="startYear && endYear">
+              Среднее многолетнее
+              <!-- {{ startYear.getFullYear() }}
+              - {{ endYear.getFullYear() }} -->
             </td>
             <td *ngFor="let val of avg.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
@@ -67,7 +69,11 @@
           </tr>
           <tr *ngIf="max && max.display" (click)="changeVisibility(max.id)"
               [ngClass]="{'text-green-600': max.display}" class="text-green-600">
-            <td>Максимальное значение {{ max.year }}</td>
+            <td>
+              <!-- Максимальное значение -->
+              <!-- {{ max.year }} -->
+              Максимальный
+            </td>
             <td *ngFor="let val of max.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
             <td>{{ (max.value) | number: '.0-0' }}</td>
@@ -75,7 +81,11 @@
           </tr>
           <tr *ngIf="min && min.display" (click)="changeVisibility(min.id)"
               [ngClass]="{'text-rose-600': min.display}" class="text-rose-600">
-            <td>Минимальное значение {{ min.year }}</td>
+            <td>
+              <!-- Минимальное значение -->
+               <!-- {{ min.year }} -->
+               Минимальный
+              </td>
             <td *ngFor="let val of min.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
             <td>{{ (min.value) | number: '.0-0' }}</td>
