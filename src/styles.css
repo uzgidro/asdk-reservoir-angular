@@ -19,10 +19,10 @@
     @apply table-auto w-full border-collapse text-sm overflow-x-auto
   }
   thead tr:first-child th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-4 first:rounded-tl-3xl last:rounded-tr-3xl
+    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-2 first:rounded-tl-3xl last:rounded-tr-3xl
   }
   thead tr th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-4
+    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-2
   }
   tbody tr td {
     @apply px-4 py-2 border-b border-gray-500 text-center break-words max-w-20

@@ -34,6 +34,8 @@ export class ReservoirScheduleComponent implements OnInit {
   existingIncomeYears: number[] = []
   existingReleaseYears: number[] = []
   selectedIncomeYears: number[] = [];
+  isIncomeRadioSelected = false;
+  isReleaseRadioSelected = false;
   selectedReleaseYears: number[] = [];
   months = [
     'Апрель',
@@ -156,13 +158,41 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
 
+  onReleaseRadioChange(event:any){
+    this.isReleaseRadioSelected=event.target.checked
+    console.log(this.isReleaseRadioSelected);
+
+    if (this.isReleaseRadioSelected&&this.selectedReleaseYears.length>0){
+      this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
+        next: (values: ComplexValueResponse) => {
+          this.setFlowForecast(undefined, values.data.map(item => item.value))
+        },
+      })
+
+    }
+
+  }
+  onIncomeRadioChange(event:any){
+    this.isIncomeRadioSelected=event.target.checked
+    console.log(this.isIncomeRadioSelected);
+
+    if (this.isIncomeRadioSelected&&this.selectedIncomeYears.length>0){
+      this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
+        next: (values: ComplexValueResponse) => {
+          this.setFlowForecast(values.data.map(item => item.value))
+        },
+      })
+    };
+  }
+
+
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30') {
     this.selectedIncomeRadio =category ;
     //percent min max==null
     this.incomeForecastCategory = category
     this.setIncomePercentForecast()
-    this.selectedReleaseYears=[]
-    this.selectedIncomeYears=[]
+    // this.selectedIncomeYears=[]
+    this.isIncomeRadioSelected=false
     if (this.income) {
       if (this.incomeForecastCategory == 'five') {
         this.setFlowForecast(this.income.stat5)
@@ -194,8 +224,8 @@ export class ReservoirScheduleComponent implements OnInit {
     this.selectedReleaseRadio =category ;
     this.releaseForecastCategory = category
     this.setReleasePercentForecast()
-    this.selectedReleaseYears=[]
-    this.selectedIncomeYears=[]
+    // this.selectedReleaseYears=[]
+    this.isReleaseRadioSelected=false
     if (this.release) {
       if (this.releaseForecastCategory == 'five') {
         this.setFlowForecast(undefined, this.release.stat5)
@@ -226,8 +256,8 @@ export class ReservoirScheduleComponent implements OnInit {
     this.selectedIncomePercent = percent
     this.incomePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setIncomePercentForecast()
-    this.selectedReleaseYears=[]
-    this.selectedIncomeYears=[]
+    this.isIncomeRadioSelected=false
+
   }
 
   changeReleasePercent(event: any) {
@@ -235,8 +265,7 @@ export class ReservoirScheduleComponent implements OnInit {
     this.selectedReleasePercent = percent;
     this.releasePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setReleasePercentForecast()
-    this.selectedReleaseYears=[]
-    this.selectedIncomeYears=[]
+    this.isReleaseRadioSelected=false
   }
 
   calcFlowVolume(array?: number[]) {
@@ -260,23 +289,28 @@ export class ReservoirScheduleComponent implements OnInit {
     this.selectedIncomeRadio = null;
     this.selectedIncomePercent = null;
     this.selectedIncomeYears = event.value;
-    //percent and max min ==[]
-    this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
-      next: (values: ComplexValueResponse) => {
-        this.setFlowForecast(values.data.map(item => item.value))
-      },
-    })
+    if (this.isIncomeRadioSelected&&this.selectedIncomeYears.length>0){
+      this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
+        next: (values: ComplexValueResponse) => {
+          this.setFlowForecast(values.data.map(item => item.value))
+        },
+      })
+    };
   }
 
-  changeSelectedReleaseForecast(event: MatSelectChange): void {
+  changeSelectedReleaseForecast(event: any): void {
     this.selectedReleaseRadio = null;
     this.selectedReleasePercent = null;
     this.selectedReleaseYears = event.value;
-    this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
-      next: (values: ComplexValueResponse) => {
-        this.setFlowForecast(undefined, values.data.map(item => item.value))
-      },
-    })
+    if (this.isReleaseRadioSelected&&this.selectedReleaseYears.length>0){
+      this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
+        next: (values: ComplexValueResponse) => {
+          this.setFlowForecast(undefined, values.data.map(item => item.value))
+        },
+      })
+
+    }
+
   }
 
   private subscribeSubjects() {

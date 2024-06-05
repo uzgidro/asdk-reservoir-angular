@@ -148,19 +148,19 @@
           <label>% к прошлому году</label> -->
          <input class="w-full" type="number"  [value]="selectedIncomePercent" min="0" max="200" (input)="changeIncomePercent($event)">
         </span>
-        <span class="flex gap-2 flex-row">
-          <!-- INCOME YEAR ( Приток )-->
-          <!-- <input type="radio" name="income" #incomeYear (change)="changeSelectedIncomeInput(incomeYear.checked)"> -->
-          <!-- <input type="number" [value]="this.selectedYearIncome" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedIncomeValue($event)"  class="w-full"> -->
+        <div class="flex gap-2 items-center">
+          <div class="h-full pb-3">
+            <input class="h-4 w-4" type="radio" name="income" (change)="onIncomeRadioChange($event)" >
+           </div>
           <mat-form-field class="w-[120px]  h-[63px]" appearance="fill">
-            <!-- <mat-label>Select Years</mat-label> -->
+
             <mat-select multiple [(value)]="selectedIncomeYears"
                         (selectionChange)=" changeSelectedIncomeForecast($event)">
               <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500"
                           *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
              </mat-select>
           </mat-form-field>
-        </span>
+        </div>
         <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
           <input type="radio" name="income" (click)="changeIncomeForecast('30')"  [checked]="selectedIncomeRadio === '30'">
           <label>Среднее за 30 лет</label>
@@ -191,20 +191,26 @@
           <label>% к прошлому году</label> -->
         <input class="w-full" type="number"  [value]="selectedReleasePercent"   max="200" min="0" (input)="changeReleasePercent($event)" >
         </span>
-        <span class="flex gap-2 flex-row">
-          <!-- RELEASE YEAR (Попуск )-->
-          <!-- <input type="radio" name="release" #releaseYear  (change)="changeSelectedReleaseInput(releaseYear.checked)" >
-          <input type="number" [value]="this.selectedYearRelease" [max]="this.inputMax" [min]="this.inputMin" (change)="changeSelectedReleaseValue($event)" class="w-full"> -->
-
-          <mat-form-field class="w-[120px]  h-[63px]" appearance="fill">
-            <!-- <mat-label>Select Years</mat-label> -->
-            <mat-select multiple [(value)]="selectedReleaseYears"
-                        (selectionChange)=" changeSelectedReleaseForecast($event)">
-              <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500"
-                          *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
+        <div class="flex items-center gap-2">
+           <div class="h-full pb-3">
+            <input class="h-4 w-4" type="radio" name="release" (change)="onReleaseRadioChange($event)" >
+           </div>
+           <mat-form-field
+             class="w-[120px]  h-[63px]"
+            appearance="fill">
+            <mat-select multiple
+             [(value)]="selectedReleaseYears"
+            (selectionChange)=" changeSelectedReleaseForecast($event)"
+             class="">
+            <mat-option
+            class=""
+            *ngFor="let year of existingIncomeYears"
+             [value]="year">{{ year }}
+            </mat-option>
             </mat-select>
           </mat-form-field>
-        </span>
+
+        </div>
         <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
           <input type="radio" name="release" [checked]="selectedReleaseRadio === '30'"  (click)="changeReleaseForecast('30')" >
           <label>Среднее за 30 лет</label>
