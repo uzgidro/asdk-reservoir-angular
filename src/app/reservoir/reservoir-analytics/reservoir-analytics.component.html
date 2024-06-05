@@ -114,6 +114,7 @@
     <div class="flex flex-col gap-2.5 col-span-2 max-2xl:col-span-3 mb-40 h-[830px]">
       <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto flex-1 h-fit"
            [ngStyle]="{'max-height.px': tableHeight}">
+        <!-- Приток воды -->
         <table>
           <thead class="sticky top-0">
           <tr>
@@ -122,30 +123,41 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of years" (click)="yearSelect(item.year)">
+          <tr *ngFor="let item of years">
             <td
-              [ngStyle]="{'color': getColor(item)}"
+              [ngStyle]="{'background-color': getColor(item)}"
               [ngClass]="{
             'min': min?.year == item.year,
             'max': max?.year == item.year,
             'past': past?.year == item.year,
-            }">{{ item.year }}
+            'text-gray-200':getColor(item)
+            }"
+
+            >
+             <input type="checkbox" name="year" [checked]="min?.year==item.year||max?.year==item.year|| past?.year == item.year"   (click)="yearSelect(item.year)">
+            <span class="ml-2">{{ item.year }}</span>
             </td>
             <td
-              [ngStyle]="{'color': getColor(item)}"
+              [ngStyle]="{'background-color': getColor(item)}"
               [ngClass]="{
             'min': min?.year == item.year,
             'max': max?.year == item.year,
-            'past': past?.year == item.year
-            }">{{ item.value |number: '.0-0' }}
+            'past': past?.year == item.year,
+            'text-gray-200':getColor(item),
+            }"
+
+            >
+            {{ item.value |number: '.0-0' }}
+
+
             </td>
           </tr>
           </tbody>
         </table>
-
       </div>
       <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto flex-1 mb-14 h-fit"
-           [ngStyle]="{'max-height.px': tableHeight}">
+         [ngStyle]="{'max-height.px': tableHeight}">
+        <!-- Годовой приток -->
         <table>
           <thead class="sticky top-0">
           <tr>
@@ -181,7 +193,6 @@
           </tr>
           </tbody>
         </table>
-
       </div>
     </div>
   </div>
