@@ -40,10 +40,10 @@
         <td class="bg-gray-300">{{ calcFlowVolume(forecast.income) | number:'0.0-0' }}</td>
       </tr>
       <tr>
-        <td class="bg-gray-300" colspan="2">Утвержденный приток в 2024</td>
-        <td class="bg-gray-300" *ngFor="let value of approvedIncome">{{ value }}</td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(approvedIncome.length)"></td>
-        <td class="bg-gray-300">{{ calcFlowVolume(approvedIncome) | number:'0.0-0' }}</td>
+        <td class="bg-gray-500 text-slate-300" colspan="2">Утвержденный приток в 2024</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let value of approvedIncome">{{ value }}</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let day of decade.slice(approvedIncome.length)"></td>
+        <td class="bg-gray-500 text-slate-300">{{ calcFlowVolume(approvedIncome) | number:'0.0-0' }}</td>
       </tr>
       <tr>
         <td colspan="2">Объём в 2023</td>
@@ -66,17 +66,17 @@
       </tr>
 
       <tr>
-        <td class="bg-gray-300" rowspan="2">Утвержденный объём в 2024</td>
-        <td class="bg-gray-300">Начало декады</td>
-        <td class="bg-gray-300" *ngFor="let value of approvedVolumeStart">{{ value | number: '.0-1' }}</td>
+        <td class="bg-gray-500 text-slate-300"rowspan="2">Утвержденный объём в 2024</td>
+        <td class="bg-gray-500 text-slate-300">Начало декады</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let value of approvedVolumeStart">{{ value | number: '.0-1' }}</td>
         <td class="bg-gray-300" *ngFor="let day of decade.slice(approvedVolumeStart.length)"></td>
-        <td class="bg-gray-300"></td>
+        <td class="bg-gray-500 text-slate-300"></td>
       </tr>
       <tr>
-        <td class="bg-gray-300">Конец декады</td>
-        <td class="bg-gray-300" *ngFor="let value of approvedVolumeEnd">{{ value | number: '.0-1' }}</td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(approvedVolumeEnd.length)"></td>
-        <td class="bg-gray-300"></td>
+        <td class="bg-gray-500 text-slate-300">Конец декады</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let value of approvedVolumeEnd">{{ value | number: '.0-1' }}</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let day of decade.slice(approvedVolumeEnd.length)"></td>
+        <td class="bg-gray-500 text-slate-300"></td>
       </tr>
 
 
@@ -98,10 +98,10 @@
       </tr>
 
       <tr>
-        <td colspan="2" class="bg-gray-400/60">Утвержденный уровень на конец декады</td>
-        <td *ngFor="let value of approvedLevel" class="bg-gray-400/60">{{ value }}</td>
-        <td class="bg-gray-400/60" *ngFor="let day of decade.slice(approvedLevel.length)"></td>
-        <td class="bg-gray-400/60"></td>
+        <td colspan="2"class="bg-gray-500 text-slate-300">Утвержденный уровень на конец декады</td>
+        <td *ngFor="let value of approvedLevel" class="bg-gray-500 text-slate-300">{{ value | number: '1.1-1' }}</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let day of decade.slice(approvedLevel.length)"></td>
+        <td class="bg-gray-500 text-slate-300"></td>
       <tr>
         <td colspan="2">Многолетний cредний попуск</td>
         <td rowspan="4">м3/с</td>
@@ -122,10 +122,10 @@
       </tr>
 
       <tr>
-        <td class="bg-gray-300" colspan="2">Утвержденный попуск в 2024 (Прогноз)</td>
-        <td class="bg-gray-300" *ngFor="let value of approvedRelease">{{ value }}</td>
-        <td class="bg-gray-300" *ngFor="let day of decade.slice(approvedRelease.length)"></td>
-        <td class="bg-gray-300">{{ calcFlowVolume(approvedRelease) | number:'0.0-0' }}</td>
+        <td class="bg-gray-500 text-slate-300"colspan="2">Утвержденный попуск в 2024 (Прогноз)</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let value of approvedRelease">{{ value }}</td>
+        <td class="bg-gray-500 text-slate-300" *ngFor="let day of decade.slice(approvedRelease.length)"></td>
+        <td class="bg-gray-500 text-slate-300">{{ calcFlowVolume(approvedRelease) | number:'0.0-0' }}</td>
       </tr>
       <tr *ngIf="gesCoefficient && lowerLevel">
         <td colspan="2">Выработка электроэнергии</td>
@@ -142,11 +142,11 @@
       <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
         <h3>Приток</h3>
         <span class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('perAvg')">
+          <input type="radio" [checked]="selectedIncomeRadio==='perAvg'"  name="income" (click)="changeIncomeForecast('perAvg')">
           <label class="mr-2">% </label>
           <!-- <input type="radio" name="income" (click)="changeIncomeForecast('perLast')">
           <label>% к прошлому году</label> -->
-         <input class="w-full" type="number" value="80" min="0" max="200" (input)="changeIncomePercent($event)">
+         <input class="w-full" type="number"  [value]="selectedIncomePercent" min="0" max="200" (input)="changeIncomePercent($event)">
         </span>
         <span class="flex gap-2 flex-row">
           <!-- INCOME YEAR ( Приток )-->
@@ -158,38 +158,38 @@
                         (selectionChange)=" changeSelectedIncomeForecast($event)">
               <mat-option class="py-2 px-4  hover:bg-indigo-500 hover:text-red-500"
                           *ngFor="let year of existingIncomeYears" [value]="year">{{ year }}</mat-option>
-            </mat-select>
+             </mat-select>
           </mat-form-field>
         </span>
         <span *ngIf="income?.stat30?.length !== 0" class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('30')">
+          <input type="radio" name="income" (click)="changeIncomeForecast('30')"  [checked]="selectedIncomeRadio === '30'">
           <label>Среднее за 30 лет</label>
         </span>
         <span *ngIf="income?.stat10?.length!==0" class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('ten')">
+          <input type="radio" name="income" (click)="changeIncomeForecast('ten')" [checked]="selectedIncomeRadio === 'ten'">
           <label>Среднее за 10 лет</label>
         </span>
         <span *ngIf="income?.stat5?.length!==0" class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('last')">
+          <input type="radio" name="income" (click)="changeIncomeForecast('last')" [checked]="selectedIncomeRadio === 'last'">
           <label>Среднее за 5 лет</label>
         </span>
         <span class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('max')">
+          <input type="radio" name="income" (click)="changeIncomeForecast('max')" [checked]="selectedIncomeRadio === 'max'">
           <label>Максимум</label>
           </span>
         <span class="flex flex-row">
-          <input type="radio" name="income" (click)="changeIncomeForecast('min')">
+          <input type="radio" name="income" (click)="changeIncomeForecast('min')" [checked]="selectedIncomeRadio === 'min'">
            <label>Минимум</label>
           </span>
       </form>
       <form class="flex flex-col items-center text-sm whitespace-nowrap space-y-2">
         <h3>Попуск</h3>
         <span class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('perAvg')">
+          <input type="radio" [checked]="selectedReleaseRadio === 'perAvg'"  name="release" (click)="changeReleaseForecast('perAvg')">
           <label class="mr-2">% </label>
           <!-- <input type="radio" name="release" (click)="changeReleaseForecast('perLast')">
           <label>% к прошлому году</label> -->
-        <input class="w-full" type="number" value="80" max="200" min="0" (input)="changeReleasePercent($event)">
+        <input class="w-full" type="number"  [value]="selectedReleasePercent"   max="200" min="0" (input)="changeReleasePercent($event)" >
         </span>
         <span class="flex gap-2 flex-row">
           <!-- RELEASE YEAR (Попуск )-->
@@ -206,23 +206,23 @@
           </mat-form-field>
         </span>
         <span *ngIf="release?.stat30?.length!==0" class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('30')">
+          <input type="radio" name="release" [checked]="selectedReleaseRadio === '30'"  (click)="changeReleaseForecast('30')" >
           <label>Среднее за 30 лет</label>
         </span>
         <span *ngIf="release?.stat10?.length!==0" class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('ten')">
+          <input type="radio" name="release"[checked]="selectedReleaseRadio === 'ten'"  (click)="changeReleaseForecast('ten')" >
           <label>Среднее за 10 лет</label>
         </span>
         <span class="flex flex-row" *ngIf="release?.stat5?.length!==0">
-          <input type="radio" name="release" (click)="changeReleaseForecast('five')">
+          <input type="radio" name="release" [checked]="selectedReleaseRadio === 'five'" (click)="changeReleaseForecast('five')" >
           <label>Среднее за 5 лет</label>
         </span>
         <span class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('max')">
+          <input type="radio" name="release" [checked]="selectedReleaseRadio === 'max'"  (click)="changeReleaseForecast('max')" >
           <label>Максимум</label>
           </span>
         <span class="flex flex-row">
-          <input type="radio" name="release" (click)="changeReleaseForecast('min')">
+          <input type="radio" name="release"  [checked]="selectedReleaseRadio === 'min'" (click)="changeReleaseForecast('min')" >
            <label>Минимум</label>
           </span>
       </form>

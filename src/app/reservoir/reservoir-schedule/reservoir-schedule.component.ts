@@ -75,6 +75,11 @@ export class ReservoirScheduleComponent implements OnInit {
   approvedVolumeStart: number[] = []
   approvedVolumeEnd: number[] = []
 
+  selectedIncomeRadio: string | null = null;
+  selectedReleaseRadio: string | null = null;
+  selectedIncomePercent: number | null = 80;
+  selectedReleasePercent: number | null = 80;
+
 
   flowForecast: { income: number[], release: number[] } = {income: [], release: []}
   flowForecastObs: Subject<{ income: number[], release: number[] }> = new Subject<{
@@ -147,14 +152,17 @@ export class ReservoirScheduleComponent implements OnInit {
         })
       }
     })
-
     this.subscribeSubjects()
   }
 
 
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30') {
+    this.selectedIncomeRadio =category ;
+    //percent min max==null
     this.incomeForecastCategory = category
     this.setIncomePercentForecast()
+    this.selectedReleaseYears=[]
+    this.selectedIncomeYears=[]
     if (this.income) {
       if (this.incomeForecastCategory == 'five') {
         this.setFlowForecast(this.income.stat5)
@@ -183,8 +191,11 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min') {
+    this.selectedReleaseRadio =category ;
     this.releaseForecastCategory = category
     this.setReleasePercentForecast()
+    this.selectedReleaseYears=[]
+    this.selectedIncomeYears=[]
     if (this.release) {
       if (this.releaseForecastCategory == 'five') {
         this.setFlowForecast(undefined, this.release.stat5)
@@ -211,13 +222,21 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   changeIncomePercent(event: any) {
+    const percent = event.target.value;
+    this.selectedIncomePercent = percent
     this.incomePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setIncomePercentForecast()
+    this.selectedReleaseYears=[]
+    this.selectedIncomeYears=[]
   }
 
   changeReleasePercent(event: any) {
+    const percent = event.target.value;
+    this.selectedReleasePercent = percent;
     this.releasePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setReleasePercentForecast()
+    this.selectedReleaseYears=[]
+    this.selectedIncomeYears=[]
   }
 
   calcFlowVolume(array?: number[]) {
@@ -238,7 +257,10 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   changeSelectedIncomeForecast(event: MatSelectChange): void {
+    this.selectedIncomeRadio = null;
+    this.selectedIncomePercent = null;
     this.selectedIncomeYears = event.value;
+    //percent and max min ==[]
     this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
       next: (values: ComplexValueResponse) => {
         this.setFlowForecast(values.data.map(item => item.value))
@@ -247,6 +269,8 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   changeSelectedReleaseForecast(event: MatSelectChange): void {
+    this.selectedReleaseRadio = null;
+    this.selectedReleasePercent = null;
     this.selectedReleaseYears = event.value;
     this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
       next: (values: ComplexValueResponse) => {
