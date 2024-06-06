@@ -198,6 +198,9 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
   tableHeight?: number
   category = 'income'
 
+  firstHalf: { year: number, value: number }[] = [];
+  secondHalf: { year: number, value: number }[] = [];
+
 
   startYear?: Date
   endYear?: Date
@@ -260,6 +263,22 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     if (this.tableHeight !== this.infoContainer?.nativeElement.offsetHeight) {
       this.tableHeight = this.infoContainer?.nativeElement.offsetHeight
     }
+  }
+
+
+
+  splitYears(years:any) {
+    if (years.length > 20) {
+      this.firstHalf = years.slice(0, 20);
+      this.secondHalf = years.slice(20);
+    } else {
+      this.firstHalf = years;
+    }
+    console.log(this.firstHalf);
+    console.log(this.secondHalf);
+    console.log(years);
+
+
   }
 
   yearSelect(year: number | undefined) {
@@ -347,6 +366,9 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
         this.years = response.data.flatMap(item => {
           return {year: new Date(item.date).getFullYear(), value: this.calculateVolume(item)}
         })
+        console.log(this.years);
+        this.splitYears(this.years)
+
 
         this.volumeChartLabels = response.data.map(item => new Date(item.date).getFullYear())
         this.volumeChartDataset[0] = {

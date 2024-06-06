@@ -1,8 +1,10 @@
 <div class="flex flex-col">
-  <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
 
-  <div class="grid grid-cols-12 gap-4">
-    <div class="flex flex-col 2xl:col-start-2 col-span-8 max-2xl:col-span-9 h-fit" #infoContainer>
+
+  <div class="grid grid-cols-12 gap-4 p-5">
+
+    <div class="flex flex-col 2xl:col-start-1 col-span-10 max-2xl:col-span-10  h-fit" #infoContainer>
+      <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
       <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100">
         <canvas *ngIf="category.includes('income')"
                 baseChart
@@ -121,57 +123,95 @@
     </div>
 
 
-    <div class="flex flex-col gap-2.5 col-span-2 max-2xl:col-span-3 mb-40 h-[830px]">
-      <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto flex-1 h-fit"
-           [ngStyle]="{'max-height.px': tableHeight}">
+    <div class="flex flex-col gap-2.5 col-span-2 max-2xl:col-span-3 mb-40 h-fit">
+
+      <!-- Two Tables -->
+      <div class="flex flex-row items-start gap-1 justify-center">
+
+      <div class="col-span-1 max-2xl:col-span-1">
         <!-- Приток воды -->
         <table>
           <thead class="sticky top-0">
-          <tr>
-            <th>Год</th>
-            <th>Приток воды, млн. м3</th>
-          </tr>
+            <tr>
+              <th>Год</th>
+              <th>Приток воды, млн. м3</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of years">
-            <td
-              [ngStyle]="{'background-color': getColor(item)}"
-              [ngClass]="{
-            'min': min?.year == item.year,
-            'max': max?.year == item.year,
-            'past': past?.year == item.year,
-            'text-gray-200':getColor(item)
-            }"
-
-            >
-             <input type="checkbox" name="year" [checked]="min?.year==item.year||max?.year==item.year|| past?.year == item.year"   (click)="yearSelect(item.year)">
-            <span class="ml-2">{{ item.year }}</span>
-            </td>
-            <td
-              [ngStyle]="{'background-color': getColor(item)}"
-              [ngClass]="{
-            'min': min?.year == item.year,
-            'max': max?.year == item.year,
-            'past': past?.year == item.year,
-            'text-gray-200':getColor(item),
-            }"
-
-            >
-            {{ item.value |number: '.0-0' }}
-
-
-            </td>
-          </tr>
+            <tr *ngFor="let item of firstHalf">
+              <td
+                [ngStyle]="{'background-color': getColor(item)}"
+                [ngClass]="{
+                  'min': min?.year == item.year,
+                  'max': max?.year == item.year,
+                  'past': past?.year == item.year,
+                  'text-gray-200': getColor(item)
+                }"
+                class="flex"
+                >
+                <input type="checkbox" name="year" [checked]="min?.year == item.year || max?.year == item.year || past?.year == item.year" (click)="yearSelect(item.year)">
+                <span class="ml-1">{{ item.year }}</span>
+              </td>
+              <td
+                [ngStyle]="{'background-color': getColor(item)}"
+                [ngClass]="{
+                  'min': min?.year == item.year,
+                  'max': max?.year == item.year,
+                  'past': past?.year == item.year,
+                  'text-gray-200': getColor(item)
+                }">
+                {{ item.value | number: '.0-0' }}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <div class="col-span-2 max-2xl:col-span-3 overflow-y-auto flex-1 mb-14 h-fit"
-         [ngStyle]="{'max-height.px': tableHeight}">
+      <div *ngIf="years.length > 20" class="col-span-1 max-2xl:col-span-1">
+        <!-- Приток воды - Second Table -->
+        <table>
+          <thead class="sticky top-0">
+            <tr>
+              <th>Год</th>
+              <th>Приток воды, млн. м3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of secondHalf">
+              <td
+                [ngStyle]="{'background-color': getColor(item)}"
+                [ngClass]="{
+                  'min': min?.year == item.year,
+                  'max': max?.year == item.year,
+                  'past': past?.year == item.year,
+                  'text-gray-200': getColor(item)
+                }"
+                class="flex"
+                >
+                <input type="checkbox" name="year" [checked]="min?.year == item.year || max?.year == item.year || past?.year == item.year" (click)="yearSelect(item.year)">
+                <span class="ml-2">{{ item.year }}</span>
+              </td>
+              <td
+                [ngStyle]="{'background-color': getColor(item)}"
+                [ngClass]="{
+                  'min': min?.year == item.year,
+                  'max': max?.year == item.year,
+                  'past': past?.year == item.year,
+                  'text-gray-200': getColor(item)
+                }">
+                {{ item.value | number: '.0-0' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+
         <!-- Годовой приток -->
+       <div class="col-span-1 max-2xl:col-span-1 overflow-y-auto flex-1 mb-14 h-fit"
+         [ngStyle]="{'max-height.px': tableHeight}">
         <table>
           <thead class="sticky top-0">
           <tr>
-
             <th>Год</th>
             <th>Годовой приток, млн. м3</th>
           </tr>
@@ -180,25 +220,25 @@
           <tr *ngIf="startYear && endYear" (click)="changeVisibility(avg.id) "
 
               [ngClass]="{'text-blue-600': avg.display,'text-blue-600/60': !avg.display}" class="text-blue-600">
-            <td *ngIf="startYear && endYear">{{ startYear.getFullYear() }}
-              - {{ endYear.getFullYear() }}
+            <td *ngIf="startYear && endYear">
+              Среднее многолетнее
             </td>
             <td>{{ (avg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="max" (click)="changeVisibility(max.id)"
               [ngClass]="{'text-green-600': max.display,  'text-green-600/60': !max.display}" class="text-green-600">
 
-            <td>{{ max.year }}</td>
+            <td>Максимальный</td>
             <td>{{ (max.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="min" (click)="changeVisibility(min.id)"
               [ngClass]="{'text-rose-600': min.display, 'text-rose-600/60': !min.display}" class="text-rose-600">
-            <td>{{ min.year }}</td>
+            <td>Минимальный</td>
             <td>{{ (min.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="past" (click)="changeVisibility(past.id)"
               [ngClass]="{'text-amber-600': past.display, 'text-amber-600/60': !past.display}" class="text-amber-600">
-            <td> {{ past.year }}</td>
+            <td> Среднее за 10 лет</td>
             <td>{{ (past.value) | number: '.0-0' }}</td>
           </tr>
           </tbody>
