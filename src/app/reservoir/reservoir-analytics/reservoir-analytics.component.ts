@@ -218,7 +218,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
       intersect: false
     },
     plugins: {
-      legend: {display: true},
+      legend: {display:false},
       title: {
         display: true,
         text: 'Приток воды, млн. м3'
@@ -269,6 +269,7 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
 
   splitYears(years:any) {
     if (years.length > 20) {
+
       this.firstHalf = years.slice(0, 20);
       this.secondHalf = years.slice(20);
     } else {

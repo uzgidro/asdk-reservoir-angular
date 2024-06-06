@@ -59,7 +59,7 @@
           <tbody *ngIf="avg">
           <tr *ngIf="startYear && endYear && avg.display" (click)="changeVisibility(avg.id)"
               [ngClass]="{'text-blue-600': avg.display}" class="text-blue-600">
-            <td *ngIf="startYear && endYear">
+            <td *ngIf="startYear && endYear" class="text-sm p-1">
               Среднее многолетнее
               <!-- {{ startYear.getFullYear() }}
               - {{ endYear.getFullYear() }} -->
@@ -70,8 +70,8 @@
             <td>100</td>
           </tr>
           <tr *ngIf="max && max.display" (click)="changeVisibility(max.id)"
-              [ngClass]="{'text-green-600': max.display}" class="text-green-600">
-            <td>
+              [ngClass]="{'text-green-600': max.display}" class="text-green-600 text-xs">
+            <td class="p-1">
               <!-- Максимальное значение -->
               <!-- {{ max.year }} -->
               Максимальный
@@ -83,7 +83,7 @@
           </tr>
           <tr *ngIf="min && min.display" (click)="changeVisibility(min.id)"
               [ngClass]="{'text-rose-600': min.display}" class="text-rose-600">
-            <td>
+            <td class="p-1">
               <!-- Минимальное значение -->
                <!-- {{ min.year }} -->
                Минимальный
