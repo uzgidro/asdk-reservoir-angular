@@ -12,6 +12,7 @@ const CURRENT: string = '/current'
 const DECADE: string = '/decade'
 const MONTH: string = '/month'
 const AVG: string = '/avg'
+const PAST_YEARS_AVG: string = '/past-avg'
 const MAX: string = '/max'
 const MIN: string = '/min'
 const YEAR: string = '/year'
@@ -140,6 +141,15 @@ export class ApiService {
 
   getAvgValues(reservoirId: number): Observable<any> {
     return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + AVG, {params: new HttpParams().set('category', 'income')}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getTenYearsAvgValues(reservoirId: number): Observable<any> {
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + PAST_YEARS_AVG, {params: new HttpParams().set('category', 'income').set('years', 10)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];

@@ -111,6 +111,20 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     return
   }
 
+  get tenAvg() {
+    const exists = this._incomeChart.find(item => item.id.includes('tenAvg'))
+    if (exists && exists.avgValue) {
+      const item: Values = {
+        id: exists.id,
+        value: exists.avgValue,
+        byMonth: exists.valuesByMonth,
+        display: exists.display
+      }
+      return item
+    }
+    return
+  }
+
   get min() {
     const exists = this._incomeChart.find(item => item.id.includes('min'))
     if (exists && exists.year) {
@@ -396,6 +410,31 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
           data: {
             data: avgByMonth,
             label: `Среднее за года (${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()})`,
+            borderColor: 'rgba(37, 99, 235,0.4)',
+            pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
+            pointBorderColor: 'rgba(37, 99, 235,0.4)',
+            pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
+            pointHoverBorderColor: '#fff',
+          },
+          valuesByMonth: avgByMonth,
+          avgValue: avgValue,
+          display: true
+        })
+        this.chart?.update()
+      }
+    }))
+  }
+
+  private getTenYearsAvg(reservoirId: number) {
+    this.subscribes.push(this.api.getTenYearsAvgValues(reservoirId).subscribe({
+      next: (response: ComplexValueResponse) => {
+        const avgByMonth = this.calculateMonthlyValues(response)
+        const avgValue = this.calculateMonthlySum(response)
+        this._incomeChart.push({
+          id: 'tenAvg',
+          data: {
+            data: avgByMonth,
+            label: `Среднее за 10 лет`,
             borderColor: 'rgba(37, 99, 235,0.4)',
             pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
             pointBorderColor: 'rgba(37, 99, 235,0.4)',
