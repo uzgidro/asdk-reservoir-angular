@@ -23,6 +23,9 @@ import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
   standalone: true
 })
 export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
+hideColor(_t172: { year: number; value: number; }) {
+throw new Error('Method not implemented.');
+}
 
 
   protected mSecondsInDay = 0.0864
@@ -279,6 +282,15 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  showCheckbox(year: number): boolean {
+    return this.min?.year === year || this.max?.year === year || this.past?.year === year;
+  }
+
+  isChecked(year: number): boolean {
+    return this.min?.year === year || this.max?.year === year || this.past?.year === year;
+  }
+
+
 
 
   splitYears(years:any) {
@@ -337,6 +349,20 @@ export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
       })
     }
   }
+
+  removeFromChart(item: { year: number }) {
+    if (this.past && item.year === this.past.year) {
+      this.changeVisibility(this.past.id); // Call changeVisibility with the id of the item being removed
+      this.past.display = false;
+    } else if (this.max && item.year === this.max.year) {
+      this.changeVisibility(this.max.id); // Call changeVisibility with the id of the item being removed
+      this.max.display = false;
+    } else if (this.min && item.year === this.min.year) {
+      this.changeVisibility(this.min.id); // Call changeVisibility with the id of the item being removed
+      this.min.display = false;
+    }
+  }
+
 
   changeVisibility(id: string) {
     let find = this._incomeChart.find(i => i.id == id);
