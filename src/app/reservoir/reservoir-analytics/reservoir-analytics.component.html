@@ -300,7 +300,7 @@
             <td>{{ (avg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
-           [ngClass]="{'bg-cyan-600': tenAvg.display,'text-white': tenAvg.display,  'bg-gray-200': !tenAvg.display}" class="text-amber-600">
+           [ngClass]="{'bg-cyan-600': tenAvg.display,'text-white': tenAvg.display,  'bg-gray-200': !tenAvg.display,'text-cyan-600': !tenAvg.display}" class="text-gray-200">
            <td> Среднее за 10 лет</td>
            <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
           </tr>
