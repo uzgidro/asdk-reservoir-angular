@@ -5,7 +5,7 @@
 
     <div class="flex flex-col 2xl:col-start-1 col-span-10 max-2xl:col-span-10  h-fit" #infoContainer>
       <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
-      <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100">
+      <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100 ">
         <canvas *ngIf="category.includes('income')"
                 baseChart
                 [datasets]="incomeChart"
@@ -93,13 +93,13 @@
             <td>{{ (min.value) | number: '.0-0' }}</td>
             <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="past && past.display" (click)="changeVisibility(past.id)"
-              [ngClass]="{'text-amber-600': past.display}" class="text-amber-600">
-            <td>Значение за прошлый {{ past.year }}</td>
-            <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
-            <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
-            <td>{{ (past.value) | number: '.0-0' }}</td>
-            <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
+          <tr *ngIf="tenAvg && tenAvg.display" (click)="changeVisibility(tenAvg.id)"
+              [ngClass]="{'text-amber-600': tenAvg.display}" class="text-amber-600">
+            <td>Среднее за 10 лет</td>
+            <td *ngFor="let val of tenAvg.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (tenAvg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
+            <td>{{ (tenAvg.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="current && current.display" (click)="changeVisibility(current.id)"
               [ngClass]="{'text-purple-600': current.display}" class="text-purple-600">
@@ -150,7 +150,7 @@
                 }"
                 class="flex"
                 >
-                <input type="checkbox" name="year" [checked]="min?.year == item.year || max?.year == item.year || past?.year == item.year" (click)="yearSelect(item.year)">
+                <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="yearSelect(item.year)">
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
@@ -175,7 +175,7 @@
                 }"
                 class="flex"
                 >
-                <input type="checkbox" name="year" [checked]="min?.year == item.year || max?.year == item.year || past?.year == item.year"  (click)="removeFromChart(item)">
+                <input type="checkbox" name="year" [checked]="isChecked(item.year)"  (click)="removeFromChart(item)">
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
@@ -216,7 +216,7 @@
                 }"
                 class="flex"
                 >
-                <input type="checkbox" name="year" [checked]="min?.year == item.year || max?.year == item.year || past?.year == item.year" (click)="yearSelect(item.year)">
+                <input type="checkbox" name="year" [checked]="isChecked(item.year)"(click)="yearSelect(item.year)">
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
@@ -241,7 +241,7 @@
                 }"
                 class="flex"
                 >
-                <input type="checkbox" name="year" [checked]="min?.year == item.year || max?.year == item.year || past?.year == item.year"  (click)="removeFromChart(item)">
+                <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="removeFromChart(item)">
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
@@ -292,7 +292,7 @@
             <td>Максимальный</td>
             <td>{{ (max.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="min" (click)="changeVisibility(min.id)"
+          <tr *ngIf="min" (click)="removeFromChart(min)"
               [ngClass]="{'text-rose-600': min.display, 'text-rose-600/60': !min.display}" class="text-rose-600">
             <td>Минимальный</td>
             <td>{{ (min.value) | number: '.0-0' }}</td>

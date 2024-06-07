@@ -191,6 +191,7 @@ throw new Error('Method not implemented.');
   get selected() {
     const exists = this.displayCharts.filter(
       item =>
+        !item.id.includes('tenAvg') &&
         !item.id.includes('past') &&
         !item.id.includes('min') &&
         !item.id.includes('max') &&
@@ -286,10 +287,12 @@ throw new Error('Method not implemented.');
     return this.min?.year === year || this.max?.year === year || this.past?.year === year;
   }
 
-  isChecked(year: number): boolean {
-    return this.min?.year === year || this.max?.year === year || this.past?.year === year;
-  }
 
+  isChecked(year: number): boolean {
+    return (this.min?.year === year && this.min.display) ||
+           (this.max?.year === year && this.max.display) ||
+           (this.past?.year === year && this.past.display);
+  }
 
 
 
@@ -350,7 +353,7 @@ throw new Error('Method not implemented.');
     }
   }
 
-  removeFromChart(item: { year: number }) {
+  removeFromChart(item: any) {
     if (this.past && item.year === this.past.year) {
       this.changeVisibility(this.past.id); // Call changeVisibility with the id of the item being removed
       this.past.display = false;
