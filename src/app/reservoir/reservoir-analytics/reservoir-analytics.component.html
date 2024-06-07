@@ -291,10 +291,10 @@
             </td>
             <td>{{ (avg.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="past" (click)="changeVisibility(past.id)"
-           [ngClass]="{'bg-amber-600': past.display,'text-white': past.display,  'bg-gray-200': !past.display}" class="text-amber-600">
+          <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
+           [ngClass]="{'bg-amber-600': tenAvg.display,'text-white': tenAvg.display,  'bg-gray-200': !tenAvg.display}" class="text-amber-600">
            <td> Среднее за 10 лет</td>
-           <td>{{ (past.value) | number: '.0-0' }}</td>
+           <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="max" (click)="changeVisibility(max.id)"
               [ngClass]="{'bg-green-600': max.display, 'text-white': max.display,  'bg-gray-200':!max.display}" class="text-green-600">
