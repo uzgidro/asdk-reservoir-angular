@@ -12,7 +12,9 @@
                 [labels]="incomeChartLabels"
                 [options]="chartOptions"
                 [type]="'line'"
-        ></canvas>
+
+
+                ></canvas>
         <canvas *ngIf="category.includes('volume')"
                 baseChart
                 [datasets]="volumeChartDataset"
@@ -31,7 +33,7 @@
           </button>
         </div>
       </div>
-      <div class="overflow-x-auto overflow-y-auto max-h-96">
+      <div class="overflow-x-auto overflow-y-auto max-h-96 mt-9">
         <table>
           <thead class="sticky top-0">
           <tr>
@@ -140,13 +142,14 @@
           <tbody>
             <tr *ngFor="let item of firstHalf">
               <td
-              *ngIf="min?.year!==item.year&&max?.year!==item.year&&past?.year!==item.year"
+              *ngIf="isYearNotMatched(item.year)"
                 [ngStyle]="{'background-color': getColor(item)}"
                 [ngClass]="{
                   'min': min?.year == item.year,
                   'max': max?.year == item.year,
                   'past': past?.year == item.year,
-                  'text-gray-200': getColor(item)
+                  'text-gray-200': getColor(item),
+                  'current': current?.year == item.year,
                 }"
                 class="flex"
                 >
@@ -154,24 +157,26 @@
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
-              *ngIf="min?.year!==item.year&&max?.year!==item.year&&past?.year!==item.year"
+              *ngIf="isYearNotMatched(item.year)"
                 [ngStyle]="{'background-color': getColor(item)}"
                 [ngClass]="{
                   'min': min?.year == item.year,
                   'max': max?.year == item.year,
                   'past': past?.year == item.year,
-                  'text-gray-200': getColor(item)
+                  'text-gray-200': getColor(item),
+                  'current': current?.year == item.year,
                 }">
                 {{ item.value | number: '.0-0' }}
               </td>
               <td
-              *ngIf="min?.year===item.year||max?.year===item.year||past?.year===item.year"
+              *ngIf="isYearMatched(item.year)"
                 [ngStyle]="{'background-color': getColor(item)}"
                 [ngClass]="{
                   'min': min?.year == item.year,
                   'max': max?.year == item.year,
                   'past': past?.year == item.year,
-                  'text-gray-200': getColor(item)
+                  'text-gray-200': getColor(item),
+                  'current': current?.year == item.year,
                 }"
                 class="flex"
                 >
@@ -179,13 +184,14 @@
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
-              *ngIf="min?.year===item.year||max?.year===item.year||past?.year===item.year"
+              *ngIf="isYearMatched(item.year)"
                 [ngStyle]="{'background-color': getColor(item)}"
                 [ngClass]="{
                   'min': min?.year == item.year,
                   'max': max?.year == item.year,
                   'past': past?.year == item.year,
-                  'text-gray-200': getColor(item)
+                  'text-gray-200': getColor(item),
+                  'current': current?.year == item.year,
                 }">
                 {{ item.value | number: '.0-0' }}
               </td>
@@ -206,13 +212,14 @@
           <tbody>
             <tr *ngFor="let item of secondHalf">
               <td
-              *ngIf="min?.year!==item.year&&max?.year!==item.year&&past?.year!==item.year"
+              *ngIf="isYearNotMatched(item.year)"
                 [ngStyle]="{'background-color': getColor(item)}"
                 [ngClass]="{
                   'min': min?.year == item.year,
                   'max': max?.year == item.year,
                   'past': past?.year == item.year,
-                  'text-gray-200': getColor(item)
+                  'text-gray-200': getColor(item),
+                  'current': current?.year == item.year,
                 }"
                 class="flex"
                 >
@@ -220,23 +227,25 @@
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
-              *ngIf="min?.year!==item.year&&max?.year!==item.year&&past?.year!==item.year"
+              *ngIf="isYearNotMatched(item.year)"
                 [ngStyle]="{'background-color': getColor(item)}"
                 [ngClass]="{
                   'min': min?.year == item.year,
                   'max': max?.year == item.year,
                   'past': past?.year == item.year,
-                  'text-gray-200': getColor(item)
+                  'text-gray-200': getColor(item),
+                  'current': current?.year == item.year,
                 }">
                 {{ item.value | number: '.0-0' }}
               </td>
               <td
-              *ngIf="min?.year===item.year||max?.year===item.year||past?.year===item.year"
+              *ngIf="isYearMatched(item.year)"
                 [ngStyle]="{'background-color': getColor(item)}"
                 [ngClass]="{
                   'min': min?.year == item.year,
                   'max': max?.year == item.year,
                   'past': past?.year == item.year,
+                  'current': current?.year == item.year,
                   'text-gray-200': getColor(item)
                 }"
                 class="flex"
@@ -245,12 +254,13 @@
                 <span class="ml-2">{{ item.year }}</span>
               </td>
               <td
-              *ngIf="min?.year === item.year || max?.year === item.year || past?.year === item.year"
+              *ngIf="isYearMatched(item.year)"
               [ngStyle]="{'background-color': getColor(item)}"
               [ngClass]="{
                 'min': min?.year === item.year,
                 'max': max?.year === item.year,
                 'past': past?.year === item.year,
+                'current': current?.year == item.year,
                 'text-gray-200': getColor(item),
 
               }"
@@ -295,7 +305,7 @@
           <tr *ngIf="min" (click)="removeFromChart(min)"
               [ngClass]="{'bg-rose-600': min.display,'text-white': min.display,  'bg-gray-200':!min.display}" class="text-rose-600">
             <td>
-        
+
              Минимальный
             </td>
             <td>{{ (min.value) | number: '.0-0' }}</td>
