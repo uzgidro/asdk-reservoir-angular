@@ -275,26 +275,29 @@
           <tbody *ngIf="avg">
           <tr *ngIf="startYear && endYear" (click)="changeVisibility(avg.id) "
 
-              [ngClass]="{'text-blue-600': avg.display,'text-blue-600/60': !avg.display}" class="text-blue-600">
+              [ngClass]="{'bg-blue-600': avg.display,'text-white': avg.display,'bg-gray-200': !avg.display}" class="text-blue-600">
             <td *ngIf="startYear && endYear">
               Среднее многолетнее
             </td>
             <td>{{ (avg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="past" (click)="changeVisibility(past.id)"
-           [ngClass]="{'text-amber-600': past.display, 'text-amber-600/60': !past.display}" class="text-amber-600">
+           [ngClass]="{'bg-amber-600': past.display,'text-white': past.display,  'bg-gray-200': !past.display}" class="text-amber-600">
            <td> Среднее за 10 лет</td>
            <td>{{ (past.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="max" (click)="changeVisibility(max.id)"
-              [ngClass]="{'text-green-600': max.display,  'text-green-600/60': !max.display}" class="text-green-600">
+              [ngClass]="{'bg-green-600': max.display, 'text-white': max.display,  'bg-gray-200':!max.display}" class="text-green-600">
 
             <td>Максимальный</td>
             <td>{{ (max.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="min" (click)="removeFromChart(min)"
-              [ngClass]="{'text-rose-600': min.display, 'text-rose-600/60': !min.display}" class="text-rose-600">
-            <td>Минимальный</td>
+              [ngClass]="{'bg-rose-600': min.display,'text-white': min.display,  'bg-gray-200':!min.display}" class="text-rose-600">
+            <td>
+        
+             Минимальный
+            </td>
             <td>{{ (min.value) | number: '.0-0' }}</td>
           </tr>
           </tbody>
