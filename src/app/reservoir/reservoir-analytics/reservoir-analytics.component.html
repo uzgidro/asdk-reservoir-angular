@@ -96,13 +96,21 @@
             <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="tenAvg && tenAvg.display" (click)="changeVisibility(tenAvg.id)"
-              [ngClass]="{'text-amber-600': tenAvg.display}" class="text-amber-600">
+              [ngClass]="{'text-cyan-600': tenAvg.display}" class="text-cyan-600">
             <td>Среднее за 10 лет</td>
             <td *ngFor="let val of tenAvg.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (tenAvg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
             <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
             <td>{{ (tenAvg.value * 100 / avg.value) | number: '.0-0' }}</td>
           </tr>
+          <tr *ngIf="past && past.display" (click)="changeVisibility(past.id)"
+          [ngClass]="{'text-amber-600': past.display}" class="text-amber-600">
+        <td>Среднее за прошлый</td>
+        <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
+        <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+        <td>{{ (past.value) | number: '.0-0' }}</td>
+        <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
+      </tr>
           <tr *ngIf="current && current.display" (click)="changeVisibility(current.id)"
               [ngClass]="{'text-purple-600': current.display}" class="text-purple-600">
             <td>Значение за текущий {{ current.year }}</td>
@@ -292,7 +300,7 @@
             <td>{{ (avg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
-           [ngClass]="{'bg-amber-600': tenAvg.display,'text-white': tenAvg.display,  'bg-gray-200': !tenAvg.display}" class="text-amber-600">
+           [ngClass]="{'bg-cyan-600': tenAvg.display,'text-white': tenAvg.display,  'bg-gray-200': !tenAvg.display}" class="text-amber-600">
            <td> Среднее за 10 лет</td>
            <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
           </tr>
