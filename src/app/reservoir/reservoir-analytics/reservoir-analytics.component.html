@@ -147,7 +147,7 @@
             <tr>
               <th>
 
-                <input type="checkbox"  [checked]="true"   class="w-4 h-4 mr-2 mt-2"   (click)="toggleYears(firstHalf)">
+                <input type="checkbox"  [checked]="isFirstHalfChecked()"   class="w-4 h-4 mr-2 mt-2"   (click)="toggleYears(firstHalf)">
 
                 Год
               </th>
@@ -221,7 +221,7 @@
           <thead class="sticky top-0">
             <tr>
               <th>
-                <input type="checkbox" class="w-4 h-4 mr-2 mt-2"  [checked]="true" (click)="toggleYears(secondHalf)">
+                <input type="checkbox" class="w-4 h-4 mr-2 mt-2"  [checked]="isSecondHalfChecked()" (click)="toggleYears(secondHalf)">
                  Год
               </th>
               <th>Приток воды, млн. м3</th>

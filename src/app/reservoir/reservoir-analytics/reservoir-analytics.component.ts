@@ -246,6 +246,8 @@ throw new Error('Method not implemented.');
 
   volumeChartDataset: any[] = []
   volumeChartLabels: number[] = []
+  firstHalfChecked:boolean=true
+  secondHalfChecked:boolean=true
 
 
 
@@ -296,7 +298,7 @@ throw new Error('Method not implemented.');
     return this.min?.year === year || this.max?.year === year || this.past?.year === year;
   }
 
-
+  
   isChecked(year: number): boolean {
     return (
       (this.min?.year === year && this.min.display) ||
@@ -305,6 +307,14 @@ throw new Error('Method not implemented.');
       (this.selected?.some(item => item.year === year && item.display)) ||
       (this.past?.year === year && this.past.display)
     );
+  }
+
+  isFirstHalfChecked(): boolean {
+    return this.firstHalf.some(item => this.isChecked(item.year));
+  }
+
+  isSecondHalfChecked(): boolean {
+    return this.secondHalf.some(item => this.isChecked(item.year));
   }
 
   isYearMatched(year:number): boolean {
@@ -374,6 +384,7 @@ throw new Error('Method not implemented.');
             color: colors.main,
             display: true
           })
+
           this.chart?.update()
         }
       })
@@ -382,13 +393,13 @@ throw new Error('Method not implemented.');
 
 
   toggleYears(years:YearValue[]){
+    const checked = this.isFirstHalfChecked();
     years.forEach(item => {
      if(this.isYearMatched(item.year)&&!this.selected) {
       this.removeFromChart(item)
      }else if(this.selected&&this.isYearNotMatched(item.year)){
       this.selected.map(item=>this.changeVisibility(item.id))
      }
-
     });
   }
 
