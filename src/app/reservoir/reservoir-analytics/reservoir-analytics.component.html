@@ -12,6 +12,7 @@
                 [labels]="incomeChartLabels"
                 [options]="chartOptions"
                 [type]="'line'"
+                style="height: 47vh;"
 
 
                 ></canvas>
@@ -21,6 +22,7 @@
                 [labels]="volumeChartLabels"
                 [options]="chartOptions"
                 [type]="'line'"
+                style="height: 47vh;"
         ></canvas>
         <div class="flex flex-row space-x-4 p-2">
           <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category.includes('income')}"
@@ -143,7 +145,12 @@
         <table>
           <thead class="sticky top-0">
             <tr>
-              <th>Год</th>
+              <th>
+
+                <input type="checkbox"  [checked]="true"   class="w-4 h-4 mr-2 mt-2"   (click)="toggleYears(firstHalf)">
+
+                Год
+              </th>
               <th>Приток воды, млн. м3</th>
             </tr>
           </thead>
@@ -213,7 +220,10 @@
         <table>
           <thead class="sticky top-0">
             <tr>
-              <th>Год</th>
+              <th>
+                <input type="checkbox" class="w-4 h-4 mr-2 mt-2"  [checked]="true" (click)="toggleYears(secondHalf)">
+                 Год
+              </th>
               <th>Приток воды, млн. м3</th>
             </tr>
           </thead>
@@ -300,7 +310,7 @@
             <td>{{ (avg.value) | number: '.0-0' }}</td>
           </tr>
           <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
-           [ngClass]="{'bg-cyan-600': tenAvg.display,'text-white': tenAvg.display,  'bg-gray-200': !tenAvg.display,'text-cyan-600': !tenAvg.display}" class="text-gray-200">
+           [ngClass]="{'bg-cyan-600': tenAvg.display,'text-white': tenAvg.display,  'bg-gray-200': !tenAvg.display,'text-cyan-600': !tenAvg.display}" class="text-cyan-600">
            <td> Среднее за 10 лет</td>
            <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
           </tr>
@@ -310,7 +320,7 @@
             <td>Максимальный</td>
             <td>{{ (max.value) | number: '.0-0' }}</td>
           </tr>
-          <tr *ngIf="min" (click)="removeFromChart(min)"
+          <tr *ngIf="min" (click)="changeVisibility(min.id)"
               [ngClass]="{'bg-rose-600': min.display,'text-white': min.display,  'bg-gray-200':!min.display}" class="text-rose-600">
             <td>
 

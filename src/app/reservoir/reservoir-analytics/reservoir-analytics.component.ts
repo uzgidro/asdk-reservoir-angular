@@ -248,6 +248,8 @@ throw new Error('Method not implemented.');
   volumeChartLabels: number[] = []
 
 
+
+
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   @ViewChild('infoContainer') infoContainer?: ElementRef
 
@@ -256,6 +258,7 @@ throw new Error('Method not implemented.');
   }
 
   ngOnInit() {
+
     this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
@@ -263,11 +266,15 @@ throw new Error('Method not implemented.');
           next: (response: ReservoirResponse) => {
             this.reservoirId = response.id
             this.reservoirName = response.name
+
           }
         })
         this.configureData(value['reservoir'])
       }
     })
+
+
+
   }
 
   ngAfterViewInit() {
@@ -300,7 +307,7 @@ throw new Error('Method not implemented.');
     );
   }
 
-  isYearMatched(year: number): boolean {
+  isYearMatched(year:number): boolean {
     return (
       this.min?.year === year ||
       this.max?.year === year ||
@@ -308,7 +315,7 @@ throw new Error('Method not implemented.');
       this.past?.year === year
     );
   }
-  isYearNotMatched(year: number): boolean {
+  isYearNotMatched(year:number): boolean {
     return (
       this.min?.year !== year &&
       this.max?.year !== year &&
@@ -316,21 +323,9 @@ throw new Error('Method not implemented.');
       this.past?.year !== year
     );
   }
-  checkYear(year: number, match: boolean): boolean {
-    const isMatched = (
-      this.min?.year === year ||
-      this.max?.year === year ||
-      this.current?.year === year ||
-      this.past?.year === year
-    );
-    return match ? isMatched : !isMatched;
-  }
-
-
 
   splitYears(years:any) {
     if (years.length > 20) {
-
       this.firstHalf = years.slice(0, 20);
       this.secondHalf = years.slice(20);
     } else {
@@ -338,7 +333,7 @@ throw new Error('Method not implemented.');
     }
     console.log(this.firstHalf);
     console.log(this.secondHalf);
-    console.log(years);
+
 
 
   }
@@ -385,7 +380,20 @@ throw new Error('Method not implemented.');
     }
   }
 
-  removeFromChart(item: any) {
+
+  toggleYears(years:YearValue[]){
+    years.forEach(item => {
+     if(this.isYearMatched(item.year)&&!this.selected) {
+      this.removeFromChart(item)
+     }else if(this.selected&&this.isYearNotMatched(item.year)){
+      this.selected.map(item=>this.changeVisibility(item.id))
+     }
+
+    });
+  }
+
+
+  removeFromChart(item: YearValue) {
     if (this.past && item.year === this.past.year) {
       this.changeVisibility(this.past.id); // Call changeVisibility with the id of the item being removed
       this.past.display = false;
@@ -445,10 +453,7 @@ throw new Error('Method not implemented.');
         this.years = response.data.flatMap(item => {
           return {year: new Date(item.date).getFullYear(), value: this.calculateVolume(item)}
         })
-        console.log(this.years);
         this.splitYears(this.years)
-
-
         this.volumeChartLabels = response.data.map(item => new Date(item.date).getFullYear())
         this.volumeChartDataset[0] = {
           data: this.calculateMonthlyValues(response),
