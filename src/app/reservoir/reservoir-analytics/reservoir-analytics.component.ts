@@ -298,7 +298,7 @@ throw new Error('Method not implemented.');
     return this.min?.year === year || this.max?.year === year || this.past?.year === year;
   }
 
-  
+
   isChecked(year: number): boolean {
     return (
       (this.min?.year === year && this.min.display) ||
@@ -309,12 +309,11 @@ throw new Error('Method not implemented.');
     );
   }
 
-  isFirstHalfChecked(): boolean {
-    return this.firstHalf.some(item => this.isChecked(item.year));
-  }
 
-  isSecondHalfChecked(): boolean {
-    return this.secondHalf.some(item => this.isChecked(item.year));
+
+  isYearsChecked(years:YearValue[]):boolean{
+    return years.some(item=>this.isChecked(item.year))
+
   }
 
   isYearMatched(year:number): boolean {
@@ -325,6 +324,7 @@ throw new Error('Method not implemented.');
       this.past?.year === year
     );
   }
+  
   isYearNotMatched(year:number): boolean {
     return (
       this.min?.year !== year &&
@@ -393,7 +393,6 @@ throw new Error('Method not implemented.');
 
 
   toggleYears(years:YearValue[]){
-    const checked = this.isFirstHalfChecked();
     years.forEach(item => {
      if(this.isYearMatched(item.year)&&!this.selected) {
       this.removeFromChart(item)
