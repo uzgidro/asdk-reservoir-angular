@@ -268,7 +268,6 @@ throw new Error('Method not implemented.');
           next: (response: ReservoirResponse) => {
             this.reservoirId = response.id
             this.reservoirName = response.name
-
           }
         })
         this.configureData(value['reservoir'])
@@ -324,7 +323,7 @@ throw new Error('Method not implemented.');
       this.past?.year === year
     );
   }
-  
+
   isYearNotMatched(year:number): boolean {
     return (
       this.min?.year !== year &&
@@ -341,11 +340,6 @@ throw new Error('Method not implemented.');
     } else {
       this.firstHalf = years;
     }
-    console.log(this.firstHalf);
-    console.log(this.secondHalf);
-
-
-
   }
 
   yearSelect(year: number | undefined) {
@@ -392,15 +386,20 @@ throw new Error('Method not implemented.');
   }
 
 
-  toggleYears(years:YearValue[]){
+  toggleYears(years: YearValue[]) {
     years.forEach(item => {
-     if(this.isYearMatched(item.year)&&!this.selected) {
-      this.removeFromChart(item)
-     }else if(this.selected&&this.isYearNotMatched(item.year)){
-      this.selected.map(item=>this.changeVisibility(item.id))
-     }
+      if (this.isYearNotMatched(item.year)) {
+        this.selected?.forEach(selectedItem => {
+          if (selectedItem.year === item.year) {
+            this.changeVisibility(selectedItem.id);
+          }
+        });
+      } else {
+        this.removeFromChart(item);
+      }
     });
   }
+
 
 
   removeFromChart(item: YearValue) {
@@ -671,7 +670,7 @@ throw new Error('Method not implemented.');
 
 interface YearValue {
   year: number
-  value: number
+  value: number,
 }
 
 interface Values {
@@ -680,7 +679,8 @@ interface Values {
   byMonth: number[]
   year?: number
   color?: string
-  display: boolean
+  display: boolean,
+
 }
 
 
