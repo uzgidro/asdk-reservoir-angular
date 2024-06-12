@@ -249,6 +249,8 @@ throw new Error('Method not implemented.');
   firstHalfChecked:boolean=true
   secondHalfChecked:boolean=true
 
+  toggledYears:YearValue[]=[]
+
 
 
 
@@ -304,8 +306,20 @@ throw new Error('Method not implemented.');
       (this.max?.year === year && this.max.display) ||
       (this.current?.year === year && this.current.display) ||
       (this.selected?.some(item => item.year === year && item.display)) ||
+      (this.selected?.some(item => item.year === year && item.display)) ||
       (this.past?.year === year && this.past.display)
     );
+  }
+
+
+
+
+
+
+
+
+  isToggledChecked(item:YearValue){
+    return !this.toggledYears.includes(item)
   }
 
 
@@ -391,6 +405,7 @@ throw new Error('Method not implemented.');
       if (this.isYearNotMatched(item.year)) {
         this.selected?.forEach(selectedItem => {
           if (selectedItem.year === item.year) {
+            this.toggledYears=[...this.toggledYears,item]
             this.changeVisibility(selectedItem.id);
           }
         });
@@ -399,8 +414,6 @@ throw new Error('Method not implemented.');
       }
     });
   }
-
-
 
   removeFromChart(item: YearValue) {
     if (this.past && item.year === this.past.year) {
