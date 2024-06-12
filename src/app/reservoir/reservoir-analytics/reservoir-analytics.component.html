@@ -1,8 +1,5 @@
 <div class="flex flex-col">
-
-
   <div class="grid grid-cols-12 gap-4 p-5">
-
     <div class="flex flex-col 2xl:col-start-1 col-span-10 max-2xl:col-span-10  h-fit" #infoContainer>
       <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
       <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100 ">
@@ -13,8 +10,6 @@
                 [options]="chartOptions"
                 [type]="'line'"
                 style="height: 47vh;"
-
-
                 ></canvas>
         <canvas *ngIf="category.includes('volume')"
                 baseChart
@@ -65,8 +60,6 @@
               [ngClass]="{'text-blue-600': avg.display}" class="text-blue-600">
             <td *ngIf="startYear && endYear" class="text-sm p-1">
               Среднее многолетнее
-              <!-- {{ startYear.getFullYear() }}
-              - {{ endYear.getFullYear() }} -->
             </td>
             <td *ngFor="let val of avg.byMonth">{{ val | number: '.0-0' }}</td>
             <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
@@ -76,8 +69,6 @@
           <tr *ngIf="max && max.display" (click)="changeVisibility(max.id)"
               [ngClass]="{'text-green-600': max.display}" class="text-green-600 text-xs">
             <td class="p-1">
-              <!-- Максимальное значение -->
-              <!-- {{ max.year }} -->
               Максимальный
             </td>
             <td *ngFor="let val of max.byMonth">{{ val | number: '.0-0' }}</td>
@@ -88,8 +79,6 @@
           <tr *ngIf="min && min.display" (click)="changeVisibility(min.id)"
               [ngClass]="{'text-rose-600': min.display}" class="text-rose-600">
             <td class="p-1">
-              <!-- Минимальное значение -->
-               <!-- {{ min.year }} -->
                Минимальный
               </td>
             <td *ngFor="let val of min.byMonth">{{ val | number: '.0-0' }}</td>
@@ -133,22 +122,16 @@
         </table>
       </div>
     </div>
-
-
     <div class="flex flex-col gap-2.5 col-span-2 max-2xl:col-span-3 mb-40 h-fit">
-
       <!-- Two Tables -->
       <div class="flex flex-row items-start gap-1 justify-center">
-
       <div class="col-span-1 max-2xl:col-span-1">
         <!-- Приток воды -->
         <table>
           <thead class="sticky top-0">
             <tr>
               <th>
-
                 <input type="checkbox"  [checked]="isYearsChecked(firstHalf)"   class="w-4 h-4 mr-2 mt-2"   (click)="toggleYears(firstHalf)">
-
                 Год
               </th>
               <th>Приток воды, млн. м3</th>
@@ -280,7 +263,6 @@
                 'past': past?.year === item.year,
                 'current': current?.year == item.year,
                 'text-gray-200': getColor(item),
-
               }"
             >
               {{ item.value | number: '.0-0' }}
@@ -323,7 +305,6 @@
           <tr *ngIf="min" (click)="changeVisibility(min.id)"
               [ngClass]="{'bg-rose-600': min.display,'text-white': min.display,  'bg-gray-200':!min.display}" class="text-rose-600">
             <td>
-
              Минимальный
             </td>
             <td>{{ (min.value) | number: '.0-0' }}</td>

@@ -401,12 +401,13 @@ throw new Error('Method not implemented.');
 
 
   toggleYears(years: YearValue[]) {
+    this.toggledYears=[]
     years.forEach(item => {
       if (this.isYearNotMatched(item.year)) {
-        this.selected?.forEach(selectedItem => {
-          if (selectedItem.year === item.year) {
-            this.toggledYears=[...this.toggledYears,item]
-            this.changeVisibility(selectedItem.id);
+      this.selected?.forEach(selectedItem => {
+      if (selectedItem.year === item.year) {
+          this.toggledYears=[...this.toggledYears,item]
+          this.changeVisibility(selectedItem.id);
           }
         });
       } else {
