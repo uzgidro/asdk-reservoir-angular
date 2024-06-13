@@ -31,58 +31,22 @@ throw new Error('Method not implemented.');
   protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
   private colors: { main: string, sub: string }[] = [
-    {
-      main: 'rgba(220, 38, 38,1)',
-      sub: 'rgba(220, 38, 38,0.8)'
-    },
-    {
-      main: 'rgba(234, 88, 12,1)',
-      sub: 'rgba(234, 88, 12,0.8)'
-    },
-    {
-      main: 'rgba(202, 138, 4,1)',
-      sub: 'rgba(202, 138, 4,0.8)'
-    },
-    {
-      main: 'rgba(101, 163, 13,1)',
-      sub: 'rgba(101, 163, 13,0.8)'
-    },
-    {
-      main: 'rgba(5, 150, 105,1)',
-      sub: 'rgba(5, 150, 105,0.8)'
-    },
-    {
-      main: 'rgba(13, 148, 136,1)',
-      sub: 'rgba(13, 148, 136,0.8)'
-    },
-    {
-      main: 'rgba(8, 145, 178,1)',
-      sub: 'rgba(8, 145, 178,0.8)'
-    },
-    {
-      main: 'rgba(2, 132, 199,1)',
-      sub: 'rgba(2, 132, 199,0.8)'
-    },
-    {
-      main: 'rgba(79, 70, 229,1)',
-      sub: 'rgba(79, 70, 229,0.8)'
-    },
-    {
-      main: 'rgba(124, 58, 237,1)',
-      sub: 'rgba(124, 58, 237,0.8)'
-    },
-    {
-      main: 'rgba(192, 38, 211,1)',
-      sub: 'rgba(192, 38, 211,0.8)'
-    },
-    {
-      main: 'rgba(219, 39, 119,1)',
-      sub: 'rgba(219, 39, 119,0.8)'
-    }
-  ]
-  private colorsCounter = 0
+    { main: 'rgba(220, 38, 38,1)', sub: 'rgba(220, 38, 38,0.8)' },
+    { main: 'rgba(234, 88, 12,1)', sub: 'rgba(234, 88, 12,0.8)' },
+    { main: 'rgba(202, 138, 4,1)', sub: 'rgba(202, 138, 4,0.8)' },
+    { main: 'rgba(101, 163, 13,1)', sub: 'rgba(101, 163, 13,0.8)' },
+    { main: 'rgba(5, 150, 105,1)', sub: 'rgba(5, 150, 105,0.8)' },
+    { main: 'rgba(13, 148, 136,1)', sub: 'rgba(13, 148, 136,0.8)' },
+    { main: 'rgba(8, 145, 178,1)', sub: 'rgba(8, 145, 178,0.8)' },
+    { main: 'rgba(2, 132, 199,1)', sub: 'rgba(2, 132, 199,0.8)' },
+    { main: 'rgba(79, 70, 229,1)', sub: 'rgba(79, 70, 229,0.8)' },
+    { main: 'rgba(124, 58, 237,1)', sub: 'rgba(124, 58, 237,0.8)' },
+    { main: 'rgba(192, 38, 211,1)', sub: 'rgba(192, 38, 211,0.8)' },
+    { main: 'rgba(219, 39, 119,1)', sub: 'rgba(219, 39, 119,0.8)' }
+  ];
+   private colorsCounter = 0;
 
-  private _incomeChart: {
+   private _incomeChart: {
     id: string
     data: any
     year?: YearValue
@@ -91,6 +55,75 @@ throw new Error('Method not implemented.');
     color?: string
     display: boolean
   }[] = []
+
+  reservoirId?: number;
+  reservoirName?: string;
+  tableHeight?: number;
+  category = 'income';
+
+  firstHalf: YearValue[] = [];
+  secondHalf: YearValue[] = [];
+  startYear?: Date;
+  endYear?: Date;
+  subscribes: Subscription[] = [];
+  incomeChartLabels = [
+    'Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь',
+    'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.'
+  ];
+  chartOptions: ChartConfiguration['options'] = {
+    elements: { line: { tension: 0.5 } },
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: 'Приток воды, млн. м3' }
+    }
+  };
+  volumeChartDataset: any[] = [];
+  volumeChartLabels: number[] = [];
+  firstHalfChecked = true;
+  secondHalfChecked = true;
+  reservoir = 'reservoir';
+
+
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @ViewChild('infoContainer') infoContainer?: ElementRef
+
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
+    Chart.register(...registerables);
+  }
+
+  ngOnInit() {
+  this.shuffleArray(this.colors)
+    this.activatedRoute.queryParams.subscribe({
+      next: value => {
+        this.api.getReservoirById(value[this.reservoir]).subscribe({
+          next: (response: ReservoirResponse) => {
+            this.reservoirId = response.id
+            this.reservoirName = response.name
+          }
+        })
+        this.configureData(value[this.reservoir])
+      }
+    })
+
+
+
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() =>
+      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight
+    )
+  }
+
+
+  @HostListener('window:resize')
+  onResize() {
+    if (this.tableHeight !== this.infoContainer?.nativeElement.offsetHeight) {
+      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight;
+    }
+    this.chart?.update();
+  }
 
   get displayCharts() {
     return this._incomeChart.filter(i => i.display)
@@ -211,95 +244,6 @@ throw new Error('Method not implemented.');
     return
   }
 
-  reservoirId?: number
-  reservoirName?: string
-  tableHeight?: number
-  category = 'income'
-
-  firstHalf: { year: number, value: number }[] = [];
-  secondHalf: { year: number, value: number }[] = [];
-
-
-  startYear?: Date
-  endYear?: Date
-  subscribes: Subscription[] = []
-
-  incomeChartLabels = ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.']
-  chartOptions: ChartConfiguration['options'] = {
-    elements: {
-      line: {
-        tension: 0.5,
-      },
-    },
-    interaction: {
-      mode: 'index',
-      intersect: false
-    },
-    plugins: {
-      legend: {display:false},
-      title: {
-        display: true,
-        text: 'Приток воды, млн. м3'
-      }
-    }
-  }
-
-  volumeChartDataset: any[] = []
-  volumeChartLabels: number[] = []
-  firstHalfChecked:boolean=true
-  secondHalfChecked:boolean=true
-
-  toggledYears:YearValue[]=[]
-
-
-
-
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-  @ViewChild('infoContainer') infoContainer?: ElementRef
-
-  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
-    Chart.register(...registerables);
-  }
-
-  ngOnInit() {
-
-    this.shuffleArray(this.colors)
-    this.activatedRoute.queryParams.subscribe({
-      next: value => {
-        this.api.getReservoirById(value['reservoir']).subscribe({
-          next: (response: ReservoirResponse) => {
-            this.reservoirId = response.id
-            this.reservoirName = response.name
-          }
-        })
-        this.configureData(value['reservoir'])
-      }
-    })
-
-
-
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() =>
-      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight
-    )
-  }
-
-
-  @HostListener('window:resize')
-  onResize() {
-    if (this.tableHeight !== this.infoContainer?.nativeElement.offsetHeight) {
-      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight;
-    }
-    this.chart?.update();
-  }
-
-  showCheckbox(year: number): boolean {
-    return this.min?.year === year || this.max?.year === year || this.past?.year === year;
-  }
-
-
   isChecked(year: number): boolean {
     return (
       (this.min?.year === year && this.min.display) ||
@@ -310,19 +254,6 @@ throw new Error('Method not implemented.');
       (this.past?.year === year && this.past.display)
     );
   }
-
-
-
-
-
-
-
-
-  isToggledChecked(item:YearValue){
-    return !this.toggledYears.includes(item)
-  }
-
-
 
   isYearsChecked(years:YearValue[]):boolean{
     return years.some(item=>this.isChecked(item.year))
@@ -359,7 +290,6 @@ throw new Error('Method not implemented.');
   yearSelect(year: number | undefined) {
     // if year is undefined or year is already selected and changed visibility
     if (!year || this.changeVisibility(year.toString())) return;
-
     if (this.reservoirId) {
       this.api.getSelectedYearValues(this.reservoirId,year).subscribe({
         next: (response: ComplexValueResponse) => {
@@ -401,12 +331,10 @@ throw new Error('Method not implemented.');
 
 
   toggleYears(years: YearValue[]) {
-    this.toggledYears=[]
     years.forEach(item => {
       if (this.isYearNotMatched(item.year)) {
       this.selected?.forEach(selectedItem => {
       if (selectedItem.year === item.year) {
-          this.toggledYears=[...this.toggledYears,item]
           this.changeVisibility(selectedItem.id);
           }
         });
@@ -431,7 +359,6 @@ throw new Error('Method not implemented.');
       this.current.display = false;
     }
   }
-
 
   changeVisibility(id: string) {
     let find = this._incomeChart.find(i => i.id == id);
@@ -466,7 +393,6 @@ throw new Error('Method not implemented.');
     this.getPastYear(reservoirId)
     this.getCurrentYear(reservoirId)
   }
-
 
   private getByYears(reservoirId: number) {
     this.subscribes.push(this.api.getByYearValues(reservoirId).subscribe({
@@ -694,7 +620,6 @@ interface Values {
   year?: number
   color?: string
   display: boolean,
-
 }
 
 
