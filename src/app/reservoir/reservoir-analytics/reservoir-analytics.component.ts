@@ -105,9 +105,6 @@ throw new Error('Method not implemented.');
         this.configureData(value[this.reservoir])
       }
     })
-
-
-
   }
 
   ngAfterViewInit() {
@@ -120,7 +117,7 @@ throw new Error('Method not implemented.');
   @HostListener('window:resize')
   onResize() {
     if (this.tableHeight !== this.infoContainer?.nativeElement.offsetHeight) {
-      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight;
+       this.tableHeight = this.infoContainer?.nativeElement.offsetHeight;
     }
     this.chart?.update();
   }
@@ -246,12 +243,8 @@ throw new Error('Method not implemented.');
 
   isChecked(year: number): boolean {
     return (
-      (this.min?.year === year && this.min.display) ||
-      (this.max?.year === year && this.max.display) ||
-      (this.current?.year === year && this.current.display) ||
-      (this.selected?.some(item => item.year === year && item.display)) ||
-      (this.selected?.some(item => item.year === year && item.display)) ||
-      (this.past?.year === year && this.past.display)
+      [this.min, this.max, this.current, this.past].some(item => item?.year === year && item.display) ||
+      (this.selected?.some(item => item.year === year && item.display) ?? false)
     );
   }
 
@@ -260,23 +253,14 @@ throw new Error('Method not implemented.');
 
   }
 
-  isYearMatched(year:number): boolean {
-    return (
-      this.min?.year === year ||
-      this.max?.year === year ||
-      this.current?.year === year ||
-      this.past?.year === year
-    );
+  isYearMatched(year: number): boolean {
+    return [this.min, this.max, this.current, this.past].some(item => item?.year === year);
   }
 
-  isYearNotMatched(year:number): boolean {
-    return (
-      this.min?.year !== year &&
-      this.max?.year !== year &&
-      this.current?.year !== year &&
-      this.past?.year !== year
-    );
+  isYearNotMatched(year: number): boolean {
+    return !this.isYearMatched(year);
   }
+
 
   splitYears(years:any) {
     if (years.length > 20) {
@@ -345,20 +329,15 @@ throw new Error('Method not implemented.');
   }
 
   removeFromChart(item: YearValue) {
-    if (this.past && item.year === this.past.year) {
-      this.changeVisibility(this.past.id); // Call changeVisibility with the id of the item being removed
-      this.past.display = false;
-    } else if (this.max && item.year === this.max.year) {
-      this.changeVisibility(this.max.id); // Call changeVisibility with the id of the item being removed
-      this.max.display = false;
-    } else if (this.min && item.year === this.min.year) {
-      this.changeVisibility(this.min.id); // Call changeVisibility with the id of the item being removed
-      this.min.display = false;
-    } else if (this.current && item.year === this.current.year) {
-      this.changeVisibility(this.current.id); // Call changeVisibility with the id of the item being removed
-      this.current.display = false;
-    }
+    const yearMappings = [this.past, this.max, this.min, this.current];
+    yearMappings.forEach(mapping => {
+      if (mapping && item.year === mapping.year) {
+        this.changeVisibility(mapping.id); // Call changeVisibility with the id of the item being removed
+        mapping.display = false;
+      }
+    });
   }
+
 
   changeVisibility(id: string) {
     let find = this._incomeChart.find(i => i.id == id);
