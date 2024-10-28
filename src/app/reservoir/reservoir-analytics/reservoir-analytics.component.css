@@ -1,9 +1,5 @@
-td {
-  @apply text-sm;
-}
-
 th {
-  @apply text-sm max-w-32;
+  @apply max-w-32;
 }
 
 .min {
