@@ -12,6 +12,9 @@
   p,h1,h2,h3,h4,h5,h6,th,td {
     @apply cursor-default
   }
+  nav {
+    @apply text-white
+  }
   body {
     @apply bg-gray-200
   }
@@ -72,3 +75,10 @@
   @apply bg-amber-500 hover:bg-amber-600 active:bg-amber-400 disabled:bg-amber-300
 }
 
+.nav-gradient {
+  @apply bg-gradient-to-b from-darkGray to-deepBlack
+}
+
+.nav-border {
+  @apply  bg-gradient-to-r from-transparent via-brightBlue to-transparent
+}
