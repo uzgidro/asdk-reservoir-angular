@@ -16,7 +16,7 @@
     @apply text-white
   }
   body {
-    @apply bg-[#060606] text-[#01F5F5]
+    @apply bg-background text-primary
   }
   table {
     @apply table-auto w-full border-collapse overflow-x-auto
@@ -80,7 +80,23 @@
 }
 
 .horizontal-blue-gradient {
-  @apply  bg-gradient-to-r from-transparent via-bright-blue to-transparent
+  @apply bg-gradient-to-r from-transparent via-primary to-transparent
+}
+
+.active-button {
+  @apply bg-on-secondary
+}
+
+.inactive-button {
+  @apply bg-secondary
+}
+
+.active-button:hover, .inactive-button:hover {
+  @apply bg-secondary-variant
+}
+
+.active-button:active, .inactive-button:active {
+  @apply bg-secondary-variantus
 }
 
 /*.trapezoid {*/

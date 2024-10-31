@@ -1,30 +1,110 @@
-<div class="h-full w-full flex flex-col space-y-4 justify-center items-center text-center">
-  <div class="flex flex-row space-x-4 w-full justify-center ">
-    <a routerLink="/reservoir" class="dash-card">
-        <span class="material-symbols-outlined text-7xl">water_drop</span>
-        <h3 class="font-medium text-4xl">Водные ресурсы</h3>
-    </a>
-    <a routerLink="/reservoir/weather" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">partly_cloudy_day</span>
-      <h3 class="font-medium text-4xl">Погода</h3>
-    </a>
-    <a href="https://atnt.uz" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">swap_driving_apps_wheel</span>
-      <h3 class="font-medium text-4xl">КИА</h3>
-    </a>
+<div class="grid grid-cols-3 w-screen px-12 pt-16 gap-4 justify-stretch">
+  <div class="flex flex-col space-y-2 border border-amber-600">
+    <div class="flex w-full items-center">
+      <p class="mr-2">Suv resurslar</p>
+      <div class="flex-grow h-0 border border-primary"></div>
+    </div>
+
+    <div class="h-0 border border-white"></div>
+
+    <div class="grid grid-cols-4 justify-stretch gap-2 text-xs">
+      <button class="active-button px-4 py-2 ">Kelishi, m³/s</button>
+      <button class="inactive-button active:press-button px-4 py-2 ">Chiqish, m³/s</button>
+      <button class="inactive-button px-4 py-2 ">Suv sathi, m</button>
+      <button class="inactive-button px-4 py-2 ">Suv hajmi, mln.m³</button>
+    </div>
+
+
+
+
+    <!-- Filters -->
+
+
+    <!--    &lt;!&ndash; Chart Container &ndash;&gt;-->
+    <!--    <div class="bg-gray-900 p-4 rounded-lg shadow-lg">-->
+    <!--      <canvas id="myChart" width="400" height="300"></canvas>-->
+    <!--    </div>-->
+
+    <!-- Chart.js Script -->
+    <!--    <script>-->
+    <!--      const ctx = document.getElementById('myChart').getContext('2d');-->
+    <!--      const myChart = new Chart(ctx, {-->
+    <!--        type: 'bar',-->
+    <!--        data: {-->
+    <!--          labels: ['Андижон', 'Оҳангарон', 'Пскем', 'Чоткол', 'Чорвоқ', 'Угам', 'Сардоба', 'Хисорак', 'Тўпаланг'],-->
+    <!--          datasets: [{-->
+    <!--            label: 'Объем (м³/сек)',-->
+    <!--            data: [238, 320, 280, 150, 700, 20, 30, 15, 70],-->
+    <!--            backgroundColor: 'rgba(0, 204, 204, 0.7)',-->
+    <!--            borderColor: 'rgba(0, 204, 204, 1)',-->
+    <!--            borderWidth: 1-->
+    <!--          }]-->
+    <!--        },-->
+    <!--        options: {-->
+    <!--          scales: {-->
+    <!--            y: {-->
+    <!--              beginAtZero: true,-->
+    <!--              grid: {-->
+    <!--                color: '#333'-->
+    <!--              },-->
+    <!--              ticks: {-->
+    <!--                color: '#fff'-->
+    <!--              }-->
+    <!--            },-->
+    <!--            x: {-->
+    <!--              grid: {-->
+    <!--                color: '#333'-->
+    <!--              },-->
+    <!--              ticks: {-->
+    <!--                color: '#fff'-->
+    <!--              }-->
+    <!--            }-->
+    <!--          },-->
+    <!--          plugins: {-->
+    <!--            legend: {-->
+    <!--              labels: {-->
+    <!--                color: '#fff'-->
+    <!--              }-->
+    <!--            }-->
+    <!--          }-->
+    <!--        }-->
+    <!--      });-->
+    <!--    </script>-->
   </div>
-  <div class="flex flex-row space-x-4 w-full justify-center ">
-    <a routerLink="/reservoir/snow" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">ac_unit</span>
-      <h3 class="font-medium text-4xl">MODSNOW</h3>
-    </a>
-    <a href="https://soep.uz/" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">earthquake</span>
-      <h3 class="font-medium text-4xl">Сейсмология</h3>
-    </a>
-    <a routerLink="/" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">rocket_launch</span>
-      <h3 class="font-medium text-4xl">УзбекКосмос</h3>
-    </a>
-  </div>
+  <div class="flex p-12 bg-amber-900"></div>
+  <div class="flex p-12 bg-amber-900"></div>
+  <div class="flex p-12 bg-amber-900"></div>
+  <div class="flex p-12 bg-amber-900"></div>
+  <div class="flex p-12 bg-amber-900"></div>
 </div>
+
+<!--<div class="h-full w-full flex flex-col space-y-4 justify-center items-center text-center">-->
+<!--  <div class="flex flex-row space-x-4 w-full justify-center ">-->
+<!--    <a routerLink="/reservoir" class="dash-card">-->
+<!--      <span class="material-symbols-outlined text-7xl">water_drop</span>-->
+<!--      <h3 class="font-medium text-4xl">Водные ресурсы</h3>-->
+<!--    </a>-->
+<!--    <a routerLink="/reservoir/weather" class="dash-card">-->
+<!--      <span class="material-symbols-outlined text-7xl">partly_cloudy_day</span>-->
+<!--      <h3 class="font-medium text-4xl">Погода</h3>-->
+<!--    </a>-->
+<!--    <a href="https://atnt.uz" class="dash-card">-->
+<!--      <span class="material-symbols-outlined text-7xl">swap_driving_apps_wheel</span>-->
+<!--      <h3 class="font-medium text-4xl">КИА</h3>-->
+<!--    </a>-->
+<!--  </div>-->
+<!--  <div class="flex flex-row space-x-4 w-full justify-center ">-->
+<!--    <a routerLink="/reservoir/snow" class="dash-card">-->
+<!--      <span class="material-symbols-outlined text-7xl">ac_unit</span>-->
+<!--      <h3 class="font-medium text-4xl">MODSNOW</h3>-->
+<!--    </a>-->
+<!--    <a href="https://soep.uz/" class="dash-card">-->
+<!--      <span class="material-symbols-outlined text-7xl">earthquake</span>-->
+<!--      <h3 class="font-medium text-4xl">Сейсмология</h3>-->
+<!--    </a>-->
+<!--    <a routerLink="/" class="dash-card">-->
+<!--      <span class="material-symbols-outlined text-7xl">rocket_launch</span>-->
+<!--      <h3 class="font-medium text-4xl">УзбекКосмос</h3>-->
+<!--    </a>-->
+<!--  </div>-->
+<!--</div>-->
