@@ -16,7 +16,7 @@
     @apply text-white
   }
   body {
-    @apply bg-gray-200
+    @apply bg-[#060606] text-[#01F5F5]
   }
   table {
     @apply table-auto w-full border-collapse overflow-x-auto
@@ -75,10 +75,14 @@
   @apply bg-amber-500 hover:bg-amber-600 active:bg-amber-400 disabled:bg-amber-300
 }
 
-.nav-gradient {
-  @apply bg-gradient-to-b from-darkGray to-deepBlack
+.vertical-dark-gradient {
+  @apply bg-gradient-to-b from-dark-gray to-deep-black
 }
 
-.nav-border {
-  @apply  bg-gradient-to-r from-transparent via-brightBlue to-transparent
+.horizontal-blue-gradient {
+  @apply  bg-gradient-to-r from-transparent via-bright-blue to-transparent
 }
+
+/*.trapezoid {*/
+/*  clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);*/
+/*}*/
