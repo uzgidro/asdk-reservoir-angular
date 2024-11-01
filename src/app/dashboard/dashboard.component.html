@@ -1,5 +1,5 @@
 <div class="grid grid-cols-3 w-screen px-12 pt-16 gap-4 justify-stretch">
-  <div class="flex flex-col space-y-2 border border-amber-600">
+  <div class="flex flex-col space-y-2">
     <div class="flex w-full items-center">
       <p class="mr-2">Suv resurslar</p>
       <div class="flex-grow h-0 border border-primary"></div>
@@ -14,62 +14,17 @@
       <button class="inactive-button px-4 py-2 ">Suv hajmi, mln.m³</button>
     </div>
 
-
-
-
-    <!-- Filters -->
-
-
-    <!--    &lt;!&ndash; Chart Container &ndash;&gt;-->
-    <!--    <div class="bg-gray-900 p-4 rounded-lg shadow-lg">-->
-    <!--      <canvas id="myChart" width="400" height="300"></canvas>-->
-    <!--    </div>-->
-
-    <!-- Chart.js Script -->
-    <!--    <script>-->
-    <!--      const ctx = document.getElementById('myChart').getContext('2d');-->
-    <!--      const myChart = new Chart(ctx, {-->
-    <!--        type: 'bar',-->
-    <!--        data: {-->
-    <!--          labels: ['Андижон', 'Оҳангарон', 'Пскем', 'Чоткол', 'Чорвоқ', 'Угам', 'Сардоба', 'Хисорак', 'Тўпаланг'],-->
-    <!--          datasets: [{-->
-    <!--            label: 'Объем (м³/сек)',-->
-    <!--            data: [238, 320, 280, 150, 700, 20, 30, 15, 70],-->
-    <!--            backgroundColor: 'rgba(0, 204, 204, 0.7)',-->
-    <!--            borderColor: 'rgba(0, 204, 204, 1)',-->
-    <!--            borderWidth: 1-->
-    <!--          }]-->
-    <!--        },-->
-    <!--        options: {-->
-    <!--          scales: {-->
-    <!--            y: {-->
-    <!--              beginAtZero: true,-->
-    <!--              grid: {-->
-    <!--                color: '#333'-->
-    <!--              },-->
-    <!--              ticks: {-->
-    <!--                color: '#fff'-->
-    <!--              }-->
-    <!--            },-->
-    <!--            x: {-->
-    <!--              grid: {-->
-    <!--                color: '#333'-->
-    <!--              },-->
-    <!--              ticks: {-->
-    <!--                color: '#fff'-->
-    <!--              }-->
-    <!--            }-->
-    <!--          },-->
-    <!--          plugins: {-->
-    <!--            legend: {-->
-    <!--              labels: {-->
-    <!--                color: '#fff'-->
-    <!--              }-->
-    <!--            }-->
-    <!--          }-->
-    <!--        }-->
-    <!--      });-->
-    <!--    </script>-->
+    <div class="flex">
+      <canvas
+        baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"
+      >
+      </canvas>
+    </div>
   </div>
   <div class="flex p-12 bg-amber-900"></div>
   <div class="flex p-12 bg-amber-900"></div>
