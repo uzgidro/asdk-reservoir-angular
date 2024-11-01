@@ -1,5 +1,5 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {Chart, registerables} from "chart.js";
+import {Chart} from "chart.js";
 import {NgClass} from "@angular/common";
 
 @Component({
@@ -27,7 +27,6 @@ export class ChartsTempComponent implements OnInit {
   }
 
   ngOnInit() {
-    Chart.register(...registerables)
     this.drawChart()
   }
 

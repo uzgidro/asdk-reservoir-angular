@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Chart, registerables} from "chart.js";
+import {Chart} from "chart.js";
 import {Dataset} from "../../interfaces";
 import {PizeoService} from "../../service/pizeo.service";
 
@@ -31,7 +31,6 @@ export class PiezoComponent implements OnInit {
   }
 
   ngOnInit() {
-    Chart.register(...registerables)
     this.drawChart(this._service.st1)
   }
 

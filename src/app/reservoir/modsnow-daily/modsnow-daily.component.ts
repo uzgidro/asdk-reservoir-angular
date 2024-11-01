@@ -7,7 +7,7 @@ import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {EnvService} from "../../shared/service/env.service";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
-import {Chart, ChartConfiguration, registerables} from "chart.js";
+import {ChartConfiguration} from "chart.js";
 
 @Component({
   selector: 'app-modsnow-daily',
@@ -56,7 +56,6 @@ export class ModsnowDailyComponent implements OnInit {
   }
 
   ngOnInit() {
-    Chart.register(...registerables);
     this.setupData()
 
     this.responsiveOptions = [
@@ -75,8 +74,8 @@ export class ModsnowDailyComponent implements OnInit {
 
   setupData() {
     this.env.getRegions().filter(item => item.snowCoverage !== undefined).forEach(reservoir => {
-    let height: number[] = []
-    let heightValue = 1000
+      let height: number[] = []
+      let heightValue = 1000
       reservoir.snowCoverage!.forEach(() => {
         height.push(heightValue)
         heightValue += 500

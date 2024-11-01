@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {Chart, ChartConfiguration, registerables} from "chart.js";
+import {ChartConfiguration} from "chart.js";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
@@ -89,7 +89,6 @@ throw new Error('Method not implemented.');
   @ViewChild('infoContainer') infoContainer?: ElementRef
 
   constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
-    Chart.register(...registerables);
   }
 
   ngOnInit() {

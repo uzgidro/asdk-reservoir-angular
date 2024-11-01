@@ -30,7 +30,7 @@
     "@angular/router": "^17.0.8",
     "@angular/ssr": "^17.0.8",
     "angular-resizable-element": "^7.0.2",
-    "chart.js": "^4.4.1",
+    "chart.js": "^4.4.6",
     "express": "^4.15.2",
     "firebase": "^10.11.1",
     "material-symbols": "^0.14.5",

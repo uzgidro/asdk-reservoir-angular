@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {LoaderComponent} from './shared/component/loader/loader.component';
-import { NgOptimizedImage, CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {
   AggregateValuesTableComponent
 } from './shared/component/aggregate-values-table/aggregate-values-table.component';
@@ -22,6 +22,7 @@ import {ReservoirCurrentComponent} from './shared/component/reservoir-current/re
 import {RusDatePipe} from './shared/pipe/rus-date.pipe';
 import {RusMonthPipe} from './shared/pipe/rus-month.pipe';
 import {MetricSelectComponent} from './shared/component/metric-select/metric-select.component';
+import {Chart, registerables} from "chart.js";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,16 @@ import {MetricSelectComponent} from './shared/component/metric-select/metric-sel
     AggregateValuesTableComponent,
   ],
   exports: [HttpClientModule],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    {
+      provide: 'ChartSetup',
+      useFactory: () => {
+        Chart.register(...registerables)
+        return Chart
+      }
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

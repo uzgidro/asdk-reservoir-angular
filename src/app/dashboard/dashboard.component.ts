@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {Chart, registerables} from "chart.js";
+import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
 
 @Component({
@@ -11,9 +10,5 @@ import {RouterLink} from "@angular/router";
   ],
   standalone: true
 })
-export class DashboardComponent implements OnInit {
-
-  ngOnInit() {
-    Chart.register(...registerables)
-  }
+export class DashboardComponent {
 }
