@@ -62,8 +62,18 @@ export class DashboardComponent {
   public barChartData: ChartData<'bar'> = {
     labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
     datasets: [
-      {data: [65, 59, 80, 81, 56, 55, 40, 90, 84], label: '06:00', backgroundColor: '#014a67'},
-      {data: [28, 48, 40, 19, 86, 27, 90, 64, 54], label: '12:00', backgroundColor: '#4eeefe'},
+      {
+        data: [65, 59, 80, 81, 56, 55, 40, 90, 84],
+        label: '06:00',
+        backgroundColor: '#014a67',
+        barThickness: 24,
+      },
+      {
+        data: [28, 48, 40, 19, 86, 27, 90, 64, 54],
+        label: '12:00',
+        backgroundColor: '#4eeefe',
+        barThickness: 24,
+      },
     ],
   };
 
@@ -74,13 +84,13 @@ export class DashboardComponent {
         label: 'Current Value',
         data: [65, 59, 80, 81, 56, 55, 40, 90, 84],
         backgroundColor: '#4eeefe',
-        barThickness: 30,
+        barThickness: 24,
       },
       {
         label: '100% Background',
         data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
         backgroundColor: '#014a67',
-        barThickness: 30,
+        barThickness: 24,
         datalabels: {
           display: false
         }
