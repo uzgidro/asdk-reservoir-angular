@@ -1,7 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
-import {ChartConfiguration, ChartData, ChartEvent} from "chart.js";
+import {ChartConfiguration, ChartData, ChartEvent, Plugin} from "chart.js";
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 @Component({
   selector: 'app-dashboard',
@@ -45,9 +46,15 @@ export class DashboardComponent {
           color: 'white',
         }
       },
+      datalabels: {
+        color: 'white',
+        align: "end",
+        anchor: "end"
+      }
     },
   };
   public barChartType = 'bar' as const;
+  public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
 
   public barChartData: ChartData<'bar'> = {
     labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
