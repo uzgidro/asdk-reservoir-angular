@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
-import {ChartConfiguration, ChartData, ChartEvent, Plugin} from "chart.js";
+import {ChartConfiguration, ChartData, ChartOptions, Plugin} from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 @Component({
@@ -40,6 +40,9 @@ export class DashboardComponent {
 
     },
     plugins: {
+      tooltip: {
+        enabled: false
+      },
       legend: {
         display: true,
         labels: {
@@ -64,39 +67,57 @@ export class DashboardComponent {
     ],
   };
 
-  // events
-  public chartClicked({
-                        event,
-                        active,
-                      }: {
-    event?: ChartEvent;
-    active?: object[];
-  }): void {
-    console.log(event, active);
-  }
+  public chartData: ChartData<'bar'> = {
+    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
+    datasets: [
+      {
+        label: 'Current Value',
+        data: [65, 59, 80, 81, 56, 55, 40, 90, 84],
+        backgroundColor: 'rgba(0, 123, 255, 1)',
+        barThickness: 30,
+      },
+      {
+        label: '100% Background',
+        data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
+        backgroundColor: 'rgba(0, 123, 255, 0.3)',
+        hoverBackgroundColor: 'rgba(0, 123, 255, 0.3)',
+        barThickness: 30,
+        datalabels: {
+          display: false
+        }
+      },
+    ],
+  };
 
-  public chartHovered({
-                        event,
-                        active,
-                      }: {
-    event?: ChartEvent;
-    active?: object[];
-  }): void {
-    console.log(event, active);
-  }
-
-  public randomize(): void {
-    // Only Change 3 values
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      Math.round(Math.random() * 100),
-      56,
-      Math.round(Math.random() * 100),
-      40,
-    ];
-
-    this.chart?.update();
-  }
+  public chartOptions: ChartOptions<'bar'> = {
+    responsive: true,
+    indexAxis: 'y', // Горизонтальный бар
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {display: false},
+      tooltip: {
+        enabled: false, // Включить только для верхнего слоя
+      },
+      datalabels: {
+        color: "white",
+        align: "start",
+        anchor: "end",
+      }
+    },
+    scales: {
+      x: {
+        max: 100,
+        // stacked: true,
+        ticks: {
+          color: 'white',
+        }
+      }, // Устанавливаем максимум шкалы на 100%
+      y: {
+        stacked: true,
+        ticks: {
+          color: 'white',
+        },
+      }
+    },
+  };
 }

@@ -21,8 +21,6 @@
         [options]="barChartOptions"
         [type]="barChartType"
         [plugins]="chartPlugin"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"
       >
       </canvas>
     </div>
@@ -34,6 +32,17 @@
     </div>
 
     <div class="h-0 border border-white"></div>
+
+    <div class="flex h-full">
+      <canvas
+        baseChart
+        [data]="chartData"
+        [options]="chartOptions"
+        [type]="barChartType"
+        [plugins]="chartPlugin"
+      >
+      </canvas>
+    </div>
   </div>
   <div class="flex p-12 bg-amber-900"></div>
   <div class="flex p-12 bg-amber-900"></div>
