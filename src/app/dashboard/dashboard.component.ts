@@ -73,14 +73,13 @@ export class DashboardComponent {
       {
         label: 'Current Value',
         data: [65, 59, 80, 81, 56, 55, 40, 90, 84],
-        backgroundColor: 'rgba(0, 123, 255, 1)',
+        backgroundColor: '#4eeefe',
         barThickness: 30,
       },
       {
         label: '100% Background',
         data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
-        backgroundColor: 'rgba(0, 123, 255, 0.3)',
-        hoverBackgroundColor: 'rgba(0, 123, 255, 0.3)',
+        backgroundColor: '#014a67',
         barThickness: 30,
         datalabels: {
           display: false
@@ -99,9 +98,10 @@ export class DashboardComponent {
         enabled: false, // Включить только для верхнего слоя
       },
       datalabels: {
-        color: "white",
+        color: "#014a67",
         align: "start",
         anchor: "end",
+
       }
     },
     scales: {
