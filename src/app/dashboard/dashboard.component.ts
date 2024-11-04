@@ -4,6 +4,7 @@ import {NgChartsModule} from "ng2-charts";
 import {ChartConfiguration, ChartData, ChartOptions, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import {CarouselModule} from "primeng/carousel";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ import {CarouselModule} from "primeng/carousel";
     RouterLink,
     NgChartsModule,
     CarouselModule,
+    NgOptimizedImage,
   ],
   standalone: true
 })
