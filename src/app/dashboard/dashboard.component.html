@@ -9,7 +9,7 @@
 
     <div class="grid grid-cols-4 justify-stretch gap-2 text-xs">
       <button class="active-button px-4 py-2 ">Kelishi, m³/s</button>
-      <button class="inactive-button active:press-button px-4 py-2 ">Chiqish, m³/s</button>
+      <button class="inactive-button px-4 py-2 ">Chiqish, m³/s</button>
       <button class="inactive-button px-4 py-2 ">Suv sathi, m</button>
       <button class="inactive-button px-4 py-2 ">Suv hajmi, mln.m³</button>
     </div>
@@ -51,6 +51,10 @@
     </div>
 
     <div class="h-0 border border-white"></div>
+
+    <div class="grid grid-flow-col-dense justify-stretch gap-2 text-xs">
+      <button class="inactive-button px-4 py-2" *ngFor="let reservoir of reservoirs">{{ reservoir }}</button>
+    </div>
 
     <div class="flex h-full">
       <canvas

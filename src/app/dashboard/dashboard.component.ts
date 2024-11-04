@@ -3,6 +3,7 @@ import {RouterLink} from "@angular/router";
 import {NgChartsModule} from "ng2-charts";
 import {ChartConfiguration, ChartData, ChartOptions, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import {CarouselModule} from "primeng/carousel";
 
 @Component({
   selector: 'app-dashboard',
@@ -11,10 +12,12 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
   imports: [
     RouterLink,
     NgChartsModule,
+    CarouselModule,
   ],
   standalone: true
 })
 export class DashboardComponent {
+  public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorog', 'Sardoba']
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
@@ -58,16 +61,16 @@ export class DashboardComponent {
   public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
 
   public barChartData: ChartData<'bar'> = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
+    labels: this.reservoirs,
     datasets: [
       {
-        data: [65, 59, 80, 81, 56, 55, 40, 90, 84],
+        data: [65, 59, 80, 81, 56, 55],
         label: '06:00',
         backgroundColor: '#014a67',
         barThickness: 24,
       },
       {
-        data: [28, 48, 40, 19, 86, 27, 90, 64, 54],
+        data: [28, 48, 40, 19, 86, 27],
         label: '12:00',
         backgroundColor: '#4eeefe',
         barThickness: 24,
@@ -76,17 +79,17 @@ export class DashboardComponent {
   };
 
   public chartData: ChartData<'bar'> = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
+    labels: this.reservoirs,
     datasets: [
       {
         label: 'Current Value',
-        data: [65, 59, 80, 81, 56, 55, 40, 90, 84],
+        data: [65, 59, 80, 81, 56, 55],
         backgroundColor: '#4eeefe',
         barThickness: 24,
       },
       {
         label: '100% Background',
-        data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
+        data: [100, 100, 100, 100, 100, 100],
         backgroundColor: '#014a67',
         barThickness: 24,
         datalabels: {
