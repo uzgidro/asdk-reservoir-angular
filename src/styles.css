@@ -23,16 +23,17 @@
     @apply bg-background text-primary
   }
   table {
-    @apply table-auto w-full border-collapse overflow-x-auto
+    @apply table-auto w-full border-separate border-2 border-background overflow-x-auto
   }
-  thead tr:first-child th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-2 first:rounded-tl-3xl last:rounded-tr-3xl text-lg
-  }
+
+  /*thead tr:first-child th {*/
+  /*  @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-2 first:rounded-tl-3xl last:rounded-tr-3xl text-lg*/
+  /*}*/
   thead tr th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-2 text-lg
+    @apply text-primary bg-secondary-container p-2 bg-opacity-50
   }
   tbody tr td {
-    @apply px-4 py-2 border-b border-gray-500 text-center break-words max-w-20 text-lg
+    @apply px-4 py-2 border-b border-gray-500 text-center break-words max-w-20
   }
 }
 
