@@ -1,0 +1,46 @@
+<div class="grid grid-cols-2 w-screen px-12 pt-10 gap-4">
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Suv kelishi, m³/s'"></app-card-header>
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+  </div>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Suv chiqishi, m³/s'"></app-card-header>
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+  </div>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Suv sathi, m'"></app-card-header>
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+  </div>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Suv hajmi, mln.m'"></app-card-header>
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+  </div>
+</div>

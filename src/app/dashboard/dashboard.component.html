@@ -1,11 +1,6 @@
 <div class="grid grid-cols-3 w-screen px-12 pt-10 gap-4">
   <div class="flex flex-col space-y-2">
-    <div class="flex w-full items-center">
-      <p class="mr-2">Suv resurslar</p>
-      <div class="flex-grow h-0 border border-primary"></div>
-    </div>
-
-    <div class="h-0 border border-white"></div>
+    <app-card-header [title]="'Suv resurslar'"></app-card-header>
 
     <div class="grid grid-cols-4 justify-stretch gap-2 text-xs">
       <button class="active-button px-4 py-2 ">Kelishi, m³/s</button>
@@ -14,7 +9,7 @@
       <button class="inactive-button px-4 py-2 ">Suv hajmi, mln.m³</button>
     </div>
 
-    <div class="flex">
+    <a routerLink="/recourses" class="flex">
       <canvas
         baseChart
         [data]="barChartData"
@@ -23,15 +18,10 @@
         [plugins]="chartPlugin"
       >
       </canvas>
-    </div>
+    </a>
   </div>
   <div class="flex flex-col space-y-2">
-    <div class="flex w-full items-center">
-      <p class="mr-2">MODSNOW</p>
-      <div class="flex-grow h-0 border border-primary"></div>
-    </div>
-
-    <div class="h-0 border border-white"></div>
+    <app-card-header [title]="'MODSNOW'"></app-card-header>
 
     <div class="flex h-full">
       <canvas
@@ -45,12 +35,7 @@
     </div>
   </div>
   <div class="flex flex-col space-y-2">
-    <div class="flex w-full items-center">
-      <p class="mr-2">Nazorat o'lchash qurilmalar</p>
-      <div class="flex-grow h-0 border border-primary"></div>
-    </div>
-
-    <div class="h-0 border border-white"></div>
+    <app-card-header [title]="'Nazorat o\'lchash qurilmalar'"></app-card-header>
 
     <div class="grid grid-flow-col-dense justify-stretch gap-2 text-xs">
       <button class="inactive-button px-4 py-2" *ngFor="let reservoir of reservoirs">{{ reservoir }}</button>
@@ -66,25 +51,14 @@
     </div>
   </div>
   <div class="flex flex-col space-y-2">
-    <div class="flex w-full items-center">
-      <p class="mr-2">Seysmologiya</p>
-      <div class="flex-grow h-0 border border-primary"></div>
-    </div>
-
-    <div class="h-0 border border-white"></div>
+    <app-card-header [title]="'Seysmologiya'"></app-card-header>
 
     <a href="https://soep.uz" target="_blank" class="p-1 h-full">
       <div class="h-full w-full bg-cover bg-center" style="background-image: url('assets/video/Seysmic.gif');"></div>
     </a>
   </div>
-
   <div class="flex flex-col space-y-2">
-    <div class="flex w-full items-center">
-      <p class="mr-2">O'zbekkosmos</p>
-      <div class="flex-grow h-0 border border-primary"></div>
-    </div>
-
-    <div class="h-0 border border-white"></div>
+    <app-card-header [title]="'O\'zbekkosmos'"></app-card-header>
 
     <div class="grid grid-cols-2 p-1 gap-8 h-full">
       <!-- Первый блок -->
@@ -107,7 +81,6 @@
         </div>
       </a>
 
-      <!-- Третий блок, растягивается на обе колонки -->
       <a class="col-span-2" href="https://3d.gis.uzspace.uz/" target="_blank">
         <div class="w-full h-full bg-cover bg-center border border-primary"
              style="background-image: url('assets/video/3d gis.gif');">
@@ -119,13 +92,8 @@
 
     </div>
   </div>
-  <div class="flex flex-col space-y-2"> <!-- Set height -->
-    <div class="flex w-full items-center">
-      <p class="mr-2">Ob-havo</p>
-      <div class="flex-grow h-0 border border-primary"></div>
-    </div>
-
-    <div class="h-0 border border-white"></div>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Ob-havo'"></app-card-header>
 
     <table>
       <thead>

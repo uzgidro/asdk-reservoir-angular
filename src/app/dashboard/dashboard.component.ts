@@ -5,6 +5,7 @@ import {ChartConfiguration, ChartData, ChartOptions, ChartType, Plugin} from "ch
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import {CarouselModule} from "primeng/carousel";
 import {NgOptimizedImage} from "@angular/common";
+import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +16,7 @@ import {NgOptimizedImage} from "@angular/common";
     NgChartsModule,
     CarouselModule,
     NgOptimizedImage,
+    CardHeaderComponent,
   ],
   standalone: true
 })

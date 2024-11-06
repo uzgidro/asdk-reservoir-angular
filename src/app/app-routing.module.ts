@@ -21,12 +21,14 @@ import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 import {WeatherComponent} from "./reservoir/weather/weather.component";
 import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservoir-schedule.component";
+import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
 
 const routes: Routes = [
   {
     path: '', component: MainLayoutComponent, children: [
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
+      {path: 'recourses', component: WaterRecoursesComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
       {path: 'reservoir', component: ReservoirComponent, children: [
