@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {TimeService} from "../../service/time.service";
 import {LoggerService} from "../../../logger/logger.service";
 import {LoggerComponent} from "../../../logger/component/logger.component";
@@ -21,6 +21,7 @@ import {DatePipe, NgClass, NgOptimizedImage} from "@angular/common";
   standalone: true
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  @Output() sidebarEmitter = new EventEmitter<boolean>();
   currentTime?: Date
   loggerRef?: LoggerRef
   private subscription?: Subscription;
@@ -32,6 +33,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.subscription = this._timeService.getCurrentTimeSecond().subscribe(
       (data: any) => this.currentTime = data
     );
+  }
+
+  openSidebar() {
+    this.sidebarEmitter.emit(true);
   }
 
   openLogger() {

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from "@angular/router";
 import {NavbarComponent} from "../navbar/navbar.component";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-main-layout',
@@ -8,11 +9,16 @@ import {NavbarComponent} from "../navbar/navbar.component";
   styleUrls: ['./main-layout.component.css'],
   imports: [
     NavbarComponent,
-    RouterOutlet
+    RouterOutlet,
+    SidebarModule
   ],
   standalone: true
 
 })
 export class MainLayoutComponent {
+  isSidebarVisible = false;
 
+  toggleSidebar(isVisible: boolean) {
+    this.isSidebarVisible = isVisible;
+  }
 }
