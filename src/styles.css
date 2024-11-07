@@ -29,10 +29,11 @@
   /*thead tr:first-child th {*/
   /*  @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-2 first:rounded-tl-3xl last:rounded-tr-3xl text-lg*/
   /*}*/
-  thead tr th {
+  tr th {
     @apply text-primary bg-secondary-container p-2 bg-opacity-50
   }
-  tbody tr td {
+
+  tr td {
     @apply px-4 py-2 border-b border-gray-500 text-center break-words max-w-20
   }
 }
