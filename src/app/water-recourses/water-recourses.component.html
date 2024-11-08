@@ -1,7 +1,7 @@
 <div class="grid grid-cols-3 w-screen px-12 pt-10 gap-4">
   <div class="flex flex-col space-y-2" *ngFor="let reservoir of reservoirs">
     <app-card-header [title]="reservoir"></app-card-header>
-    <a routerLink="/reservoir">
+    <a routerLink="/reservoir" [queryParams]="{reservoir: 1}">
       <canvas
         baseChart
         [data]="lineChartData"

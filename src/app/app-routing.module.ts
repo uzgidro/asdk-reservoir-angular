@@ -31,10 +31,12 @@ const routes: Routes = [
       {path: 'recourses', component: WaterRecoursesComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
-      {path: 'reservoir', component: ReservoirComponent, children: [
-          {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
+      {
+        path: 'reservoir', component: ReservoirComponent, children: [
+          {path: '', pathMatch: 'full', redirectTo: 'water'},
           {path: 'dashboard', component: ReservoirDashboardComponent},
-          {path: 'water', children: [
+          {
+            path: 'water', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ReservoirHourlyComponent},
               {path: 'decade', component: ReservoirDecadeComponent},
@@ -42,16 +44,20 @@ const routes: Routes = [
               {path: 'year', component: ReservoirYearlyComponent},
               {path: 'analytics', component: ReservoirAnalyticsComponent},
               {path: 'schedule', component: ReservoirScheduleComponent},
-            ]},
-          {path: 'snow', children: [
+            ]
+          },
+          {
+            path: 'snow', children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ModsnowDailyComponent},
               {path: 'all-time', component: ModsnowYearlyComponent}
-            ]},
+            ]
+          },
           {
             path: 'weather', component: WeatherComponent
           },
-          {path: 'hydro', children: [
+          {
+            path: 'hydro', children: [
               {path: '', pathMatch: 'full', redirectTo: 'posts'},
               {path: 'posts', component: HydroPostComponent},
               {path: 'meter', component: HydroMeterComponent},
@@ -59,9 +65,11 @@ const routes: Routes = [
               {path: 'journal', component: BlankPageComponent},
               {path: 'contract', component: BlankPageComponent},
               {path: 'works', component: HydroWorksComponent}
-            ]},
+            ]
+          },
           {path: 'docs', component: OrdersComponent}
-        ]},
+        ]
+      },
       // {
       //   path: 'not-found', component: NotFoundComponent
       // },
@@ -84,6 +92,7 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forRoot(routes, {
     initialNavigation: 'enabledBlocking'
-})]
+  })]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}
