@@ -1,14 +1,16 @@
 <div class="grid grid-cols-3 w-screen px-12 pt-10 gap-4">
   <div class="flex flex-col space-y-2" *ngFor="let reservoir of reservoirs">
     <app-card-header [title]="reservoir"></app-card-header>
-    <canvas
-      baseChart
-      [data]="lineChartData"
-      [options]="lineChartOptions"
-      [type]="lineChartType"
-      [plugins]="chartPlugin"
-    >
-    </canvas>
+    <a routerLink="/reservoir">
+      <canvas
+        baseChart
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        [plugins]="chartPlugin"
+      >
+      </canvas>
+    </a>
 
     <div class="grid grid-flow-col-dense">
       <table>

@@ -14,13 +14,13 @@ import {NgClass, NgForOf, NgIf} from "@angular/common";
   styleUrls: ['./reservoir.component.css'],
   animations: [DropDownAnimation, SideMenuAnimation],
   imports: [
-    NgForOf,
     NgClass,
     NgIf,
     RouterLink,
     RouterOutlet,
     RouterLinkActive,
-    RouterLinkActive
+    RouterLinkActive,
+    NgForOf
   ],
   standalone: true
 })
