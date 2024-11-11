@@ -38,6 +38,10 @@
   }
 }
 
+.active {
+  @apply text-primary
+}
+
 .material-card {
   @apply border-2 border-gray-500 p-4 bg-white rounded-xl shadow-xl
 }

@@ -21,7 +21,7 @@ import {DatePipe, NgClass, NgOptimizedImage} from "@angular/common";
   standalone: true
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  @Output() sidebarEmitter = new EventEmitter<boolean>();
+  @Output() sidebarEmitter = new EventEmitter();
   currentTime?: Date
   loggerRef?: LoggerRef
   private subscription?: Subscription;
@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   openSidebar() {
-    this.sidebarEmitter.emit(true);
+    this.sidebarEmitter.emit();
   }
 
   openLogger() {
