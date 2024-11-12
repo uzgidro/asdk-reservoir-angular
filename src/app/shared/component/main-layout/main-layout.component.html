@@ -7,18 +7,19 @@
     styleClass="bg-background text-white border-r border-r-dark-gray"
     [(visible)]="isSidebarVisible">
     <ng-template pTemplate="headless">
-      <ul class="font-medium text-lg mt-4">
-        <li *ngFor="let item of menuItems">
-          <a class="items-center flex flex-row justify-between" [routerLink]="item.path"
+      <ul class="font-medium text-lg mt-4 px-4">
+        <li class="mb-4" *ngFor="let item of menuItems">
+          <a class="items-center flex flex-row justify-between pl-2 border-l border-l-white" [routerLink]="item.path"
              [queryParamsHandling]="item.path?.includes('dashboard') ? '' : 'preserve'" routerLinkActive="active"
              (click)="selectItem(item)"
              [ngClass]="{'active': item.isActive}">
             {{ item.name }} <i *ngIf="!item.path" class="pi"
                                [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i>
           </a>
-          <ul *ngIf="item.children &&item.isOpen" [@DropDownMenu]="">
-            <li class="pl-4" *ngFor="let childItem of item.children">
-              <a [routerLink]="childItem.path" routerLinkActive="active" [queryParamsHandling]="'preserve'"
+          <ul *ngIf="item.children &&item.isOpen" class="mt-3" [@DropDownMenu]="">
+            <li class="pl-4 mb-4" *ngFor="let childItem of item.children">
+              <a class="pl-2 border-l border-l-white" [routerLink]="childItem.path" routerLinkActive="active"
+                 [queryParamsHandling]="'preserve'"
                  (click)="selectItem(childItem)">{{ childItem.name }}</a>
             </li>
           </ul>

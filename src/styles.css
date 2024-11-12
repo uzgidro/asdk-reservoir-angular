@@ -39,7 +39,7 @@
 }
 
 .active {
-  @apply text-primary
+  @apply text-primary border-l-primary
 }
 
 .material-card {
