@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 
 @Component({
   selector: 'app-hydro-indicator',
   standalone: true,
-  imports: [],
+  imports: [
+    CardHeaderComponent
+  ],
   templateUrl: './hydro-indicator.component.html',
   styleUrl: './hydro-indicator.component.css'
 })

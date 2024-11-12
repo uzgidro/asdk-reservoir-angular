@@ -19,7 +19,7 @@ import {NgForOf} from "@angular/common";
   styleUrl: './water-recourses.component.css'
 })
 export class WaterRecoursesComponent {
-  public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorog', 'Sardoba']
+  public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorbog', 'Sardoba']
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
