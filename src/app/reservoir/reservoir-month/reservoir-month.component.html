@@ -1,13 +1,16 @@
-<app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>
-<div *ngIf="reservoirName && data.length > 0; else loader" class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
-  <h3 class="text-center text-3xl">{{reservoirName}}</h3>
+<!--<app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>-->
 
-  <table>
+<div *ngIf="reservoirName && data.length > 0; else loader" class="flex flex-col flex-1 space-y-4">
+  <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
+
+  <app-card-header [title]="'Oylik ma\'lumotlar'"></app-card-header>
+
+  <table class="h-full">
     <thead>
     <tr>
-      <th rowspan="2">Месяц</th>
-      <th rowspan="2">Измерение</th>
-      <th colspan="35">Дни</th>
+      <th rowspan="2">Oy</th>
+      <th rowspan="2">O'lchash turi</th>
+      <th colspan="35">Kunlar</th>
     </tr>
     <tr>
       <th>1</th>
@@ -20,7 +23,7 @@
       <th>8</th>
       <th>9</th>
       <th>10</th>
-      <th>Среднее</th>
+      <th>O'rtacha</th>
       <th>11</th>
       <th>12</th>
       <th>13</th>
@@ -31,7 +34,7 @@
       <th>18</th>
       <th>19</th>
       <th>20</th>
-      <th>Среднее</th>
+      <th>O'rtacha</th>
       <th>21</th>
       <th>22</th>
       <th>23</th>
@@ -43,51 +46,51 @@
       <th>29</th>
       <th>30</th>
       <th>31</th>
-      <th>Среднее</th>
-      <th>Ср (месяц)</th>
+      <th>O'rtacha</th>
+      <th>Oylik o'rtacha</th>
     </tr>
     </thead>
     <tbody *ngFor="let data of data">
     <tr *ngIf="data.level">
         <td rowspan="4">{{ data.date | date: 'MMMM' | uzbMonthPipe }}</td>
-      <td>Уровень, м</td>
-      <td *ngFor="let value of data.level.slice(0, 10)">{{value}}</td>
+      <td>Suv sathi, m</td>
+      <td *ngFor="let value of data.level.slice(0, 10)">{{ value }}</td>
       <td></td>
-      <td *ngFor="let value of data.level.slice(10,20)">{{value}}</td>
+      <td *ngFor="let value of data.level.slice(10,20)">{{ value }}</td>
       <td></td>
-      <td *ngFor="let value of data.level.slice(-11)">{{value}}</td>
+      <td *ngFor="let value of data.level.slice(-11)">{{ value }}</td>
       <td></td>
       <td></td>
     </tr>
     <tr *ngIf="data.volume">
-      <td>Объём, млн. м3</td>
-      <td *ngFor="let value of data.volume.slice(0, 10)">{{value}}</td>
+      <td>Suv hajmi, mln.m³</td>
+      <td *ngFor="let value of data.volume.slice(0, 10)">{{ value }}</td>
       <td></td>
-      <td *ngFor="let value of data.volume.slice(10,20)">{{value}}</td>
+      <td *ngFor="let value of data.volume.slice(10,20)">{{ value }}</td>
       <td></td>
-      <td *ngFor="let value of data.volume.slice(-11)">{{value}}</td>
+      <td *ngFor="let value of data.volume.slice(-11)">{{ value }}</td>
       <td></td>
       <td></td>
     </tr>
     <tr *ngIf="data.income">
-      <td>Приток, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
-      <td *ngFor="let value of data.income.slice(0, 10)">{{value | number: '0.0-0'}}</td>
-      <td>{{getAvg(data.income.slice(0, 10)) | number: '.0-0'}}</td>
-      <td *ngFor="let value of data.income.slice(10,20)">{{value | number: '0.0-0'}}</td>
-      <td>{{getAvg(data.income.slice(10,20)) | number: '.0-0'}}</td>
-      <td *ngFor="let value of data.income.slice(-11)">{{value | number: '0.0-0'}}</td>
-      <td>{{getAvg(data.income.slice(-11)) | number: '.0-0'}}</td>
-      <td>{{getAvg(data.income) | number: '.0-0'}}</td>
+      <td>Kelishi, m³/s</td>
+      <td *ngFor="let value of data.income.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
+      <td>{{ getAvg(data.income.slice(0, 10)) | number: '.0-0' }}</td>
+      <td *ngFor="let value of data.income.slice(10,20)">{{ value | number: '0.0-0' }}</td>
+      <td>{{ getAvg(data.income.slice(10, 20)) | number: '.0-0' }}</td>
+      <td *ngFor="let value of data.income.slice(-11)">{{ value | number: '0.0-0' }}</td>
+      <td>{{ getAvg(data.income.slice(-11)) | number: '.0-0' }}</td>
+      <td>{{ getAvg(data.income) | number: '.0-0' }}</td>
     </tr>
     <tr *ngIf="data.release">
-      <td>Попуск, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
-      <td *ngFor="let value of data.release.slice(0, 10)">{{value | number: '0.0-0'}}</td>
-      <td>{{getAvg(data.release.slice(0, 10)) | number: '.0-0'}}</td>
-      <td *ngFor="let value of data.release.slice(10,20)">{{value | number: '0.0-0'}}</td>
-      <td>{{getAvg(data.release.slice(10,20)) | number: '.0-0'}}</td>
-      <td *ngFor="let value of data.release.slice(-11)">{{value | number: '0.0-0'}}</td>
-      <td>{{getAvg(data.release.slice(-11)) | number: '.0-0'}}</td>
-      <td>{{getAvg(data.release) | number: '.0-0'}}</td>
+      <td>Chiqish, m³/s</td>
+      <td *ngFor="let value of data.release.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
+      <td>{{ getAvg(data.release.slice(0, 10)) | number: '.0-0' }}</td>
+      <td *ngFor="let value of data.release.slice(10,20)">{{ value | number: '0.0-0' }}</td>
+      <td>{{ getAvg(data.release.slice(10, 20)) | number: '.0-0' }}</td>
+      <td *ngFor="let value of data.release.slice(-11)">{{ value | number: '0.0-0' }}</td>
+      <td>{{ getAvg(data.release.slice(-11)) | number: '.0-0' }}</td>
+      <td>{{ getAvg(data.release) | number: '.0-0' }}</td>
     </tr>
     </tbody>
   </table>

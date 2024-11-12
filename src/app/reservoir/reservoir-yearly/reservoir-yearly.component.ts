@@ -10,6 +10,8 @@ import {MetricSelectComponent} from "../../shared/component/metric-select/metric
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {DecadeService} from "../decade.service";
 import {Decade} from "../../shared/interfaces";
+import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
 
 @Component({
   selector: 'app-reservoir-yearly',
@@ -21,7 +23,9 @@ import {Decade} from "../../shared/interfaces";
     NgClass,
     NgIf,
     DecimalPipe,
-    DatePipe
+    DatePipe,
+    CardHeaderComponent,
+    UzbMonthPipePipe
   ],
   standalone: true
 
@@ -63,10 +67,10 @@ export class ReservoirYearlyComponent implements OnInit {
           next: (response: CategorisedValueResponse) => {
             console.log(response)
             this.tableData.push(
-              this.decadeService.setDecade('Приток, м3/с', response.income.data, false),
-              this.decadeService.setDecade('Попуск, м3/с', response.release.data, false),
-              this.decadeService.setDecade('Уровень, м', response.level.data, false),
-              this.decadeService.setDecade('Объём, млн. м3', response.volume.data, false),
+              this.decadeService.setDecade('Kelishi, m³/s', response.income.data, false),
+              this.decadeService.setDecade('Chiqish, m³/s', response.release.data, false),
+              this.decadeService.setDecade('Suv sathi, m', response.level.data, false),
+              this.decadeService.setDecade('Suv hajmi, mln.m³', response.volume.data, false),
             )
           }
         })

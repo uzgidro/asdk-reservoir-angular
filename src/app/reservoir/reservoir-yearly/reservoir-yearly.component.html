@@ -1,12 +1,12 @@
-<app-metric-select (categoryEmitter)="changeMetrics($event)"></app-metric-select>
-<div class="w-full px-4 mt-6 flex flex-col space-y-4 relative max-h-lvh">
-  <h3 class="text-center text-3xl">{{reservoirName}}</h3>
-
+<!--<app-metric-select (categoryEmitter)="changeMetrics($event)"></app-metric-select>-->
+<div class="flex-1 flex flex-col space-y-4">
+  <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
+  <app-card-header [title]="'Ko\'p yillik ma\'lumotlar'"></app-card-header>
   <table class="h-full">
-    <thead class="sticky top-0">
+    <thead>
     <tr>
-      <th rowspan="2">Тип</th>
-      <th rowspan="2">Год</th>
+      <th rowspan="2">O'lchash turi</th>
+      <th rowspan="2">Yil</th>
       <th *ngFor="let month of months" colspan="3">{{month}}</th>
     </tr>
     <tr>
@@ -16,37 +16,44 @@
     <tbody *ngFor="let table of tableData">
     <tr>
       <td [rowSpan]="table.data.length" class="text-lg">{{table.category}}</td>
-      <td class="text-lg bg-gray-300">{{table.data[0][0].date.slice(0,4)}}</td>
-      <td *ngFor="let i of table.data[0]" class=" bg-gray-300">{{i.value | number: '0.0-0'}}</td>
+      <td class="text-lg bg-secondary-variant">{{ table.data[0][0].date.slice(0, 4) }}</td>
+      <td *ngFor="let i of table.data[0]" class=" bg-secondary-variant">{{ i.value | number: '0.0-0' }}</td>
     </tr>
     <tr *ngFor="let cat of table.data.slice(1); index as i">
-      <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" class="text-lg">{{cat[0].date.slice(0,4)}}</td>
-      <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" *ngFor="let val of cat">{{val.value | number: '0.0-0'}}</td>
-      <td [ngClass]="{'bg-gray-300': i % 2 !== 0}" *ngFor="let val of decade.slice(cat.length)"></td>
+      <td [ngClass]="{'bg-secondary-variant': i % 2 !== 0}" class="text-lg">{{ cat[0].date.slice(0, 4) }}</td>
+      <td [ngClass]="{'bg-secondary-variant': i % 2 !== 0}" *ngFor="let val of cat">{{ val.value | number: '0.0-0' }}
+      </td>
+      <td [ngClass]="{'bg-secondary-variant': i % 2 !== 0}" *ngFor="let val of decade.slice(cat.length)"></td>
     </tr>
     <tr *ngIf="table.statStart && table.statEnd && table.statTotal.length > 0">
       <td colspan="2">
-        Среднее за {{table.statStart | date:'yyyy'}} - {{table.statEnd | date: 'yyyy'}} ({{table.statEnd.getFullYear() - table.statStart.getFullYear() + 1}})</td>
+        {{ table.statStart | date:'yyyy' }} - {{ table.statEnd | date: 'yyyy' }}
+        ({{ table.statEnd.getFullYear() - table.statStart.getFullYear() + 1 }}) o'rtacha
+      </td>
       <td *ngFor="let val of table.statTotal">{{val | number: '0.0-0'}}</td>
     </tr>
     <tr *ngIf="table.statEnd && table.stat30.length > 0">
       <td colspan="2">
-        Среднее за {{table.statEnd.getFullYear() - 29}} - {{table.statEnd | date: 'yyyy'}} (30)</td>
+        {{ table.statEnd.getFullYear() - 29 }} - {{ table.statEnd | date: 'yyyy' }} (30) o'rtacha
+      </td>
       <td *ngFor="let val of table.stat30">{{val | number: '0.0-0'}}</td>
     </tr>
     <tr *ngIf="table.statEnd && table.stat10.length > 0">
       <td colspan="2">
-        Среднее за {{table.statEnd.getFullYear() - 9}} - {{table.statEnd | date: 'yyyy'}} (10)</td>
+        {{ table.statEnd.getFullYear() - 9 }} - {{ table.statEnd | date: 'yyyy' }} (10) o'rtacha
+      </td>
       <td *ngFor="let val of table.stat10">{{val | number: '0.0-0'}}</td>
     </tr>
     <tr *ngIf="table.statEnd && table.stat5.length > 0">
       <td colspan="2">
-        Среднее за {{table.statEnd.getFullYear() - 4}} - {{table.statEnd | date: 'yyyy'}} (5)</td>
+        {{ table.statEnd.getFullYear() - 4 }} - {{ table.statEnd | date: 'yyyy' }} (5) o'rtacha
+      </td>
       <td *ngFor="let val of table.stat5">{{val | number: '0.0-0'}}</td>
     </tr>
     <tr *ngIf="table.statEnd && table.statLastYear.length > 0">
       <td colspan="2">
-        Среднее за прошлый год</td>
+        O'tgan yil o'rtacha
+      </td>
       <td *ngFor="let val of table.statLastYear">{{val | number: '0.0-0'}}</td>
     </tr>
     </tbody>

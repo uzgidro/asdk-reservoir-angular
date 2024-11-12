@@ -8,18 +8,18 @@ import {Decade} from "../shared/interfaces";
 export class DecadeService {
 
   months = [
-    'Январь',
-    'Февраль',
-    'Март',
-    'Апрель',
-    'Май',
-    'Июнь',
-    'Июль',
-    'Август',
-    'Сентябрь',
-    'Октябрь',
-    'Ноябрь',
-    'Декабрь'
+    'Yanvar',
+    'Fevral',
+    'Mart',
+    'Aprel',
+    'May',
+    'Iyun',
+    'Yiul',
+    'Avgust',
+    'Sentabr',
+    'Oktabr',
+    'Noyabr',
+    'Dekavr'
   ]
   decade: string[] = [
     "I", "II", "III",
