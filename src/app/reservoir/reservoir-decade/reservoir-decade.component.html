@@ -1,15 +1,14 @@
-<!--suppress JSUnusedGlobalSymbols -->
-<app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>
+<!--<app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>-->
 
-<div *ngIf="reservoirName && tableData && totalValues.length !== 0; else loader" class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
-  <h3 class="text-center text-3xl">{{reservoirName}}</h3>
-
+<div *ngIf="reservoirName && tableData && totalValues.length !== 0; else loader" class="flex flex-col flex-1 space-y-4">
+  <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
+  <app-card-header [title]="'O\'n kunlik ma\'lumotlar'"></app-card-header>
   <table>
     <thead>
     <tr>
-      <th rowspan="2">Данные</th>
-      <th [colSpan]="daysInDecade.length">{{today | date:'MMMM' | rusMonth}}</th>
-      <th rowspan="2">Среднее</th>
+      <th rowspan="2">Ma'lumot turi</th>
+      <th [colSpan]="daysInDecade.length">{{ today | date:'MMMM' | uzbMonthPipe }}</th>
+      <th rowspan="2">O'rtacha</th>
     </tr>
     <tr>
       <th *ngFor="let day of daysInDecade">{{day}}</th>
@@ -17,26 +16,26 @@
     </thead>
     <tbody *ngIf="tableData">
     <tr *ngIf="tableData.income">
-      <td>Приток, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
+      <td>Kelishi, m³/s</td>
       <td *ngFor="let value of tableData.income.data; index as i">{{value.value | number:'0.0-0'}}</td>
       <td *ngFor="let day of daysInDecade.slice(tableData.income.data.length)"></td>
       <td>{{avgIncome}}</td>
     </tr>
     <tr *ngIf="tableData.release">
-      <td>Попуск, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
+      <td>Chiqish, m³/s</td>
       <td *ngFor="let value of tableData.release.data">{{value.value | number:'0.0-0'}}</td>
       <!--suppress JSUnusedGlobalSymbols, JSUnusedGlobalSymbols -->
       <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
       <td>{{avgRelease}}</td>
     </tr>
     <tr *ngIf="tableData.level">
-      <td>Уровень, м</td>
+      <td>Suv sathi, m</td>
       <td *ngFor="let value of tableData.level.data">{{value.value}}</td>
       <td *ngFor="let day of daysInDecade.slice(tableData.level.data.length)"></td>
       <td></td>
     </tr>
     <tr *ngIf="tableData.volume">
-      <td>Объём, млн. м3</td>
+      <td>Suv hajmi, mln.m³</td>
       <td *ngFor="let value of tableData.volume.data">{{value.value}}</td>
       <td *ngFor="let day of daysInDecade.slice(tableData.volume.data.length)"></td>
       <td></td>
@@ -48,18 +47,18 @@
   <table>
     <thead>
     <tr>
-      <th rowspan="2">Водохранилища</th>
-      <th colspan="4">Средний приток, mln.m³</th>
-      <th colspan="3">Разница в процентном соотношении</th>
+      <th rowspan="2">Suv omborlar</th>
+      <th colspan="4">O'rtacha suv kelishi, mln.m³</th>
+      <th colspan="3">Foizdagi farq</th>
     </tr>
     <tr>
-      <th><p>30 лет<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th><p>10 лет<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th><p>{{pastYear}} год<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th><p>{{ currentYear }} год<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th>30 лет</th>
-      <th>10 лет</th>
-      <th>{{pastYear}} год</th>
+      <th><p>30 yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>
+      <th><p>10 yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>
+      <th><p>{{ pastYear }} yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>
+      <th><p>{{ currentYear }} yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>
+      <th>30 yil</th>
+      <th>10 yil</th>
+      <th>{{ pastYear }} yil</th>
     </tr>
     </thead>
     <tbody *ngFor="let res of totalValues">

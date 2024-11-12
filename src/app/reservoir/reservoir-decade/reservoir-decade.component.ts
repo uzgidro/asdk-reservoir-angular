@@ -9,6 +9,8 @@ import {MetricSelectComponent} from "../../shared/component/metric-select/metric
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
 
 @Component({
   selector: 'app-reservoir-decade',
@@ -21,7 +23,9 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
     RusMonthPipe,
     LoaderComponent,
     DecimalPipe,
-    NgForOf
+    NgForOf,
+    CardHeaderComponent,
+    UzbMonthPipePipe
   ],
   standalone: true
 })

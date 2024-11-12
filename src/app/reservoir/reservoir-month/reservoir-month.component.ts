@@ -9,6 +9,7 @@ import {MetricSelectComponent} from "../../shared/component/metric-select/metric
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
 
 @Component({
   selector: 'app-reservoir-month',
@@ -21,7 +22,8 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
     DecimalPipe,
     DatePipe,
     RusMonthPipe,
-    LoaderComponent
+    LoaderComponent,
+    UzbMonthPipePipe
   ],
   standalone: true
 })

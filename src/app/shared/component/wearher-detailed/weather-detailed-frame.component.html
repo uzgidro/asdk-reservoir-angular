@@ -32,7 +32,7 @@
       <table>
         <tbody>
         <tr *ngFor="let item of weatherDaily">
-          <td class="border-0 text-left p-0 text-lg">{{ item.date | date:'cccc' | rusDate }}</td>
+          <td class="border-0 text-left p-0 text-lg">{{ item.date | date:'cccc' | uzbDatePipe }}</td>
         </tr>
         </tbody>
       </table>

@@ -6,6 +6,7 @@ import {WeatherCurrentDto, WeatherCurrentResponse} from "../../response/weather-
 import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {RusDatePipe} from "../../pipe/rus-date.pipe";
 import {LoaderComponent} from "../loader/loader.component";
+import {UzbDatePipePipe} from "../../pipe/uzb-date-pipe.pipe";
 
 @Component({
   selector: 'app-weather-detailed',
@@ -18,7 +19,8 @@ import {LoaderComponent} from "../loader/loader.component";
     DatePipe,
     NgForOf,
     RusDatePipe,
-    LoaderComponent
+    LoaderComponent,
+    UzbDatePipePipe
   ],
   standalone: true
 })

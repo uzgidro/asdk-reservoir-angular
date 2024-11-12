@@ -49,7 +49,7 @@
     </thead>
     <tbody *ngFor="let data of data">
     <tr *ngIf="data.level">
-      <td rowspan="4">{{data.date | date: 'MMMM' | rusMonth}}</td>
+        <td rowspan="4">{{ data.date | date: 'MMMM' | uzbMonthPipe }}</td>
       <td>Уровень, м</td>
       <td *ngFor="let value of data.level.slice(0, 10)">{{value}}</td>
       <td></td>
