@@ -19,6 +19,10 @@
   nav {
     @apply text-white
   }
+
+  nav ul li a {
+    @apply hover:text-[#00e5e5]  hover:border-l-[#00e5e5] active:text-[#00d5d5]  active:border-l-[#00d5d5]
+  }
   body {
     @apply bg-background text-primary
   }
@@ -39,7 +43,7 @@
 }
 
 .active {
-  @apply text-primary border-l-primary
+  @apply text-primary border-l-primary hover:text-[#00e5e5]  hover:border-l-[#00e5e5]
 }
 
 .material-card {
