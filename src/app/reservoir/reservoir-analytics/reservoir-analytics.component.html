@@ -1,407 +1,739 @@
-<div class="flex flex-col">
-  <div class="grid grid-cols-12 gap-4 p-5">
-    <div class="flex flex-col 2xl:col-start-1 col-span-10 max-2xl:col-span-10  h-fit" #infoContainer>
-    <h3 class="text-center my-4 text-3xl">{{ reservoirName }}</h3>
-    <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100 ">
+<div class="grid grid-cols-6 h-full gap-6 pb-8">
+  <!-- Chart with buttons -->
+  <div class="flex flex-col col-span-5 justify-start">
     <canvas *ngIf="category.includes('income')"
-      baseChart
-      [datasets]="incomeChart"
-      [labels]="incomeChartLabels"
-      [options]="chartOptions"
-      [type]="'line'"
-      style="height: 47vh;"
-      >
+            baseChart
+            [datasets]="incomeChart"
+            [labels]="incomeChartLabels"
+            [options]="chartOptions"
+            [type]="'line'"
+    >
     </canvas>
-   <canvas *ngIf="category.includes('volume')"
-      baseChart
-      [datasets]="volumeChartDataset"
-      [labels]="volumeChartLabels"
-      [options]="chartOptions"
-      [type]="'line'"
-      style="height: 47vh;"
-      >
+    <canvas *ngIf="category.includes('volume')"
+            baseChart
+            [datasets]="volumeChartDataset"
+            [labels]="volumeChartLabels"
+            [options]="chartOptions"
+            [type]="'line'"
+    >
     </canvas>
     <div class="flex flex-row space-x-4 p-2">
-    <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category.includes('income')}"
-      class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
-     Приток
-   </button>
-    <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category.includes('volume')}"
-     class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
-     Объем
-    </button>
+      <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category.includes('income')}"
+              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
+        Kelishi
+      </button>
+      <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category.includes('volume')}"
+              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
+        Hajm
+      </button>
     </div>
-    </div>
-    <div class="overflow-x-auto overflow-y-auto max-h-96 mt-9">
+  </div>
+  <!-- /Chart with buttons -->
+
+  <!-- Year select -->
+  <div class="flex overflow-y-auto">
     <table>
       <thead class="sticky top-0">
       <tr>
-      <th rowspan="2">Года</th>
-      <th colspan="12">Месяца, млн. м3</th>
-      <th rowspan="2">Средний приток, м3/с</th>
-      <th rowspan="2">Годовой приток, млн. м3</th>
-      <th rowspan="2">В отношении среднего показателя, %</th>
+        <th>
+          <input type="checkbox" [checked]="isYearsChecked(years)" class="w-4 h-4 mr-2 mt-2"
+                 (click)="toggleYears(years)">
+          Yil
+        </th>
+        <th>Suv kelishi, mln.m³</th>
       </tr>
-      <tr>
-      <th>Янв.</th>
-      <th>Фев.</th>
-      <th>Март</th>
-      <th>Апр.</th>
-      <th>Май</th>
-      <th>Июнь</th>
-      <th>Июль</th>
-      <th>Авг.</th>
-      <th>Сент.</th>
-      <th>Окт.</th>
-      <th>Ноя.</th>
-      <th>Дек.</th>
-     </tr>
-     </thead>
-     <tbody *ngIf="avg">
-      <tr
-       *ngIf="startYear && endYear && avg.display"
-       (click)="changeVisibility(avg.id)"
-       [ngClass]="{'text-blue-600': avg.display}"
-        class="text-blue-600">
-      <td
-      *ngIf="startYear && endYear" class="text-sm p-1">
-      Среднее многолетнее
-     </td>
-     <td
-     *ngFor="let val of avg.byMonth">
-     {{ val | number: '.0-0' }}
-     </td>
-    <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
-    <td>{{ (avg.value) | number: '.0-0' }}</td>
-    <td>100</td>
-    </tr>
-    <tr
-    *ngIf="max && max.display"
-    (click)="changeVisibility(max.id)"
-    [ngClass]="{'text-green-600': max.display}" class="text-green-600 text-xs">
-    <td class="p-1">
-    Максимальный
-    </td>
-    <td
-    *ngFor="let val of max.byMonth">
-    {{ val | number: '.0-0' }}
-    </td>
-     <td>
-      {{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}
-    </td>
-    <td>{{ (max.value) | number: '.0-0' }}</td>
-    <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>
-    </tr>
-    <tr
-     *ngIf="min && min.display"
-     (click)="changeVisibility(min.id)"
-    [ngClass]="{'text-rose-600': min.display}"
-      class="text-rose-600">
-    <td
-    class="p-1">
-    Минимальный
-    </td>
-     <td
-     *ngFor="let val of min.byMonth">
-     {{ val | number: '.0-0' }}
-    </td>
-    <td>
-      {{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}
-    </td>
-     <td>{{ (min.value) | number: '.0-0' }}</td>
-     <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
-     </tr>
-     <tr
-      *ngIf="tenAvg && tenAvg.display"
-      (click)="changeVisibility(tenAvg.id)"
-      [ngClass]="{
-      'text-cyan-600': tenAvg.display}"
-       class="text-cyan-600">
-     <td>Среднее за 10 лет</td>
-     <td
-     *ngFor="let val of tenAvg.byMonth">
-     {{ val | number: '.0-0' }}
-    </td>
-    <td>
-     {{ (tenAvg.value / mSecondsInDay / 360) | number: '.0-0' }}
-    </td>
-    <td>
-    {{ (tenAvg.value) | number: '.0-0' }}
-   </td>
-    <td>
-    {{ (tenAvg.value * 100 / avg.value) | number: '.0-0' }}
-   </td>
-   </tr>
-   <tr
-    *ngIf="past && past.display"
-     (click)="changeVisibility(past.id)"
-     [ngClass]="{'text-amber-600': past.display}"
-     class="text-amber-600">
-     <td>Среднее за прошлый</td>
-     <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
-     <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
-     <td>{{ (past.value) | number: '.0-0' }}</td>
-     <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
-     </tr>
-      <tr
-      *ngIf="current && current.display"
-      (click)="changeVisibility(current.id)"
-      [ngClass]="{'text-purple-600': current.display}"
-       class="text-purple-600">
-      <td>Значение за текущий {{ current.year }}</td>
-      <td
-      *ngFor="let val of current.byMonth">
-      {{ val | number: '.0-0' }}
-    </td>
-     <td
-      *ngFor="let _ of incomeChartLabels.slice(current.byMonth.length)">
-    </td>
-     <td>
-      {{ (current.value / mSecondsInDay / 360) | number: '.0-0' }}
-    </td>
-    <td>
-     {{ (current.value) | number: '.0-0' }}
-     </td>
-     <td>{{ (current.value * 100 / avg.value) | number: '.0-0' }}</td>
-     </tr>
-      <tr
-      *ngFor="let item of selected"
-      (click)="changeVisibility(item.id)"
-      [ngStyle]="{'color': item.color}">
-      <td>Значение за {{ item.year }}</td>
-      <td
-       *ngFor="let val of item.byMonth">
-      {{ val | number: '.0-0' }}
-     </td>
-     <td>
-      {{ (item.value / mSecondsInDay / 360) | number: '.0-0' }}
-     </td>
-      <td>
-      {{ (item.value) | number: '.0-0' }}
-    </td>
-     <td>
-      {{ (item.value * 100 / avg.value) | number: '.0-0' }}
-    </td>
-    </tr>
-    </tbody>
-    </table>
-    </div>
-    </div>
-    <div class="flex flex-col gap-2.5 col-span-2 max-2xl:col-span-3 mb-40 h-fit">
-    <div class="flex flex-row items-start gap-1 justify-center">
-    <div class="col-span-1 max-2xl:col-span-1">
-   <table>
-   <thead class="sticky top-0">
-    <tr>
-    <th>
-    <input type="checkbox"  [checked]="isYearsChecked(firstHalf)"   class="w-4 h-4 mr-2 mt-2"   (click)="toggleYears(firstHalf)">
-     Год
-    </th>
-    <th>Приток воды, млн. м3</th>
-    </tr>
-   </thead>
-   <tbody>
-   <tr *ngFor="let item of firstHalf">
-    <td
-    *ngIf="isYearNotMatched(item.year)"
-    [ngStyle]="{'background-color': getColor(item)}"
-    [ngClass]="{
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of years">
+        <td
+          *ngIf="isYearNotMatched(item.year)"
+          [ngStyle]="{'background-color': getColor(item)}"
+          [ngClass]="{
     'min': min?.year == item.year,
     'max': max?.year == item.year,
     'past': past?.year == item.year,
     'text-gray-200': getColor(item),
     'current': current?.year == item.year,
     }"
-    class="flex"
-    >
-    <input
-     type="checkbox"
-     name="year"
-     [checked]="isChecked(item.year)"
-     (click)="yearSelect(item.year)">
-    <span class="ml-2">
+          class="flex"
+        >
+          <input
+            type="checkbox"
+            name="year"
+            [checked]="isChecked(item.year)"
+            (click)="yearSelect(item.year)">
+          <span class="ml-2">
     {{ item.year }}
    </span>
-    </td>
-    <td
-     *ngIf="isYearNotMatched(item.year)"
-     [ngStyle]="{'background-color': getColor(item)}"
-     [ngClass]="{
+        </td>
+        <td
+          *ngIf="isYearNotMatched(item.year)"
+          [ngStyle]="{'background-color': getColor(item)}"
+          [ngClass]="{
      'min': min?.year == item.year,
      'max': max?.year == item.year,
      'past': past?.year == item.year,
      'text-gray-200': getColor(item),
      'current': current?.year == item.year,
      }">
-     {{ item.value | number: '.0-0' }}
-      </td>
-      <td
-      *ngIf="isYearMatched(item.year)"
-      [ngStyle]="{'background-color': getColor(item)}"
-      [ngClass]="{
+          {{ item.value | number: '.0-0' }}
+        </td>
+        <td
+          *ngIf="isYearMatched(item.year)"
+          [ngStyle]="{'background-color': getColor(item)}"
+          [ngClass]="{
       'min': min?.year == item.year,
       'max': max?.year == item.year,
       'past': past?.year == item.year,
       'text-gray-200': getColor(item),
       'current': current?.year == item.year,
        }"
-      class="flex"
-      >
-      <input type="checkbox" name="year" [checked]="isChecked(item.year)"  (click)="removeFromChart(item)">
-      <span class="ml-2">{{ item.year }}</span>
-      </td>
-       <td
-       *ngIf="isYearMatched(item.year)"
-       [ngStyle]="{'background-color': getColor(item)}"
-       [ngClass]="{
+          class="flex"
+        >
+          <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="removeFromChart(item)">
+          <span class="ml-2">{{ item.year }}</span>
+        </td>
+        <td
+          *ngIf="isYearMatched(item.year)"
+          [ngStyle]="{'background-color': getColor(item)}"
+          [ngClass]="{
         'min': min?.year == item.year,
         'max': max?.year == item.year,
         'past': past?.year == item.year,
         'text-gray-200': getColor(item),
         'current': current?.year == item.year,
         }">
-         {{ item.value | number: '.0-0' }}
+          {{ item.value | number: '.0-0' }}
         </td>
-        </tr>
-        </tbody>
-        </table>
-        </div>
-         <div *ngIf="years.length > 20" class="col-span-1 max-2xl:col-span-1">
-         <table>
-         <thead class="sticky top-0">
-         <tr>
-         <th>
-         <input type="checkbox" class="w-4 h-4 mr-2 mt-2"  [checked]="isYearsChecked(secondHalf)" (click)="toggleYears(secondHalf)">
-          Год
-         </th>
-         <th>Приток воды, млн. м3</th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr *ngFor="let item of secondHalf">
-         <td
-          *ngIf="isYearNotMatched(item.year)"
-          [ngStyle]="{'background-color': getColor(item)}"
-          [ngClass]="{
-          'min': min?.year == item.year,
-          'max': max?.year == item.year,
-          'past': past?.year == item.year,
-          'text-gray-200': getColor(item),
-          'current': current?.year == item.year,
-          }"
-          class="flex"
-          >
-          <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="yearSelect(item.year)">
-          <span class="ml-2">{{ item.year }}</span>
-          </td>
-          <td
-          *ngIf="isYearNotMatched(item.year)"
-          [ngStyle]="{'background-color': getColor(item)}"
-          [ngClass]="{
-          'min': min?.year == item.year,
-          'max': max?.year == item.year,
-          'past': past?.year == item.year,
-          'text-gray-200': getColor(item),
-          'current': current?.year == item.year,
-          }">
-          {{ item.value | number: '.0-0' }}
-          </td>
-          <td
-          *ngIf="isYearMatched(item.year)"
-          [ngStyle]="{'background-color': getColor(item)}"
-          [ngClass]="{
-          'min': min?.year == item.year,
-          'max': max?.year == item.year,
-          'past': past?.year == item.year,
-          'current': current?.year == item.year,
-          'text-gray-200': getColor(item)
-           }"
-           class="flex"
-          >
-         <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="removeFromChart(item)">
-          <span class="ml-2">{{ item.year }}</span>
-          </td>
-          <td
-          *ngIf="isYearMatched(item.year)"
-          [ngStyle]="{'background-color': getColor(item)}"
-          [ngClass]="{
-          'min': min?.year === item.year,
-          'max': max?.year === item.year,
-          'past': past?.year === item.year,
-          'current': current?.year == item.year,
-          'text-gray-200': getColor(item),
-          }"
-           >
-          {{ item.value | number: '.0-0' }}
-          </td>
-          </tr>
-          </tbody>
-         </table>
-         </div>
-         </div>
-         <div
-          class="col-span-1 max-2xl:col-span-1 overflow-y-auto flex-1 mb-14 h-fit"
-          [ngStyle]="{'max-height.px': tableHeight}">
-          <table>
-          <thead
-            class="sticky top-0">
-         <tr>
-        <th>Год</th>
-        <th>Годовой приток, млн. м3</th>
-        </tr>
-        </thead>
-        <tbody *ngIf="avg">
-        <tr
-         *ngIf="startYear && endYear"
-         (click)="changeVisibility(avg.id) "
-         [ngClass]="{
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /Year select -->
+
+  <!-- Info table -->
+  <div class="flex col-span-5" [ngClass]="{'overflow-y-auto': displayedReservoirsCount > 5}">
+    <table>
+      <thead class="sticky top-0">
+      <tr>
+        <th rowspan="2">Yillar</th>
+        <th colspan="12">Oylar, mln.m³</th>
+        <th rowspan="2">O'rtacha kelishi, m³/s</th>
+        <th rowspan="2">Yillik kelishi, mln.m³</th>
+        <th rowspan="2">O'rtacha ko'rsatkichga kelsak, %</th>
+      </tr>
+      <tr>
+        <th>Yan.</th>
+        <th>Fev.</th>
+        <th>Mart</th>
+        <th>Apr.</th>
+        <th>May</th>
+        <th>Iyun</th>
+        <th>Iyul</th>
+        <th>Avg.</th>
+        <th>Sen.</th>
+        <th>Okt.</th>
+        <th>Noy.</th>
+        <th>Dek.</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="avg">
+      <tr
+        *ngIf="startYear && endYear && avg.display"
+        (click)="changeVisibility(avg.id)"
+        [ngClass]="{'text-blue-600': avg.display}"
+        class="text-blue-600">
+        <td
+          *ngIf="startYear && endYear" class="text-sm p-1">
+          O'rtacha ko'p yillik
+        </td>
+        <td
+          *ngFor="let val of avg.byMonth">
+          {{ val | number: '.0-0' }}
+        </td>
+        <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+        <td>{{ (avg.value) | number: '.0-0' }}</td>
+        <td>100</td>
+      </tr>
+      <tr
+        *ngIf="max && max.display"
+        (click)="changeVisibility(max.id)"
+        [ngClass]="{'text-green-600': max.display}" class="text-green-600">
+        <td class="p-1">
+          Maksimal
+        </td>
+        <td
+          *ngFor="let val of max.byMonth">
+          {{ val | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}
+        </td>
+        <td>{{ (max.value) | number: '.0-0' }}</td>
+        <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>
+      </tr>
+      <tr
+        *ngIf="min && min.display"
+        (click)="changeVisibility(min.id)"
+        [ngClass]="{'text-rose-600': min.display}"
+        class="text-rose-600">
+        <td class="p-1">
+          Minimal
+        </td>
+        <td
+          *ngFor="let val of min.byMonth">
+          {{ val | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}
+        </td>
+        <td>{{ (min.value) | number: '.0-0' }}</td>
+        <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
+      </tr>
+      <tr
+        *ngIf="tenAvg && tenAvg.display"
+        (click)="changeVisibility(tenAvg.id)"
+        [ngClass]="{
+      'text-cyan-600': tenAvg.display}"
+        class="text-cyan-600">
+        <td>O'rtacha 10 yil</td>
+        <td
+          *ngFor="let val of tenAvg.byMonth">
+          {{ val | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (tenAvg.value / mSecondsInDay / 360) | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (tenAvg.value) | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (tenAvg.value * 100 / avg.value) | number: '.0-0' }}
+        </td>
+      </tr>
+      <tr
+        *ngIf="past && past.display"
+        (click)="changeVisibility(past.id)"
+        [ngClass]="{'text-amber-600': past.display}"
+        class="text-amber-600">
+        <td>O'tgan yil o'rtacha</td>
+        <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
+        <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+        <td>{{ (past.value) | number: '.0-0' }}</td>
+        <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
+      </tr>
+      <tr
+        *ngIf="current && current.display"
+        (click)="changeVisibility(current.id)"
+        [ngClass]="{'text-purple-600': current.display}"
+        class="text-purple-600">
+        <td>{{ current.year }}</td>
+        <td
+          *ngFor="let val of current.byMonth">
+          {{ val | number: '.0-0' }}
+        </td>
+        <td
+          *ngFor="let _ of incomeChartLabels.slice(current.byMonth.length)">
+        </td>
+        <td>
+          {{ (current.value / mSecondsInDay / 360) | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (current.value) | number: '.0-0' }}
+        </td>
+        <td>{{ (current.value * 100 / avg.value) | number: '.0-0' }}</td>
+      </tr>
+      <tr
+        *ngFor="let item of selected"
+        (click)="changeVisibility(item.id)"
+        [ngStyle]="{'color': item.color}">
+        <td>{{ item.year }}</td>
+        <td
+          *ngFor="let val of item.byMonth">
+          {{ val | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (item.value / mSecondsInDay / 360) | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (item.value) | number: '.0-0' }}
+        </td>
+        <td>
+          {{ (item.value * 100 / avg.value) | number: '.0-0' }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- / Info table -->
+
+  <!-- Additional table -->
+  <div class="flex">
+    <table>
+      <thead
+        class="sticky top-0">
+      <tr>
+        <th>Yil</th>
+        <th>Yillik kelishi, mln.m³</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="avg">
+      <tr
+        *ngIf="startYear && endYear"
+        (click)="changeVisibility(avg.id) "
+        [ngClass]="{
          'bg-blue-600': avg.display,
          'text-white': avg.display,
          'bg-gray-200': !avg.display}"
-          class="text-blue-600">
+        class="text-blue-600">
         <td
-         *ngIf="startYear && endYear">
-         Среднее многолетнее
-         </td>
-         <td>{{ (avg.value) | number: '.0-0' }}</td>
-         </tr>
-         <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
+          *ngIf="startYear && endYear">
+          O'rtacha ko'p yillik
+        </td>
+        <td>{{ (avg.value) | number: '.0-0' }}</td>
+      </tr>
+      <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
           [ngClass]="{
           'bg-cyan-600': tenAvg.display,
           'text-white': tenAvg.display,
           'bg-gray-200': !tenAvg.display,
           'text-cyan-600': !tenAvg.display}"
-            class="text-cyan-600">
-           <td> Среднее за 10 лет</td>
-           <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
-          </tr>
-           <tr
-           *ngIf="max"
-           (click)="changeVisibility(max.id)"
-          [ngClass]="{
+          class="text-cyan-600">
+        <td>O'rtacha 10 yil</td>
+        <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
+      </tr>
+      <tr
+        *ngIf="max"
+        (click)="changeVisibility(max.id)"
+        [ngClass]="{
           'bg-green-600': max.display,
           'text-white': max.display,
           'bg-gray-200':!max.display}"
-          class="text-green-600">
-         <td>Максимальный</td>
-         <td>{{ (max.value) | number: '.0-0' }}</td>
-         </tr>
-         <tr
-         *ngIf="min"
-         (click)="changeVisibility(min.id)"
-         [ngClass]="{
+        class="text-green-600">
+        <td>Maksimal</td>
+        <td>{{ (max.value) | number: '.0-0' }}</td>
+      </tr>
+      <tr
+        *ngIf="min"
+        (click)="changeVisibility(min.id)"
+        [ngClass]="{
          'bg-rose-600': min.display,
          'text-white': min.display,
          'bg-gray-200':!min.display}"
-          class="text-rose-600">
+        class="text-rose-600">
         <td>
-        Минимальный
+          Minimal
         </td>
         <td>{{ (min.value) | number: '.0-0' }}</td>
-        </tr>
-        </tbody>
-        </table>
-      </div>
-    </div>
+      </tr>
+      </tbody>
+    </table>
   </div>
+  <!-- / Additional table -->
 </div>
+
+
+<!--  <div class="flex flex-col" #infoContainer>-->
+<!--    <div class="flex flex-col justify-start mb-2 p-2 rounded-3xl border-2 border-slate-300 bg-gray-100 ">-->
+<!--      <canvas *ngIf="category.includes('income')"-->
+<!--              baseChart-->
+<!--              [datasets]="incomeChart"-->
+<!--              [labels]="incomeChartLabels"-->
+<!--              [options]="chartOptions"-->
+<!--              [type]="'line'"-->
+<!--              style="height: 47vh;"-->
+<!--      >-->
+<!--      </canvas>-->
+<!--      <canvas *ngIf="category.includes('volume')"-->
+<!--              baseChart-->
+<!--              [datasets]="volumeChartDataset"-->
+<!--              [labels]="volumeChartLabels"-->
+<!--              [options]="chartOptions"-->
+<!--              [type]="'line'"-->
+<!--              style="height: 47vh;"-->
+<!--      >-->
+<!--      </canvas>-->
+<!--      <div class="flex flex-row space-x-4 p-2">-->
+<!--        <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category.includes('income')}"-->
+<!--                class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
+<!--          Приток-->
+<!--        </button>-->
+<!--        <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category.includes('volume')}"-->
+<!--                class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
+<!--          Объем-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="overflow-x-auto overflow-y-auto">-->
+<!--      <table>-->
+<!--        <thead class="sticky top-0">-->
+<!--        <tr>-->
+<!--          <th rowspan="2">Года</th>-->
+<!--          <th colspan="12">Месяца, млн. м3</th>-->
+<!--          <th rowspan="2">Средний приток, м3/с</th>-->
+<!--          <th rowspan="2">Годовой приток, млн. м3</th>-->
+<!--          <th rowspan="2">В отношении среднего показателя, %</th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th>Янв.</th>-->
+<!--          <th>Фев.</th>-->
+<!--          <th>Март</th>-->
+<!--          <th>Апр.</th>-->
+<!--          <th>Май</th>-->
+<!--          <th>Июнь</th>-->
+<!--          <th>Июль</th>-->
+<!--          <th>Авг.</th>-->
+<!--          <th>Сент.</th>-->
+<!--          <th>Окт.</th>-->
+<!--          <th>Ноя.</th>-->
+<!--          <th>Дек.</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody *ngIf="avg">-->
+<!--        <tr-->
+<!--          *ngIf="startYear && endYear && avg.display"-->
+<!--          (click)="changeVisibility(avg.id)"-->
+<!--          [ngClass]="{'text-blue-600': avg.display}"-->
+<!--          class="text-blue-600">-->
+<!--          <td-->
+<!--            *ngIf="startYear && endYear" class="text-sm p-1">-->
+<!--            Среднее многолетнее-->
+<!--          </td>-->
+<!--          <td-->
+<!--            *ngFor="let val of avg.byMonth">-->
+<!--            {{ val | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>-->
+<!--          <td>{{ (avg.value) | number: '.0-0' }}</td>-->
+<!--          <td>100</td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngIf="max && max.display"-->
+<!--          (click)="changeVisibility(max.id)"-->
+<!--          [ngClass]="{'text-green-600': max.display}" class="text-green-600 text-xs">-->
+<!--          <td class="p-1">-->
+<!--            Максимальный-->
+<!--          </td>-->
+<!--          <td-->
+<!--            *ngFor="let val of max.byMonth">-->
+<!--            {{ val | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>{{ (max.value) | number: '.0-0' }}</td>-->
+<!--          <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngIf="min && min.display"-->
+<!--          (click)="changeVisibility(min.id)"-->
+<!--          [ngClass]="{'text-rose-600': min.display}"-->
+<!--          class="text-rose-600">-->
+<!--          <td-->
+<!--            class="p-1">-->
+<!--            Минимальный-->
+<!--          </td>-->
+<!--          <td-->
+<!--            *ngFor="let val of min.byMonth">-->
+<!--            {{ val | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>{{ (min.value) | number: '.0-0' }}</td>-->
+<!--          <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngIf="tenAvg && tenAvg.display"-->
+<!--          (click)="changeVisibility(tenAvg.id)"-->
+<!--          [ngClass]="{-->
+<!--      'text-cyan-600': tenAvg.display}"-->
+<!--          class="text-cyan-600">-->
+<!--          <td>Среднее за 10 лет</td>-->
+<!--          <td-->
+<!--            *ngFor="let val of tenAvg.byMonth">-->
+<!--            {{ val | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (tenAvg.value / mSecondsInDay / 360) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (tenAvg.value) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (tenAvg.value * 100 / avg.value) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngIf="past && past.display"-->
+<!--          (click)="changeVisibility(past.id)"-->
+<!--          [ngClass]="{'text-amber-600': past.display}"-->
+<!--          class="text-amber-600">-->
+<!--          <td>Среднее за прошлый</td>-->
+<!--          <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>-->
+<!--          <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>-->
+<!--          <td>{{ (past.value) | number: '.0-0' }}</td>-->
+<!--          <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngIf="current && current.display"-->
+<!--          (click)="changeVisibility(current.id)"-->
+<!--          [ngClass]="{'text-purple-600': current.display}"-->
+<!--          class="text-purple-600">-->
+<!--          <td>Значение за текущий {{ current.year }}</td>-->
+<!--          <td-->
+<!--            *ngFor="let val of current.byMonth">-->
+<!--            {{ val | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td-->
+<!--            *ngFor="let _ of incomeChartLabels.slice(current.byMonth.length)">-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (current.value / mSecondsInDay / 360) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (current.value) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>{{ (current.value * 100 / avg.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngFor="let item of selected"-->
+<!--          (click)="changeVisibility(item.id)"-->
+<!--          [ngStyle]="{'color': item.color}">-->
+<!--          <td>Значение за {{ item.year }}</td>-->
+<!--          <td-->
+<!--            *ngFor="let val of item.byMonth">-->
+<!--            {{ val | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (item.value / mSecondsInDay / 360) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (item.value) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ (item.value * 100 / avg.value) | number: '.0-0' }}-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="flex flex-col gap-2.5 col-span-2 max-2xl:col-span-3 mb-40 h-fit">-->
+<!--    <div class="flex flex-row items-start gap-1 justify-center">-->
+<!--      <div class="col-span-1 max-2xl:col-span-1">-->
+<!--        <table>-->
+<!--          <thead class="sticky top-0">-->
+<!--          <tr>-->
+<!--            <th>-->
+<!--              <input type="checkbox" [checked]="isYearsChecked(firstHalf)" class="w-4 h-4 mr-2 mt-2"-->
+<!--                     (click)="toggleYears(firstHalf)">-->
+<!--              Год-->
+<!--            </th>-->
+<!--            <th>Приток воды, млн. м3</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let item of firstHalf">-->
+<!--            <td-->
+<!--              *ngIf="isYearNotMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--    'min': min?.year == item.year,-->
+<!--    'max': max?.year == item.year,-->
+<!--    'past': past?.year == item.year,-->
+<!--    'text-gray-200': getColor(item),-->
+<!--    'current': current?.year == item.year,-->
+<!--    }"-->
+<!--              class="flex"-->
+<!--            >-->
+<!--              <input-->
+<!--                type="checkbox"-->
+<!--                name="year"-->
+<!--                [checked]="isChecked(item.year)"-->
+<!--                (click)="yearSelect(item.year)">-->
+<!--              <span class="ml-2">-->
+<!--    {{ item.year }}-->
+<!--   </span>-->
+<!--            </td>-->
+<!--            <td-->
+<!--              *ngIf="isYearNotMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--     'min': min?.year == item.year,-->
+<!--     'max': max?.year == item.year,-->
+<!--     'past': past?.year == item.year,-->
+<!--     'text-gray-200': getColor(item),-->
+<!--     'current': current?.year == item.year,-->
+<!--     }">-->
+<!--              {{ item.value | number: '.0-0' }}-->
+<!--            </td>-->
+<!--            <td-->
+<!--              *ngIf="isYearMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--      'min': min?.year == item.year,-->
+<!--      'max': max?.year == item.year,-->
+<!--      'past': past?.year == item.year,-->
+<!--      'text-gray-200': getColor(item),-->
+<!--      'current': current?.year == item.year,-->
+<!--       }"-->
+<!--              class="flex"-->
+<!--            >-->
+<!--              <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="removeFromChart(item)">-->
+<!--              <span class="ml-2">{{ item.year }}</span>-->
+<!--            </td>-->
+<!--            <td-->
+<!--              *ngIf="isYearMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--        'min': min?.year == item.year,-->
+<!--        'max': max?.year == item.year,-->
+<!--        'past': past?.year == item.year,-->
+<!--        'text-gray-200': getColor(item),-->
+<!--        'current': current?.year == item.year,-->
+<!--        }">-->
+<!--              {{ item.value | number: '.0-0' }}-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--      <div *ngIf="years.length > 20" class="col-span-1 max-2xl:col-span-1">-->
+<!--        <table>-->
+<!--          <thead class="sticky top-0">-->
+<!--          <tr>-->
+<!--            <th>-->
+<!--              <input type="checkbox" class="w-4 h-4 mr-2 mt-2" [checked]="isYearsChecked(secondHalf)"-->
+<!--                     (click)="toggleYears(secondHalf)">-->
+<!--              Год-->
+<!--            </th>-->
+<!--            <th>Приток воды, млн. м3</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let item of secondHalf">-->
+<!--            <td-->
+<!--              *ngIf="isYearNotMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--          'min': min?.year == item.year,-->
+<!--          'max': max?.year == item.year,-->
+<!--          'past': past?.year == item.year,-->
+<!--          'text-gray-200': getColor(item),-->
+<!--          'current': current?.year == item.year,-->
+<!--          }"-->
+<!--              class="flex"-->
+<!--            >-->
+<!--              <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="yearSelect(item.year)">-->
+<!--              <span class="ml-2">{{ item.year }}</span>-->
+<!--            </td>-->
+<!--            <td-->
+<!--              *ngIf="isYearNotMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--          'min': min?.year == item.year,-->
+<!--          'max': max?.year == item.year,-->
+<!--          'past': past?.year == item.year,-->
+<!--          'text-gray-200': getColor(item),-->
+<!--          'current': current?.year == item.year,-->
+<!--          }">-->
+<!--              {{ item.value | number: '.0-0' }}-->
+<!--            </td>-->
+<!--            <td-->
+<!--              *ngIf="isYearMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--          'min': min?.year == item.year,-->
+<!--          'max': max?.year == item.year,-->
+<!--          'past': past?.year == item.year,-->
+<!--          'current': current?.year == item.year,-->
+<!--          'text-gray-200': getColor(item)-->
+<!--           }"-->
+<!--              class="flex"-->
+<!--            >-->
+<!--              <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="removeFromChart(item)">-->
+<!--              <span class="ml-2">{{ item.year }}</span>-->
+<!--            </td>-->
+<!--            <td-->
+<!--              *ngIf="isYearMatched(item.year)"-->
+<!--              [ngStyle]="{'background-color': getColor(item)}"-->
+<!--              [ngClass]="{-->
+<!--          'min': min?.year === item.year,-->
+<!--          'max': max?.year === item.year,-->
+<!--          'past': past?.year === item.year,-->
+<!--          'current': current?.year == item.year,-->
+<!--          'text-gray-200': getColor(item),-->
+<!--          }"-->
+<!--            >-->
+<!--              {{ item.value | number: '.0-0' }}-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div-->
+<!--      class="col-span-1 max-2xl:col-span-1 overflow-y-auto flex-1 mb-14 h-fit"-->
+<!--      [ngStyle]="{'max-height.px': tableHeight}">-->
+<!--      <table>-->
+<!--        <thead-->
+<!--          class="sticky top-0">-->
+<!--        <tr>-->
+<!--          <th>Год</th>-->
+<!--          <th>Годовой приток, млн. м3</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody *ngIf="avg">-->
+<!--        <tr-->
+<!--          *ngIf="startYear && endYear"-->
+<!--          (click)="changeVisibility(avg.id) "-->
+<!--          [ngClass]="{-->
+<!--         'bg-blue-600': avg.display,-->
+<!--         'text-white': avg.display,-->
+<!--         'bg-gray-200': !avg.display}"-->
+<!--          class="text-blue-600">-->
+<!--          <td-->
+<!--            *ngIf="startYear && endYear">-->
+<!--            Среднее многолетнее-->
+<!--          </td>-->
+<!--          <td>{{ (avg.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"-->
+<!--            [ngClass]="{-->
+<!--          'bg-cyan-600': tenAvg.display,-->
+<!--          'text-white': tenAvg.display,-->
+<!--          'bg-gray-200': !tenAvg.display,-->
+<!--          'text-cyan-600': !tenAvg.display}"-->
+<!--            class="text-cyan-600">-->
+<!--          <td> Среднее за 10 лет</td>-->
+<!--          <td>{{ (tenAvg.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngIf="max"-->
+<!--          (click)="changeVisibility(max.id)"-->
+<!--          [ngClass]="{-->
+<!--          'bg-green-600': max.display,-->
+<!--          'text-white': max.display,-->
+<!--          'bg-gray-200':!max.display}"-->
+<!--          class="text-green-600">-->
+<!--          <td>Максимальный</td>-->
+<!--          <td>{{ (max.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        <tr-->
+<!--          *ngIf="min"-->
+<!--          (click)="changeVisibility(min.id)"-->
+<!--          [ngClass]="{-->
+<!--         'bg-rose-600': min.display,-->
+<!--         'text-white': min.display,-->
+<!--         'bg-gray-200':!min.display}"-->
+<!--          class="text-rose-600">-->
+<!--          <td>-->
+<!--            Минимальный-->
+<!--          </td>-->
+<!--          <td>{{ (min.value) | number: '.0-0' }}</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->

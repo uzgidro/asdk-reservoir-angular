@@ -23,30 +23,26 @@ import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
   standalone: true
 })
 export class ReservoirAnalyticsComponent implements OnInit, AfterViewInit {
-hideColor(_t172: { year: number; value: number; }) {
-throw new Error('Method not implemented.');
-}
-
 
   protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
   private colors: { main: string, sub: string }[] = [
-    { main: 'rgba(220, 38, 38,1)', sub: 'rgba(220, 38, 38,0.8)' },
-    { main: 'rgba(234, 88, 12,1)', sub: 'rgba(234, 88, 12,0.8)' },
-    { main: 'rgba(202, 138, 4,1)', sub: 'rgba(202, 138, 4,0.8)' },
-    { main: 'rgba(101, 163, 13,1)', sub: 'rgba(101, 163, 13,0.8)' },
-    { main: 'rgba(5, 150, 105,1)', sub: 'rgba(5, 150, 105,0.8)' },
-    { main: 'rgba(13, 148, 136,1)', sub: 'rgba(13, 148, 136,0.8)' },
-    { main: 'rgba(8, 145, 178,1)', sub: 'rgba(8, 145, 178,0.8)' },
-    { main: 'rgba(2, 132, 199,1)', sub: 'rgba(2, 132, 199,0.8)' },
-    { main: 'rgba(79, 70, 229,1)', sub: 'rgba(79, 70, 229,0.8)' },
-    { main: 'rgba(124, 58, 237,1)', sub: 'rgba(124, 58, 237,0.8)' },
-    { main: 'rgba(192, 38, 211,1)', sub: 'rgba(192, 38, 211,0.8)' },
-    { main: 'rgba(219, 39, 119,1)', sub: 'rgba(219, 39, 119,0.8)' }
+    {main: 'rgba(220, 38, 38,1)', sub: 'rgba(220, 38, 38,0.8)'},
+    {main: 'rgba(234, 88, 12,1)', sub: 'rgba(234, 88, 12,0.8)'},
+    {main: 'rgba(202, 138, 4,1)', sub: 'rgba(202, 138, 4,0.8)'},
+    {main: 'rgba(101, 163, 13,1)', sub: 'rgba(101, 163, 13,0.8)'},
+    {main: 'rgba(5, 150, 105,1)', sub: 'rgba(5, 150, 105,0.8)'},
+    {main: 'rgba(13, 148, 136,1)', sub: 'rgba(13, 148, 136,0.8)'},
+    {main: 'rgba(8, 145, 178,1)', sub: 'rgba(8, 145, 178,0.8)'},
+    {main: 'rgba(2, 132, 199,1)', sub: 'rgba(2, 132, 199,0.8)'},
+    {main: 'rgba(79, 70, 229,1)', sub: 'rgba(79, 70, 229,0.8)'},
+    {main: 'rgba(124, 58, 237,1)', sub: 'rgba(124, 58, 237,0.8)'},
+    {main: 'rgba(192, 38, 211,1)', sub: 'rgba(192, 38, 211,0.8)'},
+    {main: 'rgba(219, 39, 119,1)', sub: 'rgba(219, 39, 119,0.8)'}
   ];
-   private colorsCounter = 0;
+  private colorsCounter = 0;
 
-   private _incomeChart: {
+  private _incomeChart: {
     id: string
     data: any
     year?: YearValue
@@ -56,32 +52,52 @@ throw new Error('Method not implemented.');
     display: boolean
   }[] = []
 
+  get displayedReservoirsCount(): number {
+    return this._incomeChart.filter(m => m.display).length;
+  }
+
   reservoirId?: number;
   reservoirName?: string;
   tableHeight?: number;
   category = 'income';
 
-  firstHalf: YearValue[] = [];
-  secondHalf: YearValue[] = [];
   startYear?: Date;
   endYear?: Date;
   subscribes: Subscription[] = [];
   incomeChartLabels = [
-    'Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь',
-    'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.'
+    'Yanv.', 'Fev.', 'Mart', 'Apr.', 'May', 'Iyun',
+    'Iyul', 'Avg.', 'Sen.', 'Okt.', 'Noy.', 'Dek.'
   ];
   chartOptions: ChartConfiguration['options'] = {
-    elements: { line: { tension: 0.5 } },
-    interaction: { mode: 'index', intersect: false },
+    elements: {line: {tension: 0.5}},
+    interaction: {mode: 'index', intersect: false},
+    aspectRatio: 3,
+    scales: {
+      x: {
+        grid: {
+          color: '#2D2D2D',
+        },
+        ticks: {
+          color: 'white',
+        }
+      },
+      y: {
+        grid: {
+          color: '#2D2D2D',
+        },
+        ticks: {
+          color: 'white',
+        }
+      },
+
+    },
     plugins: {
-      legend: { display: false },
-      title: { display: true, text: 'Приток воды, млн. м3' }
+      legend: {display: false},
+      title: {display: true, text: 'Suv kelishi, mln.m³'}
     }
   };
   volumeChartDataset: any[] = [];
   volumeChartLabels: number[] = [];
-  firstHalfChecked = true;
-  secondHalfChecked = true;
   reservoir = 'reservoir';
 
 
@@ -92,7 +108,7 @@ throw new Error('Method not implemented.');
   }
 
   ngOnInit() {
-  this.shuffleArray(this.colors)
+    this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         this.api.getReservoirById(value[this.reservoir]).subscribe({
@@ -116,7 +132,7 @@ throw new Error('Method not implemented.');
   @HostListener('window:resize')
   onResize() {
     if (this.tableHeight !== this.infoContainer?.nativeElement.offsetHeight) {
-       this.tableHeight = this.infoContainer?.nativeElement.offsetHeight;
+      this.tableHeight = this.infoContainer?.nativeElement.offsetHeight;
     }
     this.chart?.update();
   }
@@ -247,8 +263,8 @@ throw new Error('Method not implemented.');
     );
   }
 
-  isYearsChecked(years:YearValue[]):boolean{
-    return years.some(item=>this.isChecked(item.year))
+  isYearsChecked(years: YearValue[]): boolean {
+    return years.some(item => this.isChecked(item.year))
 
   }
 
@@ -260,21 +276,11 @@ throw new Error('Method not implemented.');
     return !this.isYearMatched(year);
   }
 
-
-  splitYears(years:any) {
-    if (years.length > 20) {
-      this.firstHalf = years.slice(0, 20);
-      this.secondHalf = years.slice(20);
-    } else {
-      this.firstHalf = years;
-    }
-  }
-
   yearSelect(year: number | undefined) {
     // if year is undefined or year is already selected and changed visibility
     if (!year || this.changeVisibility(year.toString())) return;
     if (this.reservoirId) {
-      this.api.getSelectedYearValues(this.reservoirId,year).subscribe({
+      this.api.getSelectedYearValues(this.reservoirId, year).subscribe({
         next: (response: ComplexValueResponse) => {
           const selectedYearByMonth = this.calculateMonthlyValues(response)
           const selectedYear = {
@@ -288,7 +294,7 @@ throw new Error('Method not implemented.');
             data: {
               data: selectedYearByMonth,
               label:
-                `Данные за ${selectedYear.year}`,
+                `${selectedYear.year}`,
               borderColor:
               colors.main,
               pointBackgroundColor:
@@ -316,9 +322,9 @@ throw new Error('Method not implemented.');
   toggleYears(years: YearValue[]) {
     years.forEach(item => {
       if (this.isYearNotMatched(item.year)) {
-      this.selected?.forEach(selectedItem => {
-      if (selectedItem.year === item.year) {
-          this.changeVisibility(selectedItem.id);
+        this.selected?.forEach(selectedItem => {
+          if (selectedItem.year === item.year) {
+            this.changeVisibility(selectedItem.id);
           }
         });
       } else {
@@ -380,11 +386,10 @@ throw new Error('Method not implemented.');
         this.years = response.data.flatMap(item => {
           return {year: new Date(item.date).getFullYear(), value: this.calculateVolume(item)}
         })
-        this.splitYears(this.years)
         this.volumeChartLabels = response.data.map(item => new Date(item.date).getFullYear())
         this.volumeChartDataset[0] = {
           data: this.calculateMonthlyValues(response),
-          label: `Приток воды, млн. м3`,
+          label: `Suv kelishi, mln.m³`,
           borderColor: 'rgba(37, 99, 235,0.4)',
           pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
           pointBorderColor: 'rgba(37, 99, 235,0.4)',
@@ -406,7 +411,7 @@ throw new Error('Method not implemented.');
           id: 'avg',
           data: {
             data: avgByMonth,
-            label: `Среднее за года (${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()})`,
+            label: `(${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()}) o'rtacha`,
             borderColor: 'rgba(37, 99, 235,0.4)',
             pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
             pointBorderColor: 'rgba(37, 99, 235,0.4)',
@@ -431,7 +436,7 @@ throw new Error('Method not implemented.');
           id: 'tenAvg',
           data: {
             data: avgByMonth,
-            label: `Среднее за 10 лет`,
+            label: `O'rtacha 10 yil`,
             borderColor: 'rgba(37, 99, 235,0.4)',
             pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
             pointBorderColor: 'rgba(37, 99, 235,0.4)',
@@ -459,7 +464,7 @@ throw new Error('Method not implemented.');
           id: 'min',
           data: {
             data: minByMonth,
-            label: `Минимум ${minValue.year}`,
+            label: `${minValue.year} minimal`,
             borderColor: 'rgba(225, 29, 72,0.4)',
             pointBackgroundColor: 'rgba(225, 29, 72,0.5)',
             pointBorderColor: 'rgba(225, 29, 72,0.4)',
@@ -487,7 +492,7 @@ throw new Error('Method not implemented.');
           id: 'max',
           data: {
             data: maxByMonth,
-            label: `Максимум ${maxValue.year}`,
+            label: `${maxValue.year} maksimal`,
             borderColor: 'rgba(22, 163, 74,0.4)',
             pointBackgroundColor: 'rgba(22, 163, 74,0.5)',
             pointBorderColor: 'rgba(22, 163, 74,0.4)',
@@ -516,7 +521,7 @@ throw new Error('Method not implemented.');
           id: 'past',
           data: {
             data: pastYearByMonth,
-            label: `Данные за прошлый ${pastYear.year}`,
+            label: `${pastYear.year}`,
             borderColor: 'rgba(217, 119, 6,0.4)',
             pointBackgroundColor: 'rgba(217, 119, 6,0.5)',
             pointBorderColor: 'rgba(217, 119, 6,0.4)',
@@ -544,7 +549,7 @@ throw new Error('Method not implemented.');
           id: 'current',
           data: {
             data: currentYearByMonth,
-            label: `Данные за прошлый ${currentYear.year}`,
+            label: `${currentYear.year}`,
             borderColor: 'rgba(147, 51, 234,0.4)',
             pointBackgroundColor: 'rgba(147, 51, 234,0.5)',
             pointBorderColor: 'rgba(147, 51, 234,0.4)',

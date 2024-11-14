@@ -4,7 +4,6 @@ import {NgChartsModule} from "ng2-charts";
 import {ChartConfiguration, ChartData, ChartOptions, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import {CarouselModule} from "primeng/carousel";
-import {NgOptimizedImage} from "@angular/common";
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
 
 @Component({
@@ -15,7 +14,6 @@ import {CardHeaderComponent} from "../shared/component/card-header/card-header.c
     RouterLink,
     NgChartsModule,
     CarouselModule,
-    NgOptimizedImage,
     CardHeaderComponent,
   ],
   standalone: true
