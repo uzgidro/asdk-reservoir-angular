@@ -10,16 +10,20 @@
       <nav>
         <ul class="font-medium text-lg mt-4 px-4">
           <li class="mb-4" *ngFor="let item of menuItems">
-            <a class="items-center flex flex-row justify-between pl-2 border-l border-l-white" [routerLink]="item.path"
-               [queryParamsHandling]="item.path?.includes('dashboard') ? '' : 'preserve'" routerLinkActive="active"
-               (click)="selectItem(item)"
-               [ngClass]="{'active': item.isActive}">
-              {{ item.name }} <i *ngIf="!item.path" class="pi"
-                                 [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i>
+            <a class="items-center flex flex-row justify-between pl-2 border-l border-l-white"
+               [routerLink]="item.children ?? item.path"
+               [queryParamsHandling]="item.path.includes('dashboard') ? '' : 'preserve'"
+               [ngClass]="{'active': currentUrl.includes(item.path)}"
+               (click)="selectItem(item)">
+              {{ item.name }}
+              <i *ngIf="item.children" class="pi"
+                 [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i>
             </a>
             <ul *ngIf="item.children &&item.isOpen" class="mt-3" [@DropDownMenu]="">
               <li class="pl-4 mb-4" *ngFor="let childItem of item.children">
-                <a class="pl-2 border-l border-l-white" [routerLink]="childItem.path" routerLinkActive="active"
+                <a class="pl-2 border-l border-l-white"
+                   [routerLink]="(item.path || '') + (childItem.path || '')"
+                   routerLinkActive="active"
                    [queryParamsHandling]="'preserve'"
                    (click)="selectItem(childItem)">{{ childItem.name }}</a>
               </li>

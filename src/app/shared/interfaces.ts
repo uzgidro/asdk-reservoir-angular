@@ -50,7 +50,7 @@ export interface Aggregate {
 
 export interface MenuItem {
   name: string
-  path?: string
+  path: string
   queryParams?: string
   queryParamsHandling?: string
   isActive?: boolean
