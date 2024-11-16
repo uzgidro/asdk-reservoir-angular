@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import {NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {SidebarModule} from "primeng/sidebar";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
@@ -88,10 +88,11 @@ export class MainLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.subscribe((event: any) => {
-        this.currentUrl = (event as { routerEvent: { urlAfterRedirects: string } }).routerEvent.urlAfterRedirects
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = event.urlAfterRedirects; // Получаем актуальный URL
       }
-    )
+    });
   }
 
 
