@@ -98,7 +98,7 @@
 }
 
 .active-button {
-  @apply bg-on-secondary
+  @apply bg-on-secondary border border-primary border-opacity-60
 }
 
 .inactive-button {

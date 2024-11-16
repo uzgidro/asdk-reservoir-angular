@@ -1,6 +1,9 @@
 <div class="flex flex-col h-full pt-10 px-12 overflow-y-hidden">
   <div class="grid grid-flow-col gap-6">
-    <button class="inactive-button px-4 py-2" *ngFor="let reservoir of reservoirs">{{ reservoir.name }}</button>
+    <a class="inactive-button px-4 py-2 flex justify-center"
+       *ngFor="let reservoir of reservoirs"
+       [ngClass]="{'active-button': selectedReservoirId == reservoir.id}"
+       (click)="changeReservoir(reservoir.id)">{{ reservoir.name }}</a>
   </div>
 
   <div class="flex-1 pt-6 overflow-y-auto">
