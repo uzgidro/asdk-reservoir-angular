@@ -2,12 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedValueResponse, ComplexValueResponse} from "../../shared/response/values-response";
-import {ReservoirResponse} from "../../shared/response/reservoir-response";
-import {MetricCategory} from "../../shared/enum/metric-category";
-import {ReservoirService} from "../reservoir.service";
-import {MetricSelectComponent} from "../../shared/component/metric-select/metric-select.component";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
@@ -17,10 +12,8 @@ import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
   templateUrl: './reservoir-decade.component.html',
   styleUrls: ['./reservoir-decade.component.css'],
   imports: [
-    MetricSelectComponent,
     NgIf,
     DatePipe,
-    RusMonthPipe,
     LoaderComponent,
     DecimalPipe,
     NgForOf,
@@ -32,7 +25,6 @@ import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
 
 export class ReservoirDecadeComponent implements OnInit {
 
-  metrics: MetricCategory = MetricCategory.SPEED
   today = new Date();
   pastYear = this.today.getFullYear() - 1
   currentYear = this.today.getFullYear()
@@ -41,7 +33,6 @@ export class ReservoirDecadeComponent implements OnInit {
   tableData?: CategorisedValueResponse
   avgIncome?: number
   avgRelease?: number
-  reservoirName?: string
   totalValues: {
     reservoir: string
     decadeAvg30?: any
@@ -54,9 +45,7 @@ export class ReservoirDecadeComponent implements OnInit {
     currentYear?: any
   }[] = []
 
-  protected readonly MetricCategory = MetricCategory;
-
-  constructor(private activatedRoute: ActivatedRoute, private api: ApiService, private reservoirService: ReservoirService) {
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
   }
 
   ngOnInit() {
@@ -64,56 +53,41 @@ export class ReservoirDecadeComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         const reservoir = value['reservoir']
-        this.api.getReservoirById(reservoir).subscribe({
-          next: (response: ReservoirResponse) => {
-            this.reservoirName = response.name
-          }
-        })
         this.api.getDecadeReservoirValues(reservoir).subscribe({
           next: (response: CategorisedValueResponse) => {
-            this.reservoirName = response.income.reservoir
             this.tableData = response
             this.avgIncome = this.getAvg(this.tableData.income.data.map(item => item.value))
             this.avgRelease = this.getAvg(this.tableData.release.data.map(item => item.value))
           }
         })
-        this.api.getTotalDecadeReservoirValues().subscribe({
-          next: (response: { avg: ComplexValueResponse[], year: ComplexValueResponse[] }) => {
-            for (let item of response.avg) {
-              const data = this.parseYearlyResponse(item)
-              if (data.current && data.lastYear)
-                this.totalValues.push({
-                  reservoir: item.reservoir,
-                  decadeCurrentYear: Math.round(data.current * 0.0864),
-                  decadeLastYear: Math.round(data.lastYear * 0.0864),
-                  decadeAvg10: Math.round(data.data10 * 0.0864),
-                  decadeAvg30: Math.round(data.data30 * 0.0864),
-                })
-            }
-            for (let item of response.year) {
-              const data = this.parseYearlyResponse(item)
-              let value = this.totalValues.find(val => val.reservoir === item.reservoir);
-              if (value && data.current && data.lastYear) {
-                value.currentYear = Math.round(data.current * 0.0864)
-                value.lastYear = Math.round(data.lastYear * 0.0864)
-                value.avg10 = Math.round(data.data10 * 0.0864)
-                value.avg30 = Math.round(data.data30 * 0.0864)
-              }
-            }
-          }
-        })
       }
     })
-  }
-
-  changeCategory(event: MetricCategory) {
-    this.metrics = event
-    if (this.tableData) {
-      this.reservoirService.convertMetricsValueResponse(this.tableData.income.data, event)
-      this.reservoirService.convertMetricsValueResponse(this.tableData.release.data, event)
-      this.avgIncome = this.getAvg(this.tableData.income.data.map(item => item.value))
-      this.avgRelease = this.getAvg(this.tableData.release.data.map(item => item.value))
-    }
+    this.api.getTotalDecadeReservoirValues().subscribe({
+      next: (response: { avg: ComplexValueResponse[], year: ComplexValueResponse[] }) => {
+        for (let item of response.avg) {
+          const data = this.parseYearlyResponse(item)
+          if (data.current && data.lastYear) {
+            this.totalValues.push({
+              reservoir: item.reservoir,
+              decadeCurrentYear: Math.round(data.current * 0.0864),
+              decadeLastYear: Math.round(data.lastYear * 0.0864),
+              decadeAvg10: Math.round(data.data10 * 0.0864),
+              decadeAvg30: Math.round(data.data30 * 0.0864),
+            })
+          }
+        }
+        for (let item of response.year) {
+          const data = this.parseYearlyResponse(item)
+          let value = this.totalValues.find(val => val.reservoir === item.reservoir);
+          if (value && data.current && data.lastYear) {
+            value.currentYear = Math.round(data.current * 0.0864)
+            value.lastYear = Math.round(data.lastYear * 0.0864)
+            value.avg10 = Math.round(data.data10 * 0.0864)
+            value.avg30 = Math.round(data.data30 * 0.0864)
+          }
+        }
+      }
+    })
   }
 
   private parseYearlyResponse(response: ComplexValueResponse) {
