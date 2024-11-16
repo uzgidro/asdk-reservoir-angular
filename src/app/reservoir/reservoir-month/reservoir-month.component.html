@@ -53,14 +53,14 @@
     <tbody *ngFor="let data of data">
     <tr *ngIf="data.level">
         <td rowspan="4">{{ data.date | date: 'MMMM' | uzbMonthPipe }}</td>
-      <td>Suv sathi, m</td>
-      <td *ngFor="let value of data.level.slice(0, 10)">{{ value }}</td>
-      <td></td>
-      <td *ngFor="let value of data.level.slice(10,20)">{{ value }}</td>
-      <td></td>
-      <td *ngFor="let value of data.level.slice(-11)">{{ value }}</td>
-      <td></td>
-      <td></td>
+      <td class="bg-secondary-variant">Suv sathi, m</td>
+      <td class="bg-secondary-variant" *ngFor="let value of data.level.slice(0, 10)">{{ value }}</td>
+      <td class="bg-secondary-variant"></td>
+      <td class="bg-secondary-variant" *ngFor="let value of data.level.slice(10,20)">{{ value }}</td>
+      <td class="bg-secondary-variant"></td>
+      <td class="bg-secondary-variant" *ngFor="let value of data.level.slice(-11)">{{ value }}</td>
+      <td class="bg-secondary-variant"></td>
+      <td class="bg-secondary-variant"></td>
     </tr>
     <tr *ngIf="data.volume">
       <td>Suv hajmi, mln.m³</td>
@@ -73,14 +73,14 @@
       <td></td>
     </tr>
     <tr *ngIf="data.income">
-      <td>Kelishi, m³/s</td>
-      <td *ngFor="let value of data.income.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
-      <td>{{ getAvg(data.income.slice(0, 10)) | number: '.0-0' }}</td>
-      <td *ngFor="let value of data.income.slice(10,20)">{{ value | number: '0.0-0' }}</td>
-      <td>{{ getAvg(data.income.slice(10, 20)) | number: '.0-0' }}</td>
-      <td *ngFor="let value of data.income.slice(-11)">{{ value | number: '0.0-0' }}</td>
-      <td>{{ getAvg(data.income.slice(-11)) | number: '.0-0' }}</td>
-      <td>{{ getAvg(data.income) | number: '.0-0' }}</td>
+      <td class="bg-secondary-variant">Kelishi, m³/s</td>
+      <td class="bg-secondary-variant" *ngFor="let value of data.income.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
+      <td class="bg-secondary-variant">{{ getAvg(data.income.slice(0, 10)) | number: '.0-0' }}</td>
+      <td class="bg-secondary-variant" *ngFor="let value of data.income.slice(10,20)">{{ value | number: '0.0-0' }}</td>
+      <td class="bg-secondary-variant">{{ getAvg(data.income.slice(10, 20)) | number: '.0-0' }}</td>
+      <td class="bg-secondary-variant" *ngFor="let value of data.income.slice(-11)">{{ value | number: '0.0-0' }}</td>
+      <td class="bg-secondary-variant">{{ getAvg(data.income.slice(-11)) | number: '.0-0' }}</td>
+      <td class="bg-secondary-variant">{{ getAvg(data.income) | number: '.0-0' }}</td>
     </tr>
     <tr *ngIf="data.release">
       <td>Chiqish, m³/s</td>
