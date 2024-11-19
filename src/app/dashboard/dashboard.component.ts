@@ -1,88 +1,34 @@
-import {Component} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
 import {NgChartsModule} from "ng2-charts";
-import {ChartConfiguration, ChartData, ChartOptions, ChartType, Plugin} from "chart.js";
+import {ChartConfiguration, ChartOptions, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import {CarouselModule} from "primeng/carousel";
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
+import {DashboardCurrentChartComponent} from "./dashboard-current-chart/dashboard-current-chart.component";
+import {ApiService} from "../service/api.service";
+import {ReservoirResponse} from "../shared/response/reservoir-response";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   imports: [
-    RouterLink,
     NgChartsModule,
     CarouselModule,
     CardHeaderComponent,
+    DashboardCurrentChartComponent,
+
   ],
   standalone: true
 })
-export class DashboardComponent {
-  public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorog', 'Sardoba']
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-      y: {
-        min: 10,
-        grid: {
-          color: '#2D2D2D',
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-
-    },
-    plugins: {
-      tooltip: {
-        enabled: false
-      },
-      legend: {
-        display: true,
-        labels: {
-          color: 'white',
-        }
-      },
-      datalabels: {
-        color: 'white',
-        align: "end",
-        anchor: "end"
-      }
-    },
-  };
-  public barChartType = 'bar' as const;
+export class DashboardComponent implements OnInit {
+  // public reservoirs?: string[]
+  public reservoirs: string[] = []
   public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
 
-  public barChartData: ChartData<'bar'> = {
-    labels: this.reservoirs,
-    datasets: [
-      {
-        data: [65, 59, 80, 81, 56, 55],
-        label: '06:00',
-        backgroundColor: '#014a67',
-        barThickness: 24,
-      },
-      {
-        data: [28, 48, 40, 19, 86, 27],
-        label: '12:00',
-        backgroundColor: '#4eeefe',
-        barThickness: 24,
-      },
-    ],
-  };
+  public barChartType = 'bar' as const;
 
-  public chartData: ChartData<'bar'> = {
-    labels: this.reservoirs,
-    datasets: [
+  public chartData = [
       {
         label: 'Current Value',
         data: [65, 59, 80, 81, 56, 55],
@@ -98,8 +44,7 @@ export class DashboardComponent {
           display: false
         }
       },
-    ],
-  };
+  ]
 
   public chartOptions: ChartOptions<'bar'> = {
     responsive: true,
@@ -195,4 +140,14 @@ export class DashboardComponent {
 
   public lineChartType: ChartType = 'line';
 
+  constructor(private apiService: ApiService) {
+  }
+
+  ngOnInit() {
+    this.apiService.getReservoirs().subscribe({
+      next: (response: ReservoirResponse[]) => {
+        this.reservoirs = response.map(value => value.name)
+      }
+    })
+  }
 }
