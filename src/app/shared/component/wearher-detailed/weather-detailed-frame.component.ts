@@ -4,7 +4,6 @@ import {WeatherService} from "../../../service/weather.service";
 import {ReservoirResponse} from "../../response/reservoir-response";
 import {WeatherCurrentDto, WeatherCurrentResponse} from "../../response/weather-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {RusDatePipe} from "../../pipe/rus-date.pipe";
 import {LoaderComponent} from "../loader/loader.component";
 import {UzbDatePipePipe} from "../../pipe/uzb-date-pipe.pipe";
 
@@ -18,7 +17,6 @@ import {UzbDatePipePipe} from "../../pipe/uzb-date-pipe.pipe";
     DecimalPipe,
     DatePipe,
     NgForOf,
-    RusDatePipe,
     LoaderComponent,
     UzbDatePipePipe
   ],
@@ -50,7 +48,7 @@ export class WeatherDetailedFrameComponent implements OnChanges {
     const lon = res.lon
     this.weatherApiService.getCurrent(lat, lon).subscribe({
       next: (response: WeatherCurrentResponse) => {
-          this.weatherCurrent = this.weatherService.convertCurrentResponse(response)
+        this.weatherCurrent = this.weatherService.convertCurrentResponse(response)
       }
     })
     this.weatherApiService.getForecast(lat, lon).subscribe({
@@ -77,7 +75,7 @@ export class WeatherDetailedFrameComponent implements OnChanges {
             }
           }
         }
-        this.weatherDaily = this.weatherDaily.slice(0,4)
+        this.weatherDaily = this.weatherDaily.slice(0, 4)
       }
     })
   }

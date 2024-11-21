@@ -31,3 +31,13 @@ export interface WeatherCurrentDto {
   pressure: number
   clouds: number
 }
+
+export interface Forecast {
+  date: Date
+  dayIcon?: string
+  nightIcon?: string
+  dayIconDescription?: string
+  nightIconDescription?: string
+  dayTemperature?: number
+  nightTemperature?: number
+}

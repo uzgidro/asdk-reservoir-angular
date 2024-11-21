@@ -7,6 +7,9 @@ import {CardHeaderComponent} from "../shared/component/card-header/card-header.c
 import {DashboardCurrentChartComponent} from "./dashboard-current-chart/dashboard-current-chart.component";
 import {ApiService} from "../service/api.service";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
+import {Forecast, WeatherCurrentResponse} from "../shared/response/weather-response";
+import {WeatherService} from "../service/weather.service";
+import {WeatherApiService} from "../service/weather-api.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -22,28 +25,27 @@ import {ReservoirResponse} from "../shared/response/reservoir-response";
   standalone: true
 })
 export class DashboardComponent implements OnInit {
-  // public reservoirs?: string[]
   public reservoirs: string[] = []
   public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
 
   public barChartType = 'bar' as const;
 
   public chartData = [
-      {
-        label: 'Current Value',
-        data: [65, 59, 80, 81, 56, 55],
-        backgroundColor: '#4eeefe',
-        barThickness: 24,
-      },
-      {
-        label: '100% Background',
-        data: [100, 100, 100, 100, 100, 100],
-        backgroundColor: '#014a67',
-        barThickness: 24,
-        datalabels: {
-          display: false
-        }
-      },
+    {
+      label: 'Current Value',
+      data: [65, 59, 80, 81, 56, 55],
+      backgroundColor: '#4eeefe',
+      barThickness: 24,
+    },
+    {
+      label: '100% Background',
+      data: [100, 100, 100, 100, 100, 100],
+      backgroundColor: '#014a67',
+      barThickness: 24,
+      datalabels: {
+        display: false
+      }
+    },
   ]
 
   public chartOptions: ChartOptions<'bar'> = {
@@ -140,13 +142,53 @@ export class DashboardComponent implements OnInit {
 
   public lineChartType: ChartType = 'line';
 
-  constructor(private apiService: ApiService) {
+  weatherDaily: {
+    reservoir: string
+    forecast?: Forecast[]
+  }[] = []
+
+  get forecastDate() {
+    return this.weatherDaily[0].forecast?.map(value => value.date)
+  }
+
+  constructor(private apiService: ApiService, private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
   }
 
   ngOnInit() {
     this.apiService.getReservoirs().subscribe({
       next: (response: ReservoirResponse[]) => {
         this.reservoirs = response.map(value => value.name)
+
+        response.forEach(reservoir => {
+          let forecast: Forecast[] = []
+          this.weatherApiService.getForecast(reservoir.lat, reservoir.lon).subscribe({
+            next: (response) => {
+              for (let res of response.list as WeatherCurrentResponse[]) {
+                const weather = this.weatherService.convertCurrentResponse(res)
+                if (weather.time.getDate() !== new Date().getDate()) {
+                  let existsElement = forecast.find(item => item.date.getDate() === weather.time.getDate())
+                  if (!existsElement) {
+                    forecast.push({date: weather.time})
+                  } else {
+
+                    if (weather.time.getHours() === 11) {
+                      existsElement.dayIcon = weather.weatherIcon
+                      existsElement.dayIconDescription = weather.weatherDescription
+                      existsElement.dayTemperature = Math.round(weather.temp)
+                    } else if (weather.time.getHours() === 17) {
+                      existsElement.nightIcon = weather.weatherIcon
+                      existsElement.nightIconDescription = weather.windDirection
+                      existsElement.nightTemperature = Math.round(weather.temp)
+                    }
+                  }
+                }
+              }
+            },
+            complete: () => {
+              this.weatherDaily.push({reservoir: reservoir.name, forecast: forecast.slice(0, 4)})
+            }
+          })
+        })
       }
     })
   }

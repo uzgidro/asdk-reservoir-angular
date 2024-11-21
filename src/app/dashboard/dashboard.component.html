@@ -87,133 +87,21 @@
         <th colspan="8">Havo harorati</th>
       </tr>
       <tr>
-        <th colspan="2">05.11.2024</th>
-        <th colspan="2">06.11.2024</th>
-        <th colspan="2">07.11.2024</th>
-        <th colspan="2">08.11.2024</th>
+        <th *ngFor="let date of forecastDate" colspan="2">{{ date | date:'dd.MM.yyyy' }}</th>
+
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-      </tr>
-      <tr>
-        <td>Viloyat</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
-        <td>+13</td>
-        <td>-3</td>
+      <tr *ngFor="let forecast of weatherDaily">
+        <td>{{ forecast.reservoir }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[0].dayTemperature : '' }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[0].nightTemperature : '' }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[1].dayTemperature : '' }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[1].nightTemperature : '' }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[2].dayTemperature : '' }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[2].nightTemperature : '' }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[3].dayTemperature : '' }}</td>
+        <td>{{ forecast.forecast ? forecast.forecast[3].nightTemperature : '' }}</td>
       </tr>
       </tbody>
     </table>
