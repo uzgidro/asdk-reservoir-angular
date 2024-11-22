@@ -66,6 +66,59 @@ export class WaterRecoursesComponent implements OnInit {
   public lineChartType: ChartType = 'line';
   public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
 
+  reservoirData: {
+    reservoir: string
+    income: string
+    incomeDifference: number
+    incomeChart: {
+      data: number[],
+      label: 'Kelish',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+    }
+    release: string
+    releaseDifference: number
+    releaseChart: {
+      data: number[],
+      label: 'Chiqish',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+    }
+    level: string
+    levelDifference: number
+    levelChart: {
+      data: number[],
+      label: 'Sath',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+    }
+    volume: string
+    volumeDifference: number
+    volumeChart: {
+      data: number[],
+      label: 'Hajm',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+    }
+    labels: string[]
+    weather: string
+    temperature: string
+    windSpeed: number
+    humidity: number
+  }[] = []
+
   constructor(private apiService: ApiService) {
   }
 
