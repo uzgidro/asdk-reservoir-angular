@@ -142,7 +142,7 @@ export class DashboardComponent implements OnInit {
 
   public lineChartType: ChartType = 'line';
 
-  weatherDaily: {
+  public weatherDaily: {
     reservoir: string
     forecast?: Forecast[]
   }[] = []
@@ -159,37 +159,41 @@ export class DashboardComponent implements OnInit {
       next: (response: ReservoirResponse[]) => {
         this.reservoirs = response.map(value => value.name)
 
-        response.forEach(reservoir => {
-          let forecast: Forecast[] = []
-          this.weatherApiService.getForecast(reservoir.lat, reservoir.lon).subscribe({
-            next: (response) => {
-              for (let res of response.list as WeatherCurrentResponse[]) {
-                const weather = this.weatherService.convertCurrentResponse(res)
-                if (weather.time.getDate() !== new Date().getDate()) {
-                  let existsElement = forecast.find(item => item.date.getDate() === weather.time.getDate())
-                  if (!existsElement) {
-                    forecast.push({date: weather.time})
-                  } else {
+        this.setWeather(response)
+      }
+    })
+  }
 
-                    if (weather.time.getHours() === 11) {
-                      existsElement.dayIcon = weather.weatherIcon
-                      existsElement.dayIconDescription = weather.weatherDescription
-                      existsElement.dayTemperature = Math.round(weather.temp)
-                    } else if (weather.time.getHours() === 17) {
-                      existsElement.nightIcon = weather.weatherIcon
-                      existsElement.nightIconDescription = weather.windDirection
-                      existsElement.nightTemperature = Math.round(weather.temp)
-                    }
-                  }
+  private setWeather(reservoirs: ReservoirResponse[]) {
+    reservoirs.forEach(reservoir => {
+      let forecast: Forecast[] = []
+      this.weatherApiService.getForecast(reservoir.lat, reservoir.lon).subscribe({
+        next: (response) => {
+          for (let res of response.list as WeatherCurrentResponse[]) {
+            const weather = this.weatherService.convertCurrentResponse(res)
+            if (weather.time.getDate() !== new Date().getDate()) {
+              let existsElement = forecast.find(item => item.date.getDate() === weather.time.getDate())
+              if (!existsElement) {
+                forecast.push({date: weather.time})
+              } else {
+
+                if (weather.time.getHours() === 11) {
+                  existsElement.dayIcon = weather.weatherIcon
+                  existsElement.dayIconDescription = weather.weatherDescription
+                  existsElement.dayTemperature = `${weather.temp > 0 ? '+' : ''}${Math.round(weather.temp)}`
+                } else if (weather.time.getHours() === 17) {
+                  existsElement.nightIcon = weather.weatherIcon
+                  existsElement.nightIconDescription = weather.windDirection
+                  existsElement.nightTemperature = `${weather.temp > 0 ? '+' : ''}${Math.round(weather.temp)}`
                 }
               }
-            },
-            complete: () => {
-              this.weatherDaily.push({reservoir: reservoir.name, forecast: forecast.slice(0, 4)})
             }
-          })
-        })
-      }
+          }
+        },
+        complete: () => {
+          this.weatherDaily.push({reservoir: reservoir.name, forecast: forecast.slice(0, 4)})
+        }
+      })
     })
   }
 }

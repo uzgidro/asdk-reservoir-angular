@@ -19,7 +19,6 @@ import {NgClass} from "@angular/common";
   styleUrl: './dashboard-current-chart.component.css'
 })
 export class DashboardCurrentChartComponent implements OnInit {
-  public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorog', 'Sardoba']
   public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
 
   public chartOptions: ChartConfiguration<'bar'>['options'] = {

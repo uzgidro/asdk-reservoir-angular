@@ -38,6 +38,6 @@ export interface Forecast {
   nightIcon?: string
   dayIconDescription?: string
   nightIconDescription?: string
-  dayTemperature?: number
-  nightTemperature?: number
+  dayTemperature?: string
+  nightTemperature?: string
 }

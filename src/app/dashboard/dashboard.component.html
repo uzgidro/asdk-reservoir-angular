@@ -45,7 +45,7 @@
   <div class="flex flex-col space-y-2">
     <app-card-header [title]="'O\'zbekkosmos'"></app-card-header>
 
-    <div class="grid grid-cols-2 p-1 gap-8 h-full">
+    <div class="grid grid-cols-2 p-1 gap-4 h-full">
       <!-- Первый блок -->
       <a href="https://portal.synspective.io/login" target="_blank">
         <div class="w-full h-full bg-cover bg-center border border-primary"
@@ -93,15 +93,15 @@
       </thead>
       <tbody>
       <tr *ngFor="let forecast of weatherDaily">
-        <td>{{ forecast.reservoir }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[0].dayTemperature : '' }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[0].nightTemperature : '' }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[1].dayTemperature : '' }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[1].nightTemperature : '' }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[2].dayTemperature : '' }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[2].nightTemperature : '' }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[3].dayTemperature : '' }}</td>
-        <td>{{ forecast.forecast ? forecast.forecast[3].nightTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.reservoir }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[0].dayTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[0].nightTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[1].dayTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[1].nightTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[2].dayTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[2].nightTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[3].dayTemperature : '' }}</td>
+        <td class="py-6">{{ forecast.forecast ? forecast.forecast[3].nightTemperature : '' }}</td>
       </tr>
       </tbody>
     </table>

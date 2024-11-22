@@ -1,7 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
-import {catchError,  Observable} from "rxjs";
+import {catchError, Observable} from "rxjs";
+import {
+  CategorisedArrayResponse,
+  CategorisedValueResponse,
+  ComplexValueResponse
+} from "../shared/response/values-response";
+import {ReservoirResponse} from "../shared/response/reservoir-response";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const RESERVOIRS: string = '/reservoirs'
@@ -30,8 +36,8 @@ export class ApiService {
   constructor(private http: HttpClient, private messageService: MessageService) {
   }
 
-  getReservoirs(): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIRS).pipe(
+  getReservoirs(): Observable<ReservoirResponse[]> {
+    return this.http.get<ReservoirResponse[]>(BASE_URL + RESERVOIRS).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -39,22 +45,22 @@ export class ApiService {
     )
   }
 
-  getReservoirById(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR + '/' + reservoirId).pipe(
+  getReservoirById(reservoirId: number): Observable<ReservoirResponse> {
+    return this.http.get<ReservoirResponse>(BASE_URL + RESERVOIR + '/' + reservoirId).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
+        return []
       })
     )
   }
 
-  getDashboardValues(): Observable<any> {
-    return this.http.get(BASE_URL + DASHBOARD).pipe(
+  getDashboardValues(): Observable<CategorisedArrayResponse> {
+    return this.http.get<CategorisedArrayResponse>(BASE_URL + DASHBOARD).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
+        return []
       })
-    )
+    );
   }
 
   getCurrentReservoirValues(reservoirId: number): Observable<any> {
@@ -66,8 +72,8 @@ export class ApiService {
     )
   }
 
-  getDecadeReservoirValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE).pipe(
+  getDecadeReservoirValues(reservoirId: number): Observable<CategorisedValueResponse> {
+    return this.http.get<CategorisedValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -75,8 +81,11 @@ export class ApiService {
     )
   }
 
-  getTotalDecadeReservoirValues(): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIRS + DECADE, {params: new HttpParams().set('category', 'income')}).pipe(
+  getTotalDecadeReservoirValues(): Observable<{ avg: ComplexValueResponse[], year: ComplexValueResponse[] }> {
+    return this.http.get<{
+      avg: ComplexValueResponse[],
+      year: ComplexValueResponse[]
+    }>(BASE_URL + RESERVOIRS + DECADE, {params: new HttpParams().set('category', 'income')}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -84,8 +93,8 @@ export class ApiService {
     )
   }
 
-  getMonthReservoirValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MONTH).pipe(
+  getMonthReservoirValues(reservoirId: number): Observable<CategorisedValueResponse> {
+    return this.http.get<CategorisedValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MONTH).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -93,8 +102,8 @@ export class ApiService {
     )
   }
 
-  getDecadeYearsValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE + YEAR).pipe(
+  getDecadeYearsValues(reservoirId: number): Observable<CategorisedValueResponse> {
+    return this.http.get<CategorisedValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + DECADE + YEAR).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -103,7 +112,7 @@ export class ApiService {
   }
 
   getVegetativeDecadeYearsValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -111,8 +120,8 @@ export class ApiService {
     )
   }
 
-  getByYearValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + YEAR, {params: new HttpParams().set('category', 'income')}).pipe(
+  getByYearValues(reservoirId: number): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + YEAR, {params: new HttpParams().set('category', 'income')}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -120,8 +129,8 @@ export class ApiService {
     )
   }
 
-  getMaxValues(reservoirId: number, category: string = 'income'): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MAX, {params: new HttpParams().set('category', category)}).pipe(
+  getMaxValues(reservoirId: number, category: string = 'income'): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MAX, {params: new HttpParams().set('category', category)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -130,8 +139,8 @@ export class ApiService {
   }
 
 
-  getMinValues(reservoirId: number, category: string = 'income'): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MIN, {params: new HttpParams().set('category', category)}).pipe(
+  getMinValues(reservoirId: number, category: string = 'income'): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + MIN, {params: new HttpParams().set('category', category)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -139,8 +148,8 @@ export class ApiService {
     )
   }
 
-  getAvgValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + AVG, {params: new HttpParams().set('category', 'income')}).pipe(
+  getAvgValues(reservoirId: number): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + AVG, {params: new HttpParams().set('category', 'income')}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -148,8 +157,8 @@ export class ApiService {
     )
   }
 
-  getTenYearsAvgValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + PAST_YEARS_AVG, {params: new HttpParams().set('category', 'income').set('years', 10)}).pipe(
+  getTenYearsAvgValues(reservoirId: number): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + PAST_YEARS_AVG, {params: new HttpParams().set('category', 'income').set('years', 10)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -157,8 +166,8 @@ export class ApiService {
     )
   }
 
-  getSelectedYearValues(reservoirId: number, year: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + SELECTED, {params: new HttpParams().set('category', 'income').set('year', year)}).pipe(
+  getSelectedYearValues(reservoirId: number, year: number): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + SELECTED, {params: new HttpParams().set('category', 'income').set('year', year)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -166,38 +175,41 @@ export class ApiService {
     )
   }
 
-  getApprovedSchedule(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL+RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + APPROVED).pipe(
+  getApprovedSchedule(reservoirId: number): Observable<{
+    income: number,
+    release: number,
+    level: number,
+    volumeStart: number,
+    volumeEnd: number
+  }[]> {
+    return this.http.get<{
+      income: number,
+      release: number,
+      level: number,
+      volumeStart: number,
+      volumeEnd: number
+    }[]>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + APPROVED).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
       })
     )
   }
-
 
 
   getLevelForecast(reservoirId: number, forecast: number[]): Observable<any> {
 
     let params = new HttpParams().set('forecast', forecast.join(','));
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + LEVEL, { params: params }).pipe(
+    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + LEVEL, {params: params}).pipe(
       catchError((error) => {
-        this.messageService.add({ severity: 'error', summary: 'Ошибка', detail: error.message });
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message});
         return [];
       })
     )
   }
 
-  getVegetativeMinValues(reservoirId: number, category: string = 'income'): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MIN, {params: new HttpParams().set('category', category)}).pipe(
-      catchError((error) => {
-        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
-      })
-    )
-  }
-  getVegetativeMaxValues(reservoirId: number, category: string = 'income'): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MAX, {params: new HttpParams().set('category', category)}).pipe(
+  getVegetativeMinValues(reservoirId: number, category: string = 'income'): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MIN, {params: new HttpParams().set('category', category)}).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
@@ -205,31 +217,34 @@ export class ApiService {
     )
   }
 
-   getVegetativeSelectedValues(reservoirId: number, category: string = 'income',year:number[]): Observable<any> {
+  getVegetativeMaxValues(reservoirId: number, category: string = 'income'): Observable<ComplexValueResponse> {
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + MAX, {params: new HttpParams().set('category', category)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getVegetativeSelectedValues(reservoirId: number, category: string = 'income', year: number[]): Observable<ComplexValueResponse> {
     let params = new HttpParams();
-      params = params.append('category', category)
-      params = params.append('year', year.join(','));
-      return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params}).pipe(
-        catchError((error) => {
-          this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-          return [];
-        })
-      )
-    }
-
-
-      getThisYearValues(reservoirId: number): Observable<any> {
-         return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE ).pipe(
-         catchError((error) => {
-          this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-          return [];
-          })
-          )
-        }
-
-
-
+    params = params.append('category', category)
+    params = params.append('year', year.join(','));
+    return this.http.get<ComplexValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + SELECTED, {params}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
   }
 
 
-
+  getThisYearValues(reservoirId: number): Observable<CategorisedValueResponse> {
+    return this.http.get<CategorisedValueResponse>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + VEGETATIVE + DECADE).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+}

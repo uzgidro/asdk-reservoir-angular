@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
 import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {ChartConfiguration, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import {NgForOf} from "@angular/common";
+import {ApiService} from "../service/api.service";
+import {CategorisedArrayResponse} from "../shared/response/values-response";
 
 @Component({
   selector: 'app-water-recourses',
@@ -18,7 +20,7 @@ import {NgForOf} from "@angular/common";
   templateUrl: './water-recourses.component.html',
   styleUrl: './water-recourses.component.css'
 })
-export class WaterRecoursesComponent {
+export class WaterRecoursesComponent implements OnInit {
   public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorbog', 'Sardoba']
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -57,10 +59,21 @@ export class WaterRecoursesComponent {
     },
 
     plugins: {
-      legend: {display: false},
+      legend: {display: true},
     },
   };
 
   public lineChartType: ChartType = 'line';
   public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
+
+  constructor(private apiService: ApiService) {
+  }
+
+  ngOnInit() {
+    this.apiService.getDashboardValues().subscribe({
+      next: (response: CategorisedArrayResponse) => {
+
+      }
+    })
+  }
 }

@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {EnvService} from "../shared/service/env.service";
 import {catchError, Observable} from "rxjs";
+import {WeatherCurrentResponse} from "../shared/response/weather-response";
 
 const BASE_URL: string = 'https://api.openweathermap.org/data/2.5'
 const CURRENT: string = '/weather'
@@ -17,9 +18,9 @@ export class WeatherApiService {
   constructor(private http: HttpClient, private env: EnvService, private messageService: MessageService) {
   }
 
-  getCurrent(lat: number, lon: number): Observable<any> {
+  getCurrent(lat: number, lon: number): Observable<WeatherCurrentResponse> {
 
-    return this.http.get(BASE_URL + CURRENT, {
+    return this.http.get<WeatherCurrentResponse>(BASE_URL + CURRENT, {
       params: new HttpParams().appendAll({
         'lat': lat,
         'lon': lon,
