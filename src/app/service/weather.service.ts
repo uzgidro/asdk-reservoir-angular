@@ -63,8 +63,8 @@ export class WeatherService {
         icon = 'vlka'
     }
     return {
-      temp: (response.main.temp > 0 ? '+' : '') + response.main.temp.toString(),
-      tempFeelsLike: (response.main.feels_like > 0 ? '+' : '') + response.main.feels_like.toString(),
+      temp: (response.main.temp > 0 ? '+' : '') + response.main.temp.toFixed(0).toString(),
+      tempFeelsLike: (response.main.feels_like > 0 ? '+' : '') + response.main.feels_like.toFixed(0).toString(),
       humidity: response.main.humidity.toString() + '%',
       weatherDescription: response.weather[0].description,
       weatherIcon: `https://yastatic.net/weather/i/icons/funky/dark/${icon}.svg`,

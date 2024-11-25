@@ -4,9 +4,10 @@ import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {ChartConfiguration, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import {NgForOf} from "@angular/common";
+import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
 import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
+import {ComplexValueResponse} from "../shared/response/values-response";
 
 @Component({
   selector: 'app-water-recourses',
@@ -15,7 +16,9 @@ import {WeatherApiService} from "../service/weather-api.service";
     CardHeaderComponent,
     NgChartsModule,
     RouterLink,
-    NgForOf
+    NgForOf,
+    DecimalPipe,
+    NgClass
   ],
   templateUrl: './water-recourses.component.html',
   styleUrl: './water-recourses.component.css'
@@ -60,63 +63,37 @@ export class WaterRecoursesComponent implements OnInit {
 
     plugins: {
       legend: {display: true},
+      datalabels: {
+        color: "#FFF",
+        align: "top",
+        anchor: "start",
+      }
     },
   };
 
   public lineChartType: ChartType = 'line';
-  public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
+  public chartPlugin = [ChartDataLabels] as Plugin[];
 
   reservoirData: {
+    reservoirId: number;
     reservoir: string
     income: number
     incomeDifference: string
-    incomeChart: {
-      data: number[],
-      label: 'Kelish',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-    }
+    incomeChart: any
     release: number
     releaseDifference: string
-    releaseChart: {
-      data: number[],
-      label: 'Chiqish',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-    }
+    releaseChart: any
     level: number
     levelDifference: string
-    levelChart: {
-      data: number[],
-      label: 'Sath',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-    }
+    levelChart: any
     volume: number
     volumeDifference: string
-    volumeChart: {
-      data: number[],
-      label: 'Hajm',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-    }
+    volumeChart: any
     labels: string[]
-    weather: string
-    temperature: string
-    windSpeed: number
-    humidity: string
+    weather?: string
+    temperature?: string
+    windSpeed?: number
+    humidity?: string
   }[] = []
 
   constructor(private apiService: ApiService, private weatherApiService: WeatherApiService) {
@@ -125,76 +102,74 @@ export class WaterRecoursesComponent implements OnInit {
   ngOnInit() {
     this.apiService.getDashboardValuesSortedByReservoir().subscribe({
       next: response => {
-        let weather = ''
-        let temperature = ''
-        let windSpeed = -1
-        let humidity = ''
         response.forEach(item => {
+          this.reservoirData.push({
+            reservoirId: item.reservoir.id,
+            reservoir: item.reservoir.name,
+            income: item.income.data[0].value,
+            incomeDifference: this.getDifference(item.income),
+            incomeChart: [{
+              data: item.income.data.map(value => value.value),
+              label: 'Kelish',
+              borderColor: 'rgba(148,159,177,1)',
+              pointBackgroundColor: 'rgba(148,159,177,1)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+            }],
+            release: item.release.data[0].value,
+            releaseDifference: this.getDifference(item.release),
+            releaseChart: [{
+              data: item.release.data.map(value => value.value),
+              label: 'Chiqish',
+              borderColor: 'rgba(148,159,177,1)',
+              pointBackgroundColor: 'rgba(148,159,177,1)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+            }],
+            volume: item.volume.data[0].value,
+            volumeDifference: this.getDifference(item.volume),
+            volumeChart: [{
+              data: item.volume.data.map(value => value.value),
+              label: 'Hajm',
+              borderColor: 'rgba(148,159,177,1)',
+              pointBackgroundColor: 'rgba(148,159,177,1)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+            }],
+            level: item.level.data[0].value,
+            levelDifference: this.getDifference(item.level),
+            levelChart: [{
+              data: item.level.data.map(value => value.value),
+              label: 'Sath',
+              borderColor: 'rgba(148,159,177,1)',
+              pointBackgroundColor: 'rgba(148,159,177,1)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+            }],
+            labels: item.income.data.map(value => value.date.split(' ')[1].substring(0, 5))
+          })
           this.weatherApiService.getCurrent(item.reservoir.lat, item.reservoir.lon).subscribe({
             next: response => {
-              weather = response.weatherDescription
-              temperature = response.temp
-              windSpeed = response.windSpeed
-              humidity = response.humidity
-            },
-            complete: () => {
-              this.reservoirData.push({
-                reservoir: item.reservoir.name,
-                income: item.income.data[0].value,
-                incomeDifference: (((item.income.data[0].value - item.income.data[1].value) > 0 ? '+' : '')) + (item.income.data[0].value - item.income.data[1].value).toString(),
-                incomeChart: {
-                  data: item.income.data.map(value => value.value),
-                  label: 'Kelish',
-                  borderColor: 'rgba(148,159,177,1)',
-                  pointBackgroundColor: 'rgba(148,159,177,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-                },
-                release: item.release.data[0].value,
-                releaseDifference: (((item.release.data[0].value - item.release.data[1].value) > 0 ? '+' : '')) + (item.release.data[0].value - item.release.data[1].value).toString(),
-                releaseChart: {
-                  data: item.release.data.map(value => value.value),
-                  label: 'Chiqish',
-                  borderColor: 'rgba(148,159,177,1)',
-                  pointBackgroundColor: 'rgba(148,159,177,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-                },
-                volume: item.volume.data[0].value,
-                volumeDifference: (((item.volume.data[0].value - item.volume.data[1].value) > 0 ? '+' : '')) + (item.volume.data[0].value - item.volume.data[1].value).toString(),
-                volumeChart: {
-                  data: item.volume.data.map(value => value.value),
-                  label: 'Hajm',
-                  borderColor: 'rgba(148,159,177,1)',
-                  pointBackgroundColor: 'rgba(148,159,177,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-                },
-                level: item.level.data[0].value,
-                levelDifference: (((item.level.data[0].value - item.level.data[1].value) > 0 ? '+' : '')) + (item.level.data[0].value - item.level.data[1].value).toString(),
-                levelChart: {
-                  data: item.level.data.map(value => value.value),
-                  label: 'Sath',
-                  borderColor: 'rgba(148,159,177,1)',
-                  pointBackgroundColor: 'rgba(148,159,177,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-                },
-                labels: item.income.data.map(value => value.date),
-                weather: weather,
-                humidity: humidity,
-                windSpeed: windSpeed,
-                temperature: temperature
-              })
+              let index = this.reservoirData.findIndex(value => value.reservoir == item.reservoir.name);
+              if (index >= 0) {
+                this.reservoirData[index].weather = response.weatherDescription
+                this.reservoirData[index].humidity = response.humidity
+                this.reservoirData[index].windSpeed = response.windSpeed
+                this.reservoirData[index].temperature = response.temp
+              }
             }
           })
         })
-        console.log(this.reservoirData)
       }
     })
+  }
+
+  private getDifference(data: ComplexValueResponse) {
+    const diff = data.data[0].value - data.data[1].value;
+    return (diff > 0 ? '+' : '') + (diff % 1 === 0 ? diff.toString() : diff.toFixed(2))
   }
 }

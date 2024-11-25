@@ -61,7 +61,6 @@ export class DashboardComponent implements OnInit {
         color: "#014a67",
         align: "start",
         anchor: "end",
-
       }
     },
     scales: {

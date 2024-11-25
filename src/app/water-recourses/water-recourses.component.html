@@ -1,10 +1,11 @@
 <div class="grid grid-cols-3 w-screen px-12 pt-10 gap-4">
-  <div class="flex flex-col space-y-2" *ngFor="let reservoir of reservoirs">
-    <app-card-header [title]="reservoir"></app-card-header>
-    <a routerLink="/reservoir" [queryParams]="{reservoir: 1}">
+  <div class="flex flex-col space-y-2" *ngFor="let data of reservoirData">
+    <app-card-header [title]="data.reservoir"></app-card-header>
+    <a routerLink="/reservoir" [queryParams]="{reservoir: data.reservoirId}">
       <canvas
         baseChart
-        [data]="lineChartData"
+        [datasets]="data.incomeChart"
+        [labels]="data.labels"
         [options]="lineChartOptions"
         [type]="lineChartType"
         [plugins]="chartPlugin"
@@ -25,20 +26,25 @@
         <tr>
           <td>
             <div class="flex flex-row justify-center space-x-2">
-              <p>895.5</p>
-              <p class="text-green-600">(+0.1)</p>
+              <p>{{ data.level | number:'.0-2' }}</p>
+              <p
+                [ngClass]="{'text-green-600': data.levelDifference.includes('+'),
+                'text-red-600': data.levelDifference.includes('-')}">
+                ({{ data.levelDifference }})</p>
             </div>
           </td>
           <td>
             <div class="flex flex-row justify-center space-x-2">
-              <p>895.5</p>
-              <p class="text-red-600">(-0.1)</p>
+              <p>{{ data.volume | number:'.0-2' }}</p>
+              <p [ngClass]="{'text-green-600': data.volumeDifference.includes('+'),
+                'text-red-600': data.volumeDifference.includes('-')}">({{ data.volumeDifference }})</p>
             </div>
           </td>
           <td>
             <div class="flex flex-row justify-center space-x-2">
-              <p>895.5</p>
-              <p class="text-red-600">(-0.1)</p>
+              <p>{{ data.release | number:'.0-2' }}</p>
+              <p [ngClass]="{'text-green-600': data.releaseDifference.includes('+'),
+                'text-red-600': data.releaseDifference.includes('-')}">({{ data.releaseDifference }})</p>
             </div>
           </td>
         </tr>
@@ -48,19 +54,19 @@
       <table>
         <tr>
           <th>Holat</th>
-          <td>Yomg'ir</td>
+          <td>{{ data.weather }}</td>
         </tr>
         <tr>
           <th>C</th>
-          <td>+20</td>
+          <td>{{ data.temperature }}</td>
         </tr>
         <tr>
           <th>Shamol, m/s</th>
-          <td>1</td>
+          <td>{{ data.windSpeed }}</td>
         </tr>
         <tr>
           <th>Namlik, %</th>
-          <td>100</td>
+          <td>{{ data.humidity }}</td>
         </tr>
       </table>
     </div>
