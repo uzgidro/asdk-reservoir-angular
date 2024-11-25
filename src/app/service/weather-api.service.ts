@@ -27,7 +27,7 @@ export class WeatherApiService {
         'lon': lon,
         'appid': this.env.getWeatherKey(),
         'units': 'metric',
-        'lang': 'ru'
+        'lang': 'en'
       })
     }).pipe(
       map(value => this.weatherService.convertCurrentResponse(value)),

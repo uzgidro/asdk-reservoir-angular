@@ -54,15 +54,15 @@
       <table>
         <tr>
           <th>Holat</th>
-          <td>{{ data.weather }}</td>
+          <td>{{ data.weather | uzbWeather | titlecase }}</td>
         </tr>
         <tr>
           <th>C</th>
-          <td>{{ data.temperature }}</td>
+          <td>{{ data.temperature }} &deg;</td>
         </tr>
         <tr>
           <th>Shamol, m/s</th>
-          <td>{{ data.windSpeed }}</td>
+          <td>{{ data.windSpeed }} m/s</td>
         </tr>
         <tr>
           <th>Namlik, %</th>

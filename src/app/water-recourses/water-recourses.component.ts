@@ -4,10 +4,11 @@ import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {ChartConfiguration, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
+import {DecimalPipe, NgClass, NgForOf, TitleCasePipe} from "@angular/common";
 import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {ComplexValueResponse} from "../shared/response/values-response";
+import {UzbWeatherPipe} from "../shared/pipe/uzb-weather.pipe";
 
 @Component({
   selector: 'app-water-recourses',
@@ -18,29 +19,18 @@ import {ComplexValueResponse} from "../shared/response/values-response";
     RouterLink,
     NgForOf,
     DecimalPipe,
-    NgClass
+    NgClass,
+    UzbWeatherPipe,
+    TitleCasePipe
   ],
   templateUrl: './water-recourses.component.html',
   styleUrl: './water-recourses.component.css'
 })
 export class WaterRecoursesComponent implements OnInit {
   public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorbog', 'Sardoba']
-  public lineChartData: ChartConfiguration['data'] = {
-    datasets: [
-      {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Series A',
-        borderColor: 'rgba(148,159,177,1)',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-      }
-    ],
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  };
 
   public lineChartOptions: ChartConfiguration['options'] = {
+    interaction: {mode: 'index', intersect: false},
     aspectRatio: 2.5,
     scales: {
       x: {
