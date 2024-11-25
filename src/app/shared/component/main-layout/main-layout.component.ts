@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {SidebarModule} from "primeng/sidebar";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
@@ -27,6 +27,7 @@ import {DropDownAnimation} from "../../animation/menu-animation";
 export class MainLayoutComponent implements OnInit {
   isSidebarVisible = false
   currentUrl: string = ''
+  selectedReservoir: string | undefined
 
   menuItems: MenuItem[] = [
     {
@@ -84,7 +85,7 @@ export class MainLayoutComponent implements OnInit {
   ];
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -93,6 +94,11 @@ export class MainLayoutComponent implements OnInit {
         this.currentUrl = event.urlAfterRedirects; // Получаем актуальный URL
       }
     });
+    this.activatedRoute.queryParams.subscribe({
+      next: value => {
+        this.selectedReservoir = value['reservoir']
+      }
+    })
   }
 
 

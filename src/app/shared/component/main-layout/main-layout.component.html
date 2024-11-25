@@ -12,7 +12,7 @@
           <li class="mb-4" *ngFor="let item of menuItems">
             <a class="items-center flex flex-row justify-between pl-2 border-l border-l-white"
                [routerLink]="item.children ? null : item.path"
-               [queryParamsHandling]="item.path.includes('dashboard') ? '' : 'preserve'"
+               [queryParamsHandling]="item.path.includes('dashboard') ? null : 'preserve'"
                [ngClass]="{'active': currentUrl.includes(item.path)}"
                (click)="selectItem(item)">
               {{ item.name }}
@@ -23,8 +23,9 @@
               <li class="pl-4 mb-4" *ngFor="let childItem of item.children">
                 <a class="pl-2 border-l border-l-white"
                    [routerLink]="(item.path || '') + (childItem.path || '')"
+                   [queryParams]="item.path.includes('water') && !selectedReservoir ? {reservoir: 1} : {}"
                    routerLinkActive="active"
-                   [queryParamsHandling]="'preserve'"
+                   [queryParamsHandling]="'merge'"
                    (click)="selectItem(childItem)">
                   {{ childItem.name }}
                 </a>
