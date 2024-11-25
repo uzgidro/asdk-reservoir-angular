@@ -33,8 +33,8 @@ export class WeatherDetailedFrameComponent implements OnChanges {
     nightIcon?: string
     dayIconDescription?: string
     nightIconDescription?: string
-    dayTemperature?: number
-    nightTemperature?: number
+    dayTemperature?: string
+    nightTemperature?: string
   }[] = []
 
   constructor(private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
@@ -47,8 +47,8 @@ export class WeatherDetailedFrameComponent implements OnChanges {
     const lat = res.lat
     const lon = res.lon
     this.weatherApiService.getCurrent(lat, lon).subscribe({
-      next: (response: WeatherCurrentResponse) => {
-        this.weatherCurrent = this.weatherService.convertCurrentResponse(response)
+      next: response => {
+        this.weatherCurrent = response
       }
     })
     this.weatherApiService.getForecast(lat, lon).subscribe({

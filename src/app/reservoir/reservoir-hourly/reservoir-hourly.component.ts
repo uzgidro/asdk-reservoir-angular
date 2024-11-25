@@ -7,7 +7,6 @@ import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {NgChartsModule} from "ng2-charts";
-import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 
@@ -19,7 +18,6 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
     NgForOf,
     NgIf,
     NgChartsModule,
-    WeatherDetailedFrameComponent,
     DatePipe,
     DecimalPipe,
     LoaderComponent,

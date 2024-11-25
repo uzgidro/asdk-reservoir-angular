@@ -5,7 +5,8 @@ import {catchError, Observable} from "rxjs";
 import {
   CategorisedArrayResponse,
   CategorisedValueResponse,
-  ComplexValueResponse
+  ComplexValueResponse,
+  ReservoiredArrayResponse
 } from "../shared/response/values-response";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
 
@@ -13,6 +14,7 @@ const BASE_URL: string = 'https://speedwagon.uz'
 const RESERVOIRS: string = '/reservoirs'
 const RESERVOIR: string = '/reservoir'
 const DASHBOARD: string = '/dashboard'
+const DASHBOARD_RES: string = '/dashboard/res'
 const RESERVOIR_PREFIX: string = '/reservoir'
 const CURRENT: string = '/current'
 const DECADE: string = '/decade'
@@ -56,6 +58,15 @@ export class ApiService {
 
   getDashboardValues(): Observable<CategorisedArrayResponse> {
     return this.http.get<CategorisedArrayResponse>(BASE_URL + DASHBOARD).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return []
+      })
+    );
+  }
+
+  getDashboardValuesSortedByReservoir(): Observable<ReservoiredArrayResponse[]> {
+    return this.http.get<ReservoiredArrayResponse[]>(BASE_URL + DASHBOARD_RES).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return []

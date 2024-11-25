@@ -148,7 +148,10 @@ export class DashboardComponent implements OnInit {
   }[] = []
 
   get forecastDate() {
+    if (this.weatherDaily.length > 0) {
     return this.weatherDaily[0].forecast?.map(value => value.date)
+    }
+    return undefined
   }
 
   constructor(private apiService: ApiService, private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
@@ -180,11 +183,11 @@ export class DashboardComponent implements OnInit {
                 if (weather.time.getHours() === 11) {
                   existsElement.dayIcon = weather.weatherIcon
                   existsElement.dayIconDescription = weather.weatherDescription
-                  existsElement.dayTemperature = `${weather.temp > 0 ? '+' : ''}${Math.round(weather.temp)}`
+                  existsElement.dayTemperature = weather.temp
                 } else if (weather.time.getHours() === 17) {
                   existsElement.nightIcon = weather.weatherIcon
                   existsElement.nightIconDescription = weather.windDirection
-                  existsElement.nightTemperature = `${weather.temp > 0 ? '+' : ''}${Math.round(weather.temp)}`
+                  existsElement.nightTemperature = weather.temp
                 }
               }
             }

@@ -20,9 +20,9 @@ export interface WeatherCurrentResponse {
 }
 
 export interface WeatherCurrentDto {
-  temp: number
-  tempFeelsLike: number
-  humidity: number
+  temp: string
+  tempFeelsLike: string
+  humidity: string
   weatherDescription: string
   weatherIcon: string
   windDirection: string
