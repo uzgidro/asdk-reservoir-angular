@@ -1,14 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
 import {NgChartsModule} from "ng2-charts";
-import {RouterLink} from "@angular/router";
-import {ChartConfiguration, ChartType, Plugin} from "chart.js";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-import {DecimalPipe, NgClass, NgForOf, TitleCasePipe} from "@angular/common";
+import {NgForOf} from "@angular/common";
 import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {ComplexValueResponse} from "../shared/response/values-response";
-import {UzbWeatherPipe} from "../shared/pipe/uzb-weather.pipe";
+import {WaterRecourseCardComponent} from "./water-recourse-card/water-recourse-card.component";
 
 @Component({
   selector: 'app-water-recourses',
@@ -16,54 +13,13 @@ import {UzbWeatherPipe} from "../shared/pipe/uzb-weather.pipe";
   imports: [
     CardHeaderComponent,
     NgChartsModule,
-    RouterLink,
     NgForOf,
-    DecimalPipe,
-    NgClass,
-    UzbWeatherPipe,
-    TitleCasePipe
+    WaterRecourseCardComponent
   ],
   templateUrl: './water-recourses.component.html',
   styleUrl: './water-recourses.component.css'
 })
 export class WaterRecoursesComponent implements OnInit {
-  public reservoirs = ['Ohangaron', 'Andijon', 'Hisorak', 'To\'palang', 'Chorbog', 'Sardoba']
-
-  public lineChartOptions: ChartConfiguration['options'] = {
-    interaction: {mode: 'index', intersect: false},
-    aspectRatio: 2.5,
-    scales: {
-      x: {
-        grid: {
-          color: '#2D2D2D',
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-      y: {
-        grid: {
-          color: '#2D2D2D',
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-    },
-
-    plugins: {
-      legend: {display: true},
-      datalabels: {
-        color: "#FFF",
-        align: "top",
-        anchor: "start",
-      }
-    },
-  };
-
-  public lineChartType: ChartType = 'line';
-  public chartPlugin = [ChartDataLabels] as Plugin[];
-
   reservoirData: {
     reservoirId: number;
     reservoir: string
@@ -99,7 +55,7 @@ export class WaterRecoursesComponent implements OnInit {
             income: item.income.data[0].value,
             incomeDifference: this.getDifference(item.income),
             incomeChart: [{
-              data: item.income.data.map(value => value.value),
+              data: item.income.data.map(value => value.value).reverse(),
               label: 'Kelish',
               borderColor: 'rgba(148,159,177,1)',
               pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -110,7 +66,7 @@ export class WaterRecoursesComponent implements OnInit {
             release: item.release.data[0].value,
             releaseDifference: this.getDifference(item.release),
             releaseChart: [{
-              data: item.release.data.map(value => value.value),
+              data: item.release.data.map(value => value.value).reverse(),
               label: 'Chiqish',
               borderColor: 'rgba(148,159,177,1)',
               pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -121,7 +77,7 @@ export class WaterRecoursesComponent implements OnInit {
             volume: item.volume.data[0].value,
             volumeDifference: this.getDifference(item.volume),
             volumeChart: [{
-              data: item.volume.data.map(value => value.value),
+              data: item.volume.data.map(value => value.value).reverse(),
               label: 'Hajm',
               borderColor: 'rgba(148,159,177,1)',
               pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -132,7 +88,7 @@ export class WaterRecoursesComponent implements OnInit {
             level: item.level.data[0].value,
             levelDifference: this.getDifference(item.level),
             levelChart: [{
-              data: item.level.data.map(value => value.value),
+              data: item.level.data.map(value => value.value).reverse(),
               label: 'Sath',
               borderColor: 'rgba(148,159,177,1)',
               pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -140,7 +96,7 @@ export class WaterRecoursesComponent implements OnInit {
               pointHoverBackgroundColor: '#fff',
               pointHoverBorderColor: 'rgba(148,159,177,0.8)',
             }],
-            labels: item.income.data.map(value => value.date.split(' ')[1].substring(0, 5))
+            labels: item.income.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse()
           })
           this.weatherApiService.getCurrent(item.reservoir.lat, item.reservoir.lon).subscribe({
             next: response => {

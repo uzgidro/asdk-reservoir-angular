@@ -1,0 +1,81 @@
+<div *ngIf="data" class="flex flex-col space-y-2 flex-1"><a routerLink="/reservoir"
+                                                            [queryParams]="{reservoir: data.reservoirId}">
+  <canvas
+    baseChart
+    [datasets]="dataset"
+    [labels]="data.labels"
+    [options]="lineChartOptions"
+    [type]="lineChartType"
+    [plugins]="chartPlugin"
+  >
+  </canvas>
+</a>
+
+  <div class="grid grid-flow-col-dense">
+    <table>
+      <thead>
+      <tr>
+        <th *ngIf="category != 'income'" (click)="changeCategory('income')">Suv kelishi, m³/s</th>
+        <th *ngIf="category != 'level'" (click)="changeCategory('level')">Suv sathi, m</th>
+        <th *ngIf="category != 'volume'" (click)="changeCategory('volume')">Suv hajmi, mln.m³</th>
+        <th *ngIf="category != 'release'" (click)="changeCategory('release')">Suv chiqish, m³/s</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td *ngIf="category != 'income'" (click)="changeCategory('income')">
+          <div class="flex flex-row justify-center space-x-2">
+            <p>{{ data.income | number:'.0-2' }}</p>
+            <p
+              [ngClass]="{'text-green-600': data.incomeDifference.includes('+'),
+                'text-red-600': data.incomeDifference.includes('-')}">
+              ({{ data.incomeDifference }})</p>
+          </div>
+        </td>
+        <td *ngIf="category != 'level'" (click)="changeCategory('level')">
+          <div class="flex flex-row justify-center space-x-2">
+            <p>{{ data.level | number:'.0-2' }}</p>
+            <p
+              [ngClass]="{'text-green-600': data.levelDifference.includes('+'),
+                'text-red-600': data.levelDifference.includes('-')}">
+              ({{ data.levelDifference }})</p>
+          </div>
+        </td>
+        <td *ngIf="category != 'volume'" (click)="changeCategory('volume')">
+          <div class="flex flex-row justify-center space-x-2">
+            <p>{{ data.volume | number:'.0-2' }}</p>
+            <p [ngClass]="{'text-green-600': data.volumeDifference.includes('+'),
+                'text-red-600': data.volumeDifference.includes('-')}">({{ data.volumeDifference }})</p>
+          </div>
+        </td>
+        <td *ngIf="category != 'release'" (click)="changeCategory('release')">
+          <div class="flex flex-row justify-center space-x-2">
+            <p>{{ data.release | number:'.0-2' }}</p>
+            <p [ngClass]="{'text-green-600': data.releaseDifference.includes('+'),
+                'text-red-600': data.releaseDifference.includes('-')}">({{ data.releaseDifference }})</p>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <tr>
+        <th>Holat</th>
+        <td>{{ data.weather | uzbWeather | titlecase }}</td>
+      </tr>
+      <tr>
+        <th>C</th>
+        <td>{{ data.temperature }} &deg;</td>
+      </tr>
+      <tr>
+        <th>Shamol, m/s</th>
+        <td>{{ data.windSpeed }} m/s</td>
+      </tr>
+      <tr>
+        <th>Namlik, %</th>
+        <td>{{ data.humidity }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
