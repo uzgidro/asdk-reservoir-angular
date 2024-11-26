@@ -55,15 +55,13 @@ export class ReservoirDashboardComponent implements OnInit {
   }
 
   navigateToReservoirCurrent(id: number) {
-    // noinspection JSIgnoredPromiseFromCall
-    this.router.navigate(['/reservoir/water/current'], {
+    this.router.navigate(['/water/current'], {
       queryParams: {reservoir: id}
     })
   }
 
   navigateToReservoirWeather(id: number) {
-    // noinspection JSIgnoredPromiseFromCall
-    this.router.navigate(['/reservoir/weather'], {
+    this.router.navigate(['/weather'], {
       queryParams: {reservoir: id}
     })
   }

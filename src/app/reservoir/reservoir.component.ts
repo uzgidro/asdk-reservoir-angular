@@ -13,7 +13,7 @@ import {NgClass, NgForOf} from "@angular/common";
   imports: [
     RouterOutlet,
     NgForOf,
-    NgClass
+    NgClass,
   ],
   standalone: true
 })

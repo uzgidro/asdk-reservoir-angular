@@ -40,7 +40,7 @@ export class MainLayoutComponent implements OnInit {
       name: 'Suv resurslar',
       isActive: false,
       isOpen: false,
-      path: '/reservoir/water',
+      path: '/water',
       children: [
         {name: 'Kunlik ma\'lumotlar', path: '/current'},
         {name: 'O\'n kunlik ma\'lumotlar', path: '/decade'},
@@ -54,7 +54,7 @@ export class MainLayoutComponent implements OnInit {
       name: 'Gidrometriya',
       isActive: false,
       isOpen: false,
-      path: '/reservoir/hydro',
+      path: '/hydro',
       children: [
         {name: 'Gidropostlar', path: '/posts'},
         {name: 'Suv o\'lchash qurilmalar', path: '/meter'},
@@ -68,7 +68,7 @@ export class MainLayoutComponent implements OnInit {
       name: 'MODSNOW',
       isActive: false,
       isOpen: false,
-      path: '/reservoir/snow',
+      path: '/snow',
       children: [
         {name: 'Tezkor ma\'lumotlar', path: '/current'},
         {name: 'Ko\'p yillik ma\'lumotlar', path: '/all-time'}
@@ -76,11 +76,11 @@ export class MainLayoutComponent implements OnInit {
     },
     {
       name: 'Ob-havo',
-      path: '/reservoir/weather'
+      path: '/weather'
     },
     {
       name: 'Normativ hujjatlar',
-      path: '/reservoir/docs',
+      path: '/docs',
     }
   ];
 

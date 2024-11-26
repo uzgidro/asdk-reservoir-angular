@@ -85,7 +85,7 @@ export class ReservoirHourlyComponent implements OnInit {
 
   navigateToReservoirWeather(id: number) {
     // noinspection JSIgnoredPromiseFromCall
-    this.router.navigate(['/reservoir/weather'], {
+    this.router.navigate(['/weather'], {
       queryParams: {reservoir: id}
     })
   }

@@ -8,7 +8,6 @@ import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
 import {ReservoirHourlyComponent} from "./reservoir/reservoir-hourly/reservoir-hourly.component";
 import {ReservoirDecadeComponent} from "./reservoir/reservoir-decade/reservoir-decade.component";
-import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reservoir-dashboard.component";
 import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
 import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
@@ -31,12 +30,12 @@ const routes: Routes = [
       {path: 'recourses', component: WaterRecoursesComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
+      // {
+      //   path: 'reservoir',  children: [
+      //     {path: '', pathMatch: 'full', redirectTo: 'water'},
+      //     {path: 'dashboard', component: ReservoirDashboardComponent},
       {
-        path: 'reservoir', component: ReservoirComponent, children: [
-          {path: '', pathMatch: 'full', redirectTo: 'water'},
-          {path: 'dashboard', component: ReservoirDashboardComponent},
-          {
-            path: 'water', children: [
+        path: 'water', component: ReservoirComponent, children: [
               {path: '', pathMatch: 'full', redirectTo: 'current'},
               {path: 'current', component: ReservoirHourlyComponent},
               {path: 'decade', component: ReservoirDecadeComponent},
@@ -76,8 +75,8 @@ const routes: Routes = [
       // {
       //   path: '**', component: NotFoundComponent
       // }
-    ]
-  },
+  //   ]
+  // },
   // {
   //   path: 'login', component: LoginComponent
   // },
