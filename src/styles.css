@@ -46,10 +46,6 @@
   @apply text-primary border-l-primary hover:text-[#00e5e5]  hover:border-l-[#00e5e5]
 }
 
-.material-card {
-  @apply border-2 border-gray-500 p-4 bg-white rounded-xl shadow-xl
-}
-
 .card-title {
   @apply text-center text-3xl
 }

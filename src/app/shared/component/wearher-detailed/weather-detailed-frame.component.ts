@@ -6,6 +6,7 @@ import {WeatherCurrentDto, WeatherCurrentResponse} from "../../response/weather-
 import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {LoaderComponent} from "../loader/loader.component";
 import {UzbDatePipePipe} from "../../pipe/uzb-date-pipe.pipe";
+import {CardHeaderComponent} from "../card-header/card-header.component";
 
 @Component({
   selector: 'app-weather-detailed',
@@ -18,7 +19,8 @@ import {UzbDatePipePipe} from "../../pipe/uzb-date-pipe.pipe";
     DatePipe,
     NgForOf,
     LoaderComponent,
-    UzbDatePipePipe
+    UzbDatePipePipe,
+    CardHeaderComponent
   ],
   standalone: true
 })
