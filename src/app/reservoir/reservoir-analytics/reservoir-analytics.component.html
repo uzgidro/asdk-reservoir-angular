@@ -283,9 +283,8 @@
         (click)="changeVisibility(avg.id) "
         [ngClass]="{
          'bg-blue-600': avg.display,
-         'text-white': avg.display,
-         'bg-gray-200': !avg.display}"
-        class="text-blue-600">
+         'text-gray-200': avg.display,
+         'text-blue-600': !avg.display}">
         <td
           *ngIf="startYear && endYear">
           O'rtacha ko'p yillik
@@ -295,8 +294,7 @@
       <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
           [ngClass]="{
           'bg-cyan-600': tenAvg.display,
-          'text-white': tenAvg.display,
-          'bg-gray-200': !tenAvg.display,
+          'text-gray-200': tenAvg.display,
           'text-cyan-600': !tenAvg.display}"
           class="text-cyan-600">
         <td>O'rtacha 10 yil</td>
@@ -307,9 +305,8 @@
         (click)="changeVisibility(max.id)"
         [ngClass]="{
           'bg-green-600': max.display,
-          'text-white': max.display,
-          'bg-gray-200':!max.display}"
-        class="text-green-600">
+          'text-gray-200': max.display,
+          'text-green-600':!max.display}">
         <td>Maksimal</td>
         <td>{{ (max.value) | number: '.0-0' }}</td>
       </tr>
@@ -317,10 +314,9 @@
         *ngIf="min"
         (click)="changeVisibility(min.id)"
         [ngClass]="{
-         'bg-rose-600': min.display,
-         'text-white': min.display,
-         'bg-gray-200':!min.display}"
-        class="text-rose-600">
+         'bg-red-600': min.display,
+         'text-gray-200': min.display,
+         'text-red-600':!min.display}">
         <td>
           Minimal
         </td>
