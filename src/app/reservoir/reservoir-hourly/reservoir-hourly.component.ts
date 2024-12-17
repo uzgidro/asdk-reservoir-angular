@@ -1,8 +1,5 @@
-// noinspection JSIgnoredPromiseFromCall
-
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ReservoirService} from "../reservoir.service";
+import {Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
@@ -30,9 +27,6 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
   times: Date[] = []
-  // chartTimeline: string[] = []
-  // reservoir?: ReservoirResponse
-  // charts: { data: ChartConfiguration['data'], options: ChartConfiguration['options'] }[] = []
 
   reservoirsData: {
     id: number,
@@ -45,37 +39,12 @@ export class ReservoirHourlyComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private reservoirService: ReservoirService,
     private api: ApiService
   ) {
   }
 
   async ngOnInit() {
     this.setInfoTime()
-
-    // this.activatedRoute.queryParams.subscribe({
-    //   next: value => {
-    //     this.api.getReservoirById(value['reservoir']).subscribe({
-    //       next: (response: ReservoirResponse) => {
-    //         this.reservoir = response
-    //       }
-    //     })
-    //     this.api.getCurrentReservoirValues(value['reservoir']).subscribe({
-    //       next: (response: CategorisedValueResponse) => {
-    //         if (this.charts.length !== 0) {
-    //           this.charts = []
-    //           this.chartTimeline = []
-    //         }
-    //         this.chartTimeline = this.reservoirService.setupChartTimeline()
-    //         this.setupChart(response.income)
-    //         this.setupChart(response.release)
-    //         this.setupChart(response.level)
-    //         this.setupChart(response.volume)
-    //       }
-    //     })
-    //   }
-    // })
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
         this.setupTable(response)
@@ -83,70 +52,11 @@ export class ReservoirHourlyComponent implements OnInit {
     })
   }
 
-  navigateToReservoirWeather(id: number) {
-    // noinspection JSIgnoredPromiseFromCall
-    this.router.navigate(['/weather'], {
-      queryParams: {reservoir: id}
-    })
-  }
-
   navigateToReservoir(id: number) {
-    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate([], {
       queryParams: {reservoir: id}
     })
   }
-
-  // private setupChart(values: ComplexValueResponse) {
-  //   let label
-  //   if (values.category === 'income') {
-  //     label = 'Приток, м3/с'
-  //   } else if (values.category === 'release') {
-  //     label = 'Попуск, м3/с'
-  //   } else if (values.category === 'level') {
-  //     label = 'Уровень, м'
-  //   } else if (values.category === 'volume') {
-  //     label = 'Объём, млн. м3'
-  //   } else {
-  //     return
-  //   }
-  //   this.charts.push({
-  //     data: {
-  //       datasets: [
-  //         {
-  //           data: values.data.map(item => item.value),
-  //           label: label,
-  //           backgroundColor: 'rgba(148,159,177,0.2)',
-  //           borderColor: 'rgb(59, 130, 246)',
-  //           pointBorderColor: '#fff',
-  //           pointHoverBorderColor: 'white',
-  //           pointBackgroundColor: 'rgb(59, 130, 246)'
-  //         }
-  //       ],
-  //       labels: this.chartTimeline,
-  //     },
-  //     options: {
-  //       elements: {
-  //         line: {
-  //           tension: 0.5,
-  //         },
-  //       },
-  //       interaction: {
-  //         mode: 'index',
-  //         intersect: false
-  //       },
-  //       plugins: {
-  //         legend: {display: false},
-  //         title: {
-  //           display: true,
-  //           position: "top",
-  //           align: "center",
-  //           text: label
-  //         }
-  //       }
-  //     }
-  //   })
-  // }
 
   private setupTable(response: CategorisedArrayResponse) {
     for (let item of response.release) {
@@ -183,7 +93,7 @@ export class ReservoirHourlyComponent implements OnInit {
       let data =
         this.reservoirsData.find(value => value.id === item.reservoir_id)
       if (data) {
-        data.income = item.data.map(value => value.value).slice(-4)
+        data.income = item.data.map(value => value.value).slice(-6)
       }
     }
   }
