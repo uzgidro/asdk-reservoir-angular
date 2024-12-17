@@ -94,14 +94,62 @@
       <tbody>
       <tr *ngFor="let forecast of weatherDaily">
         <td class="py-6">{{ forecast.reservoir }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[0].dayTemperature : '' }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[0].nightTemperature : '' }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[1].dayTemperature : '' }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[1].nightTemperature : '' }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[2].dayTemperature : '' }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[2].nightTemperature : '' }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[3].dayTemperature : '' }}</td>
-        <td class="py-6">{{ forecast.forecast ? forecast.forecast[3].nightTemperature : '' }}</td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[0].dayIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[0].dayIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[0].dayTemperature : '' }}</p></div>
+        </td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[0].nightIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[0].nightIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[0].nightTemperature : '' }}</p></div>
+        </td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[1].dayIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[1].dayIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[1].dayTemperature : '' }}</p></div>
+        </td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[1].nightIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[1].nightIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[1].nightTemperature : '' }}</p></div>
+        </td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[2].dayIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[2].dayIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[2].dayTemperature : '' }}</p></div>
+        </td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[2].nightIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[2].nightIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[2].nightTemperature : '' }}</p></div>
+        </td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[3].dayIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[3].dayIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[3].dayTemperature : '' }}</p></div>
+        </td>
+        <td class="py-6">
+          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[3].nightIcon : ''}}"
+                    alt="{{forecast.forecast ? forecast.forecast[3].nightIconDescription : ''}}"
+                    width="30"
+                    height="30">
+            <p>{{ forecast.forecast ? forecast.forecast[3].nightTemperature : '' }}</p></div>
+        </td>
       </tr>
       </tbody>
     </table>

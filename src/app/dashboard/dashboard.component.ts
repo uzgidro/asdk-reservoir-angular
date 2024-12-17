@@ -10,6 +10,7 @@ import {ReservoirResponse} from "../shared/response/reservoir-response";
 import {Forecast, WeatherCurrentResponse} from "../shared/response/weather-response";
 import {WeatherService} from "../service/weather.service";
 import {WeatherApiService} from "../service/weather-api.service";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,7 @@ import {WeatherApiService} from "../service/weather-api.service";
     CarouselModule,
     CardHeaderComponent,
     DashboardCurrentChartComponent,
+    NgOptimizedImage,
 
   ],
   standalone: true
