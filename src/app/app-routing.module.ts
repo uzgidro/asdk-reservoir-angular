@@ -39,6 +39,7 @@ const routes: Routes = [
           {path: 'month', component: ReservoirMonthComponent},
           {path: 'year', component: ReservoirYearlyComponent},
           {path: 'lv', component: ReservoirLvComponent},
+          {path: 'filter', component: BlankPageComponent},
           {path: 'analytics', component: ReservoirAnalyticsComponent},
           {path: 'schedule', component: ReservoirScheduleComponent},
         ]
@@ -64,6 +65,7 @@ const routes: Routes = [
           {path: 'works', component: HydroWorksComponent}
         ]
       },
+      {path: 'rules', component: BlankPageComponent},
       {path: 'docs', component: OrdersComponent}
     ]
   },
