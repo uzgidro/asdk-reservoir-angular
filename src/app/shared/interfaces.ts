@@ -1,5 +1,10 @@
 import {ValueResponse} from "./response/values-response";
 
+export interface LevelVolume {
+  level: number
+  volume: number
+}
+
 export interface Dataset {
   label: string
   data: number[]

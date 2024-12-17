@@ -21,6 +21,7 @@ import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-mon
 import {WeatherComponent} from "./reservoir/weather/weather.component";
 import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservoir-schedule.component";
 import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
+import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
 
 const routes: Routes = [
   {
@@ -30,56 +31,42 @@ const routes: Routes = [
       {path: 'recourses', component: WaterRecoursesComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
-      // {
-      //   path: 'reservoir',  children: [
-      //     {path: '', pathMatch: 'full', redirectTo: 'water'},
-      //     {path: 'dashboard', component: ReservoirDashboardComponent},
       {
         path: 'water', component: ReservoirComponent, children: [
-              {path: '', pathMatch: 'full', redirectTo: 'current'},
-              {path: 'current', component: ReservoirHourlyComponent},
-              {path: 'decade', component: ReservoirDecadeComponent},
-              {path: 'month', component: ReservoirMonthComponent},
-              {path: 'year', component: ReservoirYearlyComponent},
-              {path: 'analytics', component: ReservoirAnalyticsComponent},
-              {path: 'schedule', component: ReservoirScheduleComponent},
-            ]
-          },
-          {
-            path: 'snow', children: [
-              {path: '', pathMatch: 'full', redirectTo: 'current'},
-              {path: 'current', component: ModsnowDailyComponent},
-              {path: 'all-time', component: ModsnowYearlyComponent}
-            ]
-          },
-          {
-            path: 'weather', component: WeatherComponent
-          },
-          {
-            path: 'hydro', children: [
-              {path: '', pathMatch: 'full', redirectTo: 'posts'},
-              {path: 'posts', component: HydroPostComponent},
-              {path: 'meter', component: HydroMeterComponent},
-              {path: 'indicator', component: HydroIndicatorComponent},
-              {path: 'journal', component: BlankPageComponent},
-              {path: 'contract', component: BlankPageComponent},
-              {path: 'works', component: HydroWorksComponent}
-            ]
-          },
-          {path: 'docs', component: OrdersComponent}
+          {path: '', pathMatch: 'full', redirectTo: 'current'},
+          {path: 'current', component: ReservoirHourlyComponent},
+          {path: 'decade', component: ReservoirDecadeComponent},
+          {path: 'month', component: ReservoirMonthComponent},
+          {path: 'year', component: ReservoirYearlyComponent},
+          {path: 'lv', component: ReservoirLvComponent},
+          {path: 'analytics', component: ReservoirAnalyticsComponent},
+          {path: 'schedule', component: ReservoirScheduleComponent},
         ]
       },
-      // {
-      //   path: 'not-found', component: NotFoundComponent
-      // },
-      // {
-      //   path: '**', component: NotFoundComponent
-      // }
-  //   ]
-  // },
-  // {
-  //   path: 'login', component: LoginComponent
-  // },
+      {
+        path: 'snow', children: [
+          {path: '', pathMatch: 'full', redirectTo: 'current'},
+          {path: 'current', component: ModsnowDailyComponent},
+          {path: 'all-time', component: ModsnowYearlyComponent}
+        ]
+      },
+      {
+        path: 'weather', component: WeatherComponent
+      },
+      {
+        path: 'hydro', children: [
+          {path: '', pathMatch: 'full', redirectTo: 'posts'},
+          {path: 'posts', component: HydroPostComponent},
+          {path: 'meter', component: HydroMeterComponent},
+          {path: 'indicator', component: HydroIndicatorComponent},
+          {path: 'journal', component: BlankPageComponent},
+          {path: 'contract', component: BlankPageComponent},
+          {path: 'works', component: HydroWorksComponent}
+        ]
+      },
+      {path: 'docs', component: OrdersComponent}
+    ]
+  },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)

@@ -9,6 +9,7 @@ import {
   ReservoiredArrayResponse
 } from "../shared/response/values-response";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
+import {LevelVolume} from "../shared/interfaces";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const RESERVOIRS: string = '/reservoirs'
@@ -28,6 +29,7 @@ const APPROVED: string = '/approved'
 const SELECTED: string = '/selected'
 const VEGETATIVE: string = '/vegetative'
 const LEVEL: string = '/level'
+const LV: string = '/lv'
 
 
 @Injectable({
@@ -207,6 +209,14 @@ export class ApiService {
     )
   }
 
+  getLv(reservoirId: number): Observable<LevelVolume[]> {
+    return this.http.get<LevelVolume[]>(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + LV).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message});
+        return [];
+      })
+    )
+  }
 
   getLevelForecast(reservoirId: number, forecast: number[]): Observable<any> {
 
