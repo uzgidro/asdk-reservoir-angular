@@ -8,6 +8,7 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import autoTable from "jspdf-autotable";
 import {jsPDF} from 'jspdf';
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -58,6 +59,14 @@ export class ReservoirHourlyComponent implements OnInit {
     this.router.navigate([], {
       queryParams: {reservoir: id}
     })
+  }
+
+  exportToExcel() {
+    const table = document.getElementById('table');
+    const worksheet = XLSX.utils.table_to_sheet(table);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, "exported_table.xlsx");
   }
 
   exportTableToPDF() {

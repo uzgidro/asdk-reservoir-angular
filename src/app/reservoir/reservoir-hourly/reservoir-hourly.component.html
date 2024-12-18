@@ -1,7 +1,8 @@
 <div *ngIf="reservoirsData.length !== 0; else loader" class="flex flex-col flex-1 space-y-4">
   <app-card-header [title]="'Kunlik ma\'lumotlar'"></app-card-header>
   <button (click)="exportTableToPDF()">Экспортировать в PDF</button>
-  <table>
+  <button (click)="exportToExcel()">Экспортировать в Excel</button>
+  <table id="table">
     <thead>
     <tr>
       <th rowspan="2">Suv omborlar</th>
