@@ -7,17 +7,17 @@
   <div class="flex flex-col space-y-2">
     <app-card-header [title]="'MODSNOW'"></app-card-header>
 
-    <div class="flex h-full">
+    <a routerLink="/snow" class="flex h-full">
       <canvas
         baseChart
-        [labels]="reservoirs"
+        [labels]="modsnowReservoirs"
         [datasets]="chartData"
         [options]="chartOptions"
         [type]="barChartType"
         [plugins]="chartPlugin"
       >
       </canvas>
-    </div>
+    </a>
   </div>
   <div class="flex flex-col space-y-2">
     <app-card-header [title]="'Nazorat o\'lchash qurilmalar'"></app-card-header>

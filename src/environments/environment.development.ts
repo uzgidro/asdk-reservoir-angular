@@ -2,7 +2,7 @@ export const environment: EnvInterface = {
   regionId: [
     {
       id: 'and',
-      name: 'Андижан',
+      name: 'Andijon',
       snowCoverage: [9.7, 60.9, 90.4, 93.1, 95.9, 98.5, 98.7, 100],
       vegetateVolume: 1009,
       lowerLevel: 793.8,
@@ -10,7 +10,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'akh',
-      name: 'Ахангаран',
+      name: 'Ohangaron',
       snowCoverage: [58.4, 100, 100, 100, 100, 100],
       vegetateVolume: 62.7,
       lowerLevel: 1004.9,
@@ -18,12 +18,12 @@ export const environment: EnvInterface = {
     },
     {
       id: 'psk',
-      name: 'Пском',
+      name: 'Pskom',
       snowCoverage: [99.5, 100, 100, 100, 100, 100, 100],
     },
     {
       id: 'his',
-      name: 'Гисарак',
+      name: 'Hisorak',
       snowCoverage: [0, 39.8, 94.7, 100, 100, 100, 100],
       vegetateVolume: 41.2,
       lowerLevel: 987.2,
@@ -31,7 +31,7 @@ export const environment: EnvInterface = {
     },
     {
       id: 'tup',
-      name: 'Тупаланг',
+      name: 'To\'palang',
       snowCoverage: [24.5, 55.2, 96.3, 100, 100, 100, 100],
       vegetateVolume: 124.5,
       lowerLevel: 792.1,
@@ -39,18 +39,18 @@ export const environment: EnvInterface = {
     },
     {
       id: 'sar',
-      name: 'Сардоба',
+      name: 'Sardoba',
       vegetateVolume: 312.5
     }, {
       id: 'chor',
-      name: 'Чарвак',
+      name: 'Chorvoq',
       vegetateVolume: 890,
       lowerLevel: 742,
       gesCoefficient: 0.893,
     },
     {
       id: 'chi',
-      name: 'Чирчик',
+      name: 'Chirchiq',
       snowCoverage: [98.9, 99.9, 100, 100, 100, 100, 100],
     }],
   dataLabels: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00'],

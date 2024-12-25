@@ -11,6 +11,8 @@ import {Forecast, WeatherCurrentResponse} from "../shared/response/weather-respo
 import {WeatherService} from "../service/weather.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {NgOptimizedImage} from "@angular/common";
+import {EnvService} from "../shared/service/env.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -22,12 +24,14 @@ import {NgOptimizedImage} from "@angular/common";
     CardHeaderComponent,
     DashboardCurrentChartComponent,
     NgOptimizedImage,
+    RouterLink,
 
   ],
   standalone: true
 })
 export class DashboardComponent implements OnInit {
   public reservoirs: string[] = []
+  public modsnowReservoirs: string[] = []
   public chartPlugin = [ChartDataLabels] as Plugin<'bar'>[];
 
   public barChartType = 'bar' as const;
@@ -35,7 +39,7 @@ export class DashboardComponent implements OnInit {
   public chartData = [
     {
       label: 'Current Value',
-      data: [65, 59, 80, 81, 56, 55],
+      data: [90, 97, 98, 97, 83, 96],
       backgroundColor: '#4eeefe',
       barThickness: 24,
     },
@@ -155,7 +159,7 @@ export class DashboardComponent implements OnInit {
     return undefined
   }
 
-  constructor(private apiService: ApiService, private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
+  constructor(private apiService: ApiService, private weatherApiService: WeatherApiService, private weatherService: WeatherService,private env: EnvService) {
   }
 
   ngOnInit() {
@@ -165,6 +169,9 @@ export class DashboardComponent implements OnInit {
 
         this.setWeather(response)
       }
+    })
+    this.env.getRegions().filter(item => item.snowCoverage !== undefined).forEach(reservoir => {
+      this.modsnowReservoirs.push(reservoir.name)
     })
   }
 

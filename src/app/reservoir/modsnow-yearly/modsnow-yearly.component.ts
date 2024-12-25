@@ -4,6 +4,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {SharedModule} from "primeng/api";
 import {EnvService} from "../../shared/service/env.service";
 import {NgChartsModule} from "ng2-charts";
+import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 
 @Component({
   selector: 'app-modsnow-yearly',
@@ -12,7 +13,8 @@ import {NgChartsModule} from "ng2-charts";
     CarouselModule,
     NgOptimizedImage,
     SharedModule,
-    NgChartsModule
+    NgChartsModule,
+    CardHeaderComponent
   ],
   templateUrl: './modsnow-yearly.component.html',
   styleUrl: './modsnow-yearly.component.css'
@@ -28,7 +30,7 @@ export class ModsnowYearlyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.env.getRegions().forEach(item => {
+    this.env.getRegions().filter(item => item.snowCoverage !== undefined).forEach(item => {
       this.reservoirs.push({
         id: item.id,
         name: item.name
