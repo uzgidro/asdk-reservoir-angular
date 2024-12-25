@@ -1,7 +1,5 @@
 <div *ngIf="reservoirsData.length !== 0; else loader" class="flex flex-col flex-1 space-y-4">
   <app-card-header [title]="'Kunlik ma\'lumotlar'"></app-card-header>
-  <button (click)="exportTableToPDF()">Экспортировать в PDF</button>
-  <button (click)="exportToExcel()">Экспортировать в Excel</button>
   <table id="table">
     <thead>
     <tr>
@@ -10,7 +8,6 @@
       <th colspan="3">Suv hajmi, mln.m³</th>
       <th colspan="7">Suv kelishi, m³/s</th>
       <th>Suv chiqishi, m³/s</th>
-      <!--      <th colspan="4">Погода</th>-->
     </tr>
     <tr>
       <!--        Level-->
@@ -101,156 +98,20 @@
         *ngIf="res.income">{{ res.income[res.income.length - 1] - res.income[res.income.length - 2] | number: '.0-2' }}
       </td>
       <td *ngIf="res.release">{{ res.release.latest | number: '.0-2' }}</td>
-      <!--      <td>Ясно</td>-->
-      <!--      <td>24</td>-->
-      <!--      <td>3, С-В</td>-->
-      <!--      <td>50</td>-->
     </tr>
     </tbody>
   </table>
+    <div class="flex flex-row w-fit px-4 py-3 border-primary border rounded-lg space-x-8 items-center">
+      <div class="flex flex-row justify-center">
+        <span class="material-symbols-outlined mr-1">picture_as_pdf</span>
+        <button (click)="exportTableToPDF()">PDF</button>
+      </div>
+      <div class="flex flex-row justify-center">
+        <span class="material-symbols-outlined mr-1">table_view</span>
+        <button (click)="exportToExcel()">Excel</button>
+      </div>
+    </div>
 </div>
-
-<!--<div *ngIf="(charts.length !== 0 && reservoirsData.length !== 0); else loader" class="flex flex-col">-->
-<!--  <h3 *ngIf="reservoir" class="text-center my-4 text-3xl">{{ reservoir.name }}</h3>-->
-
-<!--  <div class="px-4 grid grid-cols-12">-->
-<!--    <div class="grid grid-cols-12 gap-4 col-start-2 col-span-10 my-4">-->
-<!--      <div class="flex flex-col material-card col-span-12 2xl:col-span-8">-->
-<!--        <canvas *ngFor="let item of charts"-->
-<!--                style="height: 14vh"-->
-<!--                baseChart-->
-<!--                class="chart"-->
-<!--                [data]="item.data"-->
-<!--                [options]="item.options"-->
-<!--                type="line"-->
-<!--        ></canvas>-->
-<!--      </div>-->
-
-<!--      <div class="col-span-12 2xl:col-span-4">-->
-<!--        <app-weather-detailed *ngIf="reservoir" (click)="navigateToReservoirWeather(reservoir.id)"-->
-<!--                              [reservoir]="reservoir"></app-weather-detailed>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="col-start-2 col-span-10 overflow-x-auto">-->
-<!--      <table>-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th rowspan="2">Водохранилища</th>-->
-<!--          <th colspan="3">Уровень воды, м</th>-->
-<!--          <th colspan="3">Объём воды, mln.m³</th>-->
-<!--          <th colspan="5">Приток, m³/s</th>-->
-<!--          <th>Попуск, m³/s</th>-->
-<!--          &lt;!&ndash;      <th colspan="4">Погода</th>&ndash;&gt;-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--          &lt;!&ndash;        Level&ndash;&gt;-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[1] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[0] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>Разница</th>-->
-<!--          &lt;!&ndash;        Volume&ndash;&gt;-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[1] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[0] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>Разница</th>-->
-<!--          &lt;!&ndash;        Income&ndash;&gt;-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[3] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[2] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[1] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[0] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>Разница</th>-->
-<!--          &lt;!&ndash;        Release&ndash;&gt;-->
-<!--          <th>-->
-<!--            <div class="flex flex-col">-->
-<!--              <p>{{ times[0] | date:'HH:mm' }}</p>-->
-<!--              <small>({{ selectedDate | date:'dd-MM' }})</small>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--                  Weather-->
-<!--                <th>-->
-<!--                  <div class="flex flex-col">-->
-<!--                    <p>Условия</p>-->
-<!--                  </div>-->
-<!--                </th>-->
-<!--                <th>-->
-<!--                  <div class="flex flex-col">-->
-<!--                    <p>Температура, &deg;C</p>-->
-<!--                  </div>-->
-<!--                </th>-->
-<!--                <th>-->
-<!--                  <div class="flex flex-col">-->
-<!--                    <p>Ветер, м/с</p>-->
-<!--                  </div>-->
-<!--                </th>-->
-<!--                <th>-->
-<!--                  <div class="flex flex-col">-->
-<!--                    <p>Влажность, %</p>-->
-<!--                  </div>-->
-<!--                </th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody *ngFor="let res of reservoirsData">-->
-<!--        <tr (click)="navigateToReservoir(res.id)">-->
-<!--          <td>{{ res.name }}</td>-->
-<!--          <td *ngIf="res.level">{{ res.level.old | number: '.0-2' }}</td>-->
-<!--          <td *ngIf="res.level">{{ res.level.latest | number: '.0-2' }}</td>-->
-<!--          <td *ngIf="res.level">{{ res.level.latest - res.level.old | number: '.0-2' }}</td>-->
-<!--          <td *ngIf="res.volume">{{ res.volume.old | number: '.0-2' }}</td>-->
-<!--          <td *ngIf="res.volume">{{ res.volume.latest | number: '.0-2' }}</td>-->
-<!--          <td *ngIf="res.volume">{{ res.volume.latest - res.volume.old | number: '.0-2' }}</td>-->
-<!--          <td *ngFor="let income of res.income">{{ income | number: '.0-2' }}</td>-->
-<!--          <td *ngIf="res.income">{{ res.income[res.income.length - 1] - res.income[res.income.length - 2] | number: '.0-2' }}</td>-->
-<!--          <td *ngIf="res.release">{{ res.release.latest | number: '.0-2' }}</td>-->
-<!--          &lt;!&ndash;      <td>Ясно</td>&ndash;&gt;-->
-<!--          &lt;!&ndash;      <td>24</td>&ndash;&gt;-->
-<!--          &lt;!&ndash;      <td>3, С-В</td>&ndash;&gt;-->
-<!--          &lt;!&ndash;      <td>50</td>&ndash;&gt;-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--      </table>-->
-
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 
 <ng-template #loader>
   <app-loader [size]="'xl'"></app-loader>
