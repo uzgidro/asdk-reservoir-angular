@@ -80,7 +80,14 @@ export class WaterRecourseCardComponent {
     },
 
     plugins: {
-      legend: {display: true},
+      legend: {
+        display: true, labels: {
+          color: 'white',
+          font: {
+            size: 16,
+          },
+        }
+      },
       datalabels: {
         color: "#FFF",
         align: "top",

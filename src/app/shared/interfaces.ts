@@ -56,6 +56,7 @@ export interface Aggregate {
 export interface MenuItem {
   name: string
   path: string
+  externalLink?: string
   queryParams?: string
   queryParamsHandling?: string
   isActive?: boolean

@@ -73,7 +73,8 @@ export class MainLayoutComponent implements OnInit {
       path: '/snow',
       children: [
         {name: 'Tezkor ma\'lumotlar', path: '/current'},
-        {name: 'Ko\'p yillik ma\'lumotlar', path: '/all-time'}
+        {name: 'Ko\'p yillik ma\'lumotlar', path: '/all-time'},
+        {name: 'Xudud', path: '', externalLink: 'https://modsnow.online/'},
       ]
     },
     {
@@ -113,6 +114,10 @@ export class MainLayoutComponent implements OnInit {
   }
 
   selectItem(item: MenuItem): void {
+    if (item.externalLink) {
+      window.open(item.externalLink, '_blank');
+      return
+    }
     if (!item.children) {
       this.resetActivity(this.menuItems);
     }
