@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
   public chartData = [
     {
       label: 'Current Value',
-      data: [90, 97, 98, 97, 83, 96],
+      data: [75, 80, 96, 79, 60, 92],
       backgroundColor: '#4eeefe',
       barThickness: 24,
     },
