@@ -7,10 +7,6 @@ import {environment} from "../../../environments/environment.development";
 export class EnvService {
   private readonly environment = environment
 
-  getRegions() {
-    return this.environment.regionId;
-  }
-
   getRegionByName(name: string) {
     return this.environment.regionId.find(item => item.name == name)
   }

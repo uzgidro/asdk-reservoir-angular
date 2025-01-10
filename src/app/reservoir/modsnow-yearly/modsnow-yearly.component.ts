@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {CarouselModule} from "primeng/carousel";
 import {NgOptimizedImage} from "@angular/common";
 import {SharedModule} from "primeng/api";
-import {EnvService} from "../../shared/service/env.service";
 import {NgChartsModule} from "ng2-charts";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {ModsnowService} from "../../service/modsnow.service";
+import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 
 @Component({
   selector: 'app-modsnow-yearly',
@@ -20,21 +21,15 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
   styleUrl: './modsnow-yearly.component.css'
 })
 export class ModsnowYearlyComponent implements OnInit {
-  reservoirs: {
-    id: string
-    name: string
-  }[] = [];
+  rivers: ModsnowImageResponse[] = [];
   responsiveOptions: any[] = []
 
-  constructor(private env: EnvService) {
+  constructor(private modsnow: ModsnowService) {
   }
 
   ngOnInit() {
-    this.env.getRegions().filter(item => item.snowCoverage !== undefined).forEach(item => {
-      this.reservoirs.push({
-        id: item.id,
-        name: item.name
-      })
+    this.modsnow.getDynamics().subscribe(dynamics => {
+      this.rivers = dynamics;
     })
 
     this.responsiveOptions = [

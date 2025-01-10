@@ -1,12 +1,12 @@
 <div class="flex flex-col justify-center pt-10 px-12">
   <app-card-header [title]="'MODSNOW'"></app-card-header>
-  <p-carousel [value]="reservoirs" [numVisible]="2" [numScroll]="2" [circular]="true"
+  <p-carousel [value]="rivers" [numVisible]="2" [numScroll]="2" [circular]="true"
               [responsiveOptions]="responsiveOptions">
-    <ng-template let-reservoirs pTemplate="item">
+    <ng-template let-river pTemplate="item">
       <div class="mx-4 h-full ">
-        <h2 class="text-2xl font-medium text-center my-6">{{ reservoirs.name }}</h2>
+        <h2 class="text-2xl font-medium text-center my-6">{{ river.name }}</h2>
         <div class="w-full ">
-          <img class="m-auto" ngSrc="assets/img/{{reservoirs.id}}_dynamics.jpg" width="1527" height="907" alt="Modsnow">
+          <img class="m-auto" ngSrc="{{river.url}}" width="1527" height="907" alt="Modsnow">
         </div>
       </div>
     </ng-template>

@@ -17,7 +17,7 @@ import {RegionInfo} from "../../../environments/environment.development";
   ],
   styleUrl: './admin-modsnow.component.css'
 })
-export class AdminModsnowComponent implements OnInit{
+export class AdminModsnowComponent implements OnInit {
   date = new Date()
   readonly today = new Date()
   files: Record<string, File> = {}
@@ -27,15 +27,15 @@ export class AdminModsnowComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.regions = this.env.getRegions()
+    // this.regions = this.env.getRegions()
   }
 
   submitModsnow() {
-    this.messageService.add({ severity: 'success', summary: 'Обновление', detail: 'Данные Modsnow обновлены'})
+    this.messageService.add({severity: 'success', summary: 'Обновление', detail: 'Данные Modsnow обновлены'})
   }
 
   documentOnChange(event: any, category: string) {
-    const file:File = event.target.files[0];
+    const file: File = event.target.files[0];
 
     if (file) {
       this.files[category] = file

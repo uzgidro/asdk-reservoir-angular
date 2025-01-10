@@ -57,11 +57,11 @@ export class DashboardSnowChartComponent implements OnInit {
     },
   };
 
-  constructor(private api: ModsnowService) {
+  constructor(private modsnow: ModsnowService) {
   }
 
   ngOnInit() {
-    this.api.getPercent().subscribe(response => {
+    this.modsnow.getPercent().subscribe(response => {
         console.log(response)
 
         this.labels = response.map(value => value.name)

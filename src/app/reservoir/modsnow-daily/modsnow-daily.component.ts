@@ -5,9 +5,10 @@ import {ButtonModule} from "primeng/button";
 import {NgOptimizedImage} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
-import {EnvService} from "../../shared/service/env.service";
 import {NgChartsModule} from "ng2-charts";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {ModsnowService} from "../../service/modsnow.service";
+import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 
 @Component({
   selector: 'app-modsnow-daily',
@@ -26,17 +27,16 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
   styleUrl: './modsnow-daily.component.css'
 })
 export class ModsnowDailyComponent implements OnInit {
-  reservoirs: {
-    id: string
-    name: string
-  }[] = [];
+  rivers: ModsnowImageResponse[] = []
   responsiveOptions: any[] = []
 
-  constructor(private env: EnvService) {
+  constructor(private modsnow: ModsnowService) {
   }
 
   ngOnInit() {
-    this.setupData()
+    this.modsnow.getCover().subscribe(cover => {
+      this.rivers = cover;
+    })
 
     this.responsiveOptions = [
       {
@@ -50,14 +50,5 @@ export class ModsnowDailyComponent implements OnInit {
         numScroll: 1
       }
     ];
-  }
-
-  setupData() {
-    this.env.getRegions().filter(item => item.snowCoverage !== undefined).forEach(reservoir => {
-      this.reservoirs.push({
-        id: reservoir.id,
-        name: reservoir.name,
-      })
-    })
   }
 }
