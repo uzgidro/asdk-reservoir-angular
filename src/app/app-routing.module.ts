@@ -22,6 +22,7 @@ import {WeatherComponent} from "./reservoir/weather/weather.component";
 import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservoir-schedule.component";
 import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
 import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
+import {ExploitationComponent} from "./exploitation/exploitation.component";
 
 const routes: Routes = [
   {
@@ -65,7 +66,7 @@ const routes: Routes = [
           {path: 'works', component: HydroWorksComponent}
         ]
       },
-      {path: 'rules', component: BlankPageComponent},
+      {path: 'rules', component: ExploitationComponent},
       {path: 'docs', component: OrdersComponent}
     ]
   },
