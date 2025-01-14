@@ -37,7 +37,10 @@ export class WaterRecourseCardComponent {
     volume: number
     volumeDifference: string
     volumeChart: any
-    labels: string[]
+    incomeLabels: string[]
+    releaseLabels: string[]
+    levelLabels: string[]
+    volumeLabels: string[]
     weather?: string
     temperature?: string
     windSpeed?: number
@@ -54,6 +57,19 @@ export class WaterRecourseCardComponent {
         return this.data?.levelChart
       case "volume":
         return this.data?.volumeChart
+    }
+  }
+
+  get labels() {
+    switch (this.category) {
+      case "income":
+        return this.data?.incomeLabels
+      case "release":
+        return this.data?.releaseLabels
+      case "level":
+        return this.data?.levelLabels
+      case "volume":
+        return this.data?.volumeLabels
     }
   }
 
@@ -101,7 +117,6 @@ export class WaterRecourseCardComponent {
   public category: 'income' | 'release' | 'volume' | 'level' = 'income'
 
   changeCategory(category: 'income' | 'release' | 'volume' | 'level') {
-    console.log('lel')
     this.category = category
   }
 }

@@ -35,7 +35,10 @@ export class WaterRecoursesComponent implements OnInit {
     volume: number
     volumeDifference: string
     volumeChart: any
-    labels: string[]
+    incomeLabels: string[]
+    releaseLabels: string[]
+    levelLabels: string[]
+    volumeLabels: string[]
     weather?: string
     temperature?: string
     windSpeed?: number
@@ -96,7 +99,10 @@ export class WaterRecoursesComponent implements OnInit {
               pointHoverBackgroundColor: '#fff',
               pointHoverBorderColor: 'rgba(148,159,177,0.8)',
             }],
-            labels: item.income.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse()
+            incomeLabels: item.income.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse(),
+            releaseLabels: item.release.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse(),
+            levelLabels: item.level.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse(),
+            volumeLabels: item.volume.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse(),
           })
           this.weatherApiService.getCurrent(item.reservoir.lat, item.reservoir.lon).subscribe({
             next: response => {
