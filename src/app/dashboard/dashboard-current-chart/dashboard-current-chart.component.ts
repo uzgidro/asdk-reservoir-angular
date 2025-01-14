@@ -55,7 +55,8 @@ export class DashboardCurrentChartComponent implements OnInit {
       datalabels: {
         color: 'white',
         align: "end",
-        anchor: "end"
+        anchor: "end",
+        rotation: 315,
       }
     },
   };
