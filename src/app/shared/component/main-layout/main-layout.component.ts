@@ -47,7 +47,7 @@ export class MainLayoutComponent implements OnInit {
         {name: 'Oylik ma\'lumotlar', path: '/month'},
         {name: 'Ko\'p yillik ma\'lumotlar', path: '/year'},
         {name: 'Sath-xajm', path: '/lv'},
-        {name: 'Filterlash', path: '/filter'},
+        // {name: 'Filterlash', path: '/filter'},
         {name: 'Tahliliy ma\'lumotlar', path: '/analytics'},
         // {name: 'График', path: '/schedule'},
       ]
