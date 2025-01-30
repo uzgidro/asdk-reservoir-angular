@@ -4,7 +4,6 @@ import {NgChartsModule} from "ng2-charts";
 import {NgForOf} from "@angular/common";
 import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
-import {ComplexValueResponse} from "../shared/response/values-response";
 import {WaterRecourseCardComponent} from "./water-recourse-card/water-recourse-card.component";
 import {ReservoirData} from "../shared/interface/reservoir-data";
 import {ResourceService} from "../service/resource.service";
