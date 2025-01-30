@@ -1,0 +1,27 @@
+<div class="grid grid-cols-2 px-12 pt-10 gap-4">
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Suv resurslar'"></app-card-header>
+
+<!--    <app-dashboard-current-chart></app-dashboard-current-chart>-->
+  </div>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'MODSNOW'"></app-card-header>
+<!--    <app-dashboard-snow-chart></app-dashboard-snow-chart>-->
+  </div>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Filtratsiya'"></app-card-header>
+
+<!--    <a href="https://atnt.uz" target="_blank" class="flex h-full">-->
+<!--      <canvas-->
+<!--        baseChart-->
+<!--        [data]="lineChartData"-->
+<!--        [options]="lineChartOptions"-->
+<!--        [type]="lineChartType"-->
+<!--      ></canvas>-->
+<!--    </a>-->
+  </div>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Ob-havo'"></app-card-header>
+    <app-weather-detailed [reservoir]="reservoir" [displayTitle]="false"></app-weather-detailed>
+  </div>
+</div>

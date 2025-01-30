@@ -23,11 +23,12 @@ import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservo
 import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
 import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
 import {ExploitationComponent} from "./exploitation/exploitation.component";
+import {CustomDashboardComponent} from "./dashboard/custom-dashboard/custom-dashboard.component";
 
 const routes: Routes = [
   {
     path: '', component: MainLayoutComponent, children: [
-      {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'recourses', component: WaterRecoursesComponent},
       {path: 'region', component: RegionComponent},
@@ -68,6 +69,12 @@ const routes: Routes = [
       },
       {path: 'rules', component: ExploitationComponent},
       {path: 'docs', component: OrdersComponent}
+    ]
+  },
+  {
+    path:':reservoir', component: MainLayoutComponent, children: [
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path: 'dashboard', component: CustomDashboardComponent},
     ]
   },
   {

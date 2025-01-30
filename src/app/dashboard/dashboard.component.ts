@@ -10,8 +10,8 @@ import {Forecast, WeatherCurrentResponse} from "../shared/response/weather-respo
 import {WeatherService} from "../service/weather.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {NgOptimizedImage} from "@angular/common";
-import {EnvService} from "../shared/service/env.service";
 import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-char.component";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -103,7 +103,11 @@ export class DashboardComponent implements OnInit {
     return undefined
   }
 
-  constructor(private apiService: ApiService, private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
+  constructor(
+    private apiService: ApiService,
+    private weatherApiService: WeatherApiService,
+    private weatherService: WeatherService
+  ) {
   }
 
   ngOnInit() {

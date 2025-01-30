@@ -26,6 +26,7 @@ import {CardHeaderComponent} from "../card-header/card-header.component";
 })
 export class WeatherDetailedFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse
+  @Input() displayTitle: boolean = true
   reservoirName?: string
   weatherCurrent?: WeatherCurrentDto
   weatherHourly: WeatherCurrentDto[] = []
