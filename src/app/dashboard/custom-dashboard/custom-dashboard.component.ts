@@ -1,22 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
-import {DatePipe, NgForOf, NgOptimizedImage} from "@angular/common";
 import {NgChartsModule} from "ng2-charts";
 import {ApiService} from "../../service/api.service";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
+import {WaterRecourseCardComponent} from "../../water-recourses/water-recourse-card/water-recourse-card.component";
+import {ReservoirData} from "../../shared/interface/reservoir-data";
+import {ResourceService} from "../../service/resource.service";
 
 @Component({
   selector: 'app-custom-dashboard',
   standalone: true,
   imports: [
     CardHeaderComponent,
-    DatePipe,
     NgChartsModule,
-    NgForOf,
-    NgOptimizedImage,
-    WeatherDetailedFrameComponent
+    WeatherDetailedFrameComponent,
+    WaterRecourseCardComponent
   ],
   templateUrl: './custom-dashboard.component.html',
   styleUrl: './custom-dashboard.component.css'
@@ -24,12 +24,14 @@ import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-deta
 export class CustomDashboardComponent implements OnInit {
   exactReservoir: '' | 'hisorak' = '';
   reservoir?: ReservoirResponse;
+  reservoirData?: ReservoirData;
 
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private api: ApiService,) {
+    private api: ApiService,
+    private resourceService: ResourceService) {
   }
 
   ngOnInit() {
@@ -41,6 +43,13 @@ export class CustomDashboardComponent implements OnInit {
         this.router.navigate(['']);
       }
     }
+
+    this.api.getDashboardValuesSortedByReservoir().subscribe(array => {
+      let find = array.find(value => value.reservoir.name.toLowerCase() == this.exactReservoir.toLowerCase());
+      if (find) {
+        this.reservoirData = this.resourceService.parseResponse(find);
+      }
+    });
 
     this.api.getReservoirs().subscribe({
       next: (response: ReservoirResponse[]) => {

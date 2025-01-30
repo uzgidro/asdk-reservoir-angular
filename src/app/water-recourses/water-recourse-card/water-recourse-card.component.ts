@@ -5,6 +5,7 @@ import {RouterLink} from "@angular/router";
 import {UzbWeatherPipe} from "../../shared/pipe/uzb-weather.pipe";
 import {ChartConfiguration, ChartType, Plugin} from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import {ReservoirData} from "../../shared/interface/reservoir-data";
 
 @Component({
   selector: 'app-water-recourse-card',
@@ -22,30 +23,8 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
   styleUrl: './water-recourse-card.component.css'
 })
 export class WaterRecourseCardComponent {
-  @Input() data?: {
-    reservoirId: number;
-    reservoir: string
-    income: number
-    incomeDifference: string
-    incomeChart: any
-    release: number
-    releaseDifference: string
-    releaseChart: any
-    level: number
-    levelDifference: string
-    levelChart: any
-    volume: number
-    volumeDifference: string
-    volumeChart: any
-    incomeLabels: string[]
-    releaseLabels: string[]
-    levelLabels: string[]
-    volumeLabels: string[]
-    weather?: string
-    temperature?: string
-    windSpeed?: number
-    humidity?: string
-  }
+  @Input() data?: ReservoirData
+  @Input() bottomNavigation: boolean = true
 
   get dataset() {
     switch (this.category) {
