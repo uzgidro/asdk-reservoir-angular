@@ -8,6 +8,9 @@ import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-deta
 import {WaterRecourseCardComponent} from "../../water-recourses/water-recourse-card/water-recourse-card.component";
 import {ReservoirData} from "../../shared/interface/reservoir-data";
 import {ResourceService} from "../../service/resource.service";
+import {ModsnowService} from "../../service/modsnow.service";
+import {ChartConfiguration, ChartType, Plugin} from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 @Component({
   selector: 'app-custom-dashboard',
@@ -25,12 +28,57 @@ export class CustomDashboardComponent implements OnInit {
   exactReservoir: '' | 'hisorak' = '';
   reservoir?: ReservoirResponse;
   reservoirData?: ReservoirData;
+  modsnowLabels: string[] = [];
+  modsnowDatasets: any
+
+  lineChartOptions: ChartConfiguration['options'] = {
+    interaction: {mode: 'index', intersect: false},
+    aspectRatio: 2.5,
+    scales: {
+      x: {
+        grid: {
+          color: '#2D2D2D',
+        },
+        ticks: {
+          color: 'white',
+        }
+      },
+      y: {
+        grid: {
+          color: '#2D2D2D',
+        },
+        ticks: {
+          color: 'white',
+        },
+        max: 100
+      },
+    },
+
+    plugins: {
+      legend: {
+        display: true, labels: {
+          color: 'white',
+          font: {
+            size: 16,
+          },
+        }
+      },
+      datalabels: {
+        color: "#FFF",
+        align: "top",
+        anchor: "start",
+      }
+    },
+  };
+  lineChartType: ChartType = 'line';
+  chartPlugin = [ChartDataLabels] as Plugin[];
 
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private api: ApiService,
+    private modsnowService: ModsnowService,
     private resourceService: ResourceService) {
   }
 
@@ -54,8 +102,31 @@ export class CustomDashboardComponent implements OnInit {
     this.api.getReservoirs().subscribe({
       next: (response: ReservoirResponse[]) => {
         this.reservoir = response.find(value => value.name.toLowerCase() === this.exactReservoir.toLowerCase());
-        console.log(this.reservoir);
       }
     })
+
+    this.modsnowService.getYearsComparation(this.exactReservoir).subscribe(response => {
+      this.modsnowLabels = response.labels
+      this.modsnowDatasets = [
+        {
+          data: response.previous,
+          label: '2024',
+          borderColor: 'rgba(37, 99, 235,0.4)',
+          pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
+          pointBorderColor: 'rgba(37, 99, 235,0.4)',
+          pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
+          pointHoverBorderColor: '#fff',
+        },
+        {
+          data: response.current,
+          label: '2025',
+          borderColor: 'rgba(22, 163, 74,0.4)',
+          pointBackgroundColor: 'rgba(22, 163, 74,0.5)',
+          pointBorderColor: 'rgba(22, 163, 74,0.4)',
+          pointHoverBackgroundColor: 'rgba(22, 163, 74,0.8)',
+          pointHoverBorderColor: '#fff',
+        }
+      ]
+    });
   }
 }
