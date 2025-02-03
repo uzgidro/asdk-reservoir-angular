@@ -16,14 +16,14 @@
     <tbody *ngFor="let table of tableData">
     <tr>
       <td [rowSpan]="table.data.length" class="text-lg">{{table.category}}</td>
-      <td class="text-lg bg-secondary-variant">{{ table.data[0][0].date.slice(0, 4) }}</td>
-      <td *ngFor="let i of table.data[0]" class=" bg-secondary-variant">{{ i.value | number: '0.0-0' }}</td>
+      <td class="odd-row">{{ table.data[0][0].date.slice(0, 4) }}</td>
+      <td *ngFor="let i of table.data[0]" class="odd-row">{{ i.value | number: '0.0-0' }}</td>
     </tr>
     <tr *ngFor="let cat of table.data.slice(1); index as i">
-      <td [ngClass]="{'bg-secondary-variant': i % 2 !== 0}" class="text-lg">{{ cat[0].date.slice(0, 4) }}</td>
-      <td [ngClass]="{'bg-secondary-variant': i % 2 !== 0}" *ngFor="let val of cat">{{ val.value | number: '0.0-0' }}
+      <td [ngClass]="{'odd-row': i % 2 !== 0}" class="text-lg">{{ cat[0].date.slice(0, 4) }}</td>
+      <td [ngClass]="{'odd-row': i % 2 !== 0}" *ngFor="let val of cat">{{ val.value | number: '0.0-0' }}
       </td>
-      <td [ngClass]="{'bg-secondary-variant': i % 2 !== 0}" *ngFor="let val of decade.slice(cat.length)"></td>
+      <td [ngClass]="{'odd-row': i % 2 !== 0}" *ngFor="let val of decade.slice(cat.length)"></td>
     </tr>
     <tr *ngIf="table.statStart && table.statEnd && table.statTotal.length > 0">
       <td colspan="2">

@@ -19,7 +19,7 @@ export class DecadeService {
     'Sentabr',
     'Oktabr',
     'Noyabr',
-    'Dekavr'
+    'Dekabr'
   ]
   decade: string[] = [
     "I", "II", "III",

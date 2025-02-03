@@ -4,28 +4,22 @@ import {ActivatedRoute} from "@angular/router";
 import {CategorisedValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {Subscription} from "rxjs";
-import {MetricCategory} from "../../shared/enum/metric-category";
-import {ReservoirService} from "../reservoir.service";
-import {MetricSelectComponent} from "../../shared/component/metric-select/metric-select.component";
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {DecadeService} from "../decade.service";
 import {Decade} from "../../shared/interfaces";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
-import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
 
 @Component({
   selector: 'app-reservoir-yearly',
   templateUrl: './reservoir-yearly.component.html',
   styleUrl: './reservoir-yearly.component.css',
   imports: [
-    MetricSelectComponent,
     NgForOf,
     NgClass,
     NgIf,
     DecimalPipe,
     DatePipe,
-    CardHeaderComponent,
-    UzbMonthPipePipe
+    CardHeaderComponent
   ],
   standalone: true
 
@@ -42,7 +36,6 @@ export class ReservoirYearlyComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private reservoirService: ReservoirService,
     private decadeService: DecadeService,
     private activatedRoute: ActivatedRoute
   ) {
@@ -76,24 +69,5 @@ export class ReservoirYearlyComponent implements OnInit {
         })
       }
     })
-  }
-
-  changeMetrics(cat: MetricCategory) {
-    let income = this.tableData.find(val => val.category.includes('Приток'))
-    let release = this.tableData.find(val => val.category.includes('Попуск'))
-    if (income && release) {
-      income.category = cat == MetricCategory.SPEED ? 'Приток, м3/с' : 'Приток, млн. м3'
-      release.category = cat == MetricCategory.SPEED ? 'Попуск, м3/с' : 'Попуск, млн. м3'
-      this.reservoirService.convertMetrics(income.stat5, cat, 'decade')
-      this.reservoirService.convertMetrics(income.stat10, cat, 'decade')
-      this.reservoirService.convertMetrics(income.stat30, cat, 'decade')
-      this.reservoirService.convertMetrics(income.statTotal, cat, 'decade')
-      this.reservoirService.convertMetrics(release.stat5, cat, 'decade')
-      this.reservoirService.convertMetrics(release.stat10, cat, 'decade')
-      this.reservoirService.convertMetrics(release.stat30, cat, 'decade')
-      this.reservoirService.convertMetrics(release.statTotal, cat, 'decade')
-      income.data.forEach(item => this.reservoirService.convertMetricsValueResponse(item, cat, 'decade'))
-      release.data.forEach(item => this.reservoirService.convertMetricsValueResponse(item, cat, 'decade'))
-    }
   }
 }

@@ -21,15 +21,15 @@
     @apply bg-background text-slate-300
   }
   table {
-    @apply table-auto w-full border-separate  overflow-x-auto
+    @apply table-auto w-full border-separate  overflow-x-auto backdrop-blur
   }
 
   tr th {
-    @apply text-primary bg-secondary-container p-2 bg-opacity-50
+    @apply text-slate-300 bg-slate-800 p-2 text-sm
   }
 
   tr td {
-    @apply px-4 py-2 border-b border-gray-500 text-center break-words
+    @apply px-4 py-2 border-b border-slate-500 text-center break-words text-sm
   }
 }
 
