@@ -1,10 +1,14 @@
 <div class="flex flex-col h-screen">
+  <video autoplay muted loop class="fixed object-cover h-full w-full -z-10 blur-md">
+    <source src="/assets/video/bg.webm" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
   <div class="fixed top-0 left-0">
     <app-navbar (sidebarEmitter)="toggleSidebar()"></app-navbar>
   </div>
   <p-sidebar
-    class="bg-background text-white border-r border-r-dark-gray"
-    styleClass="bg-background text-white border-r border-r-dark-gray"
+    class="bg-slate-900 text-white border-r border-r-dark-gray"
+    styleClass="bg-slate-900 text-white border-r border-r-dark-gray"
     [(visible)]="isSidebarVisible">
     <ng-template pTemplate="headless">
       <nav>
