@@ -5,7 +5,7 @@ import {LoggerComponent} from "../../../logger/component/logger.component";
 import {LoggerRef} from "../../../logger/logger-ref";
 import {Subscription} from "rxjs";
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {DatePipe, NgClass, NgOptimizedImage} from "@angular/common";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-navbar',
@@ -14,9 +14,7 @@ import {DatePipe, NgClass, NgOptimizedImage} from "@angular/common";
   imports: [
     RouterLink,
     RouterLinkActive,
-    NgClass,
-    DatePipe,
-    NgOptimizedImage
+    DatePipe
   ],
   standalone: true
 })

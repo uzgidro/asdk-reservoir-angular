@@ -17,14 +17,14 @@
     @apply cursor-default
   }
   nav {
-    @apply text-white
+    @apply text-slate-300
   }
 
   nav ul li a {
-    @apply hover:text-[#00e5e5]  hover:border-l-[#00e5e5] active:text-[#00d5d5]  active:border-l-[#00d5d5]
+    @apply hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white
   }
   body {
-    @apply bg-background text-primary
+    @apply bg-background text-slate-300
   }
   table {
     @apply table-auto w-full border-separate border-2 border-background overflow-x-auto
@@ -43,7 +43,7 @@
 }
 
 .active {
-  @apply text-primary border-l-primary hover:text-[#00e5e5]  hover:border-l-[#00e5e5]
+  @apply text-white border-l-white hover:text-slate-200  hover:border-l-slate-200
 }
 
 .card-title {
@@ -248,9 +248,3 @@
   font-weight: 900;
   font-style: normal;
 }
-
-
-
-/*.trapezoid {*/
-/*  clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);*/
-/*}*/
