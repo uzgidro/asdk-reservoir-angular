@@ -16,23 +16,14 @@
   p,h1,h2,h3,h4,h5,h6,th,td {
     @apply cursor-default
   }
-  nav {
-    @apply text-slate-300
-  }
 
-  nav ul li a {
-    @apply hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white
-  }
   body {
     @apply bg-background text-slate-300
   }
   table {
-    @apply table-auto w-full border-separate border-2 border-background overflow-x-auto
+    @apply table-auto w-full border-separate  overflow-x-auto
   }
 
-  /*thead tr:first-child th {*/
-  /*  @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-2 first:rounded-tl-3xl last:rounded-tr-3xl text-lg*/
-  /*}*/
   tr th {
     @apply text-primary bg-secondary-container p-2 bg-opacity-50
   }

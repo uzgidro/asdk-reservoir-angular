@@ -1,0 +1,15 @@
+nav {
+  @apply grid grid-cols-3 w-screen px-4 py-3 items-center text-slate-300 bg-slate-900 border border-slate-400
+}
+
+ul {
+  @apply flex space-x-5 text-sm w-full justify-center
+}
+
+ul li a {
+  @apply hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white
+}
+
+.time {
+  @apply text-end text-sm
+}
