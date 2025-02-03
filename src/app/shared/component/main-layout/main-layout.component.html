@@ -14,7 +14,7 @@
       <nav>
         <ul class="font-medium text-lg mt-4 px-4">
           <li class="mb-4" *ngFor="let item of menuItems">
-            <a class="items-center flex flex-row justify-between pl-2 border-l border-l-white hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
+            <a class="items-center flex flex-row justify-between pl-2 border-l border-l-slate-300 hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
                [routerLink]="item.children ? null : item.path"
                [queryParamsHandling]="item.path.includes('dashboard') ? null : 'preserve'"
                [ngClass]="{'active': currentUrl.includes(item.path)}"
@@ -25,7 +25,7 @@
             </a>
             <ul *ngIf="item.children && item.isOpen" class="mt-3" [@DropDownMenu]>
               <li class="pl-4 mb-4" *ngFor="let childItem of item.children">
-                <a class="pl-2 border-l border-l-white hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
+                <a class="pl-2 border-l border-l-slate-300 hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
                    [routerLink]="childItem.path == '' ? null : (item.path || '') + (childItem.path || '')"
                    [href]="childItem.externalLink"
                    [queryParams]="item.path.includes('water') && !selectedReservoir ? {reservoir: 1} : {}"
