@@ -27,7 +27,7 @@ export class DashboardSnowChartComponent implements OnInit {
 
   public options: ChartOptions<'bar'> = {
     responsive: true,
-    indexAxis: 'y', // Горизонтальный бар
+    indexAxis: 'x', // Горизонтальный бар
     maintainAspectRatio: true,
     plugins: {
       legend: {display: false},
@@ -72,15 +72,15 @@ export class DashboardSnowChartComponent implements OnInit {
             backgroundColor: '#4eeefe',
             barThickness: 24,
           },
-          {
-            label: '100% Background',
-            data: response.map(() => 100),
-            backgroundColor: '#014a67',
-            barThickness: 24,
-            datalabels: {
-              display: false
-            }
-          }
+          // {
+          //   label: '100% Background',
+          //   data: response.map(() => 100),
+          //   backgroundColor: '#014a67',
+          //   barThickness: 24,
+          //   datalabels: {
+          //     display: false
+          //   }
+          // }
         ]
       }
     )
