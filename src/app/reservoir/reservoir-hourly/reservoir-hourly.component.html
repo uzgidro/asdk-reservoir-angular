@@ -111,6 +111,45 @@
         <button (click)="exportToExcel()">Excel</button>
       </div>
     </div>
+
+  <div *ngIf="chart; else loader" class="flex flex-row">
+    <canvas
+      baseChart
+      [datasets]="chart.incomeDataset"
+      [labels]="chart.labels"
+      [options]="chartOptions"
+      [type]="chartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+    <canvas
+      baseChart
+      [datasets]="chart.releaseDataset"
+      [labels]="chart.labels"
+      [options]="chartOptions"
+      [type]="chartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+    <canvas
+      baseChart
+      [datasets]="chart.levelDataset"
+      [labels]="chart.labels"
+      [options]="chartOptions"
+      [type]="chartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+    <canvas
+      baseChart
+      [datasets]="chart.volumeDataset"
+      [labels]="chart.labels"
+      [options]="chartOptions"
+      [type]="chartType"
+      [plugins]="chartPlugin"
+    >
+    </canvas>
+  </div>
 </div>
 
 <ng-template #loader>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
@@ -9,6 +9,8 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 import autoTable from "jspdf-autotable";
 import {jsPDF} from 'jspdf';
 import * as XLSX from "xlsx";
+import {ChartConfiguration, ChartType, Plugin} from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -40,8 +42,65 @@ export class ReservoirHourlyComponent implements OnInit {
     volume?: { latest: number, old: number }
   }[] = []
 
+  selectedReservoir: number = 0
+
+  dataForChart: {
+    id: number
+    incomeDataset: any
+    releaseDataset: any
+    levelDataset: any
+    volumeDataset: any
+    labels: string[]
+  }[] = []
+
+  chartOptions: ChartConfiguration['options'] = {
+    interaction: {mode: 'index', intersect: false},
+    scales: {
+      x: {
+        grid: {
+          color: '#2D2D2D',
+        },
+        ticks: {
+          color: 'white',
+        }
+      },
+      y: {
+        grid: {
+          color: '#2D2D2D',
+        },
+        ticks: {
+          color: 'white',
+        }
+      },
+    },
+
+    plugins: {
+      legend: {
+        display: true, labels: {
+          color: 'white',
+          font: {
+            size: 16,
+          },
+        }
+      },
+      datalabels: {
+        color: "#FFF",
+        align: "top",
+        anchor: "start",
+      }
+    },
+  };
+
+  chartType: ChartType = 'line';
+  chartPlugin = [ChartDataLabels] as Plugin[];
+
+  get chart() {
+    return this.dataForChart.find(e => e.id == this.selectedReservoir)
+  }
+
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private api: ApiService
   ) {
   }
@@ -51,6 +110,63 @@ export class ReservoirHourlyComponent implements OnInit {
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
         this.setupTable(response)
+
+        for (let i = 0; i < response.income.length; i++) {
+          const id = response.income[i].reservoir_id
+          const income = [{
+            data: response.income[i].data.map(e => e.value),
+            label: 'Kelish',
+            borderColor: 'rgba(37, 99, 235,0.4)',
+            pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
+            pointBorderColor: 'rgba(37, 99, 235,0.4)',
+            pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
+            pointHoverBorderColor: '#fff',
+          }]
+          const release = [{
+            data: response.release[i].data.map(e => e.value),
+            label: 'Chiqish',
+            borderColor: 'rgba(225, 29, 72,0.4)',
+            pointBackgroundColor: 'rgba(225, 29, 72,0.5)',
+            pointBorderColor: 'rgba(225, 29, 72,0.4)',
+            pointHoverBackgroundColor: 'rgba(225, 29, 72,0.8)',
+            pointHoverBorderColor: '#fff',
+          }]
+          const level = [{
+            data: response.level[i].data.map(e => e.value),
+            label: 'Sath',
+            borderColor: 'rgba(22, 163, 74,0.4)',
+            pointBackgroundColor: 'rgba(22, 163, 74,0.5)',
+            pointBorderColor: 'rgba(22, 163, 74,0.4)',
+            pointHoverBackgroundColor: 'rgba(22, 163, 74,0.8)',
+            pointHoverBorderColor: '#fff',
+          }]
+          const volume = [{
+            data: response.volume[i].data.map(e => e.value),
+            label: 'Hajm',
+            borderColor: 'rgba(147, 51, 234,0.4)',
+            pointBackgroundColor: 'rgba(147, 51, 234,0.5)',
+            pointBorderColor: 'rgba(147, 51, 234,0.4)',
+            pointHoverBackgroundColor: 'rgba(147, 51, 234,0.2)',
+            pointHoverBorderColor: '#fff',
+          }]
+          this.dataForChart.push({
+            id: id,
+            incomeDataset: income,
+            releaseDataset: release,
+            levelDataset: level,
+            volumeDataset: volume,
+            labels: response.income[i].data.map(e => e.date)
+          })
+        }
+        console.log(this.dataForChart)
+      }
+    })
+
+
+    this.activatedRoute.queryParams.subscribe({
+      next: value => {
+        this.selectedReservoir = parseInt(value['reservoir'])
+        console.log(this.selectedReservoir)
       }
     })
   }

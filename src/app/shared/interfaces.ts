@@ -11,6 +11,10 @@ export interface Dataset {
   backgroundColor: string
   borderColor: string
   tension: number
+  pointBackgroundColor: string
+  pointBorderColor: string
+  pointHoverBackgroundColor: string
+  pointHoverBorderColor: string
 }
 
 export interface Region {
