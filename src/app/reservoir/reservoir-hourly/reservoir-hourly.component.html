@@ -111,7 +111,7 @@
         <button (click)="exportToExcel()">Excel</button>
       </div>
     </div>
-  <app-chart></app-chart>
+  <app-chart *ngIf="chart" [chart]="chart"></app-chart>
 </div>
 
 <ng-template #loader>

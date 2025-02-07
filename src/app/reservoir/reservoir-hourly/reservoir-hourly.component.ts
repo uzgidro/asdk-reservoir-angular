@@ -9,12 +9,6 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 import autoTable from "jspdf-autotable";
 import {jsPDF} from 'jspdf';
 import * as XLSX from "xlsx";
-import {ChartConfiguration, ChartType, Plugin} from "chart.js";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-
-import * as am5 from '@amcharts/amcharts5';
-import * as am5xy from '@amcharts/amcharts5/xy';
-import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {ChartComponent} from "./chart/chart.component";
 
 @Component({
@@ -50,55 +44,7 @@ export class ReservoirHourlyComponent implements OnInit {
 
   selectedReservoir: number = 0
 
-  dataForChart: {
-    id: number
-    incomeDataset: any
-    releaseDataset: any
-    levelDataset: any
-    volumeDataset: any
-    labels: string[]
-  }[] = []
-
-  chartOptions: ChartConfiguration['options'] = {
-    interaction: {mode: 'index', intersect: false},
-    scales: {
-      x: {
-        grid: {
-          color: '#2D2D2D',
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-      y: {
-        grid: {
-          color: '#2D2D2D',
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-    },
-
-    plugins: {
-      legend: {
-        display: true, labels: {
-          color: 'white',
-          font: {
-            size: 16,
-          },
-        }
-      },
-      datalabels: {
-        color: "#FFF",
-        align: "top",
-        anchor: "start",
-      }
-    },
-  };
-
-  chartType: ChartType = 'line';
-  chartPlugin = [ChartDataLabels] as Plugin[];
+  dataForChart: ChartWrapper[] = []
 
   get chart() {
     return this.dataForChart.find(e => e.id == this.selectedReservoir)
@@ -119,52 +65,34 @@ export class ReservoirHourlyComponent implements OnInit {
 
         for (let i = 0; i < response.income.length; i++) {
           const id = response.income[i].reservoir_id
-          const income = [{
-            data: response.income[i].data.map(e => e.value),
-            label: 'Kelish',
-            borderColor: 'rgba(37, 99, 235,0.4)',
-            pointBackgroundColor: 'rgba(37, 99, 235,0.5)',
-            pointBorderColor: 'rgba(37, 99, 235,0.4)',
-            pointHoverBackgroundColor: 'rgba(37, 99, 235,0.2)',
-            pointHoverBorderColor: '#fff',
-          }]
-          const release = [{
-            data: response.release[i].data.map(e => e.value),
-            label: 'Chiqish',
-            borderColor: 'rgba(225, 29, 72,0.4)',
-            pointBackgroundColor: 'rgba(225, 29, 72,0.5)',
-            pointBorderColor: 'rgba(225, 29, 72,0.4)',
-            pointHoverBackgroundColor: 'rgba(225, 29, 72,0.8)',
-            pointHoverBorderColor: '#fff',
-          }]
-          const level = [{
-            data: response.level[i].data.map(e => e.value),
-            label: 'Sath',
-            borderColor: 'rgba(22, 163, 74,0.4)',
-            pointBackgroundColor: 'rgba(22, 163, 74,0.5)',
-            pointBorderColor: 'rgba(22, 163, 74,0.4)',
-            pointHoverBackgroundColor: 'rgba(22, 163, 74,0.8)',
-            pointHoverBorderColor: '#fff',
-          }]
-          const volume = [{
-            data: response.volume[i].data.map(e => e.value),
-            label: 'Hajm',
-            borderColor: 'rgba(147, 51, 234,0.4)',
-            pointBackgroundColor: 'rgba(147, 51, 234,0.5)',
-            pointBorderColor: 'rgba(147, 51, 234,0.4)',
-            pointHoverBackgroundColor: 'rgba(147, 51, 234,0.2)',
-            pointHoverBorderColor: '#fff',
-          }]
+          const income = {
+            data: response.income[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            name: 'Kelish',
+            color: 'rgba(37, 99, 235,0.4)',
+          }
+          const release = {
+            data: response.release[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            name: 'Chiqish',
+            color: 'rgba(225, 29, 72,0.4)',
+          }
+          const level = {
+            data: response.level[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            name: 'Sath',
+            color: 'rgba(22, 163, 74,0.4)',
+          }
+          const volume = {
+            data: response.volume[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            name: 'Hajm',
+            color: 'rgba(147, 51, 234,0.4)',
+          }
           this.dataForChart.push({
             id: id,
             incomeDataset: income,
             releaseDataset: release,
             levelDataset: level,
             volumeDataset: volume,
-            labels: response.income[i].data.map(e => e.date)
           })
         }
-        console.log(this.dataForChart)
       }
     })
 
@@ -172,11 +100,8 @@ export class ReservoirHourlyComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe({
       next: value => {
         this.selectedReservoir = parseInt(value['reservoir'])
-        console.log(this.selectedReservoir)
       }
     })
-
-    this.setupAm()
   }
 
   navigateToReservoir(id: number) {
@@ -321,133 +246,22 @@ export class ReservoirHourlyComponent implements OnInit {
       roundedTime -= 2
     }
   }
+}
 
-  private setupAm() {
-    let root = am5.Root.new("chartdiv");
+export interface ChartWrapper {
+  id: number
+  incomeDataset: ChartData
+  releaseDataset: ChartData
+  levelDataset: ChartData
+  volumeDataset: ChartData
+}
 
-    const myTheme = am5.Theme.new(root);
+export interface ChartData {
+  name: string,
+  data: {
+    value: number,
+    timestamp: number,
+  }[]
+  color: string
 
-// Move minor label a bit down
-    myTheme.rule("AxisLabel", ["minor"]).setAll({
-      dy: 1
-    });
-
-// Tweak minor grid opacity
-    myTheme.rule("Grid", ["minor"]).setAll({
-      strokeOpacity: 0.08
-    });
-
-// Set themes
-// https://www.amcharts.com/docs/v5/concepts/themes/
-    root.setThemes([
-      am5themes_Animated.new(root),
-      myTheme
-    ]);
-
-
-// Create chart
-// https://www.amcharts.com/docs/v5/charts/xy-chart/
-    let chart = root.container.children.push(am5xy.XYChart.new(root, {
-      panX: false,
-      panY: false,
-      wheelX: "panX",
-      wheelY: "zoomX",
-      paddingLeft: 0
-    }));
-
-
-// Add cursor
-// https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-    let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-      behavior: "zoomX"
-    }));
-    cursor.lineY.set("visible", false);
-
-    let date = new Date();
-    date.setHours(0, 0, 0, 0);
-    let value = 100;
-
-    function generateData() {
-      value = Math.round((Math.random() * 10 - 5) + value);
-      am5.time.add(date, "day", 1);
-      return {
-        date: date.getTime(),
-        value: value
-      };
-    }
-
-    function generateDatas(count: number) {
-      let data = [];
-      for (var i = 0; i < count; ++i) {
-        data.push(generateData());
-      }
-      return data;
-    }
-
-
-// Create axes
-// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-    let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-      maxDeviation: 0,
-      baseInterval: {
-        timeUnit: "day",
-        count: 1
-      },
-      renderer: am5xy.AxisRendererX.new(root, {
-        minorGridEnabled: true,
-        minGridDistance: 200,
-        minorLabelsEnabled: true
-      }),
-      tooltip: am5.Tooltip.new(root, {})
-    }));
-
-    xAxis.set("minorDateFormats", {
-      day: "dd",
-      month: "MM"
-    });
-
-    let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-      renderer: am5xy.AxisRendererY.new(root, {})
-    }));
-
-
-// Add series
-// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-    let series = chart.series.push(am5xy.LineSeries.new(root, {
-      name: "Series",
-      xAxis: xAxis,
-      yAxis: yAxis,
-      valueYField: "value",
-      valueXField: "date",
-      tooltip: am5.Tooltip.new(root, {
-        labelText: "{valueY}"
-      })
-    }));
-
-// Actual bullet
-    series.bullets.push(function () {
-      let bulletCircle = am5.Circle.new(root, {
-        radius: 5,
-        fill: series.get("fill")
-      });
-      return am5.Bullet.new(root, {
-        sprite: bulletCircle
-      })
-    })
-
-// Add scrollbar
-// https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-    chart.set("scrollbarX", am5.Scrollbar.new(root, {
-      orientation: "horizontal"
-    }));
-
-    let data = generateDatas(30);
-    series.data.setAll(data);
-
-
-// Make stuff animate on load
-// https://www.amcharts.com/docs/v5/concepts/animations/
-    series.appear(1000);
-    chart.appear(1000, 100);
-  }
 }
