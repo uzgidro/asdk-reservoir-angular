@@ -101,17 +101,22 @@
     </tr>
     </tbody>
   </table>
-    <div class="flex flex-row w-fit px-4 py-3 border-primary border rounded-lg space-x-8 items-center">
-      <div class="flex flex-row justify-center">
-        <span class="material-symbols-outlined mr-1">picture_as_pdf</span>
-        <button (click)="exportTableToPDF()">PDF</button>
-      </div>
-      <div class="flex flex-row justify-center">
-        <span class="material-symbols-outlined mr-1">table_view</span>
-        <button (click)="exportToExcel()">Excel</button>
-      </div>
+  <div class="flex flex-row w-fit px-4 py-3 border-primary border rounded-lg space-x-8 items-center">
+    <div class="flex flex-row justify-center">
+      <span class="material-symbols-outlined mr-1">picture_as_pdf</span>
+      <button (click)="exportTableToPDF()">PDF</button>
     </div>
-  <app-chart *ngIf="chart" [chart]="chart"></app-chart>
+    <div class="flex flex-row justify-center">
+      <span class="material-symbols-outlined mr-1">table_view</span>
+      <button (click)="exportToExcel()">Excel</button>
+    </div>
+  </div>
+  <div *ngIf="chart" class="grid grid-flow-col-dense">
+    <app-chart [chart]="chart.incomeDataset"></app-chart>
+    <app-chart [chart]="chart.releaseDataset"></app-chart>
+    <app-chart [chart]="chart.levelDataset"></app-chart>
+    <app-chart [chart]="chart.volumeDataset"></app-chart>
+  </div>
 </div>
 
 <ng-template #loader>

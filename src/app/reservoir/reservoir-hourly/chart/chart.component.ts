@@ -6,6 +6,7 @@ import {
   NgZone,
   OnChanges,
   OnDestroy,
+  OnInit,
   PLATFORM_ID,
   SimpleChanges
 } from '@angular/core';
@@ -14,7 +15,7 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {isPlatformBrowser} from "@angular/common";
-import {ChartData, ChartWrapper} from "../reservoir-hourly.component";
+import {ChartData} from "../reservoir-hourly.component";
 
 @Component({
   selector: 'app-chart',
@@ -23,9 +24,10 @@ import {ChartData, ChartWrapper} from "../reservoir-hourly.component";
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.css'
 })
-export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @Input() chart!: ChartWrapper;
-  private roots: { [key: string]: am5.Root } = {}; // Словарь для хранения чартов
+export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+  @Input() chart!: ChartData;
+  id!: string;
+  private root!: am5.Root; // Словарь для хранения чартов
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private zone: NgZone) {
   }
@@ -37,6 +39,10 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
         f();
       });
     }
+  }
+
+  ngOnInit() {
+    this.id = Math.floor(new Date().getTime() * Math.random()).toString();
   }
 
   ngAfterViewInit() {
@@ -53,31 +59,22 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.browserOnly(() => {
-      Object.values(this.roots).forEach(root => root.dispose());
+      this.root.dispose();
     });
   }
 
   private renderCharts() {
     if (!this.chart) return;
-
-    this.createChart("chartIncome", this.chart.incomeDataset);
-    this.createChart("chartRelease", this.chart.releaseDataset);
-    this.createChart("chartLevel", this.chart.levelDataset);
-    this.createChart("chartVolume", this.chart.volumeDataset);
+    this.createChart(this.chart);
   }
 
   private updateCharts() {
     if (!this.chart) return;
-
-    this.updateChart("chartIncome", this.chart.incomeDataset);
-    this.updateChart("chartRelease", this.chart.releaseDataset);
-    this.updateChart("chartLevel", this.chart.levelDataset);
-    this.updateChart("chartVolume", this.chart.volumeDataset);
+    this.updateChart(this.chart);
   }
 
-  private createChart(containerId: string, data: ChartData) {
-    let root = am5.Root.new(containerId);
-    this.roots[containerId] = root;
+  private createChart(data: ChartData) {
+    let root = am5.Root.new(this.id);
 
     root.setThemes([am5themes_Animated.new(root)]);
 
@@ -96,13 +93,13 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       behavior: "none"
     }));
     cursor.lineY.set("visible", false);
-    cursor.lineX.setAll({ stroke: am5.color('#fff') });
+    cursor.lineX.setAll({stroke: am5.color('#fff')});
 
     // Ось X (даты)
     let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
       maxDeviation: 0,
-      baseInterval: { timeUnit: "hour", count: 6 },
-      renderer: am5xy.AxisRendererX.new(root, { minorGridEnabled: true }),
+      baseInterval: {timeUnit: "hour", count: 6},
+      renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
       tooltip: am5.Tooltip.new(root, {})
     }));
 
@@ -123,15 +120,15 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     }));
 
     // Делаем линию толще
-    series.strokes.template.setAll({ strokeWidth: 3 });
+    series.strokes.template.setAll({strokeWidth: 3});
 
     // Устанавливаем данные
     series.data.setAll(data.data);
 
     // Настройка цветов осей
     root.interfaceColors.set("grid", am5.color('#fff'));
-    xAxis.get("renderer").labels.template.setAll({ fill: am5.color("#fff") });
-    yAxis.get("renderer").labels.template.setAll({ fill: am5.color("#fff") });
+    xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+    yAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
 
     xAxis.set("tooltip", am5.Tooltip.new(root, {
       themeTags: ["axis"]
@@ -142,17 +139,16 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       x: am5.percent(60),
       centerX: am5.percent(60)
     }));
-    legend.labels.template.setAll({ fill: am5.color("#ffffff") });
+    legend.labels.template.setAll({fill: am5.color("#ffffff")});
     legend.data.setAll(chart.series.values);
 
     chart.appear(1000, 100);
   }
 
-  private updateChart(containerId: string, data: ChartData) {
-    const root = this.roots[containerId];
-    if (!root) return;
+  private updateChart(data: ChartData) {
+    if (!this.root) return;
 
-    const chart = root.container.children.getIndex(0) as am5xy.XYChart;
+    const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
     const series = chart.series.getIndex(0) as am5xy.LineSeries;
 
     if (series) {
