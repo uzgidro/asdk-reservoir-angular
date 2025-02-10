@@ -62,7 +62,6 @@ export class ReservoirHourlyComponent implements OnInit {
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
         this.setupTable(response)
-        console.log(response)
 
         for (let i = 0; i < response.income.length; i++) {
           const id = response.income[i].reservoir_id

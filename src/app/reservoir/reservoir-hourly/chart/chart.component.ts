@@ -75,7 +75,8 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
 
   private createChart(data: ChartData) {
     let root = am5.Root.new(this.id);
-    const step = new Date(data.data[1].timestamp).getHours() - new Date(data.data[0].timestamp).getHours()
+    let step = new Date(data.data[1].timestamp).getHours() - new Date(data.data[0].timestamp).getHours()
+    if (step < 0) step += 24
 
     root.setThemes([am5themes_Animated.new(root)]);
 
