@@ -75,6 +75,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
 
   private createChart(data: ChartData) {
     let root = am5.Root.new(this.id);
+    const step = new Date(data.data[1].timestamp).getHours() - new Date(data.data[0].timestamp).getHours()
 
     root.setThemes([am5themes_Animated.new(root)]);
 
@@ -98,7 +99,10 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
     // Ось X (даты)
     let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
       maxDeviation: 0,
-      baseInterval: {timeUnit: "hour", count: 6},
+      baseInterval: {
+        timeUnit: "hour",
+        count: step
+      },
       renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
       tooltip: am5.Tooltip.new(root, {})
     }));
@@ -116,7 +120,9 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
       valueYField: "value",
       valueXField: "timestamp",
       stroke: am5.color(data.color),
-      tooltip: am5.Tooltip.new(root, {})
+      tooltip: am5.Tooltip.new(root, {
+        labelText: '{valueY}'
+      })
     }));
 
     // Делаем линию толще

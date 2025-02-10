@@ -62,26 +62,27 @@ export class ReservoirHourlyComponent implements OnInit {
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
         this.setupTable(response)
+        console.log(response)
 
         for (let i = 0; i < response.income.length; i++) {
           const id = response.income[i].reservoir_id
           const income = {
-            data: response.income[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            data: response.income[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
             name: 'Kelish',
             color: 'rgba(37, 99, 235,0.4)',
           }
           const release = {
-            data: response.release[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            data: response.release[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
             name: 'Chiqish',
             color: 'rgba(225, 29, 72,0.4)',
           }
           const level = {
-            data: response.level[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            data: response.level[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
             name: 'Sath',
             color: 'rgba(22, 163, 74,0.4)',
           }
           const volume = {
-            data: response.volume[i].data.map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+            data: response.volume[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
             name: 'Hajm',
             color: 'rgba(147, 51, 234,0.4)',
           }
