@@ -32,7 +32,6 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private zone: NgZone) {
   }
 
-  // Функция для работы только в браузере
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
@@ -79,27 +78,26 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
     if (step < 0) step += 24
 
     root.setThemes([am5themes_Animated.new(root)]);
+    root.interfaceColors.set("grid", am5.color('#fff'));
 
     let chart = root.container.children.push(am5xy.XYChart.new(root, {
       layout: root.verticalLayout,
-      panX: false,
-      panY: false,
-      wheelX: "none",
-      wheelY: "none",
+      panX: true,
+      panY: true,
+      wheelX: "panX",
+      wheelY: "zoomY",
       pinchZoomX: false,
       paddingLeft: 0,
     }));
 
-    // Курсор
     let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
       behavior: "none"
     }));
     cursor.lineY.set("visible", false);
     cursor.lineX.setAll({stroke: am5.color('#fff')});
 
-    // Ось X (даты)
     let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-      maxDeviation: 0,
+      maxDeviation: 1,
       baseInterval: {
         timeUnit: "hour",
         count: step
@@ -108,12 +106,19 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
       tooltip: am5.Tooltip.new(root, {})
     }));
 
-    // Ось Y (значения)
     let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-      renderer: am5xy.AxisRendererY.new(root, {})
+      renderer: am5xy.AxisRendererY.new(root, {
+        pan: "zoom"
+      })
     }));
 
-    // Создаем серию данных
+    xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+    yAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+
+    xAxis.set("tooltip", am5.Tooltip.new(root, {
+      themeTags: ["axis"]
+    }));
+
     let series = chart.series.push(am5xy.LineSeries.new(root, {
       name: data.name,
       xAxis: xAxis,
@@ -126,22 +131,23 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
       })
     }));
 
-    // Делаем линию толще
     series.strokes.template.setAll({strokeWidth: 3});
 
-    // Устанавливаем данные
+    series.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Label.new(root, {
+          centerX: am5.p50,
+          centerY: am5.p100,
+          text: "{valueY}",
+          fill: am5.color('#fff'),
+          populateText: true,
+          rotation: 315
+        })
+      });
+    });
+
     series.data.setAll(data.data);
 
-    // Настройка цветов осей
-    root.interfaceColors.set("grid", am5.color('#fff'));
-    xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
-    yAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
-
-    xAxis.set("tooltip", am5.Tooltip.new(root, {
-      themeTags: ["axis"]
-    }));
-
-    // Легенда
     let legend = chart.children.unshift(am5.Legend.new(root, {
       x: am5.percent(60),
       centerX: am5.percent(60)
