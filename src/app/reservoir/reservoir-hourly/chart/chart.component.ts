@@ -146,6 +146,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
       });
     });
 
+    xAxis.data.setAll(data.data)
     series.data.setAll(data.data);
 
     let legend = chart.children.unshift(am5.Legend.new(root, {
