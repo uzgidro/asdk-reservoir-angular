@@ -250,8 +250,8 @@ export class DashboardCurrentChartComponent implements AfterViewInit, OnDestroy 
       });
       let chart: ChartData = {
         name: res.reservoir,
-        currentValue: filter[0].value,
-        dayBeginValue: filter[1].value,
+        currentValue: Number.parseFloat((Math.round(filter[0].value * 10) / 10).toFixed(1)),
+        dayBeginValue: Number.parseFloat((Math.round(filter[1].value * 10) / 10).toFixed(1)),
       }
       lastUpdate = lastUpdate < new Date(filter[0].date).getTime() ? new Date(filter[0].date).getTime() : lastUpdate
       return chart;
