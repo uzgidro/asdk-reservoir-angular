@@ -169,6 +169,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
 
     if (series) {
       series.data.setAll(data.data);
+      series.appear(1000);
     }
   }
 }
