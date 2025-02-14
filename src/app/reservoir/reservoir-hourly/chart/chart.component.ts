@@ -158,6 +158,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
 
     series.appear(1000)
     chart.appear(1000, 100);
+    this.root = root;
   }
 
   private updateChart(data: ChartData) {
