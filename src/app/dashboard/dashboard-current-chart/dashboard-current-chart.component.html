@@ -1,26 +1,20 @@
-<div class="grid grid-cols-4 justify-stretch gap-2 text-xs">
-  <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'income'}"
-          (click)="changeCategory('income')">Kelishi, m³/s
-  </button>
-  <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'release'}"
-          (click)="changeCategory('release')">Chiqish, m³/s
-  </button>
-  <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'level'}"
-          (click)="changeCategory('level')">Suv sathi, m
-  </button>
-  <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'volume'}"
-          (click)="changeCategory('volume')">Suv hajmi, mln.m³
-  </button>
-</div>
+<div class="flex flex-col h-full w-full justify-between">
+  <div class="grid grid-cols-4 justify-stretch gap-2 text-xs">
+    <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'income'}"
+            (click)="changeCategory('income')">Kelishi, m³/s
+    </button>
+    <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'release'}"
+            (click)="changeCategory('release')">Chiqish, m³/s
+    </button>
+    <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'level'}"
+            (click)="changeCategory('level')">Suv sathi, m
+    </button>
+    <button class="inactive-button px-4 py-2" [ngClass]="{'active-button': category == 'volume'}"
+            (click)="changeCategory('volume')">Suv hajmi, mln.m³
+    </button>
+  </div>
 
-<a routerLink="/recourses" class="flex">
-  <canvas
-    baseChart
-    [labels]="labels"
-    [datasets]="chartData"
-    [options]="chartOptions"
-    [type]="chartType"
-    [plugins]="chartPlugin"
-  >
-  </canvas>
-</a>
+  <a routerLink="/recourses" class="flex">
+    <div id="dashboardChart" class="flex w-full h-96"></div>
+  </a>
+</div>
