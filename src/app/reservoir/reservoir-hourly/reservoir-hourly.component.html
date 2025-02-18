@@ -1,6 +1,6 @@
-<div *ngIf="reservoirsData.length !== 0; else loader" class="flex flex-col flex-1 space-y-4">
-  <app-card-header [title]="'Kunlik ma\'lumotlar'"></app-card-header>
-  <table id="table">
+<div *ngIf="reservoirsData.length !== 0; else loader" class="flex flex-col flex-1 space-y-4 overflow-y-auto">
+  <app-card-header [title]="'Tezkor ma\'lumotlar'"></app-card-header>
+  <table>
     <thead>
     <tr>
       <th rowspan="2">Suv omborlar</th>
@@ -101,16 +101,99 @@
     </tr>
     </tbody>
   </table>
-  <div class="flex flex-row w-fit px-4 py-3 border border-slate-400 rounded-lg space-x-8 items-center">
-    <div class="flex flex-row justify-center">
-      <span class="material-symbols-outlined mr-1 text-cyan-300">picture_as_pdf</span>
-      <button class="text-cyan-300" (click)="exportTableToPDF()">PDF</button>
-    </div>
-    <div class="flex flex-row justify-center">
-      <span class="material-symbols-outlined mr-1 text-cyan-300">table_view</span>
-      <button class="text-cyan-300" (click)="exportToExcel()">Excel</button>
-    </div>
-  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th rowspan="3">Suv omborlar nomi</th>
+      <th rowspan="2" colspan="2">Suvning sathi, m</th>
+      <th colspan="5">Suvning hajmi, mln.m³</th>
+      <th colspan="6">Suvning kelishi, m³/s</th>
+      <th colspan="5">Suvning chiqishi, m³/s</th>
+    </tr>
+    <tr>
+      <th rowspan="2">{{yesterday | date:'dd.MM'}}</th>
+      <th rowspan="2">{{today | date:'dd.MM'}}</th>
+      <th colspan="3">O'tgan yillarda shu kunga</th>
+      <th rowspan="2">{{yesterday | date:'dd.MM'}}</th>
+      <th rowspan="2">{{today | date:'dd.MM'}}</th>
+      <th rowspan="2">O'rt</th>
+      <th colspan="3">O'tgan yillarda shu kunga</th>
+      <th rowspan="2">{{yesterday | date:'dd.MM'}}</th>
+      <th rowspan="2">{{today | date:'dd.MM'}}</th>
+      <th colspan="3">O'tgan yillarda shu kunga</th>
+    </tr>
+    <tr>
+      <th>{{yesterday | date:'dd.MM'}}</th>
+      <th>{{today | date:'dd.MM'}}</th>
+      <th>{{pastYear | date:'yyyy'}}</th>
+      <th>{{beforePastYear | date:'yyyy'}}</th>
+      <th>{{beforeBeforePastYear | date:'yyyy'}}</th>
+      <th>{{pastYear | date:'yyyy'}}</th>
+      <th>{{beforePastYear | date:'yyyy'}}</th>
+      <th>{{beforeBeforePastYear | date:'yyyy'}}</th>
+      <th>{{pastYear | date:'yyyy'}}</th>
+      <th>{{beforePastYear | date:'yyyy'}}</th>
+      <th>{{beforeBeforePastYear | date:'yyyy'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let data of operativeData; let i = index">
+      <tr>
+        <td class="text-lg" rowspan="2">{{ data.name }}</td>
+        <td>{{ data.level[2].value | number:'0.0-2' }}</td>
+        <td>{{ data.level[0].value | number:'0.0-2' }}</td>
+        <td>{{ data.volume[2].value | number:'0.0-2' }}</td>
+        <td>{{ data.volume[0].value | number:'0.0-2' }}</td>
+        <td>{{ data.volume[3].value | number:'0.0-2' }}</td>
+        <td>{{ data.volume[4].value | number:'0.0-2' }}</td>
+        <td>{{ data.volume[5].value | number:'0.0-2' }}</td>
+        <td>{{ data.income[2].value | number:'0.0-2' }}</td>
+        <td>{{ data.income[0].value | number:'0.0-2' }}</td>
+        <td>{{ (data.income[0].value + data.income[0].value) / 2 | number:'0.0-2' }}</td>
+        <td>{{ data.income[3].value | number:'0.0-2' }}</td>
+        <td>{{ data.income[4].value | number:'0.0-2' }}</td>
+        <td>{{ data.income[5].value | number:'0.0-2' }}</td>
+        <td>{{ data.release[2].value | number:'0.0-2' }}</td>
+        <td>{{ data.release[0].value | number:'0.0-2' }}</td>
+        <td>{{ data.release[3].value | number:'0.0-2' }}</td>
+        <td>{{ data.release[4].value | number:'0.0-2' }}</td>
+        <td>{{ data.release[5].value | number:'0.0-2' }}</td>
+      </tr>
+      <tr>
+        <td class="bg-slate-600">{{ data.level[2].value - data.level[1].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.level[0].value - data.level[2].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.volume[2].value - data.volume[1].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.volume[0].value - data.volume[2].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.volume[0].value - data.volume[3].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.volume[0].value - data.volume[4].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.volume[0].value - data.volume[5].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.income[2].value - data.income[0].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.income[0].value - data.income[2].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600"></td>
+        <td class="bg-slate-600">{{ data.income[0].value - data.income[3].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.income[0].value - data.income[4].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.income[0].value - data.income[5].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.release[2].value - data.release[1].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.release[0].value - data.release[2].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.release[0].value - data.release[3].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.release[0].value - data.release[4].value | number:'0.0-2' }}</td>
+        <td class="bg-slate-600">{{ data.release[0].value - data.release[5].value | number:'0.0-2' }}</td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <!--  <div class="flex flex-row w-fit px-4 py-3 border border-slate-400 rounded-lg space-x-8 items-center">-->
+  <!--    <div class="flex flex-row justify-center">-->
+  <!--      <span class="material-symbols-outlined mr-1 text-cyan-300">picture_as_pdf</span>-->
+  <!--      <button class="text-cyan-300" (click)="exportTableToPDF()">PDF</button>-->
+  <!--    </div>-->
+  <!--    <div class="flex flex-row justify-center">-->
+  <!--      <span class="material-symbols-outlined mr-1 text-cyan-300">table_view</span>-->
+  <!--      <button class="text-cyan-300" (click)="exportToExcel()">Excel</button>-->
+  <!--    </div>-->
+  <!--  </div>-->
   <div *ngIf="chart" class="grid grid-flow-col-dense">
     <app-chart [chart]="chart.incomeDataset"></app-chart>
     <app-chart [chart]="chart.releaseDataset"></app-chart>

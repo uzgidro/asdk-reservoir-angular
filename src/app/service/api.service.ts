@@ -5,7 +5,7 @@ import {catchError, Observable} from "rxjs";
 import {
   CategorisedArrayResponse,
   CategorisedValueResponse,
-  ComplexValueResponse,
+  ComplexValueResponse, OperativeValueResponse,
   ReservoiredArrayResponse
 } from "../shared/response/values-response";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
@@ -30,6 +30,7 @@ const SELECTED: string = '/selected'
 const VEGETATIVE: string = '/vegetative'
 const LEVEL: string = '/level'
 const LV: string = '/lv'
+const OPERATIVE: string = '/operative'
 
 
 @Injectable({
@@ -69,6 +70,15 @@ export class ApiService {
 
   getDashboardValuesSortedByReservoir(): Observable<ReservoiredArrayResponse[]> {
     return this.http.get<ReservoiredArrayResponse[]>(BASE_URL + DASHBOARD_RES).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return []
+      })
+    );
+  }
+
+  getOperativeValues(): Observable<OperativeValueResponse[]> {
+    return this.http.get<OperativeValueResponse[]>(BASE_URL + OPERATIVE).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return []

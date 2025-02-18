@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
-import {CategorisedArrayResponse} from "../../shared/response/values-response";
+import {CategorisedArrayResponse, OperativeValueResponse} from "../../shared/response/values-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {NgChartsModule} from "ng2-charts";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
@@ -32,6 +32,12 @@ import {ChartComponent} from "./chart/chart.component";
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
   times: Date[] = []
+  operativeData: OperativeValueResponse[] = []
+  today = new Date();
+  yesterday = new Date().setDate(this.today.getDate() - 1);
+  pastYear = new Date().setFullYear(this.today.getFullYear() - 1);
+  beforePastYear = new Date().setFullYear(this.today.getFullYear() - 2);
+  beforeBeforePastYear = new Date().setFullYear(this.today.getFullYear() - 3);
 
   reservoirsData: {
     id: number,
@@ -62,37 +68,13 @@ export class ReservoirHourlyComponent implements OnInit {
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
         this.setupTable(response)
+        this.setupChartData(response)
+      }
+    })
 
-        for (let i = 0; i < response.income.length; i++) {
-          const id = response.income[i].reservoir_id
-          const income = {
-            data: response.income[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-            name: 'Kelish, m³/s',
-            color: 'rgba(37, 99, 235,0.4)',
-          }
-          const release = {
-            data: response.release[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-            name: 'Chiqish, m³/s',
-            color: 'rgba(225, 29, 72,0.4)',
-          }
-          const level = {
-            data: response.level[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-            name: 'Sath, m',
-            color: 'rgba(22, 163, 74,0.4)',
-          }
-          const volume = {
-            data: response.volume[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-            name: 'Hajm, mln.m³',
-            color: 'rgba(147, 51, 234,0.4)',
-          }
-          this.dataForChart.push({
-            id: id,
-            incomeDataset: income,
-            releaseDataset: release,
-            levelDataset: level,
-            volumeDataset: volume,
-          })
-        }
+    this.api.getOperativeValues().subscribe({
+      next: (response: OperativeValueResponse[]) => {
+        this.operativeData = response
       }
     })
 
@@ -176,6 +158,39 @@ export class ReservoirHourlyComponent implements OnInit {
 
     // Сохранение PDF
     doc.save('Reservoirs-Table.pdf');
+  }
+
+  private setupChartData(data: CategorisedArrayResponse) {
+    for (let i = 0; i < data.income.length; i++) {
+      const id = data.income[i].reservoir_id
+      const income = {
+        data: data.income[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        name: 'Kelish, m³/s',
+        color: 'rgba(37, 99, 235,0.4)',
+      }
+      const release = {
+        data: data.release[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        name: 'Chiqish, m³/s',
+        color: 'rgba(225, 29, 72,0.4)',
+      }
+      const level = {
+        data: data.level[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        name: 'Sath, m',
+        color: 'rgba(22, 163, 74,0.4)',
+      }
+      const volume = {
+        data: data.volume[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        name: 'Hajm, mln.m³',
+        color: 'rgba(147, 51, 234,0.4)',
+      }
+      this.dataForChart.push({
+        id: id,
+        incomeDataset: income,
+        releaseDataset: release,
+        levelDataset: level,
+        volumeDataset: volume,
+      })
+    }
   }
 
   private formatDate(date: Date) {

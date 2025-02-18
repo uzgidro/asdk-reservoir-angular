@@ -33,3 +33,27 @@ export interface CategorisedValueResponse {
   level: ComplexValueResponse
   volume: ComplexValueResponse
 }
+
+export interface OperativeValueResponse {
+  name: string
+  income: {
+    category: string
+    date: string
+    value: number
+  }[]
+  release: {
+    category: string
+    date: string
+    value: number
+  }[]
+  level: {
+    category: string
+    date: string
+    value: number
+  }[]
+  volume: {
+    category: string
+    date: string
+    value: number
+  }[]
+}
