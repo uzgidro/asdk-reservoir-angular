@@ -277,6 +277,6 @@ export interface ChartData {
     value: number,
     timestamp: number,
   }[]
-  color: string
+  color?: string
 
 }

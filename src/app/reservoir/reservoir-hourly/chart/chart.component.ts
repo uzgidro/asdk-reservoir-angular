@@ -125,7 +125,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
       yAxis: yAxis,
       valueYField: "value",
       valueXField: "timestamp",
-      stroke: am5.color(data.color),
+      stroke: am5.color(data.color!),
       tooltip: am5.Tooltip.new(root, {
         labelText: '{valueY}'
       })
