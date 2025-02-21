@@ -1,14 +1,6 @@
 <div *ngIf="data" class="flex flex-col space-y-2 flex-1"><a routerLink="/water"
                                                             [queryParams]="{reservoir: data.reservoirId}">
-  <canvas
-    baseChart
-    [datasets]="dataset"
-    [labels]="labels"
-    [options]="lineChartOptions"
-    [type]="lineChartType"
-    [plugins]="chartPlugin"
-  >
-  </canvas>
+  <div [id]="id" class="w-full h-80"></div>
 </a>
 
   <div class="grid grid-flow-col-dense">

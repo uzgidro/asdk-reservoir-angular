@@ -6,6 +6,7 @@ import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {ComplexValueResponse} from "../shared/response/values-response";
 import {WaterRecourseCardComponent} from "./water-recourse-card/water-recourse-card.component";
+import {ChartData} from "../reservoir/reservoir-hourly/reservoir-hourly.component";
 
 @Component({
   selector: 'app-water-recourses',
@@ -25,16 +26,16 @@ export class WaterRecoursesComponent implements OnInit {
     reservoir: string
     income: number
     incomeDifference: string
-    incomeChart: any
+    incomeChart: ChartData
     release: number
     releaseDifference: string
-    releaseChart: any
+    releaseChart: ChartData
     level: number
     levelDifference: string
-    levelChart: any
+    levelChart: ChartData
     volume: number
     volumeDifference: string
-    volumeChart: any
+    volumeChart: ChartData
     incomeLabels: string[]
     releaseLabels: string[]
     levelLabels: string[]
@@ -52,53 +53,47 @@ export class WaterRecoursesComponent implements OnInit {
     this.apiService.getDashboardValuesSortedByReservoir().subscribe({
       next: response => {
         response.forEach(item => {
+          item.income.data.map(it => new Date(it.date).getTime())
+
           this.reservoirData.push({
             reservoirId: item.reservoir.id,
             reservoir: item.reservoir.name,
             income: item.income.data[0].value,
             incomeDifference: this.getDifference(item.income),
-            incomeChart: [{
-              data: item.income.data.map(value => value.value).reverse(),
-              label: 'Kelish',
-              borderColor: 'rgba(148,159,177,1)',
-              pointBackgroundColor: 'rgba(148,159,177,1)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-            }],
+            incomeChart: {
+              name: 'Kelish',
+              data: item.income.data.map(it => ({
+                timestamp: Date.parse(it.date),
+                value: it.value
+              })).reverse(),
+            },
             release: item.release.data[0].value,
             releaseDifference: this.getDifference(item.release),
-            releaseChart: [{
-              data: item.release.data.map(value => value.value).reverse(),
-              label: 'Chiqish',
-              borderColor: 'rgba(148,159,177,1)',
-              pointBackgroundColor: 'rgba(148,159,177,1)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-            }],
+            releaseChart: {
+              name: 'Chiqish',
+              data: item.release.data.map(it => ({
+                timestamp: Date.parse(it.date),
+                value: it.value
+              })).reverse(),
+            },
             volume: item.volume.data[0].value,
             volumeDifference: this.getDifference(item.volume),
-            volumeChart: [{
-              data: item.volume.data.map(value => value.value).reverse(),
-              label: 'Hajm',
-              borderColor: 'rgba(148,159,177,1)',
-              pointBackgroundColor: 'rgba(148,159,177,1)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-            }],
+            volumeChart: {
+              name: 'Hajm',
+              data: item.volume.data.map(it => ({
+                timestamp: Date.parse(it.date),
+                value: it.value
+              })).reverse(),
+            },
             level: item.level.data[0].value,
             levelDifference: this.getDifference(item.level),
-            levelChart: [{
-              data: item.level.data.map(value => value.value).reverse(),
-              label: 'Sath',
-              borderColor: 'rgba(148,159,177,1)',
-              pointBackgroundColor: 'rgba(148,159,177,1)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-            }],
+            levelChart: {
+              name: 'Sath',
+              data: item.level.data.map(it => ({
+                timestamp: Date.parse(it.date),
+                value: it.value
+              })).reverse(),
+            },
             incomeLabels: item.income.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse(),
             releaseLabels: item.release.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse(),
             levelLabels: item.level.data.map(value => value.date.split(' ')[1].substring(0, 5)).reverse(),
