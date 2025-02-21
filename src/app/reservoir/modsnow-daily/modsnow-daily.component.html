@@ -1,6 +1,7 @@
-<div class="flex flex-col justify-center pt-10 px-12 max-h-fit">
+<div class="flex flex-col justify-center max-h-fit"
+     [ngClass]="{'px-12 pt-10': isMainComponent}">
   <app-card-header [title]="'MODSNOW'"></app-card-header>
-  <p-carousel [value]="rivers" [numVisible]="3" [numScroll]="3" [circular]="true"
+  <p-carousel [value]="rivers" [numVisible]="itemCount" [numScroll]="itemCount" [circular]="true"
               [responsiveOptions]="responsiveOptions">
     <ng-template let-river pTemplate="item">
       <div class="flex flex-col justify-center mx-4 h-fit">

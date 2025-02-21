@@ -12,6 +12,8 @@ import {WeatherApiService} from "../service/weather-api.service";
 import {NgOptimizedImage} from "@angular/common";
 import {EnvService} from "../shared/service/env.service";
 import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-char.component";
+import {DashboardMapComponent} from "./dashboard-map/dashboard-map.component";
+import {ModsnowDailyComponent} from "../reservoir/modsnow-daily/modsnow-daily.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +26,8 @@ import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-
     DashboardCurrentChartComponent,
     NgOptimizedImage,
     DashboardSnowChartComponent,
+    DashboardMapComponent,
+    ModsnowDailyComponent,
   ],
   standalone: true
 })
@@ -93,7 +97,7 @@ export class DashboardComponent implements OnInit {
 
   public weatherDaily: {
     reservoir: string
-    forecast?: Forecast[]
+    forecast: Forecast[]
   }[] = []
 
   get forecastDate() {
@@ -128,7 +132,6 @@ export class DashboardComponent implements OnInit {
               if (!existsElement) {
                 forecast.push({date: weather.time})
               } else {
-
                 if (weather.time.getHours() === 11) {
                   existsElement.dayIcon = weather.weatherIcon
                   existsElement.dayIconDescription = weather.weatherDescription
@@ -143,7 +146,8 @@ export class DashboardComponent implements OnInit {
           }
         },
         complete: () => {
-          this.weatherDaily.push({reservoir: reservoir.name, forecast: forecast.slice(0, 4)})
+          this.weatherDaily.push({reservoir: reservoir.name, forecast: forecast.slice(0, 3)})
+          console.log(this.weatherDaily)
         }
       })
     })
