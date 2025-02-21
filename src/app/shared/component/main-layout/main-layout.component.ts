@@ -89,6 +89,10 @@ export class MainLayoutComponent implements OnInit {
       name: 'Normativ hujjatlar',
       path: '/docs',
     },
+    {
+      name: 'Xarita',
+      path: '/map',
+    },
   ];
 
 

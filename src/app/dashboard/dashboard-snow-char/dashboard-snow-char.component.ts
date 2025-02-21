@@ -44,7 +44,9 @@ export class DashboardSnowChartComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.root.dispose()
+    if (this.root != undefined) {
+      this.root.dispose()
+    }
   }
 
   private renderChart(data: ModsnowPercentResponse[]) {

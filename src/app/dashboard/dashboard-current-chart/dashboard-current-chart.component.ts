@@ -58,7 +58,9 @@ export class DashboardCurrentChartComponent implements AfterViewInit, OnDestroy 
   }
 
   ngOnDestroy() {
-    this.root.dispose()
+    if (this.root != undefined) {
+      this.root.dispose()
+    }
   }
 
   public changeCategory(category: 'income' | 'release' | 'volume' | 'level'): void {

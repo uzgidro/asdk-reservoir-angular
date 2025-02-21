@@ -147,7 +147,6 @@ export class DashboardComponent implements OnInit {
         },
         complete: () => {
           this.weatherDaily.push({reservoir: reservoir.name, forecast: forecast.slice(0, 3)})
-          console.log(this.weatherDaily)
         }
       })
     })
