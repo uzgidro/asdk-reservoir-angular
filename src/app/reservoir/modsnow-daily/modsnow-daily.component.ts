@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CarouselModule} from "primeng/carousel";
 import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
-import {NgOptimizedImage} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {NgChartsModule} from "ng2-charts";
@@ -10,7 +9,6 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 import {ModsnowService} from "../../service/modsnow.service";
 import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 import {ActivatedRoute} from "@angular/router";
-import {array} from "@amcharts/amcharts5";
 
 @Component({
   selector: 'app-modsnow-daily',
@@ -19,7 +17,6 @@ import {array} from "@amcharts/amcharts5";
     CarouselModule,
     TagModule,
     ButtonModule,
-    NgOptimizedImage,
     CalendarModule,
     FormsModule,
     NgChartsModule,

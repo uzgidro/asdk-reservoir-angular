@@ -1,12 +1,15 @@
-export interface ChartData {
+export interface Chart {
   name: string
-  value: number
+  color?: string
 }
 
-export interface DateChartData extends ChartData {
-  date: number
+export interface DateChart extends Chart {
+  data: {
+    value: number
+    timestamp: number
+  }[]
 }
 
-export interface ClusterChartData extends ChartData {
+export interface ClusterChart extends Chart {
   index: number
 }
