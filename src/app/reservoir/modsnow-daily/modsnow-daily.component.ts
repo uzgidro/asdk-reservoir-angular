@@ -30,56 +30,7 @@ import {array} from "@amcharts/amcharts5";
 })
 export class ModsnowDailyComponent implements OnInit {
   @Input() itemCount: number = 3
-  rivers: ModsnowImageResponse[] = [
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-    {
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
-    },
-  ]
+  rivers: ModsnowImageResponse[] = []
   responsiveOptions: any[] = []
   isMainComponent: boolean = true;
 
@@ -91,6 +42,11 @@ export class ModsnowDailyComponent implements OnInit {
     // this.modsnow.getCover().subscribe(cover => {
     //   this.rivers = cover;
     // })
+
+    this.rivers = Array(12).fill({
+      name: 'asd',
+      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
+    })
 
     this.activatedRoute.url.subscribe({
       next: value => {
