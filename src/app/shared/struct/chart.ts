@@ -1,6 +1,7 @@
 export interface Chart {
   name: string
   color?: string
+  bulletColor?: string
 }
 
 export interface DateChart extends Chart {
@@ -8,6 +9,17 @@ export interface DateChart extends Chart {
     value: number
     timestamp: number
   }[]
+}
+
+export interface CategoryChart extends Chart {
+  data: CategoryData[]
+}
+
+export interface CategoryData  {
+  seriesName: string
+  value: number
+  color?: string
+  bulletColor?: string
 }
 
 export interface ClusterChart extends Chart {

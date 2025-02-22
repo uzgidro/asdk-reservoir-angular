@@ -50,7 +50,6 @@ export class DashboardCurrentChartComponent implements AfterViewInit, OnDestroy 
           this.releaseData = this.setupData(response.release)
           this.levelData = this.setupData(response.level)
           this.volumeData = this.setupData(response.volume)
-          console.log(this.incomeData)
           this.setupChart(this.incomeData)
         }
       })
@@ -100,7 +99,6 @@ export class DashboardCurrentChartComponent implements AfterViewInit, OnDestroy 
       wheelY: "zoomX",
       pinchZoomX: true,
       paddingLeft: 0,
-      paddingRight: 1
     }));
 
     let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
