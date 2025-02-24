@@ -24,8 +24,8 @@ export class Chart {
     this.browserOnly(() => this.createHourChart(id, data))
   }
 
-  protected renderCategoryChart(id: string, data: CategoryChart[]) {
-    this.browserOnly(() => this.createCategoryChart(id, data))
+  protected renderCategoryChart(id: string, data: CategoryChart[], showLegend: boolean = true) {
+    this.browserOnly(() => this.createCategoryChart(id, data, showLegend))
   }
 
   protected updateHourChart(data: DateChart) {
@@ -38,6 +38,27 @@ export class Chart {
       if (series) {
         series.data.setAll(data.data);
         series.appear(1000);
+      }
+    })
+  }
+
+  protected updateCategoryChart(data: CategoryChart[]) {
+    this.browserOnly(() => {
+      if (!this.root) return;
+
+      const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
+      const seriesCount = chart.series.length;
+      if (seriesCount === 0) return;
+      for (let i = 0; i < seriesCount; i++) {
+        const series = chart.series.getIndex(i) as am5xy.LineSeries;
+
+        if (series) {
+          series.data.setAll(data.map(item => ({
+            name: item.name,
+            value: item.data[i].value
+          })))
+          series.appear(1000);
+        }
       }
     })
   }
@@ -106,7 +127,7 @@ export class Chart {
     this.root = root;
   }
 
-  private createCategoryChart(id: string, data: CategoryChart[]) {
+  private createCategoryChart(id: string, data: CategoryChart[], showLegend: boolean = true) {
     let root = am5.Root.new(id);
 
     this.setupRoot(root);
@@ -150,7 +171,6 @@ export class Chart {
 
     xAxis.data.setAll(data);
 
-    this.setupLegend(root, chart)
 
     let clusterCount = data[0].data.length
 
@@ -162,6 +182,7 @@ export class Chart {
       })))
       series.appear(1000)
     }
+    if (showLegend) this.setupLegend(root, chart)
 
     chart.appear(1000, 100);
     this.root = root
@@ -173,24 +194,24 @@ export class Chart {
     xAxis: am5xy.CategoryAxis<am5xy.AxisRenderer>,
     yAxis: am5xy.ValueAxis<am5xy.AxisRenderer>,
     data: CategoryData
-    ) {
-      let series = chart.series.push(am5xy.ColumnSeries.new(root, {
-        name: data.seriesName,
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: "value",
-        sequencedInterpolation: true,
-        categoryXField: "name",
-        tooltip: am5.Tooltip.new(root, {
-          labelText: "{valueY}"
-        })
-      }));
+  ) {
+    let series = chart.series.push(am5xy.ColumnSeries.new(root, {
+      name: data.seriesName,
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value",
+      sequencedInterpolation: true,
+      categoryXField: "name",
+      tooltip: am5.Tooltip.new(root, {
+        labelText: "{valueY}"
+      })
+    }));
 
-      series.bullets.push(() => this.setupBullets(root, data.bulletColor));
-      series.columns.template.setAll({cornerRadiusTL: 5, cornerRadiusTR: 5, strokeOpacity: 0});
-      if (data.color) series.columns.template.set('fill', am5.color(data.color));
+    series.bullets.push(() => this.setupBullets(root, data.bulletColor));
+    series.columns.template.setAll({cornerRadiusTL: 5, cornerRadiusTR: 5, strokeOpacity: 0});
+    if (data.color) series.columns.template.set('fill', am5.color(data.color));
 
-      return series
+    return series
   }
 
   private setupRoot(root: am5.Root) {
@@ -225,9 +246,10 @@ export class Chart {
     }));
     legend.labels.template.setAll({fill: am5.color("#ffffff")});
     legend.data.setAll(chart.series.values);
+    console.log(chart.series.values);
   }
 
-  private setupBullets(root: am5.Root, bulletColor: string|undefined) {
+  private setupBullets(root: am5.Root, bulletColor: string | undefined) {
     const fill = bulletColor ? am5.color(bulletColor) : am5.color('#fff');
     return am5.Bullet.new(root, {
       locationY: 1,

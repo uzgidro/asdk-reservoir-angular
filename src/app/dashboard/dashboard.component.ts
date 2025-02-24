@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NgChartsModule} from "ng2-charts";
-import {ChartConfiguration, ChartType} from "chart.js";
 import {CarouselModule} from "primeng/carousel";
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
 import {DashboardCurrentChartComponent} from "./dashboard-current-chart/dashboard-current-chart.component";
@@ -10,9 +9,7 @@ import {Forecast, WeatherCurrentResponse} from "../shared/response/weather-respo
 import {WeatherService} from "../service/weather.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {NgOptimizedImage} from "@angular/common";
-import {EnvService} from "../shared/service/env.service";
 import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-char.component";
-import {DashboardMapComponent} from "./dashboard-map/dashboard-map.component";
 import {ModsnowDailyComponent} from "../reservoir/modsnow-daily/modsnow-daily.component";
 
 @Component({
@@ -26,74 +23,12 @@ import {ModsnowDailyComponent} from "../reservoir/modsnow-daily/modsnow-daily.co
     DashboardCurrentChartComponent,
     NgOptimizedImage,
     DashboardSnowChartComponent,
-    DashboardMapComponent,
     ModsnowDailyComponent,
   ],
   standalone: true
 })
 export class DashboardComponent implements OnInit {
   public reservoirs: string[] = []
-
-  public lineChartData: ChartConfiguration['data'] = {
-    datasets: [
-      {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Series A',
-        borderColor: 'rgba(148,159,177,1)',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-      },
-      {
-        data: [28, 48, 40, 19, 86, 27, 90],
-        label: 'Series B',
-        borderColor: 'rgba(77,83,96,1)',
-        pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,1)',
-      },
-      {
-        data: [180, 480, 770, 90, 1000, 270, 400],
-        label: 'Series C',
-        yAxisID: 'y1',
-        borderColor: 'red',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-      },
-    ],
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  };
-
-  public lineChartOptions: ChartConfiguration['options'] = {
-    scales: {
-      x: {
-        grid: {
-          color: '#2D2D2D',
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-      y: {
-        grid: {
-          color: '#2D2D2D',
-        },
-        ticks: {
-          color: 'white',
-        }
-      },
-    },
-
-    plugins: {
-      legend: {display: true},
-    },
-  };
-
-  public lineChartType: ChartType = 'line';
 
   public weatherDaily: {
     reservoir: string

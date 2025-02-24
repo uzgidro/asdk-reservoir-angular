@@ -1,10 +1,14 @@
-<div class="grid grid-cols-12 px-12 pt-10 gap-4">
-  <div class="flex flex-col h-full col-span-3">
+<div class="grid grid-cols-2 px-12 pt-10 gap-4">
     <div class="flex flex-col space-y-2">
       <app-card-header [title]="'Suv resurslar'"></app-card-header>
 
       <app-dashboard-current-chart class="flex flex-1"></app-dashboard-current-chart>
     </div>
+  <div class="flex flex-col space-y-2 justify-between">
+    <app-card-header [title]="'MODSNOW'"></app-card-header>
+
+    <app-dashboard-snow-chart></app-dashboard-snow-chart>
+  </div>
     <div class="flex flex-col space-y-2">
       <app-card-header [title]="'Ob-havo'"></app-card-header>
 
@@ -42,20 +46,9 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="flex col-span-6">
-    <app-dashboard-map class="flex flex-1"></app-dashboard-map>
-  </div>
-  <div class="flex flex-col h-full col-span-3">
-    <div class="flex flex-col space-y-2 justify-between">
-      <app-card-header [title]="'MODSNOW'"></app-card-header>
-
-      <app-dashboard-snow-chart></app-dashboard-snow-chart>
-    </div>
     <div class="flex flex-col space-y-2 justify-between">
       <app-modsnow-daily [itemCount]="1.5"></app-modsnow-daily>
     </div>
-  </div>
 </div>
 
 <!--<div class="grid grid-cols-3 px-12 pt-10 gap-4">-->
