@@ -8,6 +8,7 @@ import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {isPlatformBrowser} from "@angular/common";
 import {ModsnowPercentResponse} from "../../shared/response/modsnow-response";
+import {Chart} from "../../shared/component/chart";
 
 @Component({
   selector: 'app-dashboard-snow-chart',
@@ -19,32 +20,22 @@ import {ModsnowPercentResponse} from "../../shared/response/modsnow-response";
   templateUrl: './dashboard-snow-char.component.html',
   styleUrl: './dashboard-snow-char.component.css'
 })
-export class DashboardSnowChartComponent implements AfterViewInit, OnDestroy {
+export class DashboardSnowChartComponent
+  // extends Chart
+  implements AfterViewInit, OnDestroy {
 
-  private root!: am5.Root;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private zone: NgZone, private modsnow: ModsnowService) {
-  }
-
-  browserOnly(f: () => void) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.zone.runOutsideAngular(() => {
-        f();
-      });
-    }
+  constructor(private modsnow: ModsnowService) {
   }
 
   ngAfterViewInit() {
-    this.browserOnly(() => {
       this.modsnow.getPercent().subscribe(response => {
           this.renderChart(response)
         }
       )
-    });
   }
 
   ngOnDestroy() {
-    this.root.dispose()
+    // this.chartDispose()
   }
 
   private renderChart(data: ModsnowPercentResponse[]) {
@@ -149,6 +140,6 @@ export class DashboardSnowChartComponent implements AfterViewInit, OnDestroy {
 
     series.appear(1000);
     chart.appear(1000, 100);
-    this.root = root
+    // this.root = root
   }
 }
