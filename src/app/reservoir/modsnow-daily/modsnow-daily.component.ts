@@ -42,7 +42,7 @@ export class ModsnowDailyComponent implements OnInit {
 
     this.rivers = Array(12).fill({
       name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/75e68145-37de-44f1-baea-bcc999f55cee.jpeg'
+      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/ec963c74-c2e1-4007-89b6-eb1103505f6c.jpeg'
     })
 
     this.activatedRoute.url.subscribe({
