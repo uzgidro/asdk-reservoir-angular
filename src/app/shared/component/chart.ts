@@ -24,6 +24,10 @@ export class Chart {
     this.browserOnly(() => this.createHourChart(id, data))
   }
 
+  protected renderCategoryChart(id: string, data: CategoryChart[]) {
+    this.browserOnly(() => this.createCategoryChart(id, data))
+  }
+
   protected updateHourChart(data: DateChart) {
     this.browserOnly(() => {
       if (!this.root) return;
@@ -152,7 +156,10 @@ export class Chart {
 
     for (let i = 0; i < clusterCount; i++) {
       const series = this.createColumnSeries(root, chart, xAxis, yAxis, data[0].data[i]);
-      series.data.setAll(data.map(item => item.data[i]))
+      series.data.setAll(data.map(item => ({
+        name: item.name,
+        value: item.data[i].value
+      })))
       series.appear(1000)
     }
 
@@ -223,9 +230,10 @@ export class Chart {
   private setupBullets(root: am5.Root, bulletColor: string|undefined) {
     const fill = bulletColor ? am5.color(bulletColor) : am5.color('#fff');
     return am5.Bullet.new(root, {
+      locationY: 1,
       sprite: am5.Label.new(root, {
         centerX: am5.p50,
-        centerY: am5.p100,
+        // centerY: am5.p100,
         text: "{valueY}",
         fill: fill,
         populateText: true,
