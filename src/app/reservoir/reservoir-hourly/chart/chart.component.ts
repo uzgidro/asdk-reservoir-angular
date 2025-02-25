@@ -20,7 +20,7 @@ export class ChartComponent
   }
 
   ngAfterViewInit() {
-    this.renderHourChart(this.id, this.chart)
+    this.renderHourChart(this.id, [this.chart])
   }
 
   ngOnChanges(changes: SimpleChanges) {

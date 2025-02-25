@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 import {DecadeService} from "../decade.service";
-import {CommonModule, DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {CommonModule, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {ApiService} from "../../service/api.service";
 import {ActivatedRoute} from "@angular/router";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
@@ -15,7 +15,6 @@ import {EnvService} from "../../shared/service/env.service";
   selector: 'app-reservoir-schedule',
   standalone: true,
   imports: [
-    DatePipe,
     DecimalPipe,
     NgForOf,
     NgIf,
@@ -144,7 +143,13 @@ export class ReservoirScheduleComponent implements OnInit {
           }
         })
         this.api.getApprovedSchedule(reservoir).subscribe({
-          next: (response: {income: number, release: number, level: number, volumeStart: number, volumeEnd: number}[]) => {
+          next: (response: {
+            income: number,
+            release: number,
+            level: number,
+            volumeStart: number,
+            volumeEnd: number
+          }[]) => {
             this.approvedIncome = response.map(m => m.income)
             this.approvedRelease = response.map(m => m.release)
             this.approvedLevel = response.map(m => m.level)
@@ -158,11 +163,10 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
 
-  onReleaseRadioChange(event:any){
-    this.isReleaseRadioSelected=event.target.checked
-    console.log(this.isReleaseRadioSelected);
+  onReleaseRadioChange(event: any) {
+    this.isReleaseRadioSelected = event.target.checked
 
-    if (this.isReleaseRadioSelected&&this.selectedReleaseYears.length>0){
+    if (this.isReleaseRadioSelected && this.selectedReleaseYears.length > 0) {
       this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
         next: (values: ComplexValueResponse) => {
           this.setFlowForecast(undefined, values.data.map(item => item.value))
@@ -172,27 +176,27 @@ export class ReservoirScheduleComponent implements OnInit {
     }
 
   }
-  onIncomeRadioChange(event:any){
-    this.isIncomeRadioSelected=event.target.checked
-    console.log(this.isIncomeRadioSelected);
 
-    if (this.isIncomeRadioSelected&&this.selectedIncomeYears.length>0){
+  onIncomeRadioChange(event: any) {
+    this.isIncomeRadioSelected = event.target.checked
+
+    if (this.isIncomeRadioSelected && this.selectedIncomeYears.length > 0) {
       this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
         next: (values: ComplexValueResponse) => {
           this.setFlowForecast(values.data.map(item => item.value))
         },
       })
-    };
+    }
   }
 
 
   changeIncomeForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | 'last' | 'max' | 'min' | '30') {
-    this.selectedIncomeRadio =category ;
+    this.selectedIncomeRadio = category;
     //percent min max==null
     this.incomeForecastCategory = category
     this.setIncomePercentForecast()
     // this.selectedIncomeYears=[]
-    this.isIncomeRadioSelected=false
+    this.isIncomeRadioSelected = false
     if (this.income) {
       if (this.incomeForecastCategory == 'five') {
         this.setFlowForecast(this.income.stat5)
@@ -221,11 +225,11 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   changeReleaseForecast(category: 'perAvg' | 'perLast' | 'five' | 'ten' | '30' | 'last' | 'max' | 'min') {
-    this.selectedReleaseRadio =category ;
+    this.selectedReleaseRadio = category;
     this.releaseForecastCategory = category
     this.setReleasePercentForecast()
     // this.selectedReleaseYears=[]
-    this.isReleaseRadioSelected=false
+    this.isReleaseRadioSelected = false
     if (this.release) {
       if (this.releaseForecastCategory == 'five') {
         this.setFlowForecast(undefined, this.release.stat5)
@@ -252,20 +256,18 @@ export class ReservoirScheduleComponent implements OnInit {
   }
 
   changeIncomePercent(event: any) {
-    const percent = event.target.value;
-    this.selectedIncomePercent = percent
+    this.selectedIncomePercent = event.target.value
     this.incomePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setIncomePercentForecast()
-    this.isIncomeRadioSelected=false
+    this.isIncomeRadioSelected = false
 
   }
 
   changeReleasePercent(event: any) {
-    const percent = event.target.value;
-    this.selectedReleasePercent = percent;
+    this.selectedReleasePercent = event.target.value;
     this.releasePercent = typeof event.target.valueAsNumber == 'number' ? event.target.valueAsNumber : 0
     this.setReleasePercentForecast()
-    this.isReleaseRadioSelected=false
+    this.isReleaseRadioSelected = false
   }
 
   calcFlowVolume(array?: number[]) {
@@ -288,27 +290,25 @@ export class ReservoirScheduleComponent implements OnInit {
   changeSelectedIncomeForecast(event: MatSelectChange): void {
     this.selectedIncomeRadio = null
     this.selectedIncomeYears = event.value;
-    if (this.isIncomeRadioSelected&&this.selectedIncomeYears.length>0){
+    if (this.isIncomeRadioSelected && this.selectedIncomeYears.length > 0) {
       this.api.getVegetativeSelectedValues(this.reservoirId, 'income', this.selectedIncomeYears).subscribe({
         next: (values: ComplexValueResponse) => {
           this.setFlowForecast(values.data.map(item => item.value))
         },
       })
-    };
+    }
   }
 
   changeSelectedReleaseForecast(event: any): void {
     this.selectedReleaseRadio = null;
     this.selectedReleaseYears = event.value;
-    if (this.isReleaseRadioSelected&&this.selectedReleaseYears.length>0){
+    if (this.isReleaseRadioSelected && this.selectedReleaseYears.length > 0) {
       this.api.getVegetativeSelectedValues(this.reservoirId, 'release', this.selectedReleaseYears).subscribe({
         next: (values: ComplexValueResponse) => {
           this.setFlowForecast(undefined, values.data.map(item => item.value))
         },
       })
-
     }
-
   }
 
   private subscribeSubjects() {
@@ -326,8 +326,8 @@ export class ReservoirScheduleComponent implements OnInit {
         this.levelDifferenceForecast.push({value: 0, error: false})
         for (let i = 1; i <= forecast.length - 1; i++) {
           let days = i == 6 || i == 12 || i == 14 ? 11 : 10
-          const difference = (forecast[i] - forecast[i-1]) / days;
-          this.setupLevelDifferenceForecastWithConstraints(forecast[i-1], difference)
+          const difference = (forecast[i] - forecast[i - 1]) / days;
+          this.setupLevelDifferenceForecastWithConstraints(forecast[i - 1], difference)
         }
       }
     })

@@ -4,6 +4,7 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {isPlatformBrowser} from "@angular/common";
 import {Directive, Inject, NgZone, PLATFORM_ID} from "@angular/core";
 import {CategoryChart, CategoryData, DateChart} from "../struct/chart";
+import {TimeUnit} from "@amcharts/amcharts5/.internal/core/util/Time";
 
 @Directive()
 export class Chart {
@@ -20,7 +21,7 @@ export class Chart {
     }
   }
 
-  protected renderHourChart(id: string, data: DateChart) {
+  protected renderHourChart(id: string, data: DateChart[]) {
     this.browserOnly(() => this.createHourChart(id, data))
   }
 
@@ -47,6 +48,7 @@ export class Chart {
       if (!this.root) return;
 
       const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
+        // console.log(chart.series.values.find(item => item.get('name') == '12:00'))
       const seriesCount = chart.series.length;
       if (seriesCount === 0) return;
       for (let i = 0; i < seriesCount; i++) {
@@ -69,10 +71,8 @@ export class Chart {
     }
   }
 
-  private createHourChart(id: string, data: DateChart) {
+  private createHourChart(id: string, data: DateChart[]) {
     const root = am5.Root.new(id);
-    let step = new Date(data.data[1].timestamp).getHours() - new Date(data.data[0].timestamp).getHours()
-    if (step < 0) step += 24
 
     this.setupRoot(root)
     const chart = this.setupChart(root)
@@ -81,8 +81,8 @@ export class Chart {
     let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
       maxDeviation: 1,
       baseInterval: {
-        timeUnit: "hour",
-        count: step
+        timeUnit: this.setTimeStep(data).timeUnit as TimeUnit,
+        count: this.setTimeStep(data).step
       },
       renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
       tooltip: am5.Tooltip.new(root, {})
@@ -97,32 +97,15 @@ export class Chart {
     xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
     yAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
 
-    xAxis.data.setAll(data.data)
+    xAxis.data.setAll(data[0].data)
 
-    let series = chart.series.push(am5xy.LineSeries.new(root, {
-      name: data.name,
-      xAxis: xAxis,
-      yAxis: yAxis,
-      valueYField: "value",
-      valueXField: "timestamp",
-      tooltip: am5.Tooltip.new(root, {
-        labelText: '{valueY}'
-      })
-    }));
+    data.forEach(item => {
+      this.createDateSeries(root, chart, xAxis, yAxis, item)
+    })
 
-    if (data.color) {
-      series.set('stroke', am5.color(data.color))
-    }
-
-    series.strokes.template.setAll({strokeWidth: 3});
-
-    series.bullets.push(() => this.setupBullets(root, data.bulletColor))
-
-    series.data.setAll(data.data);
 
     this.setupLegend(root, chart)
 
-    series.appear(1000)
     chart.appear(1000, 100);
     this.root = root;
   }
@@ -188,6 +171,31 @@ export class Chart {
     this.root = root
   }
 
+  private createDateSeries(
+    root: am5.Root,
+    chart: am5xy.XYChart,
+    xAxis: am5xy.DateAxis<am5xy.AxisRenderer>,
+    yAxis: am5xy.ValueAxis<am5xy.AxisRenderer>,
+    data: DateChart) {
+    let series = chart.series.push(am5xy.LineSeries.new(root, {
+      name: data.name,
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value",
+      valueXField: "timestamp",
+      tooltip: am5.Tooltip.new(root, {
+        labelText: '{valueY}'
+      })
+    }));
+    if (data.color) {
+      series.set('stroke', am5.color(data.color))
+    }
+    series.strokes.template.setAll({strokeWidth: 3});
+    series.bullets.push(() => this.setupBullets(root, data.bulletColor))
+    series.data.setAll(data.data);
+    series.appear(1000)
+  }
+
   private createColumnSeries(
     root: am5.Root,
     chart: am5xy.XYChart,
@@ -212,6 +220,33 @@ export class Chart {
     if (data.color) series.columns.template.set('fill', am5.color(data.color));
 
     return series
+  }
+
+  private setTimeStep(data: DateChart[]) {
+    const differenceInMilliseconds = Math.abs(data[0].data[1].timestamp - data[0].data[0].timestamp);
+
+    // Константы для преобразования
+    const millisecondsInSecond = 1000;
+    const millisecondsInMinute = 60 * millisecondsInSecond;
+    const millisecondsInHour = 60 * millisecondsInMinute;
+    const millisecondsInDay = 24 * millisecondsInHour;
+
+    // Вычисляем дни, часы, минуты и секунды
+    const days = Math.floor(differenceInMilliseconds / millisecondsInDay);
+    const hours = Math.floor((differenceInMilliseconds % millisecondsInDay) / millisecondsInHour);
+    // const minutes = Math.floor((differenceInMilliseconds % millisecondsInHour) / millisecondsInMinute);
+    // const seconds = Math.floor((differenceInMilliseconds % millisecondsInMinute) / millisecondsInSecond);
+    if (hours > 0) {
+      return {
+        timeUnit: 'hour',
+        step: hours,
+      }
+    } else {
+      return {
+        timeUnit: 'day',
+        step: days,
+      }
+    }
   }
 
   private setupRoot(root: am5.Root) {
@@ -246,7 +281,6 @@ export class Chart {
     }));
     legend.labels.template.setAll({fill: am5.color("#ffffff")});
     legend.data.setAll(chart.series.values);
-    console.log(chart.series.values);
   }
 
   private setupBullets(root: am5.Root, bulletColor: string | undefined) {
