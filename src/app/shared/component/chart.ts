@@ -21,6 +21,10 @@ export class Chart {
     }
   }
 
+  protected generateId(): string {
+    return Math.floor(new Date().getTime() * Math.random()).toString()
+  }
+
   protected renderHourChart(id: string, data: DateChart[]) {
     this.browserOnly(() => this.createHourChart(id, data))
   }
@@ -178,7 +182,7 @@ export class Chart {
     yAxis: am5xy.ValueAxis<am5xy.AxisRenderer>,
     data: DateChart) {
     let series = chart.series.push(am5xy.LineSeries.new(root, {
-      name: data.name,
+      name: data.seriesName,
       xAxis: xAxis,
       yAxis: yAxis,
       valueYField: "value",

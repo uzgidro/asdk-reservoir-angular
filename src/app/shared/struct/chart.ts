@@ -4,7 +4,10 @@ export interface Chart {
   bulletColor?: string
 }
 
-export interface DateChart extends Chart {
+export interface DateChart {
+  seriesName: string
+  color?: string
+  bulletColor?: string
   data: {
     value: number
     timestamp: number

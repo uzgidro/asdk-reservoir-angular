@@ -27,7 +27,7 @@ export class DashboardSnowChartComponent
   }
 
   ngOnInit() {
-    this.id = Math.floor(new Date().getTime() * Math.random()).toString()
+    this.id = this.generateId()
   }
 
   ngAfterViewInit() {

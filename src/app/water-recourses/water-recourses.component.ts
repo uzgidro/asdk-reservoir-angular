@@ -6,7 +6,7 @@ import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {ComplexValueResponse} from "../shared/response/values-response";
 import {WaterRecourseCardComponent} from "./water-recourse-card/water-recourse-card.component";
-import {ChartData} from "../reservoir/reservoir-hourly/reservoir-hourly.component";
+import {DateChart} from "../shared/struct/chart";
 
 @Component({
   selector: 'app-water-recourses',
@@ -26,16 +26,16 @@ export class WaterRecoursesComponent implements OnInit {
     reservoir: string
     income: number
     incomeDifference: string
-    incomeChart: ChartData
+    incomeChart: DateChart
     release: number
     releaseDifference: string
-    releaseChart: ChartData
+    releaseChart: DateChart
     level: number
     levelDifference: string
-    levelChart: ChartData
+    levelChart: DateChart
     volume: number
     volumeDifference: string
-    volumeChart: ChartData
+    volumeChart: DateChart
     incomeLabels: string[]
     releaseLabels: string[]
     levelLabels: string[]
@@ -61,7 +61,7 @@ export class WaterRecoursesComponent implements OnInit {
             income: item.income.data[0].value,
             incomeDifference: this.getDifference(item.income),
             incomeChart: {
-              name: 'Kelish',
+              seriesName: 'Kelish',
               data: item.income.data.map(it => ({
                 timestamp: Date.parse(it.date),
                 value: it.value
@@ -70,7 +70,7 @@ export class WaterRecoursesComponent implements OnInit {
             release: item.release.data[0].value,
             releaseDifference: this.getDifference(item.release),
             releaseChart: {
-              name: 'Chiqish',
+              seriesName: 'Chiqish',
               data: item.release.data.map(it => ({
                 timestamp: Date.parse(it.date),
                 value: it.value
@@ -79,7 +79,7 @@ export class WaterRecoursesComponent implements OnInit {
             volume: item.volume.data[0].value,
             volumeDifference: this.getDifference(item.volume),
             volumeChart: {
-              name: 'Hajm',
+              seriesName: 'Hajm',
               data: item.volume.data.map(it => ({
                 timestamp: Date.parse(it.date),
                 value: it.value
@@ -88,7 +88,7 @@ export class WaterRecoursesComponent implements OnInit {
             level: item.level.data[0].value,
             levelDifference: this.getDifference(item.level),
             levelChart: {
-              name: 'Sath',
+              seriesName: 'Sath',
               data: item.level.data.map(it => ({
                 timestamp: Date.parse(it.date),
                 value: it.value

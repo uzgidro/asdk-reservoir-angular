@@ -194,11 +194,11 @@
   <!--      <button class="text-cyan-300" (click)="exportToExcel()">Excel</button>-->
   <!--    </div>-->
   <!--  </div>-->
-  <div *ngIf="chart" class="grid grid-flow-col-dense">
-    <app-chart [chart]="chart.incomeDataset"></app-chart>
-    <app-chart [chart]="chart.releaseDataset"></app-chart>
-    <app-chart [chart]="chart.levelDataset"></app-chart>
-    <app-chart [chart]="chart.volumeDataset"></app-chart>
+  <div *ngIf="incomeChart && releaseChart && levelChart && volumeChart" class="grid grid-flow-col-dense">
+    <app-chart [chart]="incomeChart"></app-chart>
+    <app-chart [chart]="releaseChart"></app-chart>
+    <app-chart [chart]="levelChart"></app-chart>
+    <app-chart [chart]="volumeChart"></app-chart>
   </div>
 </div>
 

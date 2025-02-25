@@ -10,6 +10,7 @@ import autoTable from "jspdf-autotable";
 import {jsPDF} from 'jspdf';
 import * as XLSX from "xlsx";
 import {ChartComponent} from "./chart/chart.component";
+import {DateChart} from "../../shared/struct/chart";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -50,11 +51,10 @@ export class ReservoirHourlyComponent implements OnInit {
 
   selectedReservoir: number = 0
 
-  dataForChart: ChartWrapper[] = []
-
-  get chart() {
-    return this.dataForChart.find(e => e.id == this.selectedReservoir)
-  }
+  incomeChart!: DateChart
+  releaseChart!: DateChart
+  levelChart!: DateChart
+  volumeChart!: DateChart
 
   constructor(
     private router: Router,
@@ -162,34 +162,26 @@ export class ReservoirHourlyComponent implements OnInit {
 
   private setupChartData(data: CategorisedArrayResponse) {
     for (let i = 0; i < data.income.length; i++) {
-      const id = data.income[i].reservoir_id
-      const income = {
+      this.incomeChart = {
         data: data.income[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-        name: 'Kelish, m³/s',
+        seriesName: 'Kelish, m³/s',
         color: 'rgba(37, 99, 235,0.4)',
       }
-      const release = {
+      this.releaseChart = {
         data: data.release[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-        name: 'Chiqish, m³/s',
+        seriesName: 'Chiqish, m³/s',
         color: 'rgba(225, 29, 72,0.4)',
       }
-      const level = {
+      this.levelChart = {
         data: data.level[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-        name: 'Sath, m',
+        seriesName: 'Sath, m',
         color: 'rgba(22, 163, 74,0.4)',
       }
-      const volume = {
+      this.volumeChart = {
         data: data.volume[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
-        name: 'Hajm, mln.m³',
+        seriesName: 'Hajm, mln.m³',
         color: 'rgba(147, 51, 234,0.4)',
       }
-      this.dataForChart.push({
-        id: id,
-        incomeDataset: income,
-        releaseDataset: release,
-        levelDataset: level,
-        volumeDataset: volume,
-      })
     }
   }
 
@@ -261,22 +253,4 @@ export class ReservoirHourlyComponent implements OnInit {
       roundedTime -= 2
     }
   }
-}
-
-export interface ChartWrapper {
-  id: number
-  incomeDataset: ChartData
-  releaseDataset: ChartData
-  levelDataset: ChartData
-  volumeDataset: ChartData
-}
-
-export interface ChartData {
-  name: string,
-  data: {
-    value: number,
-    timestamp: number,
-  }[]
-  color?: string
-
 }
