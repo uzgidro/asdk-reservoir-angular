@@ -3,17 +3,17 @@
 /*}*/
 
 .min {
-  @apply text-gray-200 bg-red-600; /* Apply red background */
+  @apply bg-red-600; /* Apply red background */
 }
 
 .max {
-  @apply text-gray-200 bg-green-600; /* Apply green background */
+  @apply bg-green-600; /* Apply green background */
 }
 
 .past {
-  @apply text-gray-200 bg-amber-600; /* Apply amber background */
+  @apply bg-amber-600; /* Apply amber background */
 }
 
 .current {
-  @apply text-gray-200 bg-purple-600; /* Apply purple background */
+  @apply bg-purple-600; /* Apply purple background */
 }

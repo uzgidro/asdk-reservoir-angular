@@ -52,18 +52,10 @@
     'min': min?.year == item.year,
     'max': max?.year == item.year,
     'past': past?.year == item.year,
-    'text-gray-200': getColor(item),
     'current': current?.year == item.year,
     }"
         >
-<!--          <input-->
-<!--            type="checkbox"-->
-<!--            name="year"-->
-<!--            [checked]="isChecked(item.year)"-->
-<!--            (click)="yearSelect(item.year)">-->
-          <span class="ml-2">
     {{ item.year }}
-   </span>
         </td>
         <td
           [ngStyle]="{'background-color': getColor(item)}"
@@ -71,37 +63,10 @@
      'min': min?.year == item.year,
      'max': max?.year == item.year,
      'past': past?.year == item.year,
-     'text-gray-200': getColor(item),
      'current': current?.year == item.year,
      }">
           {{ item.value | number: '.0-0' }}
         </td>
-<!--        <td-->
-<!--          *ngIf="isYearMatched(item.year)"-->
-<!--          [ngStyle]="{'background-color': getColor(item)}"-->
-<!--          [ngClass]="{-->
-<!--      'min': min?.year == item.year,-->
-<!--      'max': max?.year == item.year,-->
-<!--      'past': past?.year == item.year,-->
-<!--      'text-gray-200': getColor(item),-->
-<!--      'current': current?.year == item.year,-->
-<!--       }"-->
-<!--        >-->
-<!--          <input type="checkbox" name="year" [checked]="isChecked(item.year)" (click)="removeFromChart(item)">-->
-<!--          <span class="ml-2">{{ item.year }}</span>-->
-<!--        </td>-->
-<!--        <td-->
-<!--          *ngIf="isYearMatched(item.year)"-->
-<!--          [ngStyle]="{'background-color': getColor(item)}"-->
-<!--          [ngClass]="{-->
-<!--        'min': min?.year == item.year,-->
-<!--        'max': max?.year == item.year,-->
-<!--        'past': past?.year == item.year,-->
-<!--        'text-gray-200': getColor(item),-->
-<!--        'current': current?.year == item.year,-->
-<!--        }">-->
-<!--          {{ item.value | number: '.0-0' }}-->
-<!--        </td>-->
       </tr>
       </tbody>
     </table>

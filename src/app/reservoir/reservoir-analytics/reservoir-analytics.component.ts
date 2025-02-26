@@ -278,13 +278,13 @@ export class ReservoirAnalyticsComponent
 
 
   changeVisibility(id: string) {
-    let find = this._incomeChart.find(i => i.id == id);
-    if (find) {
-      find.display = !find.display
-      if (find.display) {
-        this.addDateSeries([find.chart])
+    let existsChart = this._incomeChart.find(i => i.id == id);
+    if (existsChart) {
+      existsChart.display = !existsChart.display
+      if (existsChart.display) {
+        this.addDateSeries([existsChart.chart])
       } else {
-        this.removeSeries(find.chart.seriesName)
+        this.removeSeries(existsChart.chart.seriesName)
       }
     }
   }
@@ -294,10 +294,7 @@ export class ReservoirAnalyticsComponent
   }
 
   getColor(yearValue: YearValue) {
-    if (this.selected) {
-      return this.selected.find(i => i.year == yearValue.year)?.color
-    }
-    return
+      return this._incomeChart.find(i => i.year.year == yearValue.year && i.display)?.chart.color
   }
 
   private configureData(reservoirId: number) {
