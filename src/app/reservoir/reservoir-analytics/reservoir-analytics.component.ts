@@ -51,7 +51,7 @@ export class ReservoirAnalyticsComponent
     chart: DateChart
     valuesByMonth: number[]
     avgValue: number
-    year: YearValue
+    year?: YearValue
     display: boolean
   }[] = []
 
@@ -100,113 +100,46 @@ export class ReservoirAnalyticsComponent
     this.chartDispose()
   }
 
-  get displayedCharts() {
-    return this._incomeChart.filter(i => i.display)
-  }
-
   get avg() {
-    const exists = this._incomeChart.find(item => item.id.includes('avg'))
-    if (exists && exists.avgValue) {
-      const item: Values = {
-        id: exists.id,
-        value: exists.avgValue,
-        byMonth: exists.valuesByMonth,
-        display: exists.display
-      }
-      return item
-    }
-    return
+    return this.getItem('avg', 'avgValue');
   }
 
   get tenAvg() {
-    const exists = this._incomeChart.find(item => item.id.includes('tenAvg'))
-    if (exists && exists.avgValue) {
-      const item: Values = {
-        id: exists.id,
-        value: exists.avgValue,
-        byMonth: exists.valuesByMonth,
-        display: exists.display
-      }
-      return item
-    }
-    return
+    return this.getItem('tenAvg', 'avgValue');
   }
 
   get min() {
-    const exists = this._incomeChart.find(item => item.id.includes('min'))
-    if (exists && exists.year) {
-      const item: Values = {
-        id: exists.id,
-        value: exists.year.value,
-        byMonth: exists.valuesByMonth,
-        year: exists.year.year,
-        display: exists.display
-      }
-      return item
-    }
-    return
+    return this.getItem('min', 'year');
   }
 
   get max() {
-    const exists = this._incomeChart.find(item => item.id.includes('max'))
-    if (exists && exists.year) {
-      const item: Values = {
-        id: exists.id,
-        value: exists.year.value,
-        byMonth: exists.valuesByMonth,
-        year: exists.year.year,
-        display: exists.display
-      }
-      return item
-    }
-    return
+    return this.getItem('max', 'year');
   }
 
   get past() {
-    const exists = this._incomeChart.find(item => item.id.includes('past'))
-    if (exists && exists.year) {
-      const item: Values = {
-        id: exists.id,
-        value: exists.year.value,
-        byMonth: exists.valuesByMonth,
-        year: exists.year.year,
-        display: exists.display
-      }
-      return item
-    }
-    return
+    return this.getItem('past', 'year');
   }
 
   get current() {
-    const exists = this._incomeChart.find(item => item.id.includes('current'))
-    if (exists && exists.year) {
-      const item: Values = {
-        id: exists.id,
-        value: exists.year.value,
-        byMonth: exists.valuesByMonth,
-        year: exists.year.year,
-        display: exists.display
-      }
-      return item
-    }
-    return
+    return this.getItem('current', 'year');
   }
 
   get selected() {
-    const exists = this.displayedCharts.filter(
+    const exists = this._incomeChart.filter(
       item =>
         !item.id.includes('tenAvg') &&
         !item.id.includes('past') &&
         !item.id.includes('min') &&
         !item.id.includes('max') &&
         !item.id.includes('current') &&
-        !item.id.includes('avg'))
+        !item.id.includes('avg') &&
+        item.display)
     if (exists.length > 0) {
       let map: Values[] = exists.map(item => ({
         id: item.id,
-        value: item.year ? item.year.value : 0,
+        value: item.year?.value ?? 0,
         byMonth: item.valuesByMonth,
-        year: item.year ? item.year.year : 0,
+        year: item.year?.year,
         color: item.chart.color ? item.chart.color : '',
         display: item.display
       }));
@@ -215,15 +148,12 @@ export class ReservoirAnalyticsComponent
     return
   }
 
-  isChecked(year: number): boolean {
-    return (
-      [this.min, this.max, this.current, this.past].some(item => item?.year === year && item.display) ||
-      (this.selected?.some(item => item.year === year && item.display) ?? false)
-    );
-  }
-
-  isYearsChecked(years: YearValue[]): boolean {
-    return years.some(item => this.isChecked(item.year))
+  isYearsChecked(years: { year: number }[]): boolean {
+    return years.some(yearItem => {
+      return [this.min, this.max, this.current, this.past].some(
+        item => item?.year === yearItem.year && item.display
+      )
+    });
   }
 
   isYearMatched(year: number): boolean {
@@ -294,7 +224,7 @@ export class ReservoirAnalyticsComponent
   }
 
   getColor(yearValue: YearValue) {
-      return this._incomeChart.find(i => i.year.year == yearValue.year && i.display)?.chart.color
+    return this._incomeChart.find(i => i.year?.year == yearValue.year && i.display)?.chart.color
   }
 
   private configureData(reservoirId: number) {
@@ -345,6 +275,7 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(37, 99, 235)',
           response: response
         })
+        this.sortArray()
       }
     }))
   }
@@ -358,6 +289,7 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(13, 148, 136)',
           response: response
         })
+        this.sortArray()
       }
     }))
   }
@@ -371,6 +303,7 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(225, 29, 72)',
           response: response
         })
+        this.sortArray()
       }
     }))
   }
@@ -384,6 +317,7 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(22, 163, 74)',
           response: response
         })
+        this.sortArray()
       }
     }))
   }
@@ -397,6 +331,7 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(217, 119, 6)',
           response: response
         })
+        this.sortArray()
       }
     }))
   }
@@ -410,6 +345,7 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(147, 51, 234)',
           response: response,
         })
+        this.sortArray()
       }
     }))
   }
@@ -427,17 +363,25 @@ export class ReservoirAnalyticsComponent
       hideBullets: true
     }
     this.addDateSeries([chart])
+    const year = data.id.includes('vg') ? undefined : {
+      year: this.getResponseYear(data.response),
+      value: this.calculateMonthlySum(data.response)
+    }
     this._incomeChart.push({
       id: data.id,
       chart: chart,
       valuesByMonth: this.calculateMonthlyValues(data.response).map(value => value.value),
-      year: {
-        year: this.getResponseYear(data.response),
-        value: this.calculateMonthlySum(data.response)
-      },
+      year: year,
       avgValue: this.calculateMonthlySum(data.response),
       display: true
     })
+  }
+
+  private sortArray() {
+    const sortOrder: { [key: string]: number } = {avg: 1, tenAvg: 2, max: 3, min: 4, past: 5, current: 6}
+
+    this._incomeChart = this._incomeChart.sort((a, b) => sortOrder[a.id] - sortOrder[b.id])
+    console.log(this._incomeChart)
   }
 
   private getResponseYear(response: ComplexValueResponse) {
@@ -454,6 +398,26 @@ export class ReservoirAnalyticsComponent
       value: this.calculateVolume(value),
       timestamp: new Date(value.date).setFullYear(2020)
     }))
+  }
+
+  private getItem(idPart: string, valueField: 'avgValue' | 'year'): Values | undefined {
+    const exists = this._incomeChart.find(item => item.id.includes(idPart));
+
+    if (exists) {
+      const value = valueField === 'avgValue' ? exists.avgValue : exists.year?.value;
+      const year = exists.year?.year;
+
+      if (value !== undefined) {
+        return {
+          id: exists.id,
+          value,
+          byMonth: exists.valuesByMonth,
+          year,
+          display: exists.display,
+        };
+      }
+    }
+    return undefined;
   }
 
   private calculateVolume(value: ValueResponse) {
