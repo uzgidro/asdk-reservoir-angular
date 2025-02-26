@@ -25,8 +25,8 @@ export class Chart {
     return Math.floor(new Date().getTime() * Math.random()).toString()
   }
 
-  protected renderHourChart(id: string, data: DateChart[]) {
-    this.browserOnly(() => this.createHourChart(id, data))
+  protected renderDateChart(id: string, data?: DateChart[]) {
+    this.browserOnly(() => this.createDateChart(id, data))
   }
 
   protected renderCategoryChart(id: string, data: CategoryChart[], showLegend: boolean = true) {
@@ -52,7 +52,7 @@ export class Chart {
       if (!this.root) return;
 
       const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
-        // console.log(chart.series.values.find(item => item.get('name') == '12:00'))
+      // console.log(chart.series.values.find(item => item.get('name') == '12:00'))
       const seriesCount = chart.series.length;
       if (seriesCount === 0) return;
       for (let i = 0; i < seriesCount; i++) {
@@ -69,28 +69,90 @@ export class Chart {
     })
   }
 
+  protected addDateSeries(data: DateChart[]) {
+    this.browserOnly(() => {
+      if (!this.root) {
+        console.warn("Root не инициализирован. Сначала вызовите createDateChart.");
+        return;
+      }
+
+      const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
+      if (!chart) {
+        console.warn("Chart не найден.");
+        return;
+      }
+
+      let xAxis = chart.xAxes.getIndex(0) as am5xy.DateAxis<am5xy.AxisRenderer> | undefined;
+
+      if (!xAxis) {
+        xAxis = chart.xAxes.push(am5xy.DateAxis.new(this.root, {
+          maxDeviation: 1,
+          baseInterval: {
+            timeUnit: this.setTimeStep(data).timeUnit as TimeUnit,
+            count: this.setTimeStep(data).step,
+          },
+          renderer: am5xy.AxisRendererX.new(this.root, {minorGridEnabled: true}),
+          tooltip: am5.Tooltip.new(this.root, {}),
+        }));
+
+        xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+        xAxis.data.setAll(data[0].data);
+      }
+
+      const yAxis = chart.yAxes.getIndex(0) as am5xy.ValueAxis<am5xy.AxisRenderer> | undefined;
+      if (!yAxis) {
+        console.warn("yAxis не найден.");
+        return;
+      }
+
+      data.forEach((item) => {
+        this.createDateSeries(this.root!, chart, xAxis!, yAxis, item);
+      });
+
+      this.setupLegend(this.root, chart);
+    })
+  }
+
+  protected clearSeries() {
+    if (!this.root) {
+      console.warn("Root не инициализирован. Сначала вызовите createDateChart.");
+      return;
+    }
+
+    const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
+    if (!chart) {
+      console.warn("Chart не найден.");
+      return;
+    }
+
+    // Проходим по всем сериям и удаляем их
+    while (chart.series.length > 0) {
+      const series = chart.series.getIndex(0); // Получаем первую серию
+      if (series) {
+        chart.series.removeValue(series); // Удаляем серию из графика
+        series.dispose(); // Освобождаем ресурсы
+      }
+    }
+
+    // Обновляем легенду, если она есть
+    const legend = chart.children.values.find((child) => child instanceof am5.Legend) as am5.Legend | undefined;
+    if (legend) {
+      legend.data.setAll(chart.series.values); // Обновляем данные легенды
+    }
+  }
+
   protected chartDispose() {
     if (this.root != undefined) {
       this.browserOnly(() => this.root.dispose())
     }
   }
 
-  private createHourChart(id: string, data: DateChart[]) {
+  private createDateChart(id: string, data?: DateChart[]) {
     const root = am5.Root.new(id);
 
     this.setupRoot(root)
     const chart = this.setupChart(root)
     this.setupCursor(root, chart)
-
-    let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-      maxDeviation: 1,
-      baseInterval: {
-        timeUnit: this.setTimeStep(data).timeUnit as TimeUnit,
-        count: this.setTimeStep(data).step
-      },
-      renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
-      tooltip: am5.Tooltip.new(root, {})
-    }));
 
     let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
       renderer: am5xy.AxisRendererY.new(root, {
@@ -98,15 +160,24 @@ export class Chart {
       })
     }));
 
-    xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
     yAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
 
-    xAxis.data.setAll(data[0].data)
-
-    data.forEach(item => {
-      this.createDateSeries(root, chart, xAxis, yAxis, item)
-    })
-
+    if (data) {
+      let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+        maxDeviation: 1,
+        baseInterval: {
+          timeUnit: this.setTimeStep(data).timeUnit as TimeUnit,
+          count: this.setTimeStep(data).step
+        },
+        renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
+        tooltip: am5.Tooltip.new(root, {})
+      }));
+      xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+      xAxis.data.setAll(data[0].data)
+      data.forEach(item => {
+        this.createDateSeries(root, chart, xAxis, yAxis, item)
+      })
+    }
 
     this.setupLegend(root, chart)
 
@@ -188,11 +259,13 @@ export class Chart {
       valueYField: "value",
       valueXField: "timestamp",
       tooltip: am5.Tooltip.new(root, {
-        labelText: '{valueY}'
+        labelText: '{name}: {valueY}'
       })
     }));
     if (data.color) {
       series.set('stroke', am5.color(data.color))
+      series.get('tooltip')!.set('getFillFromSprite', false)
+      series.get('tooltip')!.get('background')!.set('fill', am5.color(data.color))
     }
     series.strokes.template.setAll({strokeWidth: 3});
     series.bullets.push(() => this.setupBullets(root, data.bulletColor))
@@ -229,17 +302,12 @@ export class Chart {
   private setTimeStep(data: DateChart[]) {
     const differenceInMilliseconds = Math.abs(data[0].data[1].timestamp - data[0].data[0].timestamp);
 
-    // Константы для преобразования
     const millisecondsInSecond = 1000;
     const millisecondsInMinute = 60 * millisecondsInSecond;
     const millisecondsInHour = 60 * millisecondsInMinute;
     const millisecondsInDay = 24 * millisecondsInHour;
 
-    // Вычисляем дни, часы, минуты и секунды
-    const days = Math.floor(differenceInMilliseconds / millisecondsInDay);
     const hours = Math.floor((differenceInMilliseconds % millisecondsInDay) / millisecondsInHour);
-    // const minutes = Math.floor((differenceInMilliseconds % millisecondsInHour) / millisecondsInMinute);
-    // const seconds = Math.floor((differenceInMilliseconds % millisecondsInMinute) / millisecondsInSecond);
     if (hours > 0) {
       return {
         timeUnit: 'hour',
@@ -247,8 +315,8 @@ export class Chart {
       }
     } else {
       return {
-        timeUnit: 'day',
-        step: days,
+        timeUnit: 'month',
+        step: 1,
       }
     }
   }
@@ -278,12 +346,19 @@ export class Chart {
   }
 
   private setupLegend(root: am5.Root, chart: am5xy.XYChart) {
-    let legend = chart.children.unshift(am5.Legend.new(root, {
-      x: am5.percent(60),
-      centerX: am5.percent(60),
-      centerY: am5.p0,
-    }));
-    legend.labels.template.setAll({fill: am5.color("#ffffff")});
+    let legend = chart.children.values.find((child) => child instanceof am5.Legend) as am5.Legend | undefined;
+
+    if (!legend) {
+      legend = chart.children.unshift(
+        am5.Legend.new(root, {
+          x: am5.percent(60),
+          centerX: am5.percent(60),
+          centerY: am5.p0,
+        })
+      );
+      legend.labels.template.setAll({fill: am5.color("#ffffff")});
+    }
+
     legend.data.setAll(chart.series.values);
   }
 

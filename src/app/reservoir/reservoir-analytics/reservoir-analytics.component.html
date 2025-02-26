@@ -1,7 +1,7 @@
 <div class="grid grid-cols-6 h-full gap-6 pb-8">
   <!-- Chart with buttons -->
   <div class="flex flex-col col-span-5 justify-start">
-    <div [id]="id" class="w-full h-96"></div>
+    <div [id]="id" class="w-full flex flex-1"></div>
 <!--    <canvas *ngIf="category == 'income'"-->
 <!--            baseChart-->
 <!--            [datasets]="incomeChart"-->
@@ -47,7 +47,7 @@
       <tbody>
       <tr *ngFor="let item of years">
         <td
-          *ngIf="isYearNotMatched(item.year)"
+          *ngIf="!isYearMatched(item.year)"
           [ngStyle]="{'background-color': getColor(item)}"
           [ngClass]="{
     'min': min?.year == item.year,
@@ -67,7 +67,7 @@
    </span>
         </td>
         <td
-          *ngIf="isYearNotMatched(item.year)"
+          *ngIf="!isYearMatched(item.year)"
           [ngStyle]="{'background-color': getColor(item)}"
           [ngClass]="{
      'min': min?.year == item.year,
@@ -111,7 +111,7 @@
   <!-- /Year select -->
 
   <!-- Info table -->
-  <div class="flex col-span-5" [ngClass]="{'overflow-y-auto': displayedReservoirsCount > 5}">
+  <div class="flex col-span-5 overflow-y-auto">
     <table>
       <thead class="sticky top-0">
       <tr>

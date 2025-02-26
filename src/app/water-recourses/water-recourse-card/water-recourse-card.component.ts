@@ -57,7 +57,7 @@ export class WaterRecourseCardComponent
   }
 
   ngAfterViewInit() {
-    this.renderHourChart(this.id, [this.data.incomeChart])
+    this.renderDateChart(this.id, [this.data.incomeChart])
   }
 
   changeCategory(category: 'income' | 'release' | 'volume' | 'level') {
