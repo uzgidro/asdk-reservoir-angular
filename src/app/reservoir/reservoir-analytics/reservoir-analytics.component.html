@@ -1,7 +1,7 @@
 <div class="grid grid-cols-6 h-full gap-6 pb-8">
   <!-- Chart with buttons -->
   <div class="flex flex-col col-span-5 justify-start">
-    <div [id]="id" class="w-full flex flex-1"></div>
+    <div *ngIf="category == 'income'" [id]="incomeId" class="w-full flex flex-1"></div>
 <!--    <canvas *ngIf="category == 'income'"-->
 <!--            baseChart-->
 <!--            [datasets]="incomeChart"-->
@@ -18,16 +18,16 @@
 <!--            [type]="'line'"-->
 <!--    >-->
 <!--    </canvas>-->
-    <div class="flex flex-row space-x-4 p-2">
-      <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category.includes('income')}"
-              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
-        Kelishi
-      </button>
-      <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category.includes('volume')}"
-              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">
-        Hajm
-      </button>
-    </div>
+<!--    <div class="flex flex-row space-x-4 p-2">-->
+<!--      <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category == 'income'}"-->
+<!--              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
+<!--        Kelishi-->
+<!--      </button>-->
+<!--      <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category == 'volume'}"-->
+<!--              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
+<!--        Hajm-->
+<!--      </button>-->
+<!--    </div>-->
   </div>
   <!-- /Chart with buttons -->
 

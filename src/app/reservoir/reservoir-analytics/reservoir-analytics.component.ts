@@ -27,7 +27,7 @@ export class ReservoirAnalyticsComponent
   extends Chart
   implements OnInit, AfterViewInit, OnDestroy {
 
-  id!: string;
+  incomeId!: string;
 
   protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
@@ -76,7 +76,7 @@ export class ReservoirAnalyticsComponent
   }
 
   ngOnInit() {
-    this.id = this.generateId()
+    this.incomeId = this.generateId()
     this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
@@ -93,7 +93,7 @@ export class ReservoirAnalyticsComponent
   }
 
   ngAfterViewInit() {
-    this.renderDateChart(this.id)
+    this.renderDateChart(this.incomeId)
   }
 
   ngOnDestroy() {
@@ -275,7 +275,6 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(37, 99, 235)',
           response: response
         })
-        this.sortArray()
       }
     }))
   }
@@ -289,7 +288,6 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(13, 148, 136)',
           response: response
         })
-        this.sortArray()
       }
     }))
   }
@@ -303,7 +301,6 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(225, 29, 72)',
           response: response
         })
-        this.sortArray()
       }
     }))
   }
@@ -317,7 +314,6 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(22, 163, 74)',
           response: response
         })
-        this.sortArray()
       }
     }))
   }
@@ -331,7 +327,6 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(217, 119, 6)',
           response: response
         })
-        this.sortArray()
       }
     }))
   }
@@ -345,7 +340,6 @@ export class ReservoirAnalyticsComponent
           seriesColor: 'rgb(147, 51, 234)',
           response: response,
         })
-        this.sortArray()
       }
     }))
   }
@@ -375,13 +369,6 @@ export class ReservoirAnalyticsComponent
       avgValue: this.calculateMonthlySum(data.response),
       display: true
     })
-  }
-
-  private sortArray() {
-    const sortOrder: { [key: string]: number } = {avg: 1, tenAvg: 2, max: 3, min: 4, past: 5, current: 6}
-
-    this._incomeChart = this._incomeChart.sort((a, b) => sortOrder[a.id] - sortOrder[b.id])
-    console.log(this._incomeChart)
   }
 
   private getResponseYear(response: ComplexValueResponse) {
