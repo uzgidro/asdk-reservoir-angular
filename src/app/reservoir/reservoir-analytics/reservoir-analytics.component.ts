@@ -50,8 +50,8 @@ export class ReservoirAnalyticsComponent
     id: string
     chart: DateChart
     valuesByMonth: number[]
-    avgValue?: number
-    year?: YearValue
+    avgValue: number
+    year: YearValue
     display: boolean
   }[] = []
 
@@ -231,47 +231,24 @@ export class ReservoirAnalyticsComponent
   }
 
   yearSelect(year: number) {
-    // if (!year || this.changeVisibility(year.toString())) return;
-    let find = this._incomeChart.find(item => item.year ? item.year.year === year : false);
-    console.log(find)
+    let existChart = this._incomeChart.find(item => item.year ? item.year.year === year : false);
 
-    // if (this.reservoirId) {
-    //   this.api.getSelectedYearValues(this.reservoirId, year).subscribe({
-    //     next: (response: ComplexValueResponse) => {
-    //       const selectedYearByMonth = this.calculateMonthlyValues(response)
-    //       const selectedYear = {
-    //         year: this.getResponseYear(response),
-    //         value: this.calculateMonthlySum(response)
-    //       }
-    //       if (this.colorsCounter > this.colors.length - 1) this.colorsCounter = 0
-    //       const colors = this.colors[this.colorsCounter++]
-    //       this._incomeChart.push({
-    //         id: year.toString(),
-    //         data: {
-    //           data: selectedYearByMonth,
-    //           label:
-    //             `${selectedYear.year}`,
-    //           borderColor:
-    //           colors.main,
-    //           pointBackgroundColor:
-    //           colors.sub,
-    //           pointBorderColor:
-    //           colors.main,
-    //           pointHoverBackgroundColor:
-    //           colors.sub,
-    //           pointHoverBorderColor:
-    //             '#fff',
-    //         },
-    //         valuesByMonth: selectedYearByMonth,
-    //         year: selectedYear,
-    //         color: colors.main,
-    //         display: true
-    //       })
-    //
-    //       this.chart?.update()
-    //     }
-    //   })
-    // }
+    if (!existChart) {
+      this.api.getSelectedYearValues(this.reservoirId, year).subscribe({
+        next: (response: ComplexValueResponse) => {
+          if (this.colorsCounter > this.colors.length - 1) this.colorsCounter = 0
+          const colors = this.colors[this.colorsCounter++]
+          this.collectData({
+            id: year.toString(),
+            seriesName: this.getResponseYear(response).toString(),
+            seriesColor: colors.sub,
+            response: response
+          })
+        }
+      })
+    } else {
+      this.changeVisibility(existChart.id)
+    }
   }
 
 
@@ -304,6 +281,11 @@ export class ReservoirAnalyticsComponent
     let find = this._incomeChart.find(i => i.id == id);
     if (find) {
       find.display = !find.display
+      if (find.display) {
+        this.addDateSeries([find.chart])
+      } else {
+        this.removeSeries(find.chart.seriesName)
+      }
     }
   }
 
@@ -360,14 +342,11 @@ export class ReservoirAnalyticsComponent
   private getAvg(reservoirId: number) {
     this.subscribes.push(this.api.getAvgValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
-        const avgByMonth = this.calculateMonthlyValues(response)
-        const avgValue = this.calculateMonthlySum(response)
         this.collectData({
           id: 'avg',
           seriesName: `(${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()}) o'rtacha`,
           seriesColor: 'rgb(37, 99, 235)',
-          dataByMonth: avgByMonth,
-          avgValue: avgValue,
+          response: response
         })
       }
     }))
@@ -376,14 +355,11 @@ export class ReservoirAnalyticsComponent
   private getTenYearsAvg(reservoirId: number) {
     this.subscribes.push(this.api.getTenYearsAvgValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
-        const avgByMonth = this.calculateMonthlyValues(response)
-        const avgValue = this.calculateMonthlySum(response)
         this.collectData({
           id: 'tenAvg',
           seriesName: `O'rtacha 10 yil`,
           seriesColor: 'rgb(13, 148, 136)',
-          dataByMonth: avgByMonth,
-          avgValue: avgValue
+          response: response
         })
       }
     }))
@@ -392,17 +368,11 @@ export class ReservoirAnalyticsComponent
   private getMin(reservoirId: number) {
     this.subscribes.push(this.api.getMinValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
-        const minByMonth = this.calculateMonthlyValues(response)
-        const minValue = {
-          year: this.getResponseYear(response),
-          value: this.calculateMonthlySum(response)
-        }
         this.collectData({
           id: 'min',
-          seriesName: `${minValue.year} minimal`,
+          seriesName: `${this.getResponseYear(response)} minimal`,
           seriesColor: 'rgb(225, 29, 72)',
-          dataByMonth: minByMonth,
-          year: minValue
+          response: response
         })
       }
     }))
@@ -411,17 +381,11 @@ export class ReservoirAnalyticsComponent
   private getMax(reservoirId: number) {
     this.subscribes.push(this.api.getMaxValues(reservoirId).subscribe({
       next: (response: ComplexValueResponse) => {
-        const maxByMonth = this.calculateMonthlyValues(response)
-        const maxValue = {
-          year: this.getResponseYear(response),
-          value: this.calculateMonthlySum(response)
-        }
         this.collectData({
           id: 'max',
-          seriesName: `${maxValue.year} maksimal`,
+          seriesName: `${this.getResponseYear(response)} maksimal`,
           seriesColor: 'rgb(22, 163, 74)',
-          dataByMonth: maxByMonth,
-          year: maxValue
+          response: response
         })
       }
     }))
@@ -430,17 +394,11 @@ export class ReservoirAnalyticsComponent
   private getPastYear(reservoirId: number) {
     this.subscribes.push(this.api.getSelectedYearValues(reservoirId, new Date().getFullYear() - 1).subscribe({
       next: (response: ComplexValueResponse) => {
-        const pastYearByMonth = this.calculateMonthlyValues(response)
-        const pastYear = {
-          year: this.getResponseYear(response),
-          value: this.calculateMonthlySum(response)
-        }
         this.collectData({
           id: 'past',
-          seriesName: `${pastYear.year}`,
+          seriesName: this.getResponseYear(response).toString(),
           seriesColor: 'rgb(217, 119, 6)',
-          dataByMonth: pastYearByMonth,
-          year: pastYear
+          response: response
         })
       }
     }))
@@ -449,17 +407,11 @@ export class ReservoirAnalyticsComponent
   private getCurrentYear(reservoirId: number) {
     this.subscribes.push(this.api.getSelectedYearValues(reservoirId, new Date().getFullYear()).subscribe({
       next: (response: ComplexValueResponse) => {
-        const currentYearByMonth = this.calculateMonthlyValues(response)
-        const currentYear = {
-          year: this.getResponseYear(response),
-          value: this.calculateMonthlySum(response)
-        }
         this.collectData({
           id: 'current',
-          seriesName: `${currentYear.year}`,
+          seriesName: this.getResponseYear(response).toString(),
           seriesColor: 'rgb(147, 51, 234)',
-          dataByMonth: currentYearByMonth,
-          year: currentYear
+          response: response,
         })
       }
     }))
@@ -469,25 +421,24 @@ export class ReservoirAnalyticsComponent
     id: string,
     seriesName: string,
     seriesColor: string,
-    dataByMonth: {
-      value: number;
-      timestamp: number
-    }[],
-    year?: YearValue,
-    avgValue?: number
+    response: ComplexValueResponse
   }) {
     const chart: DateChart = {
       seriesName: data.seriesName,
       color: data.seriesColor,
-      data: data.dataByMonth
+      data: this.calculateMonthlyValues(data.response),
+      hideBullets: true
     }
     this.addDateSeries([chart])
     this._incomeChart.push({
       id: data.id,
       chart: chart,
-      valuesByMonth: data.dataByMonth.map(value => value.value),
-      year: data.year,
-      avgValue: data.avgValue,
+      valuesByMonth: this.calculateMonthlyValues(data.response).map(value => value.value),
+      year: {
+        year: this.getResponseYear(data.response),
+        value: this.calculateMonthlySum(data.response)
+      },
+      avgValue: this.calculateMonthlySum(data.response),
       display: true
     })
   }

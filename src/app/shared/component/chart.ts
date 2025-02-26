@@ -52,7 +52,6 @@ export class Chart {
       if (!this.root) return;
 
       const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
-      // console.log(chart.series.values.find(item => item.get('name') == '12:00'))
       const seriesCount = chart.series.length;
       if (seriesCount === 0) return;
       for (let i = 0; i < seriesCount; i++) {
@@ -110,6 +109,26 @@ export class Chart {
       });
 
       this.setupLegend(this.root, chart);
+    })
+  }
+
+  protected removeSeries(seriesName: string) {
+    this.browserOnly(() => {
+      if (!this.root) return;
+
+      const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
+      if (!chart) {
+        console.warn("Chart не найден.");
+        return;
+      }
+
+      const chartForRemove = chart.series.values.find(item => item.get('name') == seriesName)
+      if (chartForRemove) {
+        chartForRemove.hide(1000).then(() => {
+          chart.series.removeValue(chartForRemove)
+          chartForRemove.dispose()
+        })
+      }
     })
   }
 
@@ -268,7 +287,7 @@ export class Chart {
       series.get('tooltip')!.get('background')!.set('fill', am5.color(data.color))
     }
     series.strokes.template.setAll({strokeWidth: 3});
-    series.bullets.push(() => this.setupBullets(root, data.bulletColor))
+    if (!data.hideBullets) series.bullets.push(() => this.setupBullets(root, data.bulletColor))
     series.data.setAll(data.data);
     series.appear(1000)
   }

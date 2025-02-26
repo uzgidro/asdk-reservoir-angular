@@ -12,6 +12,7 @@ export interface DateChart {
     value: number
     timestamp: number
   }[]
+  hideBullets?: boolean
 }
 
 export interface CategoryChart extends Chart {
