@@ -9,6 +9,7 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 import {ModsnowService} from "../../service/modsnow.service";
 import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 import {ActivatedRoute} from "@angular/router";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-modsnow-daily',
@@ -20,7 +21,8 @@ import {ActivatedRoute} from "@angular/router";
     CalendarModule,
     FormsModule,
     NgChartsModule,
-    CardHeaderComponent
+    CardHeaderComponent,
+    NgOptimizedImage
   ],
   templateUrl: './modsnow-daily.component.html',
   styleUrl: './modsnow-daily.component.css'
@@ -36,13 +38,8 @@ export class ModsnowDailyComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.modsnow.getCover().subscribe(cover => {
-    //   this.rivers = cover;
-    // })
-
-    this.rivers = Array(12).fill({
-      name: 'asd',
-      url: 'https://storage.googleapis.com/modsnow-a1c82.appspot.com/riverimages/ec963c74-c2e1-4007-89b6-eb1103505f6c.jpeg'
+    this.modsnow.getCover().subscribe(cover => {
+      this.rivers = cover;
     })
 
     this.activatedRoute.url.subscribe({
