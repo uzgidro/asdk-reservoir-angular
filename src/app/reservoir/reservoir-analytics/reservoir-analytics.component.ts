@@ -100,6 +100,10 @@ export class ReservoirAnalyticsComponent
     this.chartDispose()
   }
 
+  get incomeChartMap() {
+    return new Map(this._incomeChart.map(item => [item.id, item]))
+  }
+
   get avg() {
     return this.getItem('avg', 'avgValue');
   }
@@ -148,16 +152,20 @@ export class ReservoirAnalyticsComponent
     return
   }
 
+  private get yearMappings() {
+    return [this.min, this.max, this.current, this.past]
+  }
+
   isYearsChecked(years: { year: number }[]): boolean {
     return years.some(yearItem => {
-      return [this.min, this.max, this.current, this.past].some(
+      return this.yearMappings.some(
         item => item?.year === yearItem.year && item.display
       )
     });
   }
 
   isYearMatched(year: number): boolean {
-    return [this.min, this.max, this.current, this.past].some(item => item?.year === year);
+    return this.yearMappings.some(item => item?.year === year);
   }
 
   yearSelect(year: number) {
@@ -183,13 +191,14 @@ export class ReservoirAnalyticsComponent
 
 
   toggleYears(years: YearValue[]) {
+    const selectedMap = new Map(this.selected?.map(item => [item.year, item]));
+
     years.forEach(item => {
       if (!this.isYearMatched(item.year)) {
-        this.selected?.forEach(selectedItem => {
-          if (selectedItem.year === item.year) {
-            this.changeVisibility(selectedItem.id);
-          }
-        });
+        const selectedItem = selectedMap.get(item.year);
+        if (selectedItem) {
+          this.changeVisibility(selectedItem.id);
+        }
       } else {
         this.removeFromChart(item);
       }
@@ -197,8 +206,7 @@ export class ReservoirAnalyticsComponent
   }
 
   removeFromChart(item: YearValue) {
-    const yearMappings = [this.past, this.max, this.min, this.current];
-    yearMappings.forEach(mapping => {
+    this.yearMappings.forEach(mapping => {
       if (mapping && item.year === mapping.year) {
         this.changeVisibility(mapping.id); // Call changeVisibility with the id of the item being removed
         mapping.display = false;
@@ -208,13 +216,13 @@ export class ReservoirAnalyticsComponent
 
 
   changeVisibility(id: string) {
-    let existsChart = this._incomeChart.find(i => i.id == id);
+    const existsChart = this.incomeChartMap.get(id);
     if (existsChart) {
-      existsChart.display = !existsChart.display
+      existsChart.display = !existsChart.display;
       if (existsChart.display) {
-        this.addDateSeries([existsChart.chart])
+        this.addDateSeries([existsChart.chart]);
       } else {
-        this.removeSeries(existsChart.chart.seriesName)
+        this.removeSeries(existsChart.chart.seriesName);
       }
     }
   }

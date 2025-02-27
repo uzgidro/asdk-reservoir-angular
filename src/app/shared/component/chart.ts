@@ -271,7 +271,7 @@ export class Chart {
     xAxis: am5xy.DateAxis<am5xy.AxisRenderer>,
     yAxis: am5xy.ValueAxis<am5xy.AxisRenderer>,
     data: DateChart) {
-    let series = chart.series.push(am5xy.LineSeries.new(root, {
+    let series = chart.series.push(am5xy.SmoothedXLineSeries.new(root, {
       name: data.seriesName,
       xAxis: xAxis,
       yAxis: yAxis,
@@ -279,7 +279,7 @@ export class Chart {
       valueXField: "timestamp",
       tooltip: am5.Tooltip.new(root, {
         labelText: '{name}: {valueY}'
-      })
+      }),
     }));
     if (data.color) {
       series.set('stroke', am5.color(data.color))
