@@ -1,54 +1,54 @@
 <div class="grid grid-cols-2 px-12 pt-10 gap-4">
-    <div class="flex flex-col space-y-2">
-      <app-card-header [title]="'Suv resurslar'"></app-card-header>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Suv resurslar'"></app-card-header>
 
-      <app-dashboard-current-chart class="flex flex-1"></app-dashboard-current-chart>
-    </div>
-  <div class="flex flex-col space-y-2 justify-between">
+    <app-dashboard-current-chart class="flex flex-1"></app-dashboard-current-chart>
+  </div>
+  <div class="flex flex-col space-y-2 h-full">
     <app-card-header [title]="'MODSNOW'"></app-card-header>
 
-    <app-dashboard-snow-chart></app-dashboard-snow-chart>
+    <app-dashboard-snow-chart class="flex h-full"></app-dashboard-snow-chart>
   </div>
-    <div class="flex flex-col space-y-2">
-      <app-card-header [title]="'Ob-havo'"></app-card-header>
+  <div class="flex flex-col space-y-2">
+    <app-card-header [title]="'Ob-havo'"></app-card-header>
 
-      <table>
-        <thead>
-        <tr>
-          <th rowspan="2">Viloyatlar</th>
-          <th [colSpan]="weatherDaily.length > 0 ? weatherDaily[0].forecast.length * 2 : 0">Havo harorati</th>
-        </tr>
-        <tr>
-          <th *ngFor="let date of forecastDate" colspan="2">{{ date | date:'dd.MM.yyyy' }}</th>
+    <table>
+      <thead>
+      <tr>
+        <th rowspan="2">Viloyatlar</th>
+        <th [colSpan]="weatherDaily.length > 0 ? weatherDaily[0].forecast.length * 2 : 0">Havo harorati</th>
+      </tr>
+      <tr>
+        <th *ngFor="let date of forecastDate" colspan="2">{{ date | date:'dd.MM.yyyy' }}</th>
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let forecast of weatherDaily">
-          <td class="py-6">{{ forecast.reservoir }}</td>
-          <ng-container *ngFor="let item of forecast.forecast">
-            <td class="py-6">
-              <div class="flex flex-row space-x-1"><img ngSrc="{{item.dayIcon}}"
-                                                        alt="{{item.dayIconDescription}}"
-                                                        width="30"
-                                                        height="30">
-                <p>{{ item.dayTemperature}}</p></div>
-            </td>
-            <td class="py-6">
-              <div class="flex flex-row space-x-1"><img ngSrc="{{item.nightIcon}}"
-                                                        alt="{{item.nightIconDescription}}"
-                                                        width="30"
-                                                        height="30">
-                <p>{{ item.nightTemperature}}</p></div>
-            </td>
-          </ng-container>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="flex flex-col space-y-2 justify-between">
-      <app-modsnow-daily [itemCount]="1.5"></app-modsnow-daily>
-    </div>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let forecast of weatherDaily">
+        <td class="py-6">{{ forecast.reservoir }}</td>
+        <ng-container *ngFor="let item of forecast.forecast">
+          <td class="py-6">
+            <div class="flex flex-row space-x-1"><img ngSrc="{{item.dayIcon}}"
+                                                      alt="{{item.dayIconDescription}}"
+                                                      width="30"
+                                                      height="30">
+              <p>{{ item.dayTemperature }}</p></div>
+          </td>
+          <td class="py-6">
+            <div class="flex flex-row space-x-1"><img ngSrc="{{item.nightIcon}}"
+                                                      alt="{{item.nightIconDescription}}"
+                                                      width="30"
+                                                      height="30">
+              <p>{{ item.nightTemperature }}</p></div>
+          </td>
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex flex-col space-y-2 justify-between">
+    <app-modsnow-daily [itemCount]="1.5"></app-modsnow-daily>
+  </div>
 </div>
 
 <!--<div class="grid grid-cols-3 px-12 pt-10 gap-4">-->
