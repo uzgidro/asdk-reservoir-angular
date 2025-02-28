@@ -31,12 +31,12 @@ export class DashboardSnowChartComponent
           name: value.name,
           data: [{
             value: value.percent,
-            seriesName: '%',
+            seriesName: 'Qor qo\'plama, %',
             color: '#4eeefe',
             bulletColor: '#014a67',
           }]
         }))
-        this.renderCategoryChart(data, false)
+        this.renderCategoryChart(data);
       }
     )
   }

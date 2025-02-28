@@ -1,6 +1,6 @@
-/*th {*/
-/*  @apply max-w-32;*/
-/*}*/
+th, td {
+  @apply text-base;
+}
 
 .min {
   @apply bg-red-600; /* Apply red background */

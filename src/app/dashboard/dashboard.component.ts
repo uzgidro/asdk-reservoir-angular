@@ -10,7 +10,7 @@ import {WeatherService} from "../service/weather.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {NgOptimizedImage} from "@angular/common";
 import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-char.component";
-import {ModsnowDailyComponent} from "../reservoir/modsnow-daily/modsnow-daily.component";
+import {DashboardSnowReviewComponent} from "./dashboard-snow-review/dashboard-snow-review.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +23,7 @@ import {ModsnowDailyComponent} from "../reservoir/modsnow-daily/modsnow-daily.co
     DashboardCurrentChartComponent,
     NgOptimizedImage,
     DashboardSnowChartComponent,
-    ModsnowDailyComponent,
+    DashboardSnowReviewComponent,
   ],
   standalone: true
 })

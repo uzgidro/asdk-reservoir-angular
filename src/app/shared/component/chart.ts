@@ -3,7 +3,7 @@ import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {isPlatformBrowser} from "@angular/common";
 import {Directive, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID} from "@angular/core";
-import {CategoryChart, CategoryData, DateChart} from "../struct/chart";
+import {CategoryChart, CategoryData, DateChart, Options} from "../struct/chart";
 import {TimeUnit} from "@amcharts/amcharts5/.internal/core/util/Time";
 
 @Directive()
@@ -30,12 +30,12 @@ export class Chart implements OnInit, OnDestroy {
     }
   }
 
-  protected renderDateChart(data?: DateChart[]) {
-    this.browserOnly(() => this.createDateChart(this.id, data))
+  protected renderDateChart(data?: DateChart[], options?: Options) {
+    this.browserOnly(() => this.createDateChart(this.id, data, options))
   }
 
-  protected renderCategoryChart(data: CategoryChart[], showLegend: boolean = true) {
-    this.browserOnly(() => this.createCategoryChart(this.id, data, showLegend))
+  protected renderCategoryChart(data: CategoryChart[], options?: Options) {
+    this.browserOnly(() => this.createCategoryChart(this.id, data, options))
   }
 
   protected updateHourChart(data: DateChart) {
@@ -73,7 +73,7 @@ export class Chart implements OnInit, OnDestroy {
     })
   }
 
-  protected addDateSeries(data: DateChart[]) {
+  protected addDateSeries(data: DateChart[], options?: Options) {
     this.browserOnly(() => {
       if (!this.root) {
         console.warn("Root не инициализирован. Сначала вызовите createDateChart.");
@@ -91,10 +91,7 @@ export class Chart implements OnInit, OnDestroy {
       if (!xAxis) {
         xAxis = chart.xAxes.push(am5xy.DateAxis.new(this.root, {
           maxDeviation: 1,
-          baseInterval: {
-            timeUnit: this.setTimeStep(data).timeUnit as TimeUnit,
-            count: this.setTimeStep(data).step,
-          },
+          baseInterval: this.setTimeStep(data),
           renderer: am5xy.AxisRendererX.new(this.root, {minorGridEnabled: true}),
           tooltip: am5.Tooltip.new(this.root, {}),
         }));
@@ -109,11 +106,16 @@ export class Chart implements OnInit, OnDestroy {
         return;
       }
 
+      let legend
+      if (!options?.hideLegend) legend = this.createLegend(this.root, chart);
+
+
       data.forEach((item) => {
-        this.createDateSeries(this.root!, chart, xAxis!, yAxis, item);
+        let series = this.createDateSeries(this.root!, chart, xAxis!, yAxis, item);
+        if (!options?.hideBullets) series.bullets.push(() => this.setupBullets(this.root, item.bulletColor))
       });
 
-      this.setupLegend(this.root, chart);
+      this.setupLegend(chart, legend)
     })
   }
 
@@ -171,7 +173,7 @@ export class Chart implements OnInit, OnDestroy {
     }
   }
 
-  private createDateChart(id: string, data?: DateChart[]) {
+  private createDateChart(id: string, data?: DateChart[], options?: Options) {
     const root = am5.Root.new(id);
 
     this.setupRoot(root)
@@ -186,30 +188,31 @@ export class Chart implements OnInit, OnDestroy {
 
     yAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
 
+    let legend
+    if (!options?.hideLegend) legend = this.createLegend(root, chart, options?.legendPosition)
+
     if (data) {
       let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
         maxDeviation: 1,
-        baseInterval: {
-          timeUnit: this.setTimeStep(data).timeUnit as TimeUnit,
-          count: this.setTimeStep(data).step
-        },
+        baseInterval: this.setTimeStep(data),
         renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
         tooltip: am5.Tooltip.new(root, {})
       }));
       xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
       xAxis.data.setAll(data[0].data)
       data.forEach(item => {
-        this.createDateSeries(root, chart, xAxis, yAxis, item)
+        let series = this.createDateSeries(root, chart, xAxis, yAxis, item);
+        if (!options?.hideBullets) series.bullets.push(() => this.setupBullets(root, item.bulletColor))
       })
     }
 
-    this.setupLegend(root, chart)
 
     chart.appear(1000, 100);
+    this.setupLegend(chart, legend)
     this.root = root;
   }
 
-  private createCategoryChart(id: string, data: CategoryChart[], showLegend: boolean = true) {
+  private createCategoryChart(id: string, data: CategoryChart[], options?: Options) {
     let root = am5.Root.new(id);
 
     this.setupRoot(root);
@@ -253,8 +256,10 @@ export class Chart implements OnInit, OnDestroy {
 
     xAxis.data.setAll(data);
 
-
     let clusterCount = data[0].data.length
+
+    let legend
+    if (!options?.hideLegend) legend = this.createLegend(root, chart, options?.legendPosition)
 
     for (let i = 0; i < clusterCount; i++) {
       const series = this.createColumnSeries(root, chart, xAxis, yAxis, data[0].data[i]);
@@ -264,9 +269,9 @@ export class Chart implements OnInit, OnDestroy {
       })))
       series.appear(1000)
     }
-    if (showLegend) this.setupLegend(root, chart)
 
     chart.appear(1000, 100);
+    this.setupLegend(chart, legend)
     this.root = root
   }
 
@@ -292,9 +297,9 @@ export class Chart implements OnInit, OnDestroy {
       series.get('tooltip')!.get('background')!.set('fill', am5.color(data.color))
     }
     series.strokes.template.setAll({strokeWidth: 3});
-    if (!data.hideBullets) series.bullets.push(() => this.setupBullets(root, data.bulletColor))
     series.data.setAll(data.data);
     series.appear(1000)
+    return series
   }
 
   private createColumnSeries(
@@ -323,28 +328,6 @@ export class Chart implements OnInit, OnDestroy {
     return series
   }
 
-  private setTimeStep(data: DateChart[]) {
-    const differenceInMilliseconds = Math.abs(data[0].data[1].timestamp - data[0].data[0].timestamp);
-
-    const millisecondsInSecond = 1000;
-    const millisecondsInMinute = 60 * millisecondsInSecond;
-    const millisecondsInHour = 60 * millisecondsInMinute;
-    const millisecondsInDay = 24 * millisecondsInHour;
-
-    const hours = Math.floor((differenceInMilliseconds % millisecondsInDay) / millisecondsInHour);
-    if (hours > 0) {
-      return {
-        timeUnit: 'hour',
-        step: hours,
-      }
-    } else {
-      return {
-        timeUnit: 'month',
-        step: 1,
-      }
-    }
-  }
-
   private setupRoot(root: am5.Root) {
     root.setThemes([am5themes_Animated.new(root)]);
     root.interfaceColors.set("grid", am5.color('#fff'));
@@ -352,6 +335,7 @@ export class Chart implements OnInit, OnDestroy {
 
   private setupChart(root: am5.Root) {
     return root.container.children.push(am5xy.XYChart.new(root, {
+      layout: root.verticalLayout,
       panX: true,
       panY: true,
       wheelX: "panX",
@@ -359,6 +343,54 @@ export class Chart implements OnInit, OnDestroy {
       pinchZoomX: false,
       paddingLeft: 0,
     }));
+  }
+
+  private setTimeStep(data: DateChart[]): { timeUnit: TimeUnit, count: number } {
+    const milliseconds = Math.abs(data[0].data[1].timestamp - data[0].data[0].timestamp);
+
+    const seconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 28);
+    const years = Math.floor(days / 365);
+
+    if (seconds <= 1) {
+      return {
+        timeUnit: 'millisecond',
+        count: milliseconds,
+      }
+    } else if (minutes <= 1) {
+      return {
+        timeUnit: 'second',
+        count: seconds,
+      }
+    } else if (hours <= 1) {
+      return {
+        timeUnit: 'minute',
+        count: minutes,
+      }
+    } else if (days <= 1) {
+      return {
+        timeUnit: 'hour',
+        count: hours,
+      }
+    } else if (months <= 1) {
+      return {
+        timeUnit: 'day',
+        count: days,
+      }
+    } else if (years <= 1) {
+      return {
+        timeUnit: 'month',
+        count: months,
+      }
+    } else {
+      return {
+        timeUnit: 'year',
+        count: years,
+      }
+    }
   }
 
   private setupCursor(root: am5.Root, chart: am5xy.XYChart) {
@@ -369,21 +401,24 @@ export class Chart implements OnInit, OnDestroy {
     cursor.lineX.setAll({stroke: am5.color('#fff')});
   }
 
-  private setupLegend(root: am5.Root, chart: am5xy.XYChart) {
+  private createLegend(root: am5.Root, chart: am5xy.XYChart, position: 'top' | 'bottom' = 'top') {
     let legend = chart.children.values.find((child) => child instanceof am5.Legend) as am5.Legend | undefined;
 
     if (!legend) {
-      legend = chart.children.unshift(
-        am5.Legend.new(root, {
-          x: am5.percent(60),
-          centerX: am5.percent(60),
-          centerY: am5.p0,
-        })
-      );
+      let legendParams = am5.Legend.new(root, {
+        centerX: am5.p50,
+        x: am5.p50
+      });
+      if (position == 'top') legend = chart.children.unshift(legendParams);
+      else legend = chart.children.push(legendParams);
       legend.labels.template.setAll({fill: am5.color("#ffffff")});
     }
+    return legend
+    // legend.data.setAll(chart.series.values);
+  }
 
-    legend.data.setAll(chart.series.values);
+  private setupLegend(chart: am5xy.XYChart, legend?: am5.Legend) {
+    legend?.data.setAll(chart.series.values)
   }
 
   private setupBullets(root: am5.Root, bulletColor: string | undefined) {
@@ -400,20 +435,4 @@ export class Chart implements OnInit, OnDestroy {
       })
     });
   }
-
-  // protected updateChart(data: ClusterChartData[]) {
-  //   if (!this.root) return;
-  //
-  //   const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
-  //   const seriesCount = chart.series.length;
-  //   if (seriesCount === 0) return;
-  //   for (let i = 0; i < seriesCount; i++) {
-  //     const series = chart.series.getIndex(i) as am5xy.LineSeries;
-  //
-  //     if (series) {
-  //       series.data.setAll(data);
-  //       series.appear(1000);
-  //     }
-  //   }
-  // }
 }

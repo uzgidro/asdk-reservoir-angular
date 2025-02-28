@@ -214,7 +214,7 @@ export class ReservoirAnalyticsComponent
     if (existsChart) {
       existsChart.display = !existsChart.display;
       if (existsChart.display) {
-        this.addDateSeries([existsChart.chart]);
+        this.addDateSeries([existsChart.chart], {hideBullets: true});
       } else {
         this.removeSeries(existsChart.chart.seriesName);
       }
@@ -355,10 +355,9 @@ export class ReservoirAnalyticsComponent
     const chart: DateChart = {
       seriesName: data.seriesName,
       color: data.seriesColor,
-      data: this.calculateMonthlyValues(data.response),
-      hideBullets: true
+      data: this.calculateMonthlyValues(data.response)
     }
-    this.addDateSeries([chart])
+    this.addDateSeries([chart], {hideBullets: true})
     const year = data.id.includes('vg') ? undefined : {
       year: this.getResponseYear(data.response),
       value: this.calculateMonthlySum(data.response)

@@ -12,7 +12,6 @@ export interface DateChart {
     value: number
     timestamp: number
   }[]
-  hideBullets?: boolean
 }
 
 export interface CategoryChart extends Chart {
@@ -26,6 +25,8 @@ export interface CategoryData  {
   bulletColor?: string
 }
 
-export interface ClusterChart extends Chart {
-  index: number
+export interface Options {
+  hideBullets?: boolean
+  hideLegend?: boolean
+  legendPosition?: 'top' | 'bottom'
 }
