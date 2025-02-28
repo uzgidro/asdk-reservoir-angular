@@ -1,5 +1,5 @@
 th, td {
-  @apply text-lg
+  @apply text-base
 }
 
 .dash-card {

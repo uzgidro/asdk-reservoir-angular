@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
 import {NgChartsModule} from "ng2-charts";
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
@@ -25,9 +25,7 @@ import {DateChart} from "../../shared/struct/chart";
 })
 export class ReservoirAnalyticsComponent
   extends Chart
-  implements OnInit, AfterViewInit, OnDestroy {
-
-  incomeId!: string;
+  implements AfterViewInit {
 
   protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
@@ -75,8 +73,8 @@ export class ReservoirAnalyticsComponent
     super(platformId, zone)
   }
 
-  ngOnInit() {
-    this.incomeId = this.generateId()
+  override ngOnInit() {
+    super.ngOnInit()
     this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
@@ -93,11 +91,7 @@ export class ReservoirAnalyticsComponent
   }
 
   ngAfterViewInit() {
-    this.renderDateChart(this.incomeId)
-  }
-
-  ngOnDestroy() {
-    this.chartDispose()
+    this.renderDateChart()
   }
 
   get incomeChartMap() {

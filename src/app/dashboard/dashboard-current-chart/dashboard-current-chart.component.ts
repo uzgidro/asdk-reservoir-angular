@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
 import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {ApiService} from "../../service/api.service";
@@ -20,8 +20,7 @@ import {CategoryChart} from "../../shared/struct/chart";
 })
 export class DashboardCurrentChartComponent
   extends Chart
-  implements OnInit, AfterViewInit, OnDestroy {
-  id!: string
+  implements AfterViewInit {
   category: 'income' | 'release' | 'volume' | 'level' = 'income';
 
   private incomeData!: CategoryChart[]
@@ -33,10 +32,6 @@ export class DashboardCurrentChartComponent
     super(platformId, zone)
   }
 
-  ngOnInit() {
-    this.id = Math.floor(new Date().getTime() * Math.random()).toString()
-  }
-
   ngAfterViewInit() {
     this.apiService.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
@@ -44,13 +39,9 @@ export class DashboardCurrentChartComponent
         this.releaseData = this.setupData(response.release)
         this.levelData = this.setupData(response.level)
         this.volumeData = this.setupData(response.volume)
-        this.renderCategoryChart(this.id, this.incomeData)
+        this.renderCategoryChart(this.incomeData)
       }
     })
-  }
-
-  ngOnDestroy() {
-    this.chartDispose()
   }
 
   public changeCategory(category: 'income' | 'release' | 'volume' | 'level'): void {

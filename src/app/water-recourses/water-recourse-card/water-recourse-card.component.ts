@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {DecimalPipe, NgClass, NgIf, TitleCasePipe} from "@angular/common";
 import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
@@ -23,7 +23,7 @@ import {DateChart} from "../../shared/struct/chart";
 })
 export class WaterRecourseCardComponent
   extends Chart
-  implements OnInit, AfterViewInit {
+  implements AfterViewInit {
   @Input() data!: {
     reservoirId: number;
     reservoir: string
@@ -48,16 +48,11 @@ export class WaterRecourseCardComponent
     windSpeed?: number
     humidity?: string
   }
-  id!: string;
 
   public category: 'income' | 'release' | 'volume' | 'level' = 'income'
 
-  ngOnInit() {
-    this.id = Math.floor(new Date().getTime() * Math.random()).toString();
-  }
-
   ngAfterViewInit() {
-    this.renderDateChart(this.id, [this.data.incomeChart])
+    this.renderDateChart([this.data.incomeChart])
   }
 
   changeCategory(category: 'income' | 'release' | 'volume' | 'level') {

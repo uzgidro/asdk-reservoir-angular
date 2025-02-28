@@ -2,15 +2,24 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {isPlatformBrowser} from "@angular/common";
-import {Directive, Inject, NgZone, PLATFORM_ID} from "@angular/core";
+import {Directive, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID} from "@angular/core";
 import {CategoryChart, CategoryData, DateChart} from "../struct/chart";
 import {TimeUnit} from "@amcharts/amcharts5/.internal/core/util/Time";
 
 @Directive()
-export class Chart {
+export class Chart implements OnInit, OnDestroy {
   private root!: am5.Root
+  protected id!: string
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private zone: NgZone) {
+  }
+
+  ngOnInit() {
+    this.id = Math.floor(new Date().getTime() * Math.random()).toString()
+  }
+
+  ngOnDestroy() {
+    this.chartDispose()
   }
 
   private browserOnly(f: () => void) {
@@ -21,16 +30,12 @@ export class Chart {
     }
   }
 
-  protected generateId(): string {
-    return Math.floor(new Date().getTime() * Math.random()).toString()
+  protected renderDateChart(data?: DateChart[]) {
+    this.browserOnly(() => this.createDateChart(this.id, data))
   }
 
-  protected renderDateChart(id: string, data?: DateChart[]) {
-    this.browserOnly(() => this.createDateChart(id, data))
-  }
-
-  protected renderCategoryChart(id: string, data: CategoryChart[], showLegend: boolean = true) {
-    this.browserOnly(() => this.createCategoryChart(id, data, showLegend))
+  protected renderCategoryChart(data: CategoryChart[], showLegend: boolean = true) {
+    this.browserOnly(() => this.createCategoryChart(this.id, data, showLegend))
   }
 
   protected updateHourChart(data: DateChart) {
@@ -160,7 +165,7 @@ export class Chart {
     }
   }
 
-  protected chartDispose() {
+  private chartDispose() {
     if (this.root != undefined) {
       this.browserOnly(() => this.root.dispose())
     }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
 import {ModsnowService} from "../../service/modsnow.service";
 import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
@@ -17,17 +17,12 @@ import {CategoryChart} from "../../shared/struct/chart";
 })
 export class DashboardSnowChartComponent
   extends Chart
-  implements OnInit, AfterViewInit, OnDestroy {
-  id!: string;
+  implements AfterViewInit {
 
   constructor(private modsnow: ModsnowService,
               @Inject(PLATFORM_ID) platformId: Object,
               zone: NgZone) {
     super(platformId, zone)
-  }
-
-  ngOnInit() {
-    this.id = this.generateId()
   }
 
   ngAfterViewInit() {
@@ -41,12 +36,8 @@ export class DashboardSnowChartComponent
             bulletColor: '#014a67',
           }]
         }))
-        this.renderCategoryChart(this.id, data, false)
+        this.renderCategoryChart(data, false)
       }
     )
-  }
-
-  ngOnDestroy() {
-    this.chartDispose()
   }
 }
