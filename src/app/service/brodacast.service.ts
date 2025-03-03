@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class BrodacastService {
+export class BrodacastService implements OnDestroy{
 
   private channel: BroadcastChannel;
-  private messageSubject = new Subject<any>();
+  private reservoirSubject = new Subject<number>();
 
   // Observable для подписки на входящие сообщения
-  public message$ = this.messageSubject.asObservable();
+  public reservoir = this.reservoirSubject.asObservable();
 
   constructor() {
     // Инициализация канала с именем 'app_channel'
@@ -18,16 +18,15 @@ export class BrodacastService {
 
     // Подписка на входящие сообщения
     this.channel.onmessage = (event: MessageEvent) => {
-      this.messageSubject.next(event.data);
+      this.reservoirSubject.next(event.data);
     };
   }
 
   // Метод для отправки сообщений
-  sendMessage(message: any): void {
-    this.channel.postMessage(message);
+  changeReservoir(reservoirId: number): void {
+    this.channel.postMessage(reservoirId);
   }
 
-  // Очистка ресурсов при уничтожении сервиса
   ngOnDestroy(): void {
     this.channel.close();
   }

@@ -1,50 +1,4 @@
 <svg width="100%" height="100%" viewBox="0 0 1300 580" xmlns="http://www.w3.org/2000/svg" overflow="hidden">
-  <style type="text/css">
-
-    svg {
-      z-index: 1;
-      filter: drop-shadow(0px 0px 10px rgba(15, 116, 180, 1));
-    }
-
-    .ges {
-      animation: shadowPulse 2s infinite;
-    }
-
-    .ges:hover {
-      cursor: pointer;
-    }
-
-    @keyframes shadowPulse {
-      0% {
-        filter: drop-shadow(0 0 0px #fff);
-      }
-      50% {
-        filter: drop-shadow(0 0 30px #fff);
-      }
-      100% {
-        filter: drop-shadow(0 0 0px #fff);
-      }
-    }
-
-    .shadow-map {
-      fill: #0f74b4
-    }
-
-    .region {
-      fill: url(#gradient1);
-      fill-rule: nonzero;
-      transition: filter 1.2s ease;
-      stroke-width: 1;
-    }
-
-    .region:hover {
-      cursor: pointer;
-      fill: url(#gradient2);
-      fill-rule: nonzero;
-      filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 1));
-    }
-
-  </style>
   <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
     <stop offset="0%" stop-color="#029fec"></stop> <!-- Новый цвет -->
     <stop offset="100%" stop-color="#014f76"></stop>
@@ -246,10 +200,10 @@
     </g><!-- Topalang -->
 
     <!-- Geo tags -->
-    <a routerLink="/water/current" [queryParams]="{reservoir: 4}">
       <g class="ges"
          style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-         transform="translate(680 360) scale(0.3 0.3)">
+         transform="translate(680 360) scale(0.3 0.3)"
+      (click)="changeReservoir(4)">
         <path
           d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ff0000; fill-rule: nonzero; opacity: 1;"
@@ -258,12 +212,11 @@
           d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"></path>
-      </g>
-    </a> <!-- Hisorak -->
-    <a  routerLink="/water/current" [queryParams]="{reservoir: 5}">
+      </g> <!-- Hisorak -->
       <g class="ges"
          style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-         transform="translate(720 400) scale(0.3 0.3)">
+         transform="translate(720 400) scale(0.3 0.3)"
+         (click)="changeReservoir(5)">
         <path
           d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ff0000; fill-rule: nonzero; opacity: 1;"
@@ -272,12 +225,11 @@
           d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"></path>
-      </g>
-    </a> <!-- Topalang -->
-    <a  routerLink="/water/current" [queryParams]="{reservoir: 3}">
+      </g> <!-- Topalang -->
       <g class="ges"
          style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-         transform="translate(820 230) scale(0.3 0.3)">
+         transform="translate(820 230) scale(0.3 0.3)"
+         (click)="changeReservoir(3)">
         <path
           d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ff0000; fill-rule: nonzero; opacity: 1;"
@@ -286,12 +238,11 @@
           d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"></path>
-      </g>
-    </a> <!-- Sardoba -->
-    <a  routerLink="/water/current" [queryParams]="{reservoir: 6}">
+      </g> <!-- Sardoba -->
       <g class="ges"
          style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-         transform="translate(950 140) scale(0.3 0.3)">
+         transform="translate(950 140) scale(0.3 0.3)"
+         (click)="changeReservoir(6)">
         <path
           d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ff0000; fill-rule: nonzero; opacity: 1;"
@@ -300,12 +251,11 @@
           d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"></path>
-      </g>
-    </a> <!-- Chovoq -->
-    <a  routerLink="/water/current" [queryParams]="{reservoir: 2}">
+      </g> <!-- Chovoq -->
       <g class="ges"
          style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-         transform="translate(970 180) scale(0.3 0.3)">
+         transform="translate(970 180) scale(0.3 0.3)"
+         (click)="changeReservoir(2)">
         <path
           d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ff0000; fill-rule: nonzero; opacity: 1;"
@@ -314,12 +264,11 @@
           d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"></path>
-      </g>
-    </a> <!-- Ohangaron -->
-    <a  routerLink="/water/current" [queryParams]="{reservoir: 1}">
+      </g> <!-- Ohangaron -->
       <g class="ges"
          style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-         transform="translate(1230 195) scale(0.3 0.3)">
+         transform="translate(1230 195) scale(0.3 0.3)"
+         (click)="changeReservoir(1)">
         <path
           d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ff0000; fill-rule: nonzero; opacity: 1;"
@@ -328,7 +277,6 @@
           d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z"
           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"></path>
-      </g>
-    </a> <!-- Andijon -->
+      </g> <!-- Andijon -->
   </g>
 </svg>

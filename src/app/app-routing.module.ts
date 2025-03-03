@@ -23,7 +23,7 @@ import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservo
 import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
 import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
 import {ExploitationComponent} from "./exploitation/exploitation.component";
-import {DashboardMapComponent} from "./dashboard/dashboard-map/dashboard-map.component";
+import {ReservoirMapComponent} from "./reservoir/reservoir-map/reservoir-map.component";
 
 const routes: Routes = [
   {
@@ -69,7 +69,7 @@ const routes: Routes = [
       },
       {path: 'rules', component: ExploitationComponent},
       {path: 'docs', component: OrdersComponent},
-      {path: 'map', component: DashboardMapComponent}
+      {path: 'map', component: ReservoirMapComponent}
     ]
   },
   {
