@@ -97,7 +97,10 @@ export class Chart implements OnInit, OnDestroy {
         }));
 
         xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
-        xAxis.data.setAll(data[0].data);
+        xAxis.data.setAll(data[0].data.map(item => ({
+          timestamp: item.timestamp,
+          value: Math.round(item.value),
+        })));
       }
 
       const yAxis = chart.yAxes.getIndex(0) as am5xy.ValueAxis<am5xy.AxisRenderer> | undefined;
@@ -265,7 +268,7 @@ export class Chart implements OnInit, OnDestroy {
       const series = this.createColumnSeries(root, chart, xAxis, yAxis, data[0].data[i]);
       series.data.setAll(data.map(item => ({
         name: item.name,
-        value: item.data[i].value
+        value: Math.round(item.data[i].value)
       })))
       series.appear(1000)
     }
@@ -297,7 +300,12 @@ export class Chart implements OnInit, OnDestroy {
       series.get('tooltip')!.get('background')!.set('fill', am5.color(data.color))
     }
     series.strokes.template.setAll({strokeWidth: 3});
-    series.data.setAll(data.data);
+    series.data.setAll(data.data.map(item => {
+      return {
+        timestamp: item.timestamp,
+        value: Math.round(item.value)
+      }
+    }));
     series.appear(1000)
     return series
   }

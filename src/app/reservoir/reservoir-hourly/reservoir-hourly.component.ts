@@ -51,10 +51,26 @@ export class ReservoirHourlyComponent implements OnInit {
 
   selectedReservoir: number = 0
 
-  incomeChart!: DateChart
-  releaseChart!: DateChart
-  levelChart!: DateChart
-  volumeChart!: DateChart
+  incomeCharts: DateChart[] = []
+  releaseCharts: DateChart[] = []
+  levelCharts: DateChart[] = []
+  volumeCharts: DateChart[] = []
+
+  get incomeChart() {
+    return this.incomeCharts[this.selectedReservoir - 1]
+  }
+
+  get releaseChart() {
+    return this.releaseCharts[this.selectedReservoir - 1]
+  }
+
+  get levelChart() {
+    return this.levelCharts[this.selectedReservoir - 1]
+  }
+
+  get volumeChart() {
+    return this.volumeCharts[this.selectedReservoir - 1]
+  }
 
   constructor(
     private router: Router,
@@ -162,26 +178,26 @@ export class ReservoirHourlyComponent implements OnInit {
 
   private setupChartData(data: CategorisedArrayResponse) {
     for (let i = 0; i < data.income.length; i++) {
-      this.incomeChart = {
+      this.incomeCharts.push({
         data: data.income[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
         seriesName: 'Kelish, m³/s',
         color: 'rgba(37, 99, 235,0.4)',
-      }
-      this.releaseChart = {
+      })
+      this.releaseCharts.push({
         data: data.release[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
         seriesName: 'Chiqish, m³/s',
         color: 'rgba(225, 29, 72,0.4)',
-      }
-      this.levelChart = {
+      })
+      this.levelCharts.push({
         data: data.level[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
         seriesName: 'Sath, m',
         color: 'rgba(22, 163, 74,0.4)',
-      }
-      this.volumeChart = {
+      })
+      this.volumeCharts.push({
         data: data.volume[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
         seriesName: 'Hajm, mln.m³',
         color: 'rgba(147, 51, 234,0.4)',
-      }
+      })
     }
   }
 
