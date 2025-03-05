@@ -11,7 +11,7 @@ export class Chart implements OnInit, OnDestroy {
   private root!: am5.Root
   protected id!: string
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private zone: NgZone) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, protected zone: NgZone) {
   }
 
   ngOnInit() {
@@ -38,16 +38,23 @@ export class Chart implements OnInit, OnDestroy {
     this.browserOnly(() => this.createCategoryChart(this.id, data, options))
   }
 
-  protected updateHourChart(data: DateChart) {
+  protected updateDateChart(data: DateChart[]) {
     this.browserOnly(() => {
       if (!this.root) return;
 
       const chart = this.root.container.children.getIndex(0) as am5xy.XYChart;
-      const series = chart.series.getIndex(0) as am5xy.LineSeries;
+      const seriesCount = chart.series.length;
+      if (seriesCount === 0) return;
+      for (let i = 0; i < seriesCount; i++) {
+        const series = chart.series.getIndex(i) as am5xy.SmoothedXLineSeries;
 
-      if (series) {
-        series.data.setAll(data.data);
-        series.appear(1000);
+        if (series) {
+          series.data.setAll(data[i].data.map(item => ({
+            timestamp: item.timestamp,
+            value: Math.round(item.value),
+          })))
+          series.appear(1000);
+        }
       }
     })
   }
@@ -135,8 +142,8 @@ export class Chart implements OnInit, OnDestroy {
       const chartForRemove = chart.series.values.find(item => item.get('name') == seriesName)
       if (chartForRemove) {
         chartForRemove.hide(1000).then(() => {
-          chart.series.removeValue(chartForRemove)
-          chartForRemove.dispose()
+          // chart.series.removeValue(chartForRemove)
+          // chartForRemove.dispose()
         })
       }
     })

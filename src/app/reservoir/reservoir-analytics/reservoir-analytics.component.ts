@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
 import {NgChartsModule} from "ng2-charts";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {ComplexValueResponse, ValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
@@ -68,6 +68,7 @@ export class ReservoirAnalyticsComponent
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
     zone: NgZone,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private api: ApiService) {
     super(platformId, zone)
@@ -78,6 +79,16 @@ export class ReservoirAnalyticsComponent
     this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
+        if (value['reservoir'] == undefined) {
+          this.zone.run(async () => {
+            await this.router.navigate([], {
+              relativeTo: this.activatedRoute,
+              queryParams: {reservoir: 1},
+              queryParamsHandling: 'merge', // Сохраняем существующие queryParams
+            })
+          })
+        }
+
         this.api.getReservoirById(value['reservoir']).subscribe({
           next: (response: ReservoirResponse) => {
             this.reservoirId = response.id

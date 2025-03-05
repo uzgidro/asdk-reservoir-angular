@@ -24,6 +24,7 @@ import {WaterRecoursesComponent} from "./water-recourses/water-recourses.compone
 import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
 import {ExploitationComponent} from "./exploitation/exploitation.component";
 import {ReservoirMapComponent} from "./reservoir/reservoir-map/reservoir-map.component";
+import {DashboardReservoirComponent} from "./dashboard/dashboard-reservoir/dashboard-reservoir.component";
 
 const routes: Routes = [
   {
@@ -33,6 +34,7 @@ const routes: Routes = [
       {path: 'recourses', component: WaterRecoursesComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
+      {path: 'reservoir', component: DashboardReservoirComponent},
       {
         path: 'water', component: ReservoirComponent, children: [
           {path: '', pathMatch: 'full', redirectTo: 'current'},

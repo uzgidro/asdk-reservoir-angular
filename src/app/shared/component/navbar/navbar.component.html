@@ -16,6 +16,7 @@
     <li><a routerLink="/weather" routerLinkActive="active">Ob-havo</a></li>
     <li><a routerLink="/docs" routerLinkActive="active">Normativ hujjatlar</a></li>
     <li><a routerLink="/map" routerLinkActive="active">Xarita</a></li>
+    <li><a routerLink="/reservoir" [queryParams]="{reservoir: 1}" routerLinkActive="active">Grafik</a></li>
   </ul>
   <div>
     <p class="time">{{ currentTime | date: 'dd.MM.yyyy HH:mm:ss' }}</p>

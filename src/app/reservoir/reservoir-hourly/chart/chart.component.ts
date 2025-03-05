@@ -20,7 +20,7 @@ export class ChartComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['chart'] && !changes['chart'].firstChange) {
-      this.updateHourChart(this.chart)
+      this.updateDateChart([this.chart])
     }
   }
 }

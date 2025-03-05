@@ -1,0 +1,12 @@
+<div class="max-h-screen grid grid-rows-12 grid-cols-12 gap-4 pb-16 px-14">
+  <app-reservoir-analytics class="col-span-9 row-span-8"></app-reservoir-analytics>
+  <app-weather-detailed class="col-span-3 row-span-8" *ngIf="reservoir" [reservoir]="reservoir"></app-weather-detailed>
+  <app-dashboard-snow-review [reservoirId]="selectedReservoir" class="col-span-4 row-span-4"></app-dashboard-snow-review>
+  <div *ngIf="incomeChart && releaseChart && levelChart && volumeChart"  class="col-span-8 row-span-4 grid grid-flow-col-dense">
+    <app-chart [chart]="incomeChart"></app-chart>
+    <app-chart [chart]="releaseChart"></app-chart>
+    <app-chart [chart]="levelChart"></app-chart>
+    <app-chart [chart]="volumeChart"></app-chart>
+  </div>
+
+</div>

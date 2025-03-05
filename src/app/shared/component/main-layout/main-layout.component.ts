@@ -93,6 +93,10 @@ export class MainLayoutComponent implements OnInit {
       name: 'Xarita',
       path: '/map',
     },
+    {
+      name: 'Grafik',
+      path: '/reservoir?reservoir=1',
+    },
   ];
 
 

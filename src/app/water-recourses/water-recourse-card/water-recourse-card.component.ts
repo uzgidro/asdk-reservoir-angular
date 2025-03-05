@@ -60,19 +60,19 @@ export class WaterRecourseCardComponent
 
     switch (this.category) {
       case 'income': {
-        this.updateHourChart(this.data.incomeChart)
+        this.updateDateChart([this.data.incomeChart])
         break
       }
       case 'release': {
-        this.updateHourChart(this.data.releaseChart)
+        this.updateDateChart([this.data.releaseChart])
         break
       }
       case 'level': {
-        this.updateHourChart(this.data.levelChart)
+        this.updateDateChart([this.data.levelChart])
         break
       }
       case 'volume': {
-        this.updateHourChart(this.data.volumeChart)
+        this.updateDateChart([this.data.volumeChart])
         break
       }
     }
