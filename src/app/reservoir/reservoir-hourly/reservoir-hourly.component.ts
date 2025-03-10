@@ -11,6 +11,7 @@ import {jsPDF} from 'jspdf';
 import * as XLSX from "xlsx";
 import {ChartComponent} from "./chart/chart.component";
 import {DateChart} from "../../shared/struct/chart";
+import {OperativeTableComponent} from "./operative-table/operative-table.component";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -24,7 +25,8 @@ import {DateChart} from "../../shared/struct/chart";
     DecimalPipe,
     LoaderComponent,
     CardHeaderComponent,
-    ChartComponent
+    ChartComponent,
+    OperativeTableComponent
   ],
 
   standalone: true
@@ -33,12 +35,6 @@ import {DateChart} from "../../shared/struct/chart";
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
   times: Date[] = []
-  operativeData: OperativeValueResponse[] = []
-  today = new Date();
-  yesterday = new Date().setDate(this.today.getDate() - 1);
-  pastYear = new Date().setFullYear(this.today.getFullYear() - 1);
-  beforePastYear = new Date().setFullYear(this.today.getFullYear() - 2);
-  beforeBeforePastYear = new Date().setFullYear(this.today.getFullYear() - 3);
 
   reservoirsData: {
     id: number,
@@ -85,12 +81,6 @@ export class ReservoirHourlyComponent implements OnInit {
       next: (response: CategorisedArrayResponse) => {
         this.setupTable(response)
         this.setupChartData(response)
-      }
-    })
-
-    this.api.getOperativeValues().subscribe({
-      next: (response: OperativeValueResponse[]) => {
-        this.operativeData = response
       }
     })
 
