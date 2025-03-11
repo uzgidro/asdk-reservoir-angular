@@ -25,6 +25,7 @@ import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.compon
 import {ExploitationComponent} from "./exploitation/exploitation.component";
 import {ReservoirMapComponent} from "./reservoir/reservoir-map/reservoir-map.component";
 import {DashboardReservoirComponent} from "./dashboard/dashboard-reservoir/dashboard-reservoir.component";
+import {TopPositionScreenComponent} from "./top-position-screen/top-position-screen.component";
 
 const routes: Routes = [
   {
@@ -71,7 +72,7 @@ const routes: Routes = [
       },
       {path: 'rules', component: ExploitationComponent},
       {path: 'docs', component: OrdersComponent},
-      {path: 'map', component: ReservoirMapComponent}
+      {path: 'map', component: TopPositionScreenComponent}
     ]
   },
   {
