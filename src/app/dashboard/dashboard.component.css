@@ -1,5 +1,5 @@
 th, td {
-  @apply text-base
+  @apply text-base py-4 px-6
 }
 
 .dash-card {

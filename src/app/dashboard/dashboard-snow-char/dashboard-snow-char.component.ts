@@ -33,7 +33,7 @@ export class DashboardSnowChartComponent
             value: value.percent,
             seriesName: 'Qor qo\'plama, %',
             color: '#4eeefe',
-            bulletColor: '#014a67',
+            // bulletColor: '#014a67',
           }]
         }))
         this.renderCategoryChart(data);

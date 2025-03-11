@@ -11,6 +11,7 @@ import {WeatherApiService} from "../service/weather-api.service";
 import {NgOptimizedImage} from "@angular/common";
 import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-char.component";
 import {DashboardSnowReviewComponent} from "./dashboard-snow-review/dashboard-snow-review.component";
+import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,7 @@ import {DashboardSnowReviewComponent} from "./dashboard-snow-review/dashboard-sn
     NgOptimizedImage,
     DashboardSnowChartComponent,
     DashboardSnowReviewComponent,
+    CardWrapperComponent,
   ],
   standalone: true
 })

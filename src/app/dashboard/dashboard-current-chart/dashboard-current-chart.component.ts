@@ -84,7 +84,7 @@ export class DashboardCurrentChartComponent
             seriesName: new Intl.DateTimeFormat('eu-EU', {hour: 'numeric'}).format(new Date(inner.date)) + ':00',
             value: Number.parseFloat((Math.round(inner.value * 10) / 10).toFixed(1)),
             color: index == 0 ? '#4eeefe' : '#014a67',
-            bulletColor: index == 0 ? '#014a67' : '#4eeefe',
+            // bulletColor: index == 0 ? '#014a67' : '#4eeefe',
           }
         })
       }

@@ -442,7 +442,7 @@ export class Chart implements OnInit, OnDestroy {
       locationY: 1,
       sprite: am5.Label.new(root, {
         centerX: am5.p50,
-        // centerY: am5.p100,
+        centerY: am5.p100,
         text: "{valueY}",
         fill: fill,
         populateText: true,
