@@ -10,8 +10,12 @@ import {WeatherService} from "../service/weather.service";
 import {WeatherApiService} from "../service/weather-api.service";
 import {NgOptimizedImage} from "@angular/common";
 import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-char.component";
-import {DashboardSnowReviewComponent} from "./dashboard-snow-review/dashboard-snow-review.component";
 import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrapper.component";
+import {
+  DecadeManyYearsIncomeTableComponent
+} from "../reservoir/reservoir-decade/decade-many-years-income-table/decade-many-years-income-table.component";
+import {DashboardSnowTableComponent} from "./dashboard-snow-table/dashboard-snow-table.component";
+import {DashboardSnowSliderComponent} from "./dashboard-snow-slider/dashboard-snow-slider.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,8 +28,10 @@ import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrappe
     DashboardCurrentChartComponent,
     NgOptimizedImage,
     DashboardSnowChartComponent,
-    DashboardSnowReviewComponent,
     CardWrapperComponent,
+    DecadeManyYearsIncomeTableComponent,
+    DashboardSnowTableComponent,
+    DashboardSnowSliderComponent,
   ],
   standalone: true
 })

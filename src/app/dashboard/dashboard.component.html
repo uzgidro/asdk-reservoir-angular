@@ -1,13 +1,12 @@
-<div class="grid grid-cols-2 px-12 pt-10 gap-4">
+<div class="grid grid-cols-3 px-12 pt-10 gap-4">
   <app-card-wrapper>
     <app-card-header slot="header" [title]="'Suv resurslar'"></app-card-header>
 
-    <app-dashboard-current-chart slot="body" class="flex flex-1"></app-dashboard-current-chart>
+    <app-dashboard-current-chart slot="body" class="flex h-full"></app-dashboard-current-chart>
   </app-card-wrapper>
   <app-card-wrapper>
-    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
-
-    <app-dashboard-snow-chart slot="body" class="flex h-full"></app-dashboard-snow-chart>
+    <app-card-header slot="header" [title]="'Ko\'p yillik'"></app-card-header>
+    <app-decade-many-years-income-table slot="body"></app-decade-many-years-income-table>
   </app-card-wrapper>
   <app-card-wrapper>
     <app-card-header slot="header" [title]="'Ob-havo'"></app-card-header>
@@ -46,11 +45,28 @@
       </tbody>
     </table>
   </app-card-wrapper>
+
   <app-card-wrapper>
     <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
 
-    <app-dashboard-snow-review slot="body" class="flex flex-1"></app-dashboard-snow-review>
+    <app-dashboard-snow-chart slot="body" class="flex h-full"></app-dashboard-snow-chart>
   </app-card-wrapper>
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
+
+    <app-dashboard-snow-table slot="body"></app-dashboard-snow-table>
+  </app-card-wrapper>
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
+
+    <app-dashboard-snow-slider slot="body"></app-dashboard-snow-slider>
+  </app-card-wrapper>
+
+<!--  <app-card-wrapper>-->
+<!--    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>-->
+
+<!--    <app-dashboard-snow-review slot="body" class="flex flex-1"></app-dashboard-snow-review>-->
+<!--  </app-card-wrapper>-->
 </div>
 
 <!--<div class="grid grid-cols-3 px-12 pt-10 gap-4">-->

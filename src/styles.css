@@ -25,7 +25,7 @@
   }
 
   tr th {
-    @apply text-slate-300 bg-slate-800 p-4 text-xl border border-slate-300
+    @apply text-slate-300 bg-slate-800 p-4 text-lg border border-slate-300 break-words
   }
 
   tr td {

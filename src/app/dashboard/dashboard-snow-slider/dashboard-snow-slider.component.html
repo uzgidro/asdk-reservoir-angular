@@ -1,0 +1,12 @@
+<p-carousel [value]="rivers" [numVisible]="2" [numScroll]="2" [circular]="true">
+  <ng-template let-river pTemplate="item">
+    <div class="flex flex-col justify-center mx-2 space-y-2 h-fit">
+      <h2 class="text-2xl font-medium text-center">{{ river.name }}</h2>
+      <div class="w-full">
+        <img class="m-auto" src="{{river.url}}" alt="Modsnow">
+      </div>
+    </div>
+
+  </ng-template>
+</p-carousel>
+<!--<img src="assets/img/and_cover.jpeg" alt="">-->
