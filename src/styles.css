@@ -25,11 +25,11 @@
   }
 
   tr th {
-    @apply text-slate-300 bg-slate-800 p-2 text-sm
+    @apply text-slate-300 bg-slate-800 p-4 text-xl
   }
 
   tr td {
-    @apply px-4 py-2 border-b border-slate-500 text-center break-words text-sm
+    @apply px-6 py-4 border-b border-slate-500 text-center break-words text-base
   }
 }
 
