@@ -7,6 +7,7 @@ import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-reservoir-month',
@@ -19,7 +20,8 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
     DatePipe,
     LoaderComponent,
     UzbMonthPipePipe,
-    CardHeaderComponent
+    CardHeaderComponent,
+    CardWrapperComponent
   ],
   standalone: true
 })

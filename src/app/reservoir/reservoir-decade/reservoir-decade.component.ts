@@ -9,6 +9,7 @@ import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
 import {
   DecadeManyYearsIncomeTableComponent
 } from "./decade-many-years-income-table/decade-many-years-income-table.component";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-reservoir-decade',
@@ -22,7 +23,8 @@ import {
     NgForOf,
     CardHeaderComponent,
     UzbMonthPipePipe,
-    DecadeManyYearsIncomeTableComponent
+    DecadeManyYearsIncomeTableComponent,
+    CardWrapperComponent
   ],
   standalone: true
 })

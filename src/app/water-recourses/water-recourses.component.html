@@ -1,6 +1,6 @@
 <div class="grid grid-cols-3 w-screen px-12 pt-10 gap-4">
-  <div class="flex flex-col space-y-2" *ngFor="let data of reservoirData">
-    <app-card-header [title]="data.reservoir"></app-card-header>
-    <app-water-recourse-card [data]="data"></app-water-recourse-card>
-  </div>
+  <app-card-wrapper *ngFor="let data of reservoirData">
+    <app-card-header slot="header" [title]="data.reservoir"></app-card-header>
+    <app-water-recourse-card slot="body" [data]="data"></app-water-recourse-card>
+  </app-card-wrapper>
 </div>

@@ -1,100 +1,98 @@
-<!--<app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>-->
+<app-card-wrapper *ngIf="reservoirName && data.length > 0; else loader">
+  <app-card-header slot="header" [title]="'Oylik ma\'lumotlar'"></app-card-header>
 
-<div *ngIf="reservoirName && data.length > 0; else loader" class="flex flex-col flex-1 space-y-4">
-  <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
-
-  <app-card-header [title]="'Oylik ma\'lumotlar'"></app-card-header>
-
-  <table>
-    <thead>
-    <tr>
-      <th rowspan="2">Oy</th>
-      <th rowspan="2">O'lchash turi</th>
-      <th colspan="35">Kunlar</th>
-    </tr>
-    <tr>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>10</th>
-      <th>O'rtacha</th>
-      <th>11</th>
-      <th>12</th>
-      <th>13</th>
-      <th>14</th>
-      <th>15</th>
-      <th>16</th>
-      <th>17</th>
-      <th>18</th>
-      <th>19</th>
-      <th>20</th>
-      <th>O'rtacha</th>
-      <th>21</th>
-      <th>22</th>
-      <th>23</th>
-      <th>24</th>
-      <th>25</th>
-      <th>26</th>
-      <th>27</th>
-      <th>28</th>
-      <th>29</th>
-      <th>30</th>
-      <th>31</th>
-      <th>O'rtacha</th>
-      <th>Oylik o'rtacha</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let data of data">
-    <tr *ngIf="data.level">
+  <div slot="body" class="overflow-auto w-full h-full">
+    <table>
+      <thead>
+      <tr>
+        <th rowspan="2">Oy</th>
+        <th rowspan="2">O'lchash turi</th>
+        <th colspan="35">Kunlar</th>
+      </tr>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>O'rtacha</th>
+        <th>11</th>
+        <th>12</th>
+        <th>13</th>
+        <th>14</th>
+        <th>15</th>
+        <th>16</th>
+        <th>17</th>
+        <th>18</th>
+        <th>19</th>
+        <th>20</th>
+        <th>O'rtacha</th>
+        <th>21</th>
+        <th>22</th>
+        <th>23</th>
+        <th>24</th>
+        <th>25</th>
+        <th>26</th>
+        <th>27</th>
+        <th>28</th>
+        <th>29</th>
+        <th>30</th>
+        <th>31</th>
+        <th>O'rtacha</th>
+        <th>Oylik o'rtacha</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let data of data">
+      <tr *ngIf="data.level">
         <td rowspan="4">{{ data.date | date: 'MMMM' | uzbMonthPipe }}</td>
-      <td class="odd-row">Suv sathi, m</td>
-      <td class="odd-row" *ngFor="let value of data.level.slice(0, 10)">{{ value }}</td>
-      <td class="odd-row"></td>
-      <td class="odd-row" *ngFor="let value of data.level.slice(10,20)">{{ value }}</td>
-      <td class="odd-row"></td>
-      <td class="odd-row" *ngFor="let value of data.level.slice(-11)">{{ value }}</td>
-      <td class="odd-row"></td>
-      <td class="odd-row"></td>
-    </tr>
-    <tr *ngIf="data.volume">
-      <td>Suv hajmi, mln.m³</td>
-      <td *ngFor="let value of data.volume.slice(0, 10)">{{ value }}</td>
-      <td></td>
-      <td *ngFor="let value of data.volume.slice(10,20)">{{ value }}</td>
-      <td></td>
-      <td *ngFor="let value of data.volume.slice(-11)">{{ value }}</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr *ngIf="data.income">
-      <td class="odd-row">Kelishi, m³/s</td>
-      <td class="odd-row" *ngFor="let value of data.income.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
-      <td class="odd-row">{{ getAvg(data.income.slice(0, 10)) | number: '.0-0' }}</td>
-      <td class="odd-row" *ngFor="let value of data.income.slice(10,20)">{{ value | number: '0.0-0' }}</td>
-      <td class="odd-row">{{ getAvg(data.income.slice(10, 20)) | number: '.0-0' }}</td>
-      <td class="odd-row" *ngFor="let value of data.income.slice(-11)">{{ value | number: '0.0-0' }}</td>
-      <td class="odd-row">{{ getAvg(data.income.slice(-11)) | number: '.0-0' }}</td>
-      <td class="odd-row">{{ getAvg(data.income) | number: '.0-0' }}</td>
-    </tr>
-    <tr *ngIf="data.release">
-      <td>Chiqish, m³/s</td>
-      <td *ngFor="let value of data.release.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
-      <td>{{ getAvg(data.release.slice(0, 10)) | number: '.0-0' }}</td>
-      <td *ngFor="let value of data.release.slice(10,20)">{{ value | number: '0.0-0' }}</td>
-      <td>{{ getAvg(data.release.slice(10, 20)) | number: '.0-0' }}</td>
-      <td *ngFor="let value of data.release.slice(-11)">{{ value | number: '0.0-0' }}</td>
-      <td>{{ getAvg(data.release.slice(-11)) | number: '.0-0' }}</td>
-      <td>{{ getAvg(data.release) | number: '.0-0' }}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+        <td class="odd-row">Suv sathi, m</td>
+        <td class="odd-row" *ngFor="let value of data.level.slice(0, 10)">{{ value }}</td>
+        <td class="odd-row"></td>
+        <td class="odd-row" *ngFor="let value of data.level.slice(10,20)">{{ value }}</td>
+        <td class="odd-row"></td>
+        <td class="odd-row" *ngFor="let value of data.level.slice(-11)">{{ value }}</td>
+        <td class="odd-row"></td>
+        <td class="odd-row"></td>
+      </tr>
+      <tr *ngIf="data.volume">
+        <td>Suv hajmi, mln.m³</td>
+        <td *ngFor="let value of data.volume.slice(0, 10)">{{ value }}</td>
+        <td></td>
+        <td *ngFor="let value of data.volume.slice(10,20)">{{ value }}</td>
+        <td></td>
+        <td *ngFor="let value of data.volume.slice(-11)">{{ value }}</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr *ngIf="data.income">
+        <td class="odd-row">Kelishi, m³/s</td>
+        <td class="odd-row" *ngFor="let value of data.income.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
+        <td class="odd-row">{{ getAvg(data.income.slice(0, 10)) | number: '.0-0' }}</td>
+        <td class="odd-row" *ngFor="let value of data.income.slice(10,20)">{{ value | number: '0.0-0' }}</td>
+        <td class="odd-row">{{ getAvg(data.income.slice(10, 20)) | number: '.0-0' }}</td>
+        <td class="odd-row" *ngFor="let value of data.income.slice(-11)">{{ value | number: '0.0-0' }}</td>
+        <td class="odd-row">{{ getAvg(data.income.slice(-11)) | number: '.0-0' }}</td>
+        <td class="odd-row">{{ getAvg(data.income) | number: '.0-0' }}</td>
+      </tr>
+      <tr *ngIf="data.release">
+        <td>Chiqish, m³/s</td>
+        <td *ngFor="let value of data.release.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
+        <td>{{ getAvg(data.release.slice(0, 10)) | number: '.0-0' }}</td>
+        <td *ngFor="let value of data.release.slice(10,20)">{{ value | number: '0.0-0' }}</td>
+        <td>{{ getAvg(data.release.slice(10, 20)) | number: '.0-0' }}</td>
+        <td *ngFor="let value of data.release.slice(-11)">{{ value | number: '0.0-0' }}</td>
+        <td>{{ getAvg(data.release.slice(-11)) | number: '.0-0' }}</td>
+        <td>{{ getAvg(data.release) | number: '.0-0' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</app-card-wrapper>
 
 
 <ng-template #loader>

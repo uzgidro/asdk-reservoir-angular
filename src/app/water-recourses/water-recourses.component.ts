@@ -7,6 +7,7 @@ import {WeatherApiService} from "../service/weather-api.service";
 import {ComplexValueResponse} from "../shared/response/values-response";
 import {WaterRecourseCardComponent} from "./water-recourse-card/water-recourse-card.component";
 import {DateChart} from "../shared/struct/chart";
+import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-water-recourses',
@@ -15,7 +16,8 @@ import {DateChart} from "../shared/struct/chart";
     CardHeaderComponent,
     NgChartsModule,
     NgForOf,
-    WaterRecourseCardComponent
+    WaterRecourseCardComponent,
+    CardWrapperComponent
   ],
   templateUrl: './water-recourses.component.html',
   styleUrl: './water-recourses.component.css'

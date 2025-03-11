@@ -12,6 +12,7 @@ import * as XLSX from "xlsx";
 import {ChartComponent} from "./chart/chart.component";
 import {DateChart} from "../../shared/struct/chart";
 import {OperativeTableComponent} from "./operative-table/operative-table.component";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -26,7 +27,8 @@ import {OperativeTableComponent} from "./operative-table/operative-table.compone
     LoaderComponent,
     CardHeaderComponent,
     ChartComponent,
-    OperativeTableComponent
+    OperativeTableComponent,
+    CardWrapperComponent
   ],
 
   standalone: true

@@ -1,48 +1,50 @@
-<div class="flex flex-col flex-1 space-y-4">
-  <app-card-header [title]="'O\'n kunlik ma\'lumotlar'"></app-card-header>
-  <table *ngIf="tableData; else loader">
-    <thead>
-    <tr>
-      <th rowspan="2">Ma'lumot turi</th>
-      <th [colSpan]="daysInDecade.length">{{ today | date:'MMMM' | uzbMonthPipe }}</th>
-      <th rowspan="2">O'rtacha</th>
-    </tr>
-    <tr>
-      <th *ngFor="let day of daysInDecade">{{day}}</th>
-    </tr>
-    </thead>
-    <tbody *ngIf="tableData">
-    <tr *ngIf="tableData.income">
-      <td>Kelishi, m³/s</td>
-      <td *ngFor="let value of tableData.income.data; index as i">{{value.value | number:'0.0-0'}}</td>
-      <td *ngFor="let day of daysInDecade.slice(tableData.income.data.length)"></td>
-      <td>{{avgIncome}}</td>
-    </tr>
-    <tr *ngIf="tableData.release">
-      <td>Chiqish, m³/s</td>
-      <td *ngFor="let value of tableData.release.data">{{value.value | number:'0.0-0'}}</td>
-      <!--suppress JSUnusedGlobalSymbols, JSUnusedGlobalSymbols -->
-      <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
-      <td>{{avgRelease}}</td>
-    </tr>
-    <tr *ngIf="tableData.level">
-      <td>Suv sathi, m</td>
-      <td *ngFor="let value of tableData.level.data">{{value.value}}</td>
-      <td *ngFor="let day of daysInDecade.slice(tableData.level.data.length)"></td>
-      <td></td>
-    </tr>
-    <tr *ngIf="tableData.volume">
-      <td>Suv hajmi, mln.m³</td>
-      <td *ngFor="let value of tableData.volume.data">{{value.value}}</td>
-      <td *ngFor="let day of daysInDecade.slice(tableData.volume.data.length)"></td>
-      <td></td>
-    </tr>
+<app-card-wrapper>
+  <app-card-header slot="header" [title]="'O\'n kunlik ma\'lumotlar'"></app-card-header>
+  <div slot="body" class="flex flex-col space-y-4">
+    <table *ngIf="tableData; else loader">
+      <thead>
+      <tr>
+        <th rowspan="2">Ma'lumot turi</th>
+        <th [colSpan]="daysInDecade.length">{{ today | date:'MMMM' | uzbMonthPipe }}</th>
+        <th rowspan="2">O'rtacha</th>
+      </tr>
+      <tr>
+        <th *ngFor="let day of daysInDecade">{{ day }}</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="tableData">
+      <tr *ngIf="tableData.income">
+        <td>Kelishi, m³/s</td>
+        <td *ngFor="let value of tableData.income.data; index as i">{{ value.value | number:'0.0-0' }}</td>
+        <td *ngFor="let day of daysInDecade.slice(tableData.income.data.length)"></td>
+        <td>{{ avgIncome }}</td>
+      </tr>
+      <tr *ngIf="tableData.release">
+        <td>Chiqish, m³/s</td>
+        <td *ngFor="let value of tableData.release.data">{{ value.value | number:'0.0-0' }}</td>
+        <!--suppress JSUnusedGlobalSymbols, JSUnusedGlobalSymbols -->
+        <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
+        <td>{{ avgRelease }}</td>
+      </tr>
+      <tr *ngIf="tableData.level">
+        <td>Suv sathi, m</td>
+        <td *ngFor="let value of tableData.level.data">{{ value.value }}</td>
+        <td *ngFor="let day of daysInDecade.slice(tableData.level.data.length)"></td>
+        <td></td>
+      </tr>
+      <tr *ngIf="tableData.volume">
+        <td>Suv hajmi, mln.m³</td>
+        <td *ngFor="let value of tableData.volume.data">{{ value.value }}</td>
+        <td *ngFor="let day of daysInDecade.slice(tableData.volume.data.length)"></td>
+        <td></td>
+      </tr>
 
-    </tbody>
-  </table>
+      </tbody>
+    </table>
 
-  <app-decade-many-years-income-table></app-decade-many-years-income-table>
-</div>
+    <app-decade-many-years-income-table></app-decade-many-years-income-table>
+  </div>
+</app-card-wrapper>
 
 <ng-template #loader>
   <app-loader size="xl"></app-loader>

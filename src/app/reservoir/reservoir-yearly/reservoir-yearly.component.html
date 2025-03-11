@@ -1,61 +1,61 @@
-<!--<app-metric-select (categoryEmitter)="changeMetrics($event)"></app-metric-select>-->
-<div class="flex-1 flex flex-col space-y-4">
-  <!--  <h3 class="text-center text-3xl">{{reservoirName}}</h3>-->
-  <app-card-header [title]="'Ko\'p yillik ma\'lumotlar'"></app-card-header>
-  <table class="h-full">
-    <thead>
-    <tr>
-      <th rowspan="2">O'lchash turi</th>
-      <th rowspan="2">Yil</th>
-      <th *ngFor="let month of months" colspan="3">{{month}}</th>
-    </tr>
-    <tr>
-      <th *ngFor="let decade of decade">{{decade}}</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let table of tableData">
-    <tr>
-      <td [rowSpan]="table.data.length" class="text-lg">{{table.category}}</td>
-      <td class="odd-row">{{ table.data[0][0].date.slice(0, 4) }}</td>
-      <td *ngFor="let i of table.data[0]" class="odd-row">{{ i.value | number: '0.0-0' }}</td>
-    </tr>
-    <tr *ngFor="let cat of table.data.slice(1); index as i">
-      <td [ngClass]="{'odd-row': i % 2 !== 0}" class="text-lg">{{ cat[0].date.slice(0, 4) }}</td>
-      <td [ngClass]="{'odd-row': i % 2 !== 0}" *ngFor="let val of cat">{{ val.value | number: '0.0-0' }}
-      </td>
-      <td [ngClass]="{'odd-row': i % 2 !== 0}" *ngFor="let val of decade.slice(cat.length)"></td>
-    </tr>
-    <tr *ngIf="table.statStart && table.statEnd && table.statTotal.length > 0">
-      <td colspan="2">
-        {{ table.statStart | date:'yyyy' }} - {{ table.statEnd | date: 'yyyy' }}
-        ({{ table.statEnd.getFullYear() - table.statStart.getFullYear() + 1 }}) o'rtacha
-      </td>
-      <td *ngFor="let val of table.statTotal">{{val | number: '0.0-0'}}</td>
-    </tr>
-    <tr *ngIf="table.statEnd && table.stat30.length > 0">
-      <td colspan="2">
-        {{ table.statEnd.getFullYear() - 29 }} - {{ table.statEnd | date: 'yyyy' }} (30) o'rtacha
-      </td>
-      <td *ngFor="let val of table.stat30">{{val | number: '0.0-0'}}</td>
-    </tr>
-    <tr *ngIf="table.statEnd && table.stat10.length > 0">
-      <td colspan="2">
-        {{ table.statEnd.getFullYear() - 9 }} - {{ table.statEnd | date: 'yyyy' }} (10) o'rtacha
-      </td>
-      <td *ngFor="let val of table.stat10">{{val | number: '0.0-0'}}</td>
-    </tr>
-    <tr *ngIf="table.statEnd && table.stat5.length > 0">
-      <td colspan="2">
-        {{ table.statEnd.getFullYear() - 4 }} - {{ table.statEnd | date: 'yyyy' }} (5) o'rtacha
-      </td>
-      <td *ngFor="let val of table.stat5">{{val | number: '0.0-0'}}</td>
-    </tr>
-    <tr *ngIf="table.statEnd && table.statLastYear.length > 0">
-      <td colspan="2">
-        O'tgan yil o'rtacha
-      </td>
-      <td *ngFor="let val of table.statLastYear">{{val | number: '0.0-0'}}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<app-card-wrapper>
+  <app-card-header slot="header" [title]="'Ko\'p yillik ma\'lumotlar'"></app-card-header>
+  <div slot="body" class="overflow-auto w-full h-full">
+    <table class="h-full">
+      <thead>
+      <tr>
+        <th rowspan="2">O'lchash turi</th>
+        <th rowspan="2">Yil</th>
+        <th *ngFor="let month of months" colspan="3">{{ month }}</th>
+      </tr>
+      <tr>
+        <th *ngFor="let decade of decade">{{ decade }}</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let table of tableData">
+      <tr>
+        <td [rowSpan]="table.data.length" class="text-lg">{{ table.category }}</td>
+        <td class="odd-row">{{ table.data[0][0].date.slice(0, 4) }}</td>
+        <td *ngFor="let i of table.data[0]" class="odd-row">{{ i.value | number: '0.0-0' }}</td>
+      </tr>
+      <tr *ngFor="let cat of table.data.slice(1); index as i">
+        <td [ngClass]="{'odd-row': i % 2 !== 0}" class="text-lg">{{ cat[0].date.slice(0, 4) }}</td>
+        <td [ngClass]="{'odd-row': i % 2 !== 0}" *ngFor="let val of cat">{{ val.value | number: '0.0-0' }}
+        </td>
+        <td [ngClass]="{'odd-row': i % 2 !== 0}" *ngFor="let val of decade.slice(cat.length)"></td>
+      </tr>
+      <tr *ngIf="table.statStart && table.statEnd && table.statTotal.length > 0">
+        <td colspan="2">
+          {{ table.statStart | date:'yyyy' }} - {{ table.statEnd | date: 'yyyy' }}
+          ({{ table.statEnd.getFullYear() - table.statStart.getFullYear() + 1 }}) o'rtacha
+        </td>
+        <td *ngFor="let val of table.statTotal">{{ val | number: '0.0-0' }}</td>
+      </tr>
+      <tr *ngIf="table.statEnd && table.stat30.length > 0">
+        <td colspan="2">
+          {{ table.statEnd.getFullYear() - 29 }} - {{ table.statEnd | date: 'yyyy' }} (30) o'rtacha
+        </td>
+        <td *ngFor="let val of table.stat30">{{ val | number: '0.0-0' }}</td>
+      </tr>
+      <tr *ngIf="table.statEnd && table.stat10.length > 0">
+        <td colspan="2">
+          {{ table.statEnd.getFullYear() - 9 }} - {{ table.statEnd | date: 'yyyy' }} (10) o'rtacha
+        </td>
+        <td *ngFor="let val of table.stat10">{{ val | number: '0.0-0' }}</td>
+      </tr>
+      <tr *ngIf="table.statEnd && table.stat5.length > 0">
+        <td colspan="2">
+          {{ table.statEnd.getFullYear() - 4 }} - {{ table.statEnd | date: 'yyyy' }} (5) o'rtacha
+        </td>
+        <td *ngFor="let val of table.stat5">{{ val | number: '0.0-0' }}</td>
+      </tr>
+      <tr *ngIf="table.statEnd && table.statLastYear.length > 0">
+        <td colspan="2">
+          O'tgan yil o'rtacha
+        </td>
+        <td *ngFor="let val of table.statLastYear">{{ val | number: '0.0-0' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</app-card-wrapper>

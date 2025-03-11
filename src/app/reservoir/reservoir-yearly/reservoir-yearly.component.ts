@@ -8,6 +8,7 @@ import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {DecadeService} from "../decade.service";
 import {Decade} from "../../shared/interfaces";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-reservoir-yearly',
@@ -19,7 +20,8 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
     NgIf,
     DecimalPipe,
     DatePipe,
-    CardHeaderComponent
+    CardHeaderComponent,
+    CardWrapperComponent
   ],
   standalone: true
 
