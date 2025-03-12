@@ -24,11 +24,11 @@
     @apply table-auto w-full border border-slate-300 border-collapse overflow-x-auto
   }
 
-  tr th {
+  th {
     @apply text-slate-300 bg-slate-800 px-4 py-3 text-lg border border-slate-300 break-words
   }
 
-  tr td {
+  td {
     @apply px-4 py-3 text-center break-words text-base border border-slate-300
   }
 }

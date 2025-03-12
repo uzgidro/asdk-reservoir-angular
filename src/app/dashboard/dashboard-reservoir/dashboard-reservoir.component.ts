@@ -88,6 +88,7 @@ export class DashboardReservoirComponent implements OnInit {
 
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
+        console.log(response);
         this.setupChartData(response)
       }
     })

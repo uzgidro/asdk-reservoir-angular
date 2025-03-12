@@ -8,6 +8,7 @@ import {Subscription} from "rxjs";
 import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 import {Chart} from "../../shared/component/chart";
 import {DateChart} from "../../shared/struct/chart";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-reservoir-analytics',
@@ -19,7 +20,8 @@ import {DateChart} from "../../shared/struct/chart";
     NgStyle,
     NgForOf,
     NgIf,
-    DecimalPipe
+    DecimalPipe,
+    CardWrapperComponent
   ],
   standalone: true
 })
