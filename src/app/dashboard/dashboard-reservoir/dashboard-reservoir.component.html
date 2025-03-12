@@ -1,15 +1,56 @@
-<div class="max-h-screen grid grid-rows-12 grid-cols-12 gap-6 grid-flow-col pb-16 px-14">
-  <app-card-wrapper class="col-span-3 row-span-3">
+<div class="flex flex-col pb-16 px-14 h-full space-y-4">
+  <app-card-header [title]="reservoir.name"></app-card-header>
+  <div class="h-full grid grid-rows-12 grid-cols-12 gap-6 grid-flow-col">
+    <app-card-wrapper class="col-span-3 row-span-3">
+      <div slot="body" *ngIf="income && release && level && volume" class="grid grid-cols-2 gap-4 h-full">
+        <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
+          <div class="flex flex-col space-y-2 justify-center items-start h-full">
+            <p>Kelishi, m³/s</p>
+            <p>{{ income.value }} | <span
+              [ngClass]="{'text-red-500': income.difference < 0, 'text-green-500': income.difference > 0}">{{ income.difference | number:'0.0-2' }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
+          <div class="flex flex-col space-y-2 justify-center items-start h-full">
+            <p>Chiqishi, m³/s</p>
+            <p>{{ release.value }} | <span
+              [ngClass]="{'text-red-500': release.difference < 0, 'text-green-500': release.difference > 0}">{{ release.difference | number:'0.0-2' }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
+          <div class="flex flex-col space-y-2 justify-center items-start h-full">
+            <p>Sath, m</p>
+            <p>{{ level.value }} | <span
+              [ngClass]="{'text-red-500': level.difference < 0, 'text-green-500': level.difference > 0}">{{ level.difference | number:'0.0-2' }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
+          <div class="flex flex-col space-y-2 justify-center items-start h-full">
+            <p>Hajm, mln.m³</p>
+            <p>{{ volume.value }} | <span
+              [ngClass]="{'text-red-500': volume.difference < 0, 'text-green-500': volume.difference > 0}">{{ volume.difference | number:'0.0-2' }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </app-card-wrapper>
+    <app-weather-detailed class="col-span-3 row-span-5" *ngIf="reservoir" [reservoir]="reservoir"
+                          [displayTitle]="false"></app-weather-detailed>
+    <app-reservoir-analytics class="col-span-9 row-span-8"></app-reservoir-analytics>
+    <app-card-wrapper *ngIf="snowImages.length > 0" class="row-span-4 col-span-2">
+      <img [src]="snowImages[0].url" alt="">
+    </app-card-wrapper>
 
-  </app-card-wrapper>
-  <app-weather-detailed class="col-span-3 row-span-5" *ngIf="reservoir" [reservoir]="reservoir"></app-weather-detailed>
-  <app-reservoir-analytics class="col-span-9 row-span-8"></app-reservoir-analytics>
-<!--  <app-dashboard-snow-review [reservoirId]="selectedReservoir" class="col-span-4 row-span-4"></app-dashboard-snow-review>-->
-<!--  <div *ngIf="incomeChart && releaseChart && levelChart && volumeChart"  class="col-span-8 row-span-4 grid grid-flow-col-dense">-->
-<!--    <app-chart [chart]="incomeChart"></app-chart>-->
-<!--    <app-chart [chart]="releaseChart"></app-chart>-->
-<!--    <app-chart [chart]="levelChart"></app-chart>-->
-<!--    <app-chart [chart]="volumeChart"></app-chart>-->
-<!--  </div>-->
+    <!--  <app-dashboard-snow-review [reservoirId]="selectedReservoir" class="col-span-4 row-span-4"></app-dashboard-snow-review>-->
+    <!--  <div *ngIf="incomeChart && releaseChart && levelChart && volumeChart"  class="col-span-8 row-span-4 grid grid-flow-col-dense">-->
+    <!--    <app-chart [chart]="incomeChart"></app-chart>-->
+    <!--    <app-chart [chart]="releaseChart"></app-chart>-->
+    <!--    <app-chart [chart]="levelChart"></app-chart>-->
+    <!--    <app-chart [chart]="volumeChart"></app-chart>-->
+    <!--  </div>-->
 
+  </div>
 </div>

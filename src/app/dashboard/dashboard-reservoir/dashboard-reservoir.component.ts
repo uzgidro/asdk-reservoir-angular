@@ -4,11 +4,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BrodacastService} from "../../service/brodacast.service";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
-import {DateChart} from "../../shared/struct/chart";
-import {NgIf} from "@angular/common";
+import {DecimalPipe, NgClass, NgIf} from "@angular/common";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
+import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {ModsnowService} from "../../service/modsnow.service";
+import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 
 @Component({
   selector: 'app-dashboard-reservoir',
@@ -17,7 +19,10 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
     ReservoirAnalyticsComponent,
     NgIf,
     WeatherDetailedFrameComponent,
-    CardWrapperComponent
+    CardWrapperComponent,
+    DecimalPipe,
+    NgClass,
+    CardHeaderComponent
   ],
   templateUrl: './dashboard-reservoir.component.html',
   styleUrl: './dashboard-reservoir.component.css'
@@ -28,32 +33,34 @@ export class DashboardReservoirComponent implements OnInit {
 
   reservoirs: ReservoirResponse[] = []
 
-  incomeCharts: DateChart[] = []
-  releaseCharts: DateChart[] = []
-  levelCharts: DateChart[] = []
-  volumeCharts: DateChart[] = []
+  snowImages: ModsnowImageResponse[] = []
 
-  get incomeChart() {
-    return this.incomeCharts[this.selectedReservoir - 1]
+  incomeData: { value: number, difference: number }[] = []
+  releaseData: { value: number, difference: number }[] = []
+  levelData: { value: number, difference: number }[] = []
+  volumeData: { value: number, difference: number }[] = []
+
+  get income() {
+    return this.incomeData[this.selectedReservoir - 1]
   }
 
-  get releaseChart() {
-    return this.releaseCharts[this.selectedReservoir - 1]
+  get release() {
+    return this.releaseData[this.selectedReservoir - 1]
   }
 
-  get levelChart() {
-    return this.levelCharts[this.selectedReservoir - 1]
+  get level() {
+    return this.levelData[this.selectedReservoir - 1]
   }
 
-  get volumeChart() {
-    return this.volumeCharts[this.selectedReservoir - 1]
+  get volume() {
+    return this.volumeData[this.selectedReservoir - 1]
   }
 
   get reservoir() {
     return this.reservoirs[this.selectedReservoir - 1]
   }
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private api: ApiService, private broadcast: BrodacastService, private zone: NgZone) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private api: ApiService, private modsnow: ModsnowService, private broadcast: BrodacastService, private zone: NgZone) {
   }
 
   ngOnInit() {
@@ -65,6 +72,12 @@ export class DashboardReservoirComponent implements OnInit {
             queryParams: {reservoir: value},
             queryParamsHandling: 'merge', // Сохраняем существующие queryParams
           });
+        })
+
+        this.modsnow.getReservoir(value).subscribe({
+          next: value => {
+            this.snowImages = value
+          }
         })
       }
     })
@@ -99,35 +112,31 @@ export class DashboardReservoirComponent implements OnInit {
   }
 
   private setupChartData(data: CategorisedArrayResponse) {
-    this.incomeCharts = data.income.map(it => {
+    this.incomeData = data.income.map(it => {
       return {
-        seriesName: 'Kelish, m³/s',
-        color: 'rgba(37, 99, 235,0.4)',
-        data: it.data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value}))
+        value: it.data.reverse()[0].value,
+        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
       }
     })
 
-    this.releaseCharts = data.release.map(it => {
+    this.releaseData = data.release.map(it => {
       return {
-        seriesName: 'Chiqish, m³/s',
-        color: 'rgba(225, 29, 72,0.4)',
-        data: it.data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value}))
+        value: it.data.reverse()[0].value,
+        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
       }
     })
 
-    this.levelCharts = data.level.map(it => {
+    this.levelData = data.level.map(it => {
       return {
-        seriesName: 'Sath, m',
-        color: 'rgba(22, 163, 74,0.4)',
-        data: it.data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value}))
+        value: it.data.reverse()[0].value,
+        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
       }
     })
 
-    this.volumeCharts = data.volume.map(it => {
+    this.volumeData = data.volume.map(it => {
       return {
-        seriesName: 'Hajm, mln.m³',
-        color: 'rgba(147, 51, 234,0.4)',
-        data: it.data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value}))
+        value: it.data.reverse()[0].value,
+        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
       }
     })
   }

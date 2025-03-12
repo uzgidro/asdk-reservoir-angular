@@ -100,26 +100,42 @@ export class ModsnowService {
     ])
   }
 
+  getReservoir(id: number): Observable<ModsnowImageResponse[]> {
+    switch (id) {
+      case 1:
+        return of([
+          {name: 'Andijon', url: 'assets/img/and_cover.jpeg'},
+          {name: 'Andijon', url: 'assets/img/and_dynamics.png'},
+        ])
+      case 2:
+        return of([
+          {name: 'Ohangaron', url: 'assets/img/akh_cover.jpeg'},
+          {name: 'Ohangaron', url: 'assets/img/akh_dynamics.png'},
+        ])
+      case 4:
+        return of([
+          {name: 'Hisorak', url: 'assets/img/his_cover.jpeg'},
+          {name: 'Hisorak', url: 'assets/img/his_dynamics.png'},
+        ])
+      case 5:
+        return of([
+          {name: 'To\'palang', url: 'assets/img/tup_cover.jpeg'},
+          {name: 'To\'palang', url: 'assets/img/tup_dynamics.png'},
+        ])
+      case 6:
+        return of([
+          {name: 'Chorvoq', url: 'assets/img/chor_cover.jpeg'},
+          {name: 'Chorvoq', url: 'assets/img/chor_dynamics.png'},
+        ])
+      default:
+        return of([])
+    }
+  }
+
   private getTempPercent(): Observable<ModsnowPercentResponse[]> {
     const tempData = this.rivers.map((river, index) => ({
       name: river,
       percent: this.currentPercent[index],
-    }));
-    return of(tempData)
-  }
-
-  private getTempCover(): Observable<ModsnowImageResponse[]> {
-    const tempData = this.rivers.map((river, index) => ({
-      name: river,
-      url: this.coverUrl[index],
-    }));
-    return of(tempData)
-  }
-
-  private getTempDynamics(): Observable<ModsnowImageResponse[]> {
-    const tempData = this.rivers.map((river, index) => ({
-      name: river,
-      url: this.dynamicsUrl[index],
     }));
     return of(tempData)
   }

@@ -28,6 +28,7 @@ import {CardWrapperComponent} from "../card-wrapper/card-wrapper.component";
 })
 export class WeatherDetailedFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse
+  @Input() displayTitle: boolean = true
   reservoirName?: string
   weatherCurrent?: WeatherCurrentDto
   weatherHourly: WeatherCurrentDto[] = []
@@ -79,7 +80,7 @@ export class WeatherDetailedFrameComponent implements OnChanges {
             }
           }
         }
-        this.weatherDaily = this.weatherDaily.slice(0, 3)
+        this.weatherDaily = this.weatherDaily.slice(0, 4)
       }
     })
   }

@@ -1,5 +1,5 @@
 <app-card-wrapper *ngIf="weatherDaily && weatherHourly; else loader">
-    <app-card-header slot="header" [title]="reservoir?.name"></app-card-header>
+    <app-card-header slot="header" *ngIf="displayTitle" [title]="reservoir?.name"></app-card-header>
   <div slot="body" class="flex flex-col space-y-8 justify-center">
     <div *ngIf="weatherCurrent" class="flex flex-row px-4 justify-between items-center">
         <div class="grid grid-cols-2 h-fit w-fit">
