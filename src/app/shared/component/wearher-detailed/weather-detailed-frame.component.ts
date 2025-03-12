@@ -71,7 +71,7 @@ export class WeatherDetailedFrameComponent implements OnChanges {
                 existsElement.dayIcon = weather.weatherIcon
                 existsElement.dayIconDescription = weather.weatherDescription
                 existsElement.dayTemperature = weather.temp
-              } else if (weather.time.getHours() === 17) {
+              } else if (weather.time.getHours() === 23) {
                 existsElement.nightIcon = weather.weatherIcon
                 existsElement.nightIconDescription = weather.windDirection
                 existsElement.nightTemperature = weather.temp
@@ -79,7 +79,7 @@ export class WeatherDetailedFrameComponent implements OnChanges {
             }
           }
         }
-        this.weatherDaily = this.weatherDaily.slice(0, 4)
+        this.weatherDaily = this.weatherDaily.slice(0, 3)
       }
     })
   }

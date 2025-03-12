@@ -5,21 +5,19 @@ import {BrodacastService} from "../../service/brodacast.service";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {DateChart} from "../../shared/struct/chart";
-import {ChartComponent} from "../../reservoir/reservoir-hourly/chart/chart.component";
 import {NgIf} from "@angular/common";
-import {DashboardSnowReviewComponent} from "../dashboard-snow-review/dashboard-snow-review.component";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-dashboard-reservoir',
   standalone: true,
   imports: [
     ReservoirAnalyticsComponent,
-    ChartComponent,
     NgIf,
-    DashboardSnowReviewComponent,
-    WeatherDetailedFrameComponent
+    WeatherDetailedFrameComponent,
+    CardWrapperComponent
   ],
   templateUrl: './dashboard-reservoir.component.html',
   styleUrl: './dashboard-reservoir.component.css'

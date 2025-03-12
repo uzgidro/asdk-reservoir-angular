@@ -1,33 +1,33 @@
-<div class="grid grid-cols-6 grid-rows-3 h-full gap-6 pb-8">
+<div class="grid grid-cols-6 grid-rows-3 h-full w-full gap-4">
   <!-- Chart with buttons -->
   <app-card-wrapper class="col-span-5 row-span-2">
     <div *ngIf="category == 'income'" [id]="id" slot="body" class="flex flex-1"></div>
-<!--    <canvas *ngIf="category == 'income'"-->
-<!--            baseChart-->
-<!--            [datasets]="incomeChart"-->
-<!--            [labels]="incomeChartLabels"-->
-<!--            [options]="chartOptions"-->
-<!--            [type]="'line'"-->
-<!--    >-->
-<!--    </canvas>-->
-<!--    <canvas *ngIf="category.includes('volume')"-->
-<!--            baseChart-->
-<!--            [datasets]="volumeChartDataset"-->
-<!--            [labels]="volumeChartLabels"-->
-<!--            [options]="chartOptions"-->
-<!--            [type]="'line'"-->
-<!--    >-->
-<!--    </canvas>-->
-<!--    <div class="flex flex-row space-x-4 p-2">-->
-<!--      <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category == 'income'}"-->
-<!--              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
-<!--        Kelishi-->
-<!--      </button>-->
-<!--      <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category == 'volume'}"-->
-<!--              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
-<!--        Hajm-->
-<!--      </button>-->
-<!--    </div>-->
+    <!--    <canvas *ngIf="category == 'income'"-->
+    <!--            baseChart-->
+    <!--            [datasets]="incomeChart"-->
+    <!--            [labels]="incomeChartLabels"-->
+    <!--            [options]="chartOptions"-->
+    <!--            [type]="'line'"-->
+    <!--    >-->
+    <!--    </canvas>-->
+    <!--    <canvas *ngIf="category.includes('volume')"-->
+    <!--            baseChart-->
+    <!--            [datasets]="volumeChartDataset"-->
+    <!--            [labels]="volumeChartLabels"-->
+    <!--            [options]="chartOptions"-->
+    <!--            [type]="'line'"-->
+    <!--    >-->
+    <!--    </canvas>-->
+    <!--    <div class="flex flex-row space-x-4 p-2">-->
+    <!--      <button (click)="changeCategory('income')" [ngClass]="{'ring-2': category == 'income'}"-->
+    <!--              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
+    <!--        Kelishi-->
+    <!--      </button>-->
+    <!--      <button (click)="changeCategory('volume')" [ngClass]="{'ring-2': category == 'volume'}"-->
+    <!--              class="px-6 py-2 rounded-full ring-offset-2 ring-blue-600 text-gray-100 bg-blue-600 hover:bg-blue-700 active:ring-2">-->
+    <!--        Hajm-->
+    <!--      </button>-->
+    <!--    </div>-->
   </app-card-wrapper>
   <!-- /Chart with buttons -->
 
@@ -106,7 +106,7 @@
         <tr
           *ngIf="startYear && endYear && avg.display"
           (click)="changeVisibility(avg.id)"
-          class="text-blue-600">
+          class="bg-blue-600">
           <td
             *ngIf="startYear && endYear" class="text-sm p-1">
             O'rtacha ko'p yillik
@@ -122,7 +122,7 @@
         <tr
           *ngIf="max && max.display"
           (click)="changeVisibility(max.id)"
-          class="text-green-600">
+          class="bg-green-600">
           <td class="p-1">
             Maksimal
           </td>
@@ -139,7 +139,7 @@
         <tr
           *ngIf="min && min.display"
           (click)="changeVisibility(min.id)"
-          class="text-rose-600">
+          class="bg-rose-600">
           <td class="p-1">
             Minimal
           </td>
@@ -156,7 +156,7 @@
         <tr
           *ngIf="tenAvg && tenAvg.display"
           (click)="changeVisibility(tenAvg.id)"
-          class="text-cyan-600">
+          class="bg-cyan-600">
           <td>O'rtacha 10 yil</td>
           <td
             *ngFor="let val of tenAvg.byMonth">
@@ -175,7 +175,7 @@
         <tr
           *ngIf="past && past.display"
           (click)="changeVisibility(past.id)"
-          class="text-amber-600">
+          class="bg-amber-600">
           <td>O'tgan yil o'rtacha</td>
           <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
           <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
@@ -185,7 +185,7 @@
         <tr
           *ngIf="current && current.display"
           (click)="changeVisibility(current.id)"
-          class="text-purple-600">
+          class="bg-purple-600">
           <td>{{ current.year }}</td>
           <td
             *ngFor="let val of current.byMonth">
@@ -205,7 +205,7 @@
         <tr
           *ngFor="let item of selected"
           (click)="changeVisibility(item.id)"
-          [ngStyle]="{'color': item.color}">
+          [ngStyle]="{'background-color': item.color}">
           <td>{{ item.year }}</td>
           <td
             *ngFor="let val of item.byMonth">

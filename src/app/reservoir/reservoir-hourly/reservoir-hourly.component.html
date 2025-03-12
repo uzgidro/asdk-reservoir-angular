@@ -1,6 +1,6 @@
-<app-card-wrapper class="flex-1 overflow-y-auto">
+<app-card-wrapper>
   <app-card-header slot="header" [title]="'Tezkor ma\'lumotlar'"></app-card-header>
-  <div slot="body" class="flex flex-col space-y-4">
+  <div slot="body" class="flex flex-col space-y-4 overflow-y-auto">
     <table *ngIf="reservoirsData.length !== 0; else loader">
       <thead>
       <tr>
