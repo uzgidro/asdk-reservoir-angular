@@ -1,6 +1,6 @@
-<div *ngIf="weatherDaily && weatherHourly; else loader"
-     class="h-full flex flex-col space-y-8 justify-center">
-    <app-card-header [title]="reservoir?.name"></app-card-header>
+<app-card-wrapper *ngIf="weatherDaily && weatherHourly; else loader">
+    <app-card-header slot="header" [title]="reservoir?.name"></app-card-header>
+  <div slot="body" class="flex flex-col space-y-8 justify-center">
     <div *ngIf="weatherCurrent" class="flex flex-row px-4 justify-between items-center">
         <div class="grid grid-cols-2 h-fit w-fit">
             <p class="text-6xl font-bold row-span-2 mr-2">
@@ -22,14 +22,14 @@
         <table>
             <tbody>
             <tr *ngFor="let item of weatherDaily">
-                <td class="border-0 text-left p-0 text-xl">{{ item.date | date:'cccc' | uzbDatePipe }}</td>
+                <td class="text-left p-0 text-xl">{{ item.date | date:'cccc' | uzbDatePipe }}</td>
             </tr>
             </tbody>
         </table>
         <table>
             <tbody>
             <tr *ngFor="let item of weatherDaily">
-                <td class="border-0 p-0">
+                <td class="p-0">
                     <div class="flex flex-row justify-end items-center">
                         <img ngSrc="{{item.dayIcon}}" alt="{{item.dayIconDescription}}"
                              width="30"
@@ -41,7 +41,7 @@
                              height="30"
                         ></div>
                 </td>
-                <td class="border-0 p-0">
+                <td class="p-0">
                     <div class="flex flex-row justify-end text-xl">
                         <p>{{ item.dayTemperature | number:'.0-0' }}&deg;/</p>
                         <p>{{ item.nightTemperature | number:'.0-0' }}&deg;</p></div>
@@ -84,7 +84,8 @@
         <p>{{ weatherCurrent.pressure }} mbar</p>
     </div>
   </div>
-</div>
+  </div>
+</app-card-wrapper>
 
 <ng-template #loader>
   <div class="p-4 flex flex-col items-center material-card">

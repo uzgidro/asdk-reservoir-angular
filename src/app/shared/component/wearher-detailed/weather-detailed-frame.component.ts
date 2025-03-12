@@ -7,6 +7,7 @@ import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/c
 import {LoaderComponent} from "../loader/loader.component";
 import {UzbDatePipePipe} from "../../pipe/uzb-date-pipe.pipe";
 import {CardHeaderComponent} from "../card-header/card-header.component";
+import {CardWrapperComponent} from "../card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-weather-detailed',
@@ -20,7 +21,8 @@ import {CardHeaderComponent} from "../card-header/card-header.component";
     NgForOf,
     LoaderComponent,
     UzbDatePipePipe,
-    CardHeaderComponent
+    CardHeaderComponent,
+    CardWrapperComponent
   ],
   standalone: true
 })
