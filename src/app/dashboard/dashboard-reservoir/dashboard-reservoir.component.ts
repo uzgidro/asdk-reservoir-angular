@@ -11,6 +11,8 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import {ModsnowService} from "../../service/modsnow.service";
 import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
+import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {DashboardSnowReviewComponent} from "../dashboard-snow-review/dashboard-snow-review.component";
 
 @Component({
   selector: 'app-dashboard-reservoir',
@@ -22,7 +24,9 @@ import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
     CardWrapperComponent,
     DecimalPipe,
     NgClass,
-    CardHeaderComponent
+    CardHeaderComponent,
+    LoaderComponent,
+    DashboardSnowReviewComponent
   ],
   templateUrl: './dashboard-reservoir.component.html',
   styleUrl: './dashboard-reservoir.component.css'
@@ -73,12 +77,6 @@ export class DashboardReservoirComponent implements OnInit {
             queryParamsHandling: 'merge', // Сохраняем существующие queryParams
           });
         })
-
-        this.modsnow.getReservoir(value).subscribe({
-          next: value => {
-            this.snowImages = value
-          }
-        })
       }
     })
 
@@ -93,13 +91,21 @@ export class DashboardReservoirComponent implements OnInit {
               queryParamsHandling: 'merge', // Сохраняем существующие queryParams
             })
           })
-        } else this.selectedReservoir = reservoirId
+        } else {
+          this.selectedReservoir = reservoirId
+          console.log(reservoirId)
+          this.modsnow.getReservoir(parseInt(reservoirId)).subscribe({
+            next: value => {
+              console.log(value)
+              this.snowImages = value
+            }
+          })
+        }
       }
     })
 
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
-        console.log(response);
         this.setupChartData(response)
       }
     })

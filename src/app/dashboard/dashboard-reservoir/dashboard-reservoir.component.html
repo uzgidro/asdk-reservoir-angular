@@ -1,6 +1,7 @@
-<div class="flex flex-col pb-16 px-14 h-full space-y-4">
+<div *ngIf="reservoir; else loader" class="flex flex-col pb-16 px-14 h-full space-y-4">
   <app-card-header [title]="reservoir.name"></app-card-header>
   <div class="h-full grid grid-rows-12 grid-cols-12 gap-6 grid-flow-col">
+    <!--  Current data  -->
     <app-card-wrapper class="col-span-3 row-span-3">
       <div slot="body" *ngIf="income && release && level && volume" class="grid grid-cols-2 gap-4 h-full">
         <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
@@ -37,20 +38,33 @@
         </div>
       </div>
     </app-card-wrapper>
+    <!--  /Current data  -->
+    <!--  Weather  -->
     <app-weather-detailed class="col-span-3 row-span-5" *ngIf="reservoir" [reservoir]="reservoir"
                           [displayTitle]="false"></app-weather-detailed>
-    <app-reservoir-analytics class="col-span-9 row-span-8"></app-reservoir-analytics>
-    <app-card-wrapper *ngIf="snowImages.length > 0" class="row-span-4 col-span-2">
-      <img [src]="snowImages[0].url" alt="">
+    <!--  /Weather  -->
+    <!--  Snow cover  -->
+    <app-card-wrapper *ngIf="snowImages.length > 0" class="col-span-2 row-span-4">
+      <img slot="body" [src]="snowImages[0].url" alt="" class="h-full w-full">
     </app-card-wrapper>
-
-    <!--  <app-dashboard-snow-review [reservoirId]="selectedReservoir" class="col-span-4 row-span-4"></app-dashboard-snow-review>-->
-    <!--  <div *ngIf="incomeChart && releaseChart && levelChart && volumeChart"  class="col-span-8 row-span-4 grid grid-flow-col-dense">-->
-    <!--    <app-chart [chart]="incomeChart"></app-chart>-->
-    <!--    <app-chart [chart]="releaseChart"></app-chart>-->
-    <!--    <app-chart [chart]="levelChart"></app-chart>-->
-    <!--    <app-chart [chart]="volumeChart"></app-chart>-->
-    <!--  </div>-->
-
+    <!--  /Snow cover  -->
+    <!--  Snow dynamics  -->
+    <app-card-wrapper *ngIf="snowImages.length > 0" class="col-span-5 row-span-4">
+      <img slot="body" [src]="snowImages[1].url" alt="" class="h-full w-full">
+    </app-card-wrapper>
+    <!--  /Snow dynamics  -->
+    <!--  Analytics  -->
+    <app-reservoir-analytics class="col-span-9 row-span-8"></app-reservoir-analytics>
+    <!--  /Analytics  -->
+    <!--  Snow chart  -->
+    <app-card-wrapper class="col-span-5 row-span-4">
+      <app-dashboard-snow-review slot="body" [reservoirId]="selectedReservoir"
+                                 class="h-full w-full"></app-dashboard-snow-review>
+    </app-card-wrapper>
+    <!--  /Snow chart  -->
   </div>
 </div>
+
+<ng-template #loader>
+  <app-loader [size]="'lg'"></app-loader>
+</ng-template>
