@@ -33,6 +33,11 @@
   }
 }
 
+.odd-row {
+  @apply bg-slate-600 bg-opacity-70
+}
+
+
 .active {
   @apply text-white border-l-white hover:text-slate-400  hover:border-l-slate-400
 }
