@@ -106,7 +106,7 @@
         <tr
           *ngIf="startYear && endYear && avg.display"
           (click)="changeVisibility(avg.id)"
-          class="bg-blue-600">
+          [ngStyle]="{'background-color': 'oklch(0.546 0.245 262.881)'}">
           <td
             *ngIf="startYear && endYear" class="text-sm p-1">
             O'rtacha ko'p yillik
@@ -122,7 +122,7 @@
         <tr
           *ngIf="max && max.display"
           (click)="changeVisibility(max.id)"
-          class="bg-green-600">
+          [ngStyle]="{'background-color': 'oklch(0.627 0.194 149.214)'}">
           <td class="p-1">
             Maksimal
           </td>
@@ -139,7 +139,7 @@
         <tr
           *ngIf="min && min.display"
           (click)="changeVisibility(min.id)"
-          class="bg-rose-600">
+          [ngStyle]="{'background-color': 'oklch(0.586 0.253 17.585)'}">
           <td class="p-1">
             Minimal
           </td>
@@ -156,7 +156,7 @@
         <tr
           *ngIf="tenAvg && tenAvg.display"
           (click)="changeVisibility(tenAvg.id)"
-          class="bg-cyan-600">
+          [ngStyle]="{'background-color': 'oklch(0.609 0.126 221.723)'}">
           <td>O'rtacha 10 yil</td>
           <td
             *ngFor="let val of tenAvg.byMonth">
@@ -175,7 +175,7 @@
         <tr
           *ngIf="past && past.display"
           (click)="changeVisibility(past.id)"
-          class="bg-amber-600">
+          [ngStyle]="{'background-color': 'oklch(0.666 0.179 58.318)'}">
           <td>O'tgan yil o'rtacha</td>
           <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
           <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
@@ -185,7 +185,7 @@
         <tr
           *ngIf="current && current.display"
           (click)="changeVisibility(current.id)"
-          class="bg-purple-600">
+          [ngStyle]="{'background-color': 'oklch(0.558 0.288 302.321)'}">
           <td>{{ current.year }}</td>
           <td
             *ngFor="let val of current.byMonth">
@@ -240,47 +240,50 @@
         <tbody *ngIf="avg">
         <tr
           *ngIf="startYear && endYear"
-          (click)="changeVisibility(avg.id) "
-          [ngClass]="{
+          (click)="changeVisibility(avg.id) ">
+          <td [ngClass]="{
          'bg-blue-600': avg.display,
-         'text-gray-200': avg.display,
          'text-blue-600': !avg.display}">
-          <td
-            *ngIf="startYear && endYear">
             O'rtacha ko'p yillik
           </td>
-          <td>{{ (avg.value) | number: '.0-0' }}</td>
+          <td
+          [ngClass]="{
+         'bg-blue-600': avg.display,
+         'text-blue-600': !avg.display}">{{ (avg.value) | number: '.0-0' }}</td>
         </tr>
-        <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)"
+        <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)">
+          <td
             [ngClass]="{
           'bg-cyan-600': tenAvg.display,
-          'text-gray-200': tenAvg.display,
-          'text-cyan-600': !tenAvg.display}"
-            class="text-cyan-600">
-          <td>O'rtacha 10 yil</td>
-          <td>{{ (tenAvg.value) | number: '.0-0' }}</td>
+          'text-cyan-600': !tenAvg.display}">O'rtacha 10 yil</td>
+          <td
+            [ngClass]="{
+          'bg-cyan-600': tenAvg.display,
+          'text-cyan-600': !tenAvg.display}">{{ (tenAvg.value) | number: '.0-0' }}</td>
         </tr>
         <tr
           *ngIf="max"
-          (click)="changeVisibility(max.id)"
+          (click)="changeVisibility(max.id)">
+          <td
           [ngClass]="{
           'bg-green-600': max.display,
-          'text-gray-200': max.display,
-          'text-green-600':!max.display}">
-          <td>Maksimal</td>
-          <td>{{ (max.value) | number: '.0-0' }}</td>
+          'text-green-600':!max.display}">Maksimal</td>
+          <td
+          [ngClass]="{
+          'bg-green-600': max.display,
+          'text-green-600':!max.display}">{{ (max.value) | number: '.0-0' }}</td>
         </tr>
         <tr
           *ngIf="min"
-          (click)="changeVisibility(min.id)"
+          (click)="changeVisibility(min.id)">
+          <td
           [ngClass]="{
          'bg-red-600': min.display,
-         'text-gray-200': min.display,
-         'text-red-600':!min.display}">
-          <td>
-            Minimal
-          </td>
-          <td>{{ (min.value) | number: '.0-0' }}</td>
+         'text-red-600':!min.display}">Minimal</td>
+          <td
+          [ngClass]="{
+         'bg-red-600': min.display,
+         'text-red-600':!min.display}">{{ (min.value) | number: '.0-0' }}</td>
         </tr>
         </tbody>
       </table>

@@ -85,8 +85,8 @@
           </div>
       </tr>
       </thead>
-      <tbody *ngFor="let res of reservoirsData">
-      <tr (click)="navigateToReservoir(res.id)">
+      <tbody>
+      <tr *ngFor="let res of reservoirsData" (click)="navigateToReservoir(res.id)">
         <td>{{ res.name }}</td>
         <td *ngIf="res.level">{{ res.level.old | number: '.0-2' }}</td>
         <td *ngIf="res.level">{{ res.level.latest | number: '.0-2' }}</td>

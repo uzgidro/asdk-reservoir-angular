@@ -2,6 +2,10 @@ table {
   @apply border-0
 }
 
+table tbody tr {
+  @apply bg-transparent
+}
+
 th, td {
   @apply border-0
 }

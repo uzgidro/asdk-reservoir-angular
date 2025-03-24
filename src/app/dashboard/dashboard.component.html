@@ -23,7 +23,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let forecast of weatherDaily">
+      <tr *ngFor="let forecast of weatherDaily" class="even:odd-row">
         <td class="py-6">{{ forecast.reservoir }}</td>
         <ng-container *ngFor="let item of forecast.forecast">
           <td class="py-6">

@@ -15,16 +15,16 @@
     <th>{{ pastYear }} yil</th>
   </tr>
   </thead>
-  <tbody *ngFor="let res of totalValues">
-  <tr>
+  <tbody>
+  <tr *ngFor="let res of totalValues">
     <td>{{res.reservoir}}</td>
-    <td>{{res.avg30}}<br><p class="text-red-600">{{ res.decadeAvg30 }}</p></td>
-    <td>{{res.avg10}}<br><p class="text-red-600">{{ res.decadeAvg10 }}</p></td>
-    <td>{{res.lastYear}}<br><p class="text-red-600">{{ res.decadeLastYear }}</p></td>
-    <td>{{res.currentYear}}<br><p class="text-red-600">{{ res.decadeCurrentYear }}</p></td>
-    <td>{{ res.avg30 !== 0 ? ((res.currentYear / res.avg30) * 100 | number: '.0-2') : '0' }}<br><p class="text-red-600">{{ res.decadeAvg30 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg30) * 100 | number: '.0-2') : '0' }}</p></td>
-    <td>{{ res.avg10 !== 0 ? ((res.currentYear / res.avg10) * 100 | number: '.0-2') : '0' }}<br><p class="text-red-600">{{ res.decadeAvg10 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg10) * 100 | number: '.0-2') : '0' }}</p></td>
-    <td>{{ (res.currentYear / res.lastYear) * 100 | number: '.0-2' }}<br><p class="text-red-600">{{ (res.decadeCurrentYear / res.decadeLastYear) * 100 | number: '.0-2' }}</p></td>
+    <td>{{res.avg30}}<br><p class="difference">{{ res.decadeAvg30 }}</p></td>
+    <td>{{res.avg10}}<br><p class="difference">{{ res.decadeAvg10 }}</p></td>
+    <td>{{res.lastYear}}<br><p class="difference">{{ res.decadeLastYear }}</p></td>
+    <td class="bg-cyan-800">{{res.currentYear}}<br><p class="difference">{{ res.decadeCurrentYear }}</p></td>
+    <td>{{ res.avg30 !== 0 ? ((res.currentYear / res.avg30) * 100 | number: '.0-2') : '0' }}<br><p class="difference">{{ res.decadeAvg30 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg30) * 100 | number: '.0-2') : '0' }}</p></td>
+    <td>{{ res.avg10 !== 0 ? ((res.currentYear / res.avg10) * 100 | number: '.0-2') : '0' }}<br><p class="difference">{{ res.decadeAvg10 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg10) * 100 | number: '.0-2') : '0' }}</p></td>
+    <td>{{ (res.currentYear / res.lastYear) * 100 | number: '.0-2' }}<br><p class="difference">{{ (res.decadeCurrentYear / res.decadeLastYear) * 100 | number: '.0-2' }}</p></td>
   </tr>
   </tbody>
 </table>

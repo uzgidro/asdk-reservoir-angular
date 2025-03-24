@@ -1,3 +1,7 @@
 th, td {
   @apply px-2 py-2 text-base
 }
+
+.difference {
+  @apply italic font-extralight text-lime-300
+}

@@ -50,14 +50,14 @@
       <tbody *ngFor="let data of data">
       <tr *ngIf="data.level">
         <td rowspan="4">{{ data.date | date: 'MMMM' | uzbMonthPipe }}</td>
-        <td class="odd-row">Suv sathi, m</td>
-        <td class="odd-row" *ngFor="let value of data.level.slice(0, 10)">{{ value }}</td>
-        <td class="odd-row"></td>
-        <td class="odd-row" *ngFor="let value of data.level.slice(10,20)">{{ value }}</td>
-        <td class="odd-row"></td>
-        <td class="odd-row" *ngFor="let value of data.level.slice(-11)">{{ value }}</td>
-        <td class="odd-row"></td>
-        <td class="odd-row"></td>
+        <td>Suv sathi, m</td>
+        <td *ngFor="let value of data.level.slice(0, 10)">{{ value }}</td>
+        <td></td>
+        <td *ngFor="let value of data.level.slice(10,20)">{{ value }}</td>
+        <td></td>
+        <td *ngFor="let value of data.level.slice(-11)">{{ value }}</td>
+        <td></td>
+        <td></td>
       </tr>
       <tr *ngIf="data.volume">
         <td>Suv hajmi, mln.m³</td>
@@ -70,14 +70,14 @@
         <td></td>
       </tr>
       <tr *ngIf="data.income">
-        <td class="odd-row">Kelishi, m³/s</td>
-        <td class="odd-row" *ngFor="let value of data.income.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
-        <td class="odd-row">{{ getAvg(data.income.slice(0, 10)) | number: '.0-0' }}</td>
-        <td class="odd-row" *ngFor="let value of data.income.slice(10,20)">{{ value | number: '0.0-0' }}</td>
-        <td class="odd-row">{{ getAvg(data.income.slice(10, 20)) | number: '.0-0' }}</td>
-        <td class="odd-row" *ngFor="let value of data.income.slice(-11)">{{ value | number: '0.0-0' }}</td>
-        <td class="odd-row">{{ getAvg(data.income.slice(-11)) | number: '.0-0' }}</td>
-        <td class="odd-row">{{ getAvg(data.income) | number: '.0-0' }}</td>
+        <td>Kelishi, m³/s</td>
+        <td *ngFor="let value of data.income.slice(0, 10)">{{ value | number: '0.0-0' }}</td>
+        <td>{{ getAvg(data.income.slice(0, 10)) | number: '.0-0' }}</td>
+        <td *ngFor="let value of data.income.slice(10,20)">{{ value | number: '0.0-0' }}</td>
+        <td>{{ getAvg(data.income.slice(10, 20)) | number: '.0-0' }}</td>
+        <td *ngFor="let value of data.income.slice(-11)">{{ value | number: '0.0-0' }}</td>
+        <td>{{ getAvg(data.income.slice(-11)) | number: '.0-0' }}</td>
+        <td>{{ getAvg(data.income) | number: '.0-0' }}</td>
       </tr>
       <tr *ngIf="data.release">
         <td>Chiqish, m³/s</td>

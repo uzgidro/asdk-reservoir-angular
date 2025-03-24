@@ -25,16 +25,20 @@
   }
 
   th {
-    @apply text-slate-300 bg-slate-800 px-4 py-3 text-lg border border-slate-300 break-words
+    @apply text-slate-300 bg-slate-900 px-4 py-3 text-lg border border-slate-300 break-words
   }
 
   td {
     @apply px-4 py-3 text-center break-words text-base border border-slate-300
   }
+
+  table tbody tr {
+    @apply even:bg-slate-500/80 odd:bg-slate-800
+  }
 }
 
 .odd-row {
-  @apply bg-slate-600 bg-opacity-70
+  @apply bg-slate-500/80
 }
 
 
