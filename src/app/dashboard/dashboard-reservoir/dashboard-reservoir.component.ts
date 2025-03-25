@@ -93,10 +93,8 @@ export class DashboardReservoirComponent implements OnInit {
           })
         } else {
           this.selectedReservoir = reservoirId
-          console.log(reservoirId)
           this.modsnow.getReservoir(parseInt(reservoirId)).subscribe({
             next: value => {
-              console.log(value)
               this.snowImages = value
             }
           })
