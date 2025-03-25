@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {OperativeValueResponse} from "../../../shared/response/values-response";
 import {ApiService} from "../../../service/api.service";
 import {LoaderComponent} from "../../../shared/component/loader/loader.component";
@@ -12,7 +12,8 @@ import {LoaderComponent} from "../../../shared/component/loader/loader.component
     DecimalPipe,
     NgForOf,
     LoaderComponent,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './operative-table.component.html',
   styleUrl: './operative-table.component.css'

@@ -1,4 +1,4 @@
-<table *ngIf="operativeData.length > 0; else loader">
+<table *ngIf="operativeData.length > 0; else loader" [ngClass]="{'scale-y-150' : shortView}">
   <thead *ngIf="!shortView">
   <tr>
     <th rowspan="3">Suv omborlar nomi</th>
