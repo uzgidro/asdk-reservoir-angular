@@ -1,6 +1,6 @@
 <div *ngIf="reservoir; else loader" class="flex flex-col pb-16 px-14 h-full space-y-4">
   <app-card-header [title]="reservoir.name"></app-card-header>
-  <div class="h-full grid grid-rows-12 grid-cols-12 gap-6 grid-flow-col">
+  <div class="h-full grid grid-rows-12 grid-cols-12 gap-8 grid-flow-col">
     <!--  Current data  -->
     <app-card-wrapper class="col-span-3 row-span-3">
       <div slot="body" *ngIf="income && release && level && volume" class="grid grid-cols-2 gap-4 h-full">
