@@ -305,29 +305,17 @@ export class Chart implements OnInit, OnDestroy {
       series.set('stroke', am5.color(data.color))
       series.get('tooltip')!.set('getFillFromSprite', false)
       series.get('tooltip')!.get('background')!.set('fill', am5.color(data.color))
-      series.fills.template.setAll({
-        fillGradient: am5.LinearGradient.new(this.root, {
-          stops: [
-            {color: am5.color(data.color)},
-            { opacity: 0},
-          ]
-        }),
-        visible: true,
-        fillOpacity: 0.1
-      });
-    } else {
-      // series.fills.template.setAll({
-      //   fillGradient: am5.LinearGradient.new(this.root, {
-      //     stops: [
-      //       {},
-      //       {opacity: 0},
-      //     ]
-      //   }),
-      //   visible: true,
-      //   fillOpacity: 0.1
-      // });
     }
 
+    series.fills.template.setAll({
+      fillGradient: am5.LinearGradient.new(root, {
+        stops: [
+          {color: data.color ? am5.color(data.color) : undefined, opacity: 0.2},
+          {opacity: 0},
+        ]
+      }),
+      visible: true,
+    });
 
     series.strokes.template.setAll({strokeWidth: 3});
     series.data.setAll(data.data.map(item => {
