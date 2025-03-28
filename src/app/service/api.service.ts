@@ -17,7 +17,6 @@ const RESERVOIR: string = '/reservoir'
 const DASHBOARD: string = '/dashboard'
 const DASHBOARD_RES: string = '/dashboard/res'
 const RESERVOIR_PREFIX: string = '/reservoir'
-const CURRENT: string = '/current'
 const DECADE: string = '/decade'
 const MONTH: string = '/month'
 const AVG: string = '/avg'
@@ -84,15 +83,6 @@ export class ApiService {
         return []
       })
     );
-  }
-
-  getCurrentReservoirValues(reservoirId: number): Observable<any> {
-    return this.http.get(BASE_URL + RESERVOIR_PREFIX + '/' + reservoirId + CURRENT).pipe(
-      catchError((error) => {
-        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
-      })
-    )
   }
 
   getDecadeReservoirValues(reservoirId: number): Observable<CategorisedValueResponse> {
