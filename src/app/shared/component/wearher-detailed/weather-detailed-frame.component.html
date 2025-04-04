@@ -1,6 +1,16 @@
+<style>
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+  }
+</style>
+
 <app-card-wrapper *ngIf="weatherDaily && weatherHourly; else loader">
   <app-card-header slot="header" *ngIf="displayTitle" [title]="reservoir?.name"></app-card-header>
-  <div slot="body" class="flex flex-col space-y-6 justify-center">
+  <div slot="body" class="flex flex-col space-y-3 justify-center">
     <div *ngIf="weatherCurrent" class="flex flex-row px-4 justify-between items-center">
       <div class="grid grid-cols-2 h-fit w-fit">
         <p class="text-7xl font-extralight row-span-2 mr-2">
@@ -22,7 +32,7 @@
       <table>
         <tbody>
         <tr *ngFor="let item of weatherDaily">
-          <td class="text-left p-0 text-xl">{{ item.date | date:'cccc' | uzbDatePipe }}</td>
+          <td class="text-left p-0 text-2xl font-light">{{ item.date | date:'cccc' | uzbDatePipe }}</td>
         </tr>
         </tbody>
       </table>
@@ -42,7 +52,7 @@
               ></div>
           </td>
           <td class="p-0">
-            <div class="flex flex-row justify-end text-xl">
+            <div class="flex flex-row justify-end text-2xl">
               <p>{{ item.dayTemperature | number:'.0-0' }}&deg;/</p>
               <p>{{ item.nightTemperature | number:'.0-0' }}&deg;</p></div>
           </td>
@@ -55,33 +65,36 @@
       <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2">
         <div class="flex flex-row space-x-2">
           <span class="material-symbols-outlined">cloud</span>
-          <p>Bulutlik</p>
+          <p class="text-lg font-bold">Bulutlik</p>
         </div>
-        <p class="text-end text-2xl font-light">{{ weatherCurrent.clouds }}%</p>
+        <p class="text-end text-3xl font-light">{{ weatherCurrent.clouds }}%</p>
       </div>
       <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2">
         <div class="flex flex-row space-x-2">
           <span class="material-symbols-outlined">humidity_percentage</span>
-          <p>Namlik</p>
+          <p class="text-lg font-bold">Namlik</p>
         </div>
-        <p class="text-end text-2xl font-light">{{ weatherCurrent.humidity }}</p>
+        <p class="text-end text-3xl font-light">{{ weatherCurrent.humidity }}</p>
       </div>
       <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2">
         <div class="flex flex-row space-x-2">
           <span class="material-symbols-outlined">air</span>
-          <p>Shamol tezligi</p>
+          <p class="text-lg font-bold">Shamol tezligi</p>
         </div>
-        <div class="flex flex-row justify-end items-center space-x-2 text-2xl font-light">
-          <span class="material-symbols-outlined">{{ weatherCurrent.windDirection }}</span>
+        <div class="flex flex-row justify-end items-center space-x-1 text-3xl font-light">
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24"
+          >{{ weatherCurrent.windDirection }}</span>
           <p>{{ weatherCurrent.windSpeed }} m/s</p>
         </div>
       </div>
       <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2">
         <div class="flex flex-row space-x-2">
           <span class="material-symbols-outlined">compress</span>
-          <p>Bosim</p>
+          <p class="text-lg font-bold">Bosim</p>
         </div>
-        <p class="text-end text-2xl font-light">{{ weatherCurrent.pressure }} mbar</p>
+        <p class="text-end text-3xl font-light">{{ weatherCurrent.pressure }} mbar</p>
       </div>
     </div>
   </div>
