@@ -41,6 +41,10 @@
   @apply bg-slate-500/80
 }
 
+.difference {
+  @apply italic font-extralight text-lime-300
+}
+
 
 .active {
   @apply text-white border-l-white hover:text-slate-400  hover:border-l-slate-400

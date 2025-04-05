@@ -61,49 +61,49 @@
       <td class="text-lg" rowspan="2">{{ data.name }}</td>
       <td>{{ data.level[2].value | number:'0.0-2' }}</td>
       <td>{{ data.level[0].value | number:'0.0-2' }}</td>
-      <td>{{ data.volume[2].value | number:'0.0-2' }}</td>
-      <td>{{ data.volume[0].value | number:'0.0-2' }}</td>
-      <td>{{ data.volume[3].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView">{{ data.volume[4].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView">{{ data.volume[5].value | number:'0.0-2' }}</td>
-      <td>{{ data.income[2].value | number:'0.0-2' }}</td>
-      <td>{{ data.income[0].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView">{{ (data.income[0].value + data.income[0].value) / 2 | number:'0.0-2' }}</td>
-      <td>{{ data.income[3].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView">{{ data.income[4].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView">{{ data.income[5].value | number:'0.0-2' }}</td>
-      <td>{{ data.release[2].value | number:'0.0-2' }}</td>
-      <td>{{ data.release[0].value | number:'0.0-2' }}</td>
-      <td>{{ data.release[3].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView">{{ data.release[4].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView">{{ data.release[5].value | number:'0.0-2' }}</td>
+      <td>{{ data.volume[2].value | number:'0.0-1' }}</td>
+      <td>{{ data.volume[0].value | number:'0.0-1' }}</td>
+      <td>{{ data.volume[3].value | number:'0.0-1' }}</td>
+      <td *ngIf="!shortView">{{ data.volume[4].value | number:'0.0-1' }}</td>
+      <td *ngIf="!shortView">{{ data.volume[5].value | number:'0.0-1' }}</td>
+      <td>{{ data.income[2].value | number:'0.0-0' }}</td>
+      <td>{{ data.income[0].value | number:'0.0-0' }}</td>
+      <td *ngIf="!shortView">{{ (data.income[0].value + data.income[0].value) / 2 | number:'0.0-0' }}</td>
+      <td>{{ data.income[3].value | number:'0.0-0' }}</td>
+      <td *ngIf="!shortView">{{ data.income[4].value | number:'0.0-0' }}</td>
+      <td *ngIf="!shortView">{{ data.income[5].value | number:'0.0-0' }}</td>
+      <td>{{ data.release[2].value | number:'0.0-0' }}</td>
+      <td>{{ data.release[0].value | number:'0.0-0' }}</td>
+      <td>{{ data.release[3].value | number:'0.0-0' }}</td>
+      <td *ngIf="!shortView">{{ data.release[4].value | number:'0.0-0' }}</td>
+      <td *ngIf="!shortView">{{ data.release[5].value | number:'0.0-0' }}</td>
     </tr>
-    <tr>
-      <td class="bg-slate-600">{{ data.level[2].value - data.level[1].value | number:'0.0-2' }}</td>
-      <td class="bg-slate-600">{{ data.level[0].value - data.level[2].value | number:'0.0-2' }}</td>
-      <td class="bg-slate-600">{{ data.volume[2].value - data.volume[1].value | number:'0.0-2' }}</td>
-      <td class="bg-slate-600">{{ data.volume[0].value - data.volume[2].value | number:'0.0-2' }}</td>
-      <td class="bg-slate-600">{{ data.volume[0].value - data.volume[3].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView" class="bg-slate-600">{{ data.volume[0].value - data.volume[4].value | number:'0.0-2' }}
+    <tr class="difference">
+      <td class="bg-cyan-800">{{ data.level[2].value - data.level[1].value | number:'0.0-2' | difference }}</td>
+      <td class="bg-cyan-800">{{ data.level[0].value - data.level[2].value | number:'0.0-2' | difference }}</td>
+      <td class="bg-cyan-800">{{ data.volume[2].value - data.volume[1].value | number:'0.0-1' | difference }}</td>
+      <td class="bg-cyan-800">{{ data.volume[0].value - data.volume[2].value | number:'0.0-1' | difference }}</td>
+      <td class="bg-cyan-800">{{ data.volume[0].value - data.volume[3].value | number:'0.0-1' | difference }}</td>
+      <td class="bg-cyan-800" *ngIf="!shortView">{{ data.volume[0].value - data.volume[4].value | number:'0.0-1' | difference }}
       </td>
-      <td *ngIf="!shortView" class="bg-slate-600">{{ data.volume[0].value - data.volume[5].value | number:'0.0-2' }}
+      <td class="bg-cyan-800" *ngIf="!shortView">{{ data.volume[0].value - data.volume[5].value | number:'0.0-1' | difference }}
       </td>
-      <td class="bg-slate-600">{{ data.income[2].value - data.income[0].value | number:'0.0-2' }}</td>
-      <td class="bg-slate-600">{{ data.income[0].value - data.income[2].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView" class="bg-slate-600"></td>
-      <td class="bg-slate-600">{{ data.income[0].value - data.income[3].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView" class="bg-slate-600">{{ data.income[0].value - data.income[4].value | number:'0.0-2' }}
+      <td class="bg-cyan-800">{{ data.income[2].value - data.income[0].value | number:'0.0-0' | difference }}</td>
+      <td class="bg-cyan-800">{{ data.income[0].value - data.income[2].value | number:'0.0-0' | difference }}</td>
+      <td class="bg-cyan-800" *ngIf="!shortView"></td>
+      <td class="bg-cyan-800">{{ data.income[0].value - data.income[3].value | number:'0.0-0' | difference }}</td>
+      <td class="bg-cyan-800" *ngIf="!shortView">{{ data.income[0].value - data.income[4].value | number:'0.0-0' | difference }}
       </td>
-      <td *ngIf="!shortView" class="bg-slate-600">{{ data.income[0].value - data.income[5].value | number:'0.0-2' }}
+      <td class="bg-cyan-800" *ngIf="!shortView">{{ data.income[0].value - data.income[5].value | number:'0.0-0' | difference }}
       </td>
-      <td class="bg-slate-600">{{ data.release[2].value - data.release[1].value | number:'0.0-2' }}</td>
-      <td class="bg-slate-600">{{ data.release[0].value - data.release[2].value | number:'0.0-2' }}</td>
-      <td class="bg-slate-600">{{ data.release[0].value - data.release[3].value | number:'0.0-2' }}</td>
-      <td *ngIf="!shortView"
-          class="bg-slate-600">{{ data.release[0].value - data.release[4].value | number:'0.0-2' }}
+      <td class="bg-cyan-800">{{ data.release[2].value - data.release[1].value | number:'0.0-0' | difference }}</td>
+      <td class="bg-cyan-800">{{ data.release[0].value - data.release[2].value | number:'0.0-0' | difference }}</td>
+      <td class="bg-cyan-800">{{ data.release[0].value - data.release[3].value | number:'0.0-0' | difference }}</td>
+      <td class="bg-cyan-800" *ngIf="!shortView"
+      >{{ data.release[0].value - data.release[4].value | number:'0.0-0' | difference }}
       </td>
-      <td *ngIf="!shortView"
-          class="bg-slate-600">{{ data.release[0].value - data.release[5].value | number:'0.0-2' }}
+      <td class="bg-cyan-800" *ngIf="!shortView"
+      >{{ data.release[0].value - data.release[5].value | number:'0.0-0' | difference }}
       </td>
     </tr>
   </ng-container>

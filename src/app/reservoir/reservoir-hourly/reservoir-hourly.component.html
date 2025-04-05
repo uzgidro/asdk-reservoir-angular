@@ -90,15 +90,15 @@
         <td>{{ res.name }}</td>
         <td *ngIf="res.level">{{ res.level.old | number: '.0-2' }}</td>
         <td *ngIf="res.level">{{ res.level.latest | number: '.0-2' }}</td>
-        <td *ngIf="res.level">{{ res.level.latest - res.level.old | number: '.0-2' }}</td>
-        <td *ngIf="res.volume">{{ res.volume.old | number: '.0-2' }}</td>
-        <td *ngIf="res.volume">{{ res.volume.latest | number: '.0-2' }}</td>
-        <td *ngIf="res.volume">{{ res.volume.latest - res.volume.old | number: '.0-2' }}</td>
-        <td *ngFor="let income of res.income">{{ income | number: '.0-2' }}</td>
-        <td
-          *ngIf="res.income">{{ res.income[res.income.length - 1] - res.income[res.income.length - 2] | number: '.0-2' }}
+        <td class="bg-cyan-800 difference" *ngIf="res.level">{{ res.level.latest - res.level.old | number: '.0-2' | difference }}</td>
+        <td *ngIf="res.volume">{{ res.volume.old | number: '.0-1' }}</td>
+        <td *ngIf="res.volume">{{ res.volume.latest | number: '.0-1' }}</td>
+        <td class="bg-cyan-800 difference" *ngIf="res.volume">{{ res.volume.latest - res.volume.old | number: '.0-1' | difference }}</td>
+        <td *ngFor="let income of res.income">{{ income | number: '.0-0' }}</td>
+        <td class="bg-cyan-800 difference"
+          *ngIf="res.income">{{ res.income[res.income.length - 1] - res.income[res.income.length - 2] | number: '.0-0' | difference }}
         </td>
-        <td *ngIf="res.release">{{ res.release.latest | number: '.0-2' }}</td>
+        <td *ngIf="res.release">{{ res.release.latest | number: '.0-0' }}</td>
       </tr>
       </tbody>
     </table>

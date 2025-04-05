@@ -13,6 +13,7 @@ import {ChartComponent} from "./chart/chart.component";
 import {DateChart} from "../../shared/struct/chart";
 import {OperativeTableComponent} from "./operative-table/operative-table.component";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
+import {DifferencePipe} from "../../shared/pipe/difference.pipe";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -28,7 +29,8 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
     CardHeaderComponent,
     ChartComponent,
     OperativeTableComponent,
-    CardWrapperComponent
+    CardWrapperComponent,
+    DifferencePipe
   ],
 
   standalone: true

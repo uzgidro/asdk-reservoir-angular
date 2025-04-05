@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ReservoirMapComponent} from "../reservoir/reservoir-map/reservoir-map.component";
 import {OperativeTableComponent} from "../reservoir/reservoir-hourly/operative-table/operative-table.component";
 

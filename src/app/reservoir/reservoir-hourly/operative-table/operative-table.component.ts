@@ -3,6 +3,7 @@ import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {OperativeValueResponse} from "../../../shared/response/values-response";
 import {ApiService} from "../../../service/api.service";
 import {LoaderComponent} from "../../../shared/component/loader/loader.component";
+import {DifferencePipe} from "../../../shared/pipe/difference.pipe";
 
 @Component({
   selector: 'app-operative-table',
@@ -13,7 +14,8 @@ import {LoaderComponent} from "../../../shared/component/loader/loader.component
     NgForOf,
     LoaderComponent,
     NgIf,
-    NgClass
+    NgClass,
+    DifferencePipe
   ],
   templateUrl: './operative-table.component.html',
   styleUrl: './operative-table.component.css'
