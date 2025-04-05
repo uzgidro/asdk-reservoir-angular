@@ -52,7 +52,7 @@
               ></div>
           </td>
           <td class="p-0">
-            <div class="flex flex-row justify-end text-2xl">
+            <div class="flex flex-row justify-end text-2xl space-x-1">
               <p>{{ item.dayTemperature | number:'.0-0' }}&deg;/</p>
               <p>{{ item.nightTemperature | number:'.0-0' }}&deg;</p></div>
           </td>
@@ -86,7 +86,7 @@
             class="material-symbols-outlined"
             style="font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24"
           >{{ weatherCurrent.windDirection }}</span>
-          <p>{{ weatherCurrent.windSpeed }} m/s</p>
+          <p>{{ weatherCurrent.windSpeed | number:'0.0-0' }} m/s</p>
         </div>
       </div>
       <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2">

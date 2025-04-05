@@ -7,23 +7,23 @@
         <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
           <div class="flex flex-col space-y-2 justify-center items-start h-full">
             <p class="font-bold">Kelishi, m³/s</p>
-            <p class="text-2xl font-light">{{ income.value }} | <span
-              [ngClass]="{'text-red-500': income.difference < 0, 'text-green-500': income.difference > 0}">{{ income.difference | number:'0.0-2' }}</span>
+            <p class="self-end text-3xl font-light">{{ income.value }} / <span
+              [ngClass]="{'text-red-500': income.difference < 0, 'text-green-500': income.difference > 0}">{{ income.difference | number:'0.0-0' }}</span>
             </p>
           </div>
         </div>
         <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
           <div class="flex flex-col space-y-2 justify-center items-start h-full">
             <p class="font-bold">Chiqishi, m³/s</p>
-            <p class="text-2xl font-light">{{ release.value }} | <span
-              [ngClass]="{'text-red-500': release.difference < 0, 'text-green-500': release.difference > 0}">{{ release.difference | number:'0.0-2' }}</span>
+            <p class="self-end text-3xl font-light">{{ release.value }} / <span
+              [ngClass]="{'text-red-500': release.difference < 0, 'text-green-500': release.difference > 0}">{{ release.difference | number:'0.0-0' }}</span>
             </p>
           </div>
         </div>
         <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
           <div class="flex flex-col space-y-2 justify-center items-start h-full">
             <p class="font-bold">Sath, m</p>
-            <p class="text-2xl font-light">{{ level.value }} | <span
+            <p class="self-end text-3xl font-light">{{ level.value }} / <span
               [ngClass]="{'text-red-500': level.difference < 0, 'text-green-500': level.difference > 0}">{{ level.difference | number:'0.0-2' }}</span>
             </p>
           </div>
@@ -31,8 +31,8 @@
         <div class="flex flex-col justify-start border border-gray-500 rounded-xl px-4 py-2 text-xl">
           <div class="flex flex-col space-y-2 justify-center items-start h-full">
             <p class="font-bold">Hajm, mln.m³</p>
-            <p class="text-2xl font-light">{{ volume.value }} | <span
-              [ngClass]="{'text-red-500': volume.difference < 0, 'text-green-500': volume.difference > 0}">{{ volume.difference | number:'0.0-2' }}</span>
+            <p class="self-end text-3xl font-light">{{ volume.value }} / <span
+              [ngClass]="{'text-red-500': volume.difference < 0, 'text-green-500': volume.difference > 0}">{{ volume.difference | number:'0.0-1' }}</span>
             </p>
           </div>
         </div>
