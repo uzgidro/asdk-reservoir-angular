@@ -105,7 +105,7 @@ export class DecadeManyYearsIncomeTableComponent implements OnInit {
     let resultDate: number;
 
     if (dayOfMonth >= 1 && dayOfMonth <= 9) {
-      const previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
+      const previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() -1, 1);
       resultDate = previousMonth.getDate();
     } else if (dayOfMonth >= 10 && dayOfMonth <= 19) {
       resultDate = 10;

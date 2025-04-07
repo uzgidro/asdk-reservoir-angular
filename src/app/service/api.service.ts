@@ -13,7 +13,6 @@ import {LevelVolume} from "../shared/interfaces";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const BASE_URL_V2: string = 'https://srmt-back.speedwagon.uz'
-const RESERVOIRS: string = '/reservoirs'
 const RESERVOIR: string = '/reservoir'
 const LIST: string = '/list'
 const VALUE: string = '/value'
@@ -33,6 +32,7 @@ const VEGETATIVE: string = '/vegetative'
 const LEVEL: string = '/level'
 const LV: string = '/lv'
 const OPERATIVE: string = '/operative'
+const SUM: string = '/sum'
 
 
 @Injectable({
@@ -100,12 +100,11 @@ export class ApiService {
     )
   }
 
-  // TODO(): Work with specialist
   getTotalDecadeReservoirValues(): Observable<{ avg: ComplexValueResponse[], year: ComplexValueResponse[] }> {
     return this.http.get<{
       avg: ComplexValueResponse[],
       year: ComplexValueResponse[]
-    }>(BASE_URL + RESERVOIRS + DECADE, {params: new HttpParams().set('category', 'income')}).pipe(
+    }>(BASE_URL_V2 + VALUE + DECADE + SUM).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
