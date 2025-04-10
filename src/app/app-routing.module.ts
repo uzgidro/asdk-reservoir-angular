@@ -11,21 +11,21 @@ import {ReservoirDecadeComponent} from "./reservoir/reservoir-decade/reservoir-d
 import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
 import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
-import {HydroPostComponent} from "./reservoir/hydro-post/hydro-post.component";
+import {HydroPostComponent} from "./hydrometer/hydro-post/hydro-post.component";
 import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
-import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
-import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
-import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
+import {HydroMeterComponent} from "./hydrometer/hydro-meter/hydro-meter.component";
+import {HydroIndicatorComponent} from "./hydrometer/hydro-indicator/hydro-indicator.component";
+import {HydroWorksComponent} from "./hydrometer/hydro-works/hydro-works.component";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 import {WeatherComponent} from "./reservoir/weather/weather.component";
 import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservoir-schedule.component";
 import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
 import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
 import {ExploitationComponent} from "./exploitation/exploitation.component";
-import {ReservoirMapComponent} from "./reservoir/reservoir-map/reservoir-map.component";
 import {DashboardReservoirComponent} from "./dashboard/dashboard-reservoir/dashboard-reservoir.component";
 import {TopPositionScreenComponent} from "./top-position-screen/top-position-screen.component";
+import {HydrometerComponent} from "./hydrometer/hydrometer.component";
 
 const routes: Routes = [
   {
@@ -60,7 +60,7 @@ const routes: Routes = [
         path: 'weather', component: WeatherComponent
       },
       {
-        path: 'hydro', children: [
+        path: 'hydro', component: HydrometerComponent,  children: [
           {path: '', pathMatch: 'full', redirectTo: 'posts'},
           {path: 'posts', component: HydroPostComponent},
           {path: 'meter', component: HydroMeterComponent},
