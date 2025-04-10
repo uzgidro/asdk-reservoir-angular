@@ -6,6 +6,7 @@ import {NgChartsModule} from "ng2-charts";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import {ModsnowService} from "../../service/modsnow.service";
 import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-modsnow-yearly',
@@ -15,7 +16,8 @@ import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
     NgOptimizedImage,
     SharedModule,
     NgChartsModule,
-    CardHeaderComponent
+    CardHeaderComponent,
+    CardWrapperComponent
   ],
   templateUrl: './modsnow-yearly.component.html',
   styleUrl: './modsnow-yearly.component.css'

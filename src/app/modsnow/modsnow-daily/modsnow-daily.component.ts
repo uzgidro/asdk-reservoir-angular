@@ -9,7 +9,7 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 import {ModsnowService} from "../../service/modsnow.service";
 import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 import {ActivatedRoute} from "@angular/router";
-import {NgOptimizedImage} from "@angular/common";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-modsnow-daily',
@@ -22,7 +22,7 @@ import {NgOptimizedImage} from "@angular/common";
     FormsModule,
     NgChartsModule,
     CardHeaderComponent,
-    NgOptimizedImage
+    CardWrapperComponent
   ],
   templateUrl: './modsnow-daily.component.html',
   styleUrl: './modsnow-daily.component.css'

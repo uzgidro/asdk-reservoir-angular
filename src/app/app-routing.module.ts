@@ -8,8 +8,8 @@ import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
 import {ReservoirHourlyComponent} from "./reservoir/reservoir-hourly/reservoir-hourly.component";
 import {ReservoirDecadeComponent} from "./reservoir/reservoir-decade/reservoir-decade.component";
-import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
-import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
+import {ModsnowDailyComponent} from "./modsnow/modsnow-daily/modsnow-daily.component";
+import {ModsnowYearlyComponent} from "./modsnow/modsnow-yearly/modsnow-yearly.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
 import {HydroPostComponent} from "./hydrometer/hydro-post/hydro-post.component";
 import {OrdersComponent} from "./reservoir/orders/orders.component";
@@ -26,6 +26,7 @@ import {ExploitationComponent} from "./exploitation/exploitation.component";
 import {DashboardReservoirComponent} from "./dashboard/dashboard-reservoir/dashboard-reservoir.component";
 import {TopPositionScreenComponent} from "./top-position-screen/top-position-screen.component";
 import {HydrometerComponent} from "./hydrometer/hydrometer.component";
+import {ModsnowComponent} from "./modsnow/modsnow.component";
 
 const routes: Routes = [
   {
@@ -50,7 +51,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'snow', children: [
+        path: 'snow', component: ModsnowComponent, children: [
           {path: '', pathMatch: 'full', redirectTo: 'current'},
           {path: 'current', component: ModsnowDailyComponent},
           {path: 'all-time', component: ModsnowYearlyComponent}
