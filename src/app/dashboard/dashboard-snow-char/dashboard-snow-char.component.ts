@@ -36,7 +36,7 @@ export class DashboardSnowChartComponent
             // bulletColor: '#014a67',
           }]
         }))
-        this.renderCategoryChart(data);
+        this.renderVerticalCategoryChart(data);
       }
     )
   }

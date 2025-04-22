@@ -34,8 +34,12 @@ export class Chart implements OnInit, OnDestroy {
     this.browserOnly(() => this.createDateChart(this.id, data, options))
   }
 
-  protected renderCategoryChart(data: CategoryChart[], options?: Options) {
-    this.browserOnly(() => this.createCategoryChart(this.id, data, options))
+  protected renderVerticalCategoryChart(data: CategoryChart[], options?: Options) {
+    this.browserOnly(() => this.createVerticalCategoryChart(this.id, data, options))
+  }
+
+  protected renderHorizontalCategoryChart(data: CategoryChart[], options?: Options) {
+    this.browserOnly(() => this.createHorizontalCategoryChart(this.id, data, options))
   }
 
   protected updateDateChart(data: DateChart[]) {
@@ -222,49 +226,49 @@ export class Chart implements OnInit, OnDestroy {
     this.root = root;
   }
 
-  private createCategoryChart(id: string, data: CategoryChart[], options?: Options) {
+  private createVerticalCategoryChart(id: string, data: CategoryChart[], options?: Options) {
     let root = am5.Root.new(id);
 
     this.setupRoot(root);
     let chart = this.setupChart(root)
     this.setupCursor(root, chart)
 
-    let xRenderer = am5xy.AxisRendererX.new(root, {
+    let categoryRenderer = am5xy.AxisRendererX.new(root, {
       minGridDistance: 30,
       minorGridEnabled: true
     });
 
-    xRenderer.labels.template.setAll({
+    categoryRenderer.labels.template.setAll({
       rotation: 0,
       centerY: am5.p50,
       centerX: am5.p50,
       paddingRight: 0
     });
 
-    xRenderer.grid.template.setAll({
+    categoryRenderer.grid.template.setAll({
       location: 1
     })
 
-    let xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+    let categoryAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
       maxDeviation: 0.3,
       categoryField: "name",
-      renderer: xRenderer,
+      renderer: categoryRenderer,
       tooltip: am5.Tooltip.new(root, {})
     }));
 
-    let yRenderer = am5xy.AxisRendererY.new(root, {
+    let valueRenderer = am5xy.AxisRendererY.new(root, {
       strokeOpacity: 0.1
     })
 
-    let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+    let valueAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
       maxDeviation: 0,
-      renderer: yRenderer
+      renderer: valueRenderer
     }));
 
-    xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
-    yAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+    categoryAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+    valueAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
 
-    xAxis.data.setAll(data);
+    categoryAxis.data.setAll(data);
 
     let clusterCount = data[0].data.length
 
@@ -272,7 +276,74 @@ export class Chart implements OnInit, OnDestroy {
     if (!options?.hideLegend) legend = this.createLegend(root, chart, options?.legendPosition)
 
     for (let i = 0; i < clusterCount; i++) {
-      const series = this.createColumnSeries(root, chart, xAxis, yAxis, data[0].data[i]);
+      const series = this.createVerticalColumnSeries(root, chart, categoryAxis, valueAxis, data[0].data[i]);
+      series.data.setAll(data.map(item => ({
+        name: item.name,
+        value: Math.round(item.data[i].value)
+      })))
+      series.appear(1000)
+    }
+
+    chart.appear(1000, 100);
+    this.setupLegend(chart, legend)
+    this.root = root
+  }
+
+  private createHorizontalCategoryChart(id: string, data: CategoryChart[], options?: Options) {
+    let root = am5.Root.new(id);
+
+    this.setupRoot(root);
+    let chart = this.setupChart(root)
+    let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+      behavior: "none"
+    }));
+    cursor.lineX.set("visible", false);
+    cursor.lineY.setAll({stroke: am5.color('#fff')});
+
+    let categoryRenderer = am5xy.AxisRendererY.new(root, {
+      minGridDistance: 30,
+      minorGridEnabled: true
+    });
+
+    categoryRenderer.labels.template.setAll({
+      rotation: 0,
+      centerY: am5.p50,
+      centerX: am5.p50,
+      paddingRight: 0
+    });
+
+    categoryRenderer.grid.template.setAll({
+      location: 1
+    })
+
+    let categoryAxis = chart.yAxes.push(am5xy.CategoryAxis.new(root, {
+      maxDeviation: 0.3,
+      categoryField: "name",
+      renderer: categoryRenderer,
+      tooltip: am5.Tooltip.new(root, {})
+    }));
+
+    let valueRenderer = am5xy.AxisRendererX.new(root, {
+      strokeOpacity: 0.1
+    })
+
+    let valueAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+      maxDeviation: 0,
+      renderer: valueRenderer
+    }));
+
+    categoryAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+    valueAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
+
+    categoryAxis.data.setAll(data);
+
+    let clusterCount = data[0].data.length
+
+    let legend
+    if (!options?.hideLegend) legend = this.createLegend(root, chart, options?.legendPosition)
+
+    for (let i = 0; i < clusterCount; i++) {
+      const series = this.createHorizontalColumnSeries(root, chart, valueAxis, categoryAxis, data[0].data[i]);
       series.data.setAll(data.map(item => ({
         name: item.name,
         value: Math.round(item.data[i].value)
@@ -328,7 +399,7 @@ export class Chart implements OnInit, OnDestroy {
     return series
   }
 
-  private createColumnSeries(
+  private createVerticalColumnSeries(
     root: am5.Root,
     chart: am5xy.XYChart,
     xAxis: am5xy.CategoryAxis<am5xy.AxisRenderer>,
@@ -349,6 +420,44 @@ export class Chart implements OnInit, OnDestroy {
 
     series.bullets.push(() => this.setupBullets(root, data.bulletColor));
     series.columns.template.setAll({cornerRadiusTL: 5, cornerRadiusTR: 5, strokeOpacity: 0});
+    if (data.color) series.columns.template.set('fill', am5.color(data.color));
+
+    return series
+  }
+
+  private createHorizontalColumnSeries(
+    root: am5.Root,
+    chart: am5xy.XYChart,
+    xAxis: am5xy.ValueAxis<am5xy.AxisRenderer>,
+    yAxis: am5xy.CategoryAxis<am5xy.AxisRenderer>,
+    data: CategoryData
+  ) {
+    let series = chart.series.push(am5xy.ColumnSeries.new(root, {
+      name: data.seriesName,
+      xAxis: xAxis,
+      yAxis: yAxis,
+      categoryYField: "name",
+      sequencedInterpolation: true,
+      valueXField: "value",
+      tooltip: am5.Tooltip.new(root, {
+        labelText: "{valueX}"
+      })
+    }));
+
+    series.bullets.push(() => {
+      return am5.Bullet.new(root, {
+        locationX: 1,
+        sprite: am5.Label.new(root, {
+          centerX: am5.p0,
+          centerY: am5.p50,
+          text: "{valueX}",
+          fill: am5.color('#fff'),
+          populateText: true,
+          // rotation: 315
+        })
+      });
+    });
+    series.columns.template.setAll({cornerRadiusBR: 5, cornerRadiusTR: 5, strokeOpacity: 0});
     if (data.color) series.columns.template.set('fill', am5.color(data.color));
 
     return series

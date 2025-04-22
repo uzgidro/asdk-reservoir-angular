@@ -39,7 +39,7 @@ export class DashboardCurrentChartComponent
         this.releaseData = this.setupData(response.release)
         this.levelData = this.setupData(response.level)
         this.volumeData = this.setupData(response.volume)
-        this.renderCategoryChart(this.incomeData)
+        this.renderHorizontalCategoryChart(this.incomeData)
       }
     })
   }
