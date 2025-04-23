@@ -1,7 +1,8 @@
 @import "primeicons/primeicons.css";
 @import "primeng/resources/primeng.css";
-@import "primeng/resources/themes/lara-light-blue/theme.css"; /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
 @import 'material-symbols/outlined.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,21 +12,23 @@
 @layer base {
   * {
     font-family: 'Gilroy', sans-serif;
+    @apply text-white
   }
 
-  p,h1,h2,h3,h4,h5,h6,th,td {
+  p, h1, h2, h3, h4, h5, h6, th, td {
     @apply cursor-default
   }
 
   body {
     @apply bg-background text-slate-200
   }
+
   table {
     @apply table-auto w-full border border-slate-300 border-collapse overflow-x-auto
   }
 
   th {
-    @apply text-slate-300 bg-slate-900 px-4 py-3 text-lg border border-slate-300 break-words
+    @apply bg-slate-900 px-4 py-3 text-lg border border-slate-300 break-words
   }
 
   td {
