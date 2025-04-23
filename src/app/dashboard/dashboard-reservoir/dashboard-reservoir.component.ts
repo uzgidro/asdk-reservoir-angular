@@ -3,7 +3,7 @@ import {ReservoirAnalyticsComponent} from "../../reservoir/reservoir-analytics/r
 import {ActivatedRoute, Router} from "@angular/router";
 import {BrodacastService} from "../../service/brodacast.service";
 import {ApiService} from "../../service/api.service";
-import {CategorisedArrayResponse} from "../../shared/response/values-response";
+import {CategorisedArrayResponse, ComplexValueResponse} from "../../shared/response/values-response";
 import {DecimalPipe, NgClass, NgIf} from "@angular/common";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
@@ -117,31 +117,36 @@ export class DashboardReservoirComponent implements OnInit {
 
   private setupChartData(data: CategorisedArrayResponse) {
     this.incomeData = data.income.map(it => {
-      return {
-        value: it.data.reverse()[0].value,
-        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
-      }
+      return this.getValueWithDifference(it)
     })
 
     this.releaseData = data.release.map(it => {
-      return {
-        value: it.data.reverse()[0].value,
-        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
-      }
+      return this.getValueWithDifference(it)
     })
 
     this.levelData = data.level.map(it => {
-      return {
-        value: it.data.reverse()[0].value,
-        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
-      }
+      return this.getValueWithDifference(it)
     })
 
     this.volumeData = data.volume.map(it => {
-      return {
-        value: it.data.reverse()[0].value,
-        difference: it.data.reverse()[1].value - it.data.reverse()[0].value
-      }
+      return this.getValueWithDifference(it)
     })
+  }
+
+  private getValueWithDifference(response: ComplexValueResponse) {
+    let valueAtDayBegin = response.data.find(value => {
+      return value.date.includes('06:00:00')
+    });
+    if (valueAtDayBegin) {
+      return {
+        value: response.data[0].value,
+        difference: response.data[0].value - valueAtDayBegin.value
+      }
+    } else {
+      return {
+        value: response.data[0].value,
+        difference: response.data[0].value - response.data[1].value
+      }
+    }
   }
 }
