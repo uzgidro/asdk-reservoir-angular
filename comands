@@ -1,0 +1,2 @@
+docker build -t srmt-front .
+docker save srmt-front > srmt-front.tar

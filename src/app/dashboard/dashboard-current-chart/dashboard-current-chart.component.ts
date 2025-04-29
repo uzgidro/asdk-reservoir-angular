@@ -77,9 +77,10 @@ export class DashboardCurrentChartComponent
         return false;
       });
 
+      // first came at 6:00 then current
       return {
         name: it.reservoir,
-        data: filter.map((inner, index) => {
+        data: filter.reverse().map((inner, index) => {
           return {
             seriesName: new Intl.DateTimeFormat('eu-EU', {hour: 'numeric'}).format(new Date(inner.date)) + ':00',
             value: Number.parseFloat((Math.round(inner.value * 10) / 10).toFixed(1)),
