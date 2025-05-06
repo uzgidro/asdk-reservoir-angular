@@ -16,6 +16,7 @@ import {
 } from "../reservoir/reservoir-decade/decade-many-years-income-table/decade-many-years-income-table.component";
 import {DashboardSnowTableComponent} from "./dashboard-snow-table/dashboard-snow-table.component";
 import {DashboardSnowSliderComponent} from "./dashboard-snow-slider/dashboard-snow-slider.component";
+import {response} from "express";
 
 @Component({
   selector: 'app-dashboard',
@@ -38,16 +39,21 @@ import {DashboardSnowSliderComponent} from "./dashboard-snow-slider/dashboard-sn
 export class DashboardComponent implements OnInit {
   public reservoirs: string[] = []
 
-  public weatherDaily: {
+  private _weatherDaily: {
     reservoir: string
+    position: number
     forecast: Forecast[]
   }[] = []
 
   get forecastDate() {
-    if (this.weatherDaily.length > 0) {
-      return this.weatherDaily[0].forecast?.map(value => value.date)
+    if (this._weatherDaily.length > 0) {
+      return this._weatherDaily[0].forecast?.map(value => value.date)
     }
     return undefined
+  }
+
+  get weatherDaily(): { reservoir: string; position: number; forecast: Forecast[] }[] {
+    return this._weatherDaily.sort((a, b) => a.position - b.position);
   }
 
   constructor(private apiService: ApiService, private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
@@ -89,7 +95,7 @@ export class DashboardComponent implements OnInit {
           }
         },
         complete: () => {
-          this.weatherDaily.push({reservoir: reservoir.name, forecast: forecast.slice(0, 3)})
+          this._weatherDaily.push({reservoir: reservoir.name, position: reservoir.position, forecast: forecast.slice(0, 3)})
         }
       })
     })

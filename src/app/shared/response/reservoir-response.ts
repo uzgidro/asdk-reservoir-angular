@@ -3,4 +3,5 @@ export interface ReservoirResponse {
   name: string
   lat: number
   lon: number
+  position: number
 }
