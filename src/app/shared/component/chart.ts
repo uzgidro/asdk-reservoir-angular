@@ -57,6 +57,9 @@ export class Chart implements OnInit, OnDestroy {
             timestamp: item.timestamp,
             value: Math.round(item.value),
           })))
+
+          series.set('name', data[i].seriesName)
+
           series.appear(1000);
         }
       }
@@ -262,6 +265,7 @@ export class Chart implements OnInit, OnDestroy {
 
     let valueAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
       maxDeviation: 0,
+      extraMax: 0.15,
       renderer: valueRenderer
     }));
 

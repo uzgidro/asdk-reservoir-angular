@@ -58,14 +58,14 @@ export class ModsnowService {
   ]
 
   private currentPercent = [
-    42,
-    30,
-    39,
+    7,
+    3,
+    15,
     // 98,
     // 98,
     // 89,
-    26,
-    37,
+    10,
+    7,
     // 64,
     // 65
   ]
@@ -82,11 +82,11 @@ export class ModsnowService {
 
   getCover(): Observable<ModsnowImageResponse[]> {
     return of([
-      {name: 'Andijon', url: 'assets/img/1. Андижон/2025122.jpeg'},
-      {name: 'Ohangaron', url: 'assets/img/2. Охангарон/2025122.jpeg'},
-      {name: 'Chorvoq', url: 'assets/img/3. Чорвок/2025122.jpeg'},
-      {name: 'Hisorak', url: 'assets/img/7. Хисорак/2025122.jpeg'},
-      {name: 'To\'palang', url: 'assets/img/8. Туполанг/2025122.jpeg'},
+      {name: 'Andijon', url: 'assets/img/1. Андижон/2025151.jpeg'},
+      {name: 'Ohangaron', url: 'assets/img/2. Охангарон/2025151.jpeg'},
+      {name: 'Chorvoq', url: 'assets/img/3. Чорвок/2025151.jpeg'},
+      {name: 'Hisorak', url: 'assets/img/7. Хисорак/2025151.jpeg'},
+      {name: 'To\'palang', url: 'assets/img/8. Туполанг/2025151.jpeg'},
     ])
   }
 
@@ -104,27 +104,27 @@ export class ModsnowService {
     switch (id) {
       case 1:
         return of([
-          {name: 'Andijon', url: 'assets/img/1. Андижон/2025122.jpeg'},
+          {name: 'Andijon', url: 'assets/img/1. Андижон/2025151.jpeg'},
           {name: 'Andijon', url: 'assets/img/1. Андижон/snow_cover_dynamics_last_year_karadaryo_andijan.png'},
         ])
       case 2:
         return of([
-          {name: 'Ohangaron', url: 'assets/img/2. Охангарон/2025122.jpeg'},
+          {name: 'Ohangaron', url: 'assets/img/2. Охангарон/2025151.jpeg'},
           {name: 'Ohangaron', url: 'assets/img/2. Охангарон/snow_cover_dynamics_last_year_ahangaran_irtash.png'},
         ])
       case 4:
         return of([
-          {name: 'Hisorak', url: 'assets/img/7. Хисорак/2025122.jpeg'},
+          {name: 'Hisorak', url: 'assets/img/7. Хисорак/2025151.jpeg'},
           {name: 'Hisorak', url: 'assets/img/7. Хисорак/snow_cover_dynamics_last_year_akdarya_gissarak.png'},
         ])
       case 5:
         return of([
-          {name: 'To\'palang', url: 'assets/img/8. Туполанг/2025122.jpeg'},
+          {name: 'To\'palang', url: 'assets/img/8. Туполанг/2025151.jpeg'},
           {name: 'To\'palang', url: 'assets/img/8. Туполанг/snow_cover_dynamics_last_year_tupalang_zarchob.png'},
         ])
       case 6:
         return of([
-          {name: 'Chorvoq', url: 'assets/img/3. Чорвок/2025122.jpeg'},
+          {name: 'Chorvoq', url: 'assets/img/3. Чорвок/2025151.jpeg'},
           {name: 'Chorvoq', url: 'assets/img/3. Чорвок/snow_cover_dynamics_last_year_chirchik.png'},
         ])
       default:
