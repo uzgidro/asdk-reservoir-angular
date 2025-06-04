@@ -55,7 +55,7 @@ export class Chart implements OnInit, OnDestroy {
         if (series) {
           series.data.setAll(data[i].data.map(item => ({
             timestamp: item.timestamp,
-            value: Math.round(item.value),
+            value: item.value,
           })))
 
           series.set('name', data[i].seriesName)
@@ -113,7 +113,7 @@ export class Chart implements OnInit, OnDestroy {
         xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
         xAxis.data.setAll(data[0].data.map(item => ({
           timestamp: item.timestamp,
-          value: Math.round(item.value),
+          value: item.value,
         })));
       }
 
@@ -198,6 +198,7 @@ export class Chart implements OnInit, OnDestroy {
     this.setupCursor(root, chart)
 
     let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+      extraMax: 0.15,
       renderer: am5xy.AxisRendererY.new(root, {
         pan: "zoom"
       })
@@ -283,7 +284,7 @@ export class Chart implements OnInit, OnDestroy {
       const series = this.createVerticalColumnSeries(root, chart, categoryAxis, valueAxis, data[0].data[i]);
       series.data.setAll(data.map(item => ({
         name: item.name,
-        value: Math.round(item.data[i].value)
+        value: item.data[i].value
       })))
       series.appear(1000)
     }
@@ -350,7 +351,7 @@ export class Chart implements OnInit, OnDestroy {
       const series = this.createHorizontalColumnSeries(root, chart, valueAxis, categoryAxis, data[0].data[i]);
       series.data.setAll(data.map(item => ({
         name: item.name,
-        value: Math.round(item.data[i].value)
+        value: item.data[i].value
       })))
       series.appear(1000)
     }
@@ -396,7 +397,7 @@ export class Chart implements OnInit, OnDestroy {
     series.data.setAll(data.data.map(item => {
       return {
         timestamp: item.timestamp,
-        value: Math.round(item.value)
+        value: item.value
       }
     }));
     series.appear(1000)
@@ -470,6 +471,7 @@ export class Chart implements OnInit, OnDestroy {
   private setupRoot(root: am5.Root) {
     root.setThemes([am5themes_Animated.new(root)]);
     root.interfaceColors.set("grid", am5.color('#fff'));
+    root.numberFormatter.set("numberFormat", "#,###.##");
   }
 
   private setupChart(root: am5.Root) {
