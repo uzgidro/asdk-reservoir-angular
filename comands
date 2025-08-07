@@ -1,3 +1,3 @@
-docker build -t suxa/srmt-front .
-docker push suxa/srmt-front:1.0.3
+docker build -t suxa/srmt-front:1.0.4 .
+docker push suxa/srmt-front:1.0.4
 docker save suxa/srmt-front > srmt-front.tar

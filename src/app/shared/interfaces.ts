@@ -79,3 +79,35 @@ export interface Decade {
   statTotal: number[]
   statLastYear: number[]
 }
+
+export interface ValueDiff {
+  value: number;
+  diff: number;
+}
+
+export interface Stock {
+  id: number;
+  position: number;
+  name: string;
+  date: string;
+  avg30: ValueDiff;
+  avg10: ValueDiff;
+  past_year: ValueDiff;
+  current_year: number;
+  percent30: ValueDiff;
+  percent10: ValueDiff;
+  past_year_percent: ValueDiff;
+}
+
+export interface Modsnow {
+  name: string;
+  position: number;
+  current_year: string;
+  current_percent: number;
+  current_data: number[];
+  past_year: string;
+  past_percent: number;
+  past_data: number[];
+  diff_percent: number;
+  diff_data: number[];
+}

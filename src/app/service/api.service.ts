@@ -9,10 +9,11 @@ import {
   ReservoiredArrayResponse
 } from "../shared/response/values-response";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
-import {LevelVolume} from "../shared/interfaces";
+import {LevelVolume, Modsnow, Stock} from "../shared/interfaces";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const BASE_URL_V2: string = 'https://srmt-back.speedwagon.uz'
+const BASE_URL_V3: string = 'https://prime.speedwagon.uz/api/v3'
 const RESERVOIR: string = '/reservoir'
 const LIST: string = '/list'
 const VALUE: string = '/value'
@@ -33,6 +34,9 @@ const LEVEL: string = '/level'
 const LV: string = '/lv'
 const OPERATIVE: string = '/operative'
 const SUM: string = '/sum'
+
+const STOCK: string = '/stock'
+const MODSNOW: string = '/modsnow'
 
 
 @Injectable({
@@ -58,6 +62,26 @@ export class ApiService {
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return []
+      })
+    )
+  }
+
+  // Stcok
+  getStock(): Observable<Stock[]> {
+    return this.http.get<Stock[]>(BASE_URL_V3 + STOCK).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  // Modsnow
+  getModsnow(): Observable<Modsnow[]> {
+    return this.http.get<Modsnow[]>(BASE_URL_V3 + MODSNOW).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
       })
     )
   }

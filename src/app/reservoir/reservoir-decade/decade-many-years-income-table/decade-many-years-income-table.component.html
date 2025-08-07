@@ -1,130 +1,35 @@
-<!--<table *ngIf="totalValues.length !== 0; else loader">-->
-<!--  <thead>-->
-<!--  <tr>-->
-<!--    <th rowspan="2">Suv omborlar</th>-->
-<!--    <th colspan="4">O'rtacha suv kelishi, mln.m³</th>-->
-<!--    <th colspan="3">Foizdagi farq</th>-->
-<!--  </tr>-->
-<!--  <tr>-->
-<!--    <th><p>30 yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>-->
-<!--    <th><p>10 yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>-->
-<!--    <th><p>{{ pastYear }} yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>-->
-<!--    <th><p>{{ currentYear }} yil<br><small>{{ decade | date: 'dd.MM' }}</small></p></th>-->
-<!--    <th>30 yil</th>-->
-<!--    <th>10 yil</th>-->
-<!--    <th>{{ pastYear }} yil</th>-->
-<!--  </tr>-->
-<!--  </thead>-->
-<!--  <tbody>-->
-<!--  <tr *ngFor="let res of totalValues">-->
-<!--    <td>{{res.reservoir}}</td>-->
-<!--    <td>{{res.avg30}}<br><p class="difference">{{ res.decadeAvg30 | number:'.0-0' }}</p></td>-->
-<!--    <td>{{res.avg10}}<br><p class="difference">{{ res.decadeAvg10 | number:'.0-0' }}</p></td>-->
-<!--    <td>{{res.lastYear}}<br><p class="difference">{{ res.decadeLastYear | number:'.0-0' }}</p></td>-->
-<!--    <td class="bg-cyan-800">{{res.currentYear}}<br><p class="difference">{{ res.decadeCurrentYear | number:'.0-0' }}</p></td>-->
-<!--    <td>{{ res.avg30 !== 0 ? ((res.currentYear / res.avg30) * 100 | number: '.0-0') : '0' }}<br><p class="difference">{{ res.decadeAvg30 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg30) * 100 | number: '.0-0') : '0' }}</p></td>-->
-<!--    <td>{{ res.avg10 !== 0 ? ((res.currentYear / res.avg10) * 100 | number: '.0-0') : '0' }}<br><p class="difference">{{ res.decadeAvg10 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg10) * 100 | number: '.0-0') : '0' }}</p></td>-->
-<!--    <td>{{ (res.currentYear / res.lastYear) * 100 | number: '.0-0' }}<br><p class="difference">{{ (res.decadeCurrentYear / res.decadeLastYear) * 100 | number: '.0-0' }}</p></td>-->
-<!--  </tr>-->
-<!--  </tbody>-->
-<!--</table>-->
-
-<table>
+<table *ngIf="data.length !== 0; else loader">
   <thead>
   <tr>
-    <th rowspan="2">№</th>
-    <th rowspan="2">Suv omborlari</th>
+    <th rowspan="2">Suv omborlar</th>
     <th rowspan="2">O‘lchov bir.</th>
-    <th colspan="4">O‘rtacha suvning kelishi</th>
+    <th colspan="4">O'rtacha suv kelishi</th>
     <th colspan="3">Farqi, %</th>
   </tr>
   <tr>
-    <th>30 yillik</th>
-    <th>10 yillik</th>
-    <th>2024 yil</th>
-    <th>2025 yil (1 yan - 1 iyun)</th>
+    <th><p>30 yillik</p></th>
+    <th><p>10 yillik</p></th>
+    <th><p>{{ pastYear | date: 'yyyy' }} yil</p></th>
+    <th><p>{{ currentYear | date: 'yyyy' }} yil<br><small>{{ data[0].date}}</small></p></th>
     <th>30 yillikka nisbatan</th>
     <th>10 yillikka nisbatan</th>
-    <th>2024 yilga nisbatan</th>
+    <th>{{ pastYear | date: 'yyyy' }} yilga nisbatan</th>
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td>1</td>
-    <td>Andijon</td>
+  <tr *ngFor="let res of data">
+    <td>{{res.name}}</td>
     <td>mln.m3</td>
-    <td>3610 <br><small style="color:red">1615</small></td>
-    <td>3296 <br><small style="color:red">1584</small></td>
-    <td>3801 <br><small style="color:red">1820</small></td>
-    <td>1353</td>
-    <td>37 <br><small style="color:red">101</small></td>
-    <td>41 <br><small style="color:red">103</small></td>
-    <td>36 <br><small style="color:red">92</small></td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>Ohangaron</td>
-    <td>mln.m3</td>
-    <td>715 <br><small style="color:red">521</small></td>
-    <td>668 <br><small style="color:red">508</small></td>
-    <td>788 <br><small style="color:red">523</small></td>
-    <td>310</td>
-    <td>43 <br><small style="color:red">67</small></td>
-    <td>46 <br><small style="color:red">68</small></td>
-    <td>39 <br><small style="color:red">68</small></td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>Sardoba</td>
-    <td>mln.m3</td>
-    <td> <br><small style="color:red"></small></td>
-    <td>1766 <br><small style="color:red">864</small></td>
-    <td>1657 <br><small style="color:red">862</small></td>
-    <td>656</td>
-    <td> <br><small style="color:red"></small></td>
-    <td>37 <br><small style="color:red">80</small></td>
-    <td>40 <br><small style="color:red">80</small></td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>Xisorak</td>
-    <td>mln.m3</td>
-    <td>357 <br><small style="color:red">135</small></td>
-    <td>365 <br><small style="color:red">137</small></td>
-    <td>308 <br><small style="color:red">111</small></td>
-    <td>85</td>
-    <td>24 <br><small style="color:red">77</small></td>
-    <td>23 <br><small style="color:red">76</small></td>
-    <td>28 <br><small style="color:red">105</small></td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>Tupolang</td>
-    <td>mln.m3</td>
-    <td>1736 <br><small style="color:red">770</small></td>
-    <td>1623 <br><small style="color:red">755</small></td>
-    <td>1543 <br><small style="color:red">671</small></td>
-    <td>561</td>
-    <td>32 <br><small style="color:red">105</small></td>
-    <td>35 <br><small style="color:red">90</small></td>
-    <td>36 <br><small style="color:red">108</small></td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>Chorvoq</td>
-    <td>mln.m3</td>
-    <td>6674 <br><small style="color:red">2577</small></td>
-    <td>6498 <br><small style="color:red">2607</small></td>
-    <td>7292 <br><small style="color:red">2861</small></td>
-    <td>7958</td>
-    <td>29 <br><small style="color:red">93</small></td>
-    <td>30 <br><small style="color:red">92</small></td>
-    <td>27 <br><small style="color:red">85</small></td>
+    <td>{{res.avg30.value}}<br><p class="red-difference">{{ res.avg30.diff }}</p></td>
+    <td>{{res.avg10.value}}<br><p class="red-difference">{{ res.avg10.diff }}</p></td>
+    <td>{{res.past_year.value}}<br><p class="red-difference">{{ res.past_year.diff }}</p></td>
+    <td>{{res.current_year}}</td>
+    <td>{{ res.percent30.value }}<br><p class="red-difference">{{ res.percent30.diff }}</p></td>
+    <td>{{ res.percent10.value }}<br><p class="red-difference">{{ res.percent10.diff  }}</p></td>
+    <td>{{ res.past_year_percent.value }}<br><p class="red-difference">{{ res.past_year_percent.diff }}</p></td>
   </tr>
   </tbody>
 </table>
-
-
 
 <ng-template #loader>
   <app-loader size="xl"></app-loader>

@@ -48,3 +48,5 @@ Thumbs.db
 *.jpeg
 /src/assets/img
 comands
+
+environment.*

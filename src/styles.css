@@ -44,6 +44,10 @@
   @apply bg-slate-500/80
 }
 
+.red-difference {
+  @apply italic font-extralight text-red-500
+}
+
 .difference {
   @apply italic font-extralight text-lime-300
 }

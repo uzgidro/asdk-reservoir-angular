@@ -1,4 +1,4 @@
-<table>
+<table *ngIf="data.length !== 0; else loader">
   <thead>
   <tr>
     <th rowspan="2">Suv omborlar</th>
@@ -16,189 +16,234 @@
     <th>4500 - 5000</th>
   </tr>
   </thead>
-  <tr>
-    <td rowspan="3">Andijon</td> <!-- name -->
-    <td class="current-year">2025</td> <!-- year -->
-    <td class="current-year">7</td>  <!-- percent -->
-    <td class="current-year"></td> <!-- 1000 - 1500 -->
-    <td class="current-year"></td> <!-- 1500 - 2000 -->
-    <td class="current-year"></td> <!-- 2000 - 2500 -->
-    <td class="current-year"></td> <!-- 2500 - 3000 -->
-    <td class="current-year">4</td> <!-- 3000 - 3500 -->
-    <td class="current-year">29</td> <!-- 3500 - 4000 -->
-    <td class="current-year">70</td> <!-- 4000 - 4500 -->
-    <td class="current-year">91</td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td>2024</td> <!-- year -->
-    <td>13</td>  <!-- percent -->
-    <td></td> <!-- 1000 - 1500 -->
-    <td></td> <!-- 1500 - 2000 -->
-    <td></td> <!-- 2000 - 2500 -->
-    <td>2</td> <!-- 2500 - 3000 -->
-    <td>14</td> <!-- 3000 - 3500 -->
-    <td>52</td> <!-- 3500 - 4000 -->
-    <td>79</td> <!-- 4000 - 4500 -->
-    <td>100</td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td class="odd-row difference">Farqi</td> <!-- year -->
-    <td class="odd-row difference">-6</td>  <!-- percent -->
-    <td class="odd-row difference"></td> <!-- 1000 - 1500 -->
-    <td class="odd-row difference"></td> <!-- 1500 - 2000 -->
-    <td class="odd-row difference"></td> <!-- 2000 - 2500 -->
-    <td class="odd-row difference">-2</td> <!-- 2500 - 3000 -->
-    <td class="odd-row difference">-10</td> <!-- 3000 - 3500 -->
-    <td class="odd-row difference">-23</td> <!-- 3500 - 4000 -->
-    <td class="odd-row difference">-10</td> <!-- 4000 - 4500 -->
-    <td class="odd-row difference">-9</td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td rowspan="3">Ohangaron</td><!-- name -->
-    <td class="current-year">2025</td><!-- year -->
-    <td class="current-year">3</td><!-- percent -->
-    <td class="current-year"></td><!-- 1000 - 1500 -->
-    <td class="current-year"></td><!-- 1500 - 2000 -->
-    <td class="current-year"></td><!-- 2000 - 2500 -->
-    <td class="current-year"></td><!-- 2500 - 3000 -->
-    <td class="current-year">3</td><!-- 3000 - 3500 -->
-    <td class="current-year">83</td><!-- 3500 - 4000 -->
-    <td class="current-year"></td><!-- 4000 - 4500 -->
-    <td class="current-year"></td><!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td>2024</td> <!-- year -->
-    <td>7</td>  <!-- percent -->
-    <td></td> <!-- 1000 - 1500 -->
-    <td></td> <!-- 1500 - 2000 -->
-    <td></td> <!-- 2000 - 2500 -->
-    <td>1</td> <!-- 2500 - 3000 -->
-    <td>25</td> <!-- 3000 - 3500 -->
-    <td>88</td> <!-- 3500 - 4000 -->
-    <td></td> <!-- 4000 - 4500 -->
-    <td></td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td class="odd-row difference">Farqi</td> <!-- year -->
-    <td class="odd-row difference">-4</td>  <!-- percent -->
-    <td class="odd-row difference"></td> <!-- 1000 - 1500 -->
-    <td class="odd-row difference"></td> <!-- 1500 - 2000 -->
-    <td class="odd-row difference"></td> <!-- 2000 - 2500 -->
-    <td class="odd-row difference">-1</td> <!-- 2500 - 3000 -->
-    <td class="odd-row difference">-22</td> <!-- 3000 - 3500 -->
-    <td class="odd-row difference">--5</td> <!-- 3500 - 4000 -->
-    <td class="odd-row difference"></td> <!-- 4000 - 4500 -->
-    <td class="odd-row difference"></td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td rowspan="3">Chorvoq</td><!-- name -->
-    <td class="current-year">2025</td><!-- year -->
-    <td class="current-year">15</td><!-- percent -->
-    <td class="current-year"></td><!-- 1000 - 1500 -->
-    <td class="current-year"></td><!-- 1500 - 2000 -->
-    <td class="current-year"></td><!-- 2000 - 2500 -->
-    <td class="current-year"></td><!-- 2500 - 3000 -->
-    <td class="current-year">31</td><!-- 3000 - 3500 -->
-    <td class="current-year">84</td><!-- 3500 - 4000 -->
-    <td class="current-year">98</td><!-- 4000 - 4500 -->
-    <td class="current-year"></td><!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td>2024</td> <!-- year -->
-    <td>23</td>  <!-- percent -->
-    <td></td> <!-- 1000 - 1500 -->
-    <td></td> <!-- 1500 - 2000 -->
-    <td></td> <!-- 2000 - 2500 -->
-    <td>9</td> <!-- 2500 - 3000 -->
-    <td>59</td> <!-- 3000 - 3500 -->
-    <td>91</td> <!-- 3500 - 4000 -->
-    <td>99</td> <!-- 4000 - 4500 -->
-    <td></td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td class="odd-row difference">Farqi</td> <!-- year -->
-    <td class="odd-row difference">-8</td>  <!-- percent -->
-    <td class="odd-row difference"></td> <!-- 1000 - 1500 -->
-    <td class="odd-row difference"></td> <!-- 1500 - 2000 -->
-    <td class="odd-row difference"></td> <!-- 2000 - 2500 -->
-    <td class="odd-row difference">-9</td> <!-- 2500 - 3000 -->
-    <td class="odd-row difference">-28</td> <!-- 3000 - 3500 -->
-    <td class="odd-row difference">-7</td> <!-- 3500 - 4000 -->
-    <td class="odd-row difference">-1</td> <!-- 4000 - 4500 -->
-    <td class="odd-row difference"></td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td rowspan="3">Hisorak</td><!-- name -->
-    <td class="current-year">2025</td><!-- year -->
-    <td class="current-year">10</td><!-- percent -->
-    <td class="current-year"></td><!-- 1000 - 1500 -->
-    <td class="current-year"></td><!-- 1500 - 2000 -->
-    <td class="current-year"></td><!-- 2000 - 2500 -->
-    <td class="current-year"></td><!-- 2500 - 3000 -->
-    <td class="current-year">7</td><!-- 3000 - 3500 -->
-    <td class="current-year">43</td><!-- 3500 - 4000 -->
-    <td class="current-year">55</td><!-- 4000 - 4500 -->
-    <td class="current-year"></td><!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td>2024</td> <!-- year -->
-    <td>19</td>  <!-- percent -->
-    <td></td> <!-- 1000 - 1500 -->
-    <td></td> <!-- 1500 - 2000 -->
-    <td></td> <!-- 2000 - 2500 -->
-    <td></td> <!-- 2500 - 3000 -->
-    <td>17</td> <!-- 3000 - 3500 -->
-    <td>82</td> <!-- 3500 - 4000 -->
-    <td>95</td> <!-- 4000 - 4500 -->
-    <td></td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td class="odd-row difference">Farqi</td> <!-- year -->
-    <td class="odd-row difference">-9</td>  <!-- percent -->
-    <td class="odd-row difference"></td> <!-- 1000 - 1500 -->
-    <td class="odd-row difference"></td> <!-- 1500 - 2000 -->
-    <td class="odd-row difference"></td> <!-- 2000 - 2500 -->
-    <td class="odd-row difference"></td> <!-- 2500 - 3000 -->
-    <td class="odd-row difference">-10</td> <!-- 3000 - 3500 -->
-    <td class="odd-row difference">-39</td> <!-- 3500 - 4000 -->
-    <td class="odd-row difference">-40</td> <!-- 4000 - 4500 -->
-    <td class="odd-row difference"></td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td rowspan="3">To'palang</td><!-- name -->
-    <td class="current-year">2025</td><!-- year -->
-    <td class="current-year">7</td><!-- percent -->
-    <td class="current-year"></td><!-- 1000 - 1500 -->
-    <td class="current-year"></td><!-- 1500 - 2000 -->
-    <td class="current-year"></td><!-- 2000 - 2500 -->
-    <td class="current-year"></td><!-- 2500 - 3000 -->
-    <td class="current-year">4</td><!-- 3000 - 3500 -->
-    <td class="current-year">41</td><!-- 3500 - 4000 -->
-    <td class="current-year">82</td><!-- 4000 - 4500 -->
-    <td class="current-year"></td><!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td>2024</td> <!-- year -->
-    <td>23</td>  <!-- percent -->
-    <td></td> <!-- 1000 - 1500 -->
-    <td></td> <!-- 1500 - 2000 -->
-    <td></td> <!-- 2000 - 2500 -->
-    <td>1</td> <!-- 2500 - 3000 -->
-    <td>48</td> <!-- 3000 - 3500 -->
-    <td>97</td> <!-- 3500 - 4000 -->
-    <td>99</td> <!-- 4000 - 4500 -->
-    <td></td> <!-- 4500 - 5000 -->
-  </tr>
-  <tr>
-    <td class="odd-row difference">Farqi</td> <!-- year -->
-    <td class="odd-row difference">-16</td>  <!-- percent -->
-    <td class="odd-row difference"></td> <!-- 1000 - 1500 -->
-    <td class="odd-row difference"></td> <!-- 1500 - 2000 -->
-    <td class="odd-row difference"></td> <!-- 2000 - 2500 -->
-    <td class="odd-row difference">-1</td> <!-- 2500 - 3000 -->
-    <td class="odd-row difference">-44</td> <!-- 3000 - 3500 -->
-    <td class="odd-row difference">-56</td> <!-- 3500 - 4000 -->
-    <td class="odd-row difference">-17</td> <!-- 4000 - 4500 -->
-    <td class="odd-row difference"></td> <!-- 4500 - 5000 -->
-  </tr>
+  <tbody>
+  <ng-container *ngFor="let item of data">
+    <tr>
+      <td rowspan="3">{{item.name}}</td> <!-- name -->
+      <td class="current-year">{{ item.current_year }}</td>
+      <td class="current-year">{{ item.current_percent }}</td>
+      <td *ngFor="let val of item.current_data" class="current-year">{{ val }}</td>
+    </tr>
+    <tr>
+      <td class="current-year">{{ item.past_year }}</td>
+      <td class="current-year">{{ item.past_percent }}</td>
+      <td *ngFor="let val of item.past_data" class="current-year">{{ val }}</td>
+    </tr>
+    <tr>
+      <td class="odd-row difference">Farqi</td> <!-- year -->
+      <td class="current-year">{{ item.diff_percent }}</td>
+      <td *ngFor="let val of item.diff_data" class="current-year">{{ val }}</td>
+    </tr>
+  </ng-container>
+  </tbody>
 </table>
+
+<ng-template #loader>
+  <app-loader size="xl"></app-loader>
+</ng-template>
+
+
+<!--<table>-->
+<!--  <thead>-->
+<!--  <tr>-->
+<!--    <th rowspan="2">Suv omborlar</th>-->
+<!--    <th rowspan="2" colspan="2">Qor bilan qoplanganlik, %</th>-->
+<!--    <th colspan="10">Balandliklar bo'yicha, m</th>-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <th>1000 - 1500</th>-->
+<!--    <th>1500 - 2000</th>-->
+<!--    <th>2000 - 2500</th>-->
+<!--    <th>2500 - 3000</th>-->
+<!--    <th>3000 - 3500</th>-->
+<!--    <th>3500 - 4000</th>-->
+<!--    <th>4000 - 4500</th>-->
+<!--    <th>4500 - 5000</th>-->
+<!--  </tr>-->
+<!--  </thead>-->
+<!--  <tr>-->
+<!--    <td rowspan="3">Andijon</td> &lt;!&ndash; name &ndash;&gt;-->
+<!--    <td class="current-year">2025</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="current-year">14</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="current-year"></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="current-year"></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="current-year">4</td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="current-year">13</td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="current-year">20</td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="current-year">33</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="current-year">64</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="current-year">96</td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>2024</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td>16</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td>14</td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td>20</td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td>36</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td>71</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td>92</td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td class="odd-row difference">Farqi</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="odd-row difference">-2</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="odd-row difference">4</td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-1</td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-3</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-7</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">4</td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td rowspan="3">Ohangaron</td>&lt;!&ndash; name &ndash;&gt;-->
+<!--    <td class="current-year">2025</td>&lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="current-year">0</td>&lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="current-year">1</td>&lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="current-year">5</td>&lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>2024</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td>1</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td>1</td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td>2</td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td>6</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td class="odd-row difference">Farqi</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="odd-row difference">-1</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-1</td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-1</td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-1</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td rowspan="3">Chorvoq</td>&lt;!&ndash; name &ndash;&gt;-->
+<!--    <td class="current-year">2025</td>&lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="current-year">2</td>&lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="current-year">4</td>&lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="current-year">5</td>&lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="current-year">9</td>&lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="current-year">22</td>&lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>2024</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td>5</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td>2</td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td>11</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td>23</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td class="odd-row difference">Farqi</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="odd-row difference">-3</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">1</td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="odd-row difference">0</td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-2</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-1</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td rowspan="3">Hisorak</td>&lt;!&ndash; name &ndash;&gt;-->
+<!--    <td class="current-year">2025</td>&lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="current-year">2</td>&lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="current-year">62</td>&lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>2024</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td>4</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td>4</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td>72</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td class="odd-row difference">Farqi</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="odd-row difference">-2</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-4</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-10</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td rowspan="3">To'palang</td>&lt;!&ndash; name &ndash;&gt;-->
+<!--    <td class="current-year">2025</td>&lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="current-year">0</td>&lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="current-year">25</td>&lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="current-year"></td>&lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>2024</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td>6</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td>2</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td>33</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td class="odd-row difference">Farqi</td> &lt;!&ndash; year &ndash;&gt;-->
+<!--    <td class="odd-row difference">-6</td>  &lt;!&ndash; percent &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1000 - 1500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 1500 - 2000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 2000 - 2500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 2500 - 3000 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 3000 - 3500 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-2</td> &lt;!&ndash; 3500 - 4000 &ndash;&gt;-->
+<!--    <td class="odd-row difference">-9</td> &lt;!&ndash; 4000 - 4500 &ndash;&gt;-->
+<!--    <td class="odd-row difference"></td> &lt;!&ndash; 4500 - 5000 &ndash;&gt;-->
+<!--  </tr>-->
+<!--</table>-->
