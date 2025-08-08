@@ -1,16 +1,27 @@
 <app-card-wrapper>
   <div slot="body" class="flex flex-col justify-center px-2 py-1 flex-1">
     <app-card-header [title]="'MODSNOW'"></app-card-header>
-    <p-carousel [value]="rivers" [numVisible]="2" [numScroll]="2" [circular]="true"
-                [responsiveOptions]="responsiveOptions">
-      <ng-template let-river pTemplate="item">
-        <div class="mx-4 h-full ">
-          <h2 class="text-2xl font-medium text-center my-6">{{ river.name }}</h2>
-          <div class="w-full ">
-            <img class="m-auto" ngSrc="{{river.url}}" width="1527" height="907" alt="Modsnow" priority>
+    <div *ngIf="images$ | async as urls; else loader">
+      <p-carousel [value]="urls" [numVisible]="2" [numScroll]="2" [circular]="true"
+                  [responsiveOptions]="responsiveOptions">
+        <ng-template let-url pTemplate="item">
+          <div class="mx-4 h-full ">
+            <h2 class="text-2xl font-medium text-center my-6">{{ url.name }}</h2>
+            <div class="w-full ">
+              <img class="m-auto" ngSrc="{{url.url}}" width="1527" height="907" alt="Modsnow" priority>
+            </div>
           </div>
-        </div>
-      </ng-template>
-    </p-carousel>
+        </ng-template>
+      </p-carousel>
+    </div>
   </div>
 </app-card-wrapper>
+
+<ng-template #loader>
+  <app-loader size="xl"></app-loader>
+</ng-template>
+
+<!-- Template for when no images are found -->
+<ng-template #noImages>
+  <p>No images found.</p>
+</ng-template>

@@ -6,10 +6,12 @@ import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {NgChartsModule} from "ng2-charts";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
-import {ModsnowService} from "../../service/modsnow.service";
-import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 import {ActivatedRoute} from "@angular/router";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
+import {Observable} from "rxjs";
+import {ModsnowImg} from "../../shared/interfaces";
+import {ApiService} from "../../service/api.service";
+import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-modsnow-daily',
@@ -22,25 +24,25 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
     FormsModule,
     NgChartsModule,
     CardHeaderComponent,
-    CardWrapperComponent
+    CardWrapperComponent,
+    LoaderComponent
   ],
   templateUrl: './modsnow-daily.component.html',
   styleUrl: './modsnow-daily.component.css'
 })
 export class ModsnowDailyComponent implements OnInit {
   @Input() itemCount: number = 3
-  rivers: ModsnowImageResponse[] = []
   responsiveOptions: any[] = []
   isMainComponent: boolean = true;
 
 
-  constructor(private modsnow: ModsnowService, private activatedRoute: ActivatedRoute) {
+  images$!: Observable<ModsnowImg[]>;
+
+  constructor(private apiService: ApiService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.modsnow.getCover().subscribe(cover => {
-      this.rivers = cover;
-    })
+    this.images$ = this.apiService.getModsnowDynamics()
 
     this.activatedRoute.url.subscribe({
       next: value => {

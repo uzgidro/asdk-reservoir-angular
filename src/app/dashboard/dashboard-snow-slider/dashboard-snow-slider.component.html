@@ -1,10 +1,10 @@
-<div *ngIf="coverImages$ | async as urls; else loader">
+<div *ngIf="images$ | async as urls; else loader">
   <p-carousel [value]="urls" [numVisible]="2" [numScroll]="2" [circular]="true" *ngIf="urls.length > 0; else noImages">
     <ng-template let-url pTemplate="item">
       <div class="flex flex-col justify-center mx-2 space-y-2 h-fit">
         <h2 class="text-2xl font-medium text-center">{{ url.name }}</h2>
         <div class="w-full"> <!-- Container for the image -->
-          <img src="{{url.url}}" alt="Modsnow Cover" fill class="m-auto">
+          <img src="{{url.url}}" alt="Modsnow Cover" class="m-auto">
         </div>
       </div>
 

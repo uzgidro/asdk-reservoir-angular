@@ -4,9 +4,11 @@ import {NgOptimizedImage} from "@angular/common";
 import {SharedModule} from "primeng/api";
 import {NgChartsModule} from "ng2-charts";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
-import {ModsnowService} from "../../service/modsnow.service";
-import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
+import {Observable} from "rxjs";
+import {ModsnowImg} from "../../shared/interfaces";
+import {ApiService} from "../../service/api.service";
+import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-modsnow-yearly',
@@ -17,22 +19,21 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
     SharedModule,
     NgChartsModule,
     CardHeaderComponent,
-    CardWrapperComponent
+    CardWrapperComponent,
+    LoaderComponent
   ],
   templateUrl: './modsnow-yearly.component.html',
   styleUrl: './modsnow-yearly.component.css'
 })
 export class ModsnowYearlyComponent implements OnInit {
-  rivers: ModsnowImageResponse[] = [];
   responsiveOptions: any[] = []
+  images$!: Observable<ModsnowImg[]>;
 
-  constructor(private modsnow: ModsnowService) {
+  constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
-    this.modsnow.getDynamics().subscribe(dynamics => {
-      this.rivers = dynamics;
-    })
+    this.images$ = this.apiService.getModsnowCover()
 
     this.responsiveOptions = [
       {

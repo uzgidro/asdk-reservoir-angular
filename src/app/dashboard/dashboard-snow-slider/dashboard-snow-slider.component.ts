@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {CarouselModule} from "primeng/carousel";
 import {SharedModule} from "primeng/api";
 import {ApiService} from "../../service/api.service";
-import {NgOptimizedImage} from "@angular/common";
 import {Observable} from "rxjs";
 import {ModsnowImg} from "../../shared/interfaces";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
@@ -13,7 +12,6 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
   imports: [
     CarouselModule,
     SharedModule,
-    NgOptimizedImage,
     LoaderComponent
   ],
   templateUrl: './dashboard-snow-slider.component.html',
@@ -21,13 +19,13 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
 })
 export class DashboardSnowSliderComponent implements OnInit {
 
-  coverImages$!: Observable<ModsnowImg[]>;
+  images$!: Observable<ModsnowImg[]>;
 
   constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
-    this.coverImages$ = this.apiService.getModsnowDynamics()
+    this.images$ = this.apiService.getModsnowDynamics()
   }
 
 }

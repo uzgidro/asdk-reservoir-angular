@@ -98,7 +98,7 @@ export class ApiService {
   }
 
   getModsnowDynamics(): Observable<ModsnowImg[]> {
-    return this.http.get<ModsnowImg[]>('http://localhost:9010/api/v3' + MODSNOW + DYNAMICS).pipe(
+    return this.http.get<ModsnowImg[]>(BASE_URL_V3 + MODSNOW + DYNAMICS).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
