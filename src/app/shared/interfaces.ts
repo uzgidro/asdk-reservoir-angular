@@ -111,3 +111,8 @@ export interface Modsnow {
   diff_percent: number;
   diff_data: number[];
 }
+
+export interface ModsnowImg {
+  name: string
+  url: string
+}

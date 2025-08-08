@@ -9,7 +9,7 @@ import {
   ReservoiredArrayResponse
 } from "../shared/response/values-response";
 import {ReservoirResponse} from "../shared/response/reservoir-response";
-import {LevelVolume, Modsnow, Stock} from "../shared/interfaces";
+import {LevelVolume, Modsnow, ModsnowImg, Stock} from "../shared/interfaces";
 
 const BASE_URL: string = 'https://speedwagon.uz'
 const BASE_URL_V2: string = 'https://srmt-back.speedwagon.uz'
@@ -37,6 +37,8 @@ const SUM: string = '/sum'
 
 const STOCK: string = '/stock'
 const MODSNOW: string = '/modsnow'
+const COVER: string = '/cover'
+const DYNAMICS: string = '/dynamics'
 
 
 @Injectable({
@@ -79,6 +81,24 @@ export class ApiService {
   // Modsnow
   getModsnow(): Observable<Modsnow[]> {
     return this.http.get<Modsnow[]>(BASE_URL_V3 + MODSNOW).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getModsnowCover(): Observable<ModsnowImg[]> {
+    return this.http.get<ModsnowImg[]>(BASE_URL_V3 + MODSNOW + COVER).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return [];
+      })
+    )
+  }
+
+  getModsnowDynamics(): Observable<ModsnowImg[]> {
+    return this.http.get<ModsnowImg[]>('http://localhost:9010/api/v3' + MODSNOW + DYNAMICS).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
         return [];
