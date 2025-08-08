@@ -19,20 +19,20 @@
   <tbody>
   <ng-container *ngFor="let item of data">
     <tr>
-      <td rowspan="3">{{item.name}}</td> <!-- name -->
+      <td class="bg-slate-800" rowspan="3">{{item.name}}</td> <!-- name -->
       <td class="current-year">{{ item.current_year }}</td>
       <td class="current-year">{{ item.current_percent }}</td>
-      <td *ngFor="let val of item.current_data" class="current-year">{{ val }}</td>
+      <td *ngFor="let val of item.current_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
     </tr>
     <tr>
       <td class="current-year">{{ item.past_year }}</td>
       <td class="current-year">{{ item.past_percent }}</td>
-      <td *ngFor="let val of item.past_data" class="current-year">{{ val }}</td>
+      <td *ngFor="let val of item.past_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
     </tr>
     <tr>
       <td class="odd-row difference">Farqi</td> <!-- year -->
       <td class="current-year">{{ item.diff_percent }}</td>
-      <td *ngFor="let val of item.diff_data" class="current-year">{{ val }}</td>
+      <td *ngFor="let val of item.diff_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
     </tr>
   </ng-container>
   </tbody>
