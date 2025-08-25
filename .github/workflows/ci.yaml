@@ -1,0 +1,60 @@
+# .github/workflows/ci.yaml
+
+name: Build and Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main # Запускать при пуше в ветку main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Забираем исходный код приложения
+      - name: Checkout App Repo
+        uses: actions/checkout@v3
+
+      # 2. Настраиваем Docker Buildx для ускорения сборки
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # 3. Логинимся в Docker Registry
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 4. Собираем и пушим образ с уникальным тегом (хэш коммита)
+      - name: Build and push Docker image
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asdk-reservoir:${{ github.sha }}
+
+      # 5. Клонируем GitOps-репозиторий
+      - name: Checkout GitOps Repo
+        uses: actions/checkout@v3
+        with:
+          repository: uzgidro/GitOps-Repo
+          ssh-key: ${{ secrets.GITOPS_REPO_SSH_KEY }}
+          path: gitops # Клонируем в отдельную папку
+
+      # 6. Обновляем тег образа в Kubernetes-манифесте
+      - name: Update image tag in GitOps repo
+        run: |
+          cd gitops
+          # Используем yq для безопасного редактирования YAML
+          yq e '.spec.template.spec.containers[0].image = "${{ secrets.DOCKERHUB_USERNAME }}/asdk-reservoir:${{ github.sha }}"' -i reservoir-k8s.yaml
+          
+          # Настраиваем Git
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          # Делаем коммит и пуш
+          git add reservoir-k8s.yaml
+          git commit -m "Update image for asdk-reservoir to ${{ github.sha }}" || echo "No changes to commit"
+          git push
