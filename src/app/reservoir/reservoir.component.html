@@ -1,33 +1,46 @@
-<div class="flex h-full flex-col overflow-y-hidden">
-  <div class="w-full flex flex-row bg-slate-800 text-sm text-white items-center justify-center">
-    <button (click)="toggleMenu()" class="p-2"><span class="material-symbols-outlined">menu</span></button>
-    <nav>
-      <ul class="text-slate-200 font-medium text-sm flex flex-row space-x-4 items-center text-center">
-        <li *ngFor="let item of reservoirs" class="hover:cursor-pointer">
-          <a [ngClass]="{'active': selectedReservoirId == item.id}" (click)="changeReservoir(item.id)">{{ item.name }}</a>
-      </ul>
-    </nav>
+<div class="flex flex-col h-full pt-10 px-12 overflow-y-hidden">
+  <div class="grid grid-flow-col gap-6">
+    <a class="inactive-button px-4 py-2 flex justify-center text-2xl font-light"
+       *ngFor="let reservoir of reservoirs"
+       [ngClass]="{'active-button': selectedReservoirId == reservoir.id}"
+       (click)="changeReservoir(reservoir.id)">{{ reservoir.name }}</a>
   </div>
 
-  <div class="flex flex-row h-full">
-  <div class="bg-slate-700 h-full px-5 left-0 top-0 overflow-y-auto" *ngIf="sideMenuVisible" [@SideMenu]="">
-    <nav>
-      <ul class="text-slate-200 font-medium text-sm mt-4">
-        <li *ngFor="let item of menuItems">
-          <a *ngIf="selectedReservoirId || item !== waterMenuItem" class="items-center flex flex-row justify-between" [routerLink]="item.path" [queryParamsHandling]="item.path?.includes('dashboard') ? '' : 'preserve'" routerLinkActive="active" (click)="selectItem(item)"
-             [ngClass]="{'parent-active': item.isActive}">{{ item.name }} <i *ngIf="!item.path" class="pi" [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i></a>
-          <ul *ngIf="item.children &&item.isOpen" [@DropDownMenu]="">
-            <li class="pl-4" *ngFor="let childItem of item.children">
-              <a [routerLink]="childItem.path" routerLinkActive="active" [queryParamsHandling]="'preserve'"
-                 (click)="selectItem(childItem)">{{ childItem.name }}</a>
-            </li>
-          </ul>
-
-      </ul>
-    </nav>
-  </div>
-  <div class="flex-1 mb-12 overflow-y-auto">
+  <div class="flex-1 pt-6 pb-10 px-2 overflow-y-auto">
     <router-outlet></router-outlet>
   </div>
-  </div>
 </div>
+
+<!--<div class="flex h-full flex-col overflow-y-hidden">-->
+<!--  <div class="w-full flex flex-row bg-slate-800 text-sm text-white items-center justify-center">-->
+<!--    <button (click)="toggleMenu()" class="p-2"><span class="material-symbols-outlined">menu</span></button>-->
+<!--    <nav>-->
+<!--      <ul class="text-slate-200 font-medium text-sm flex flex-row space-x-4 items-center text-center">-->
+<!--        <li *ngFor="let item of reservoirs" class="hover:cursor-pointer">-->
+<!--          <a [ngClass]="{'active': selectedReservoirId == item.id}" (click)="changeReservoir(item.id)">{{ item.name }}</a>-->
+<!--      </ul>-->
+<!--    </nav>-->
+<!--  </div>-->
+
+<!--  <div class="flex flex-row h-full">-->
+<!--  <div class="bg-slate-700 h-full px-5 left-0 top-0 overflow-y-auto" *ngIf="sideMenuVisible" [@SideMenu]="">-->
+<!--    <nav>-->
+<!--      <ul class="text-slate-200 font-medium text-sm mt-4">-->
+<!--        <li *ngFor="let item of menuItems">-->
+<!--          <a *ngIf="selectedReservoirId || item !== waterMenuItem" class="items-center flex flex-row justify-between" [routerLink]="item.path" [queryParamsHandling]="item.path?.includes('dashboard') ? '' : 'preserve'" routerLinkActive="active" (click)="selectItem(item)"-->
+<!--             [ngClass]="{'parent-active': item.isActive}">{{ item.name }} <i *ngIf="!item.path" class="pi" [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i></a>-->
+<!--          <ul *ngIf="item.children &&item.isOpen" [@DropDownMenu]="">-->
+<!--            <li class="pl-4" *ngFor="let childItem of item.children">-->
+<!--              <a [routerLink]="childItem.path" routerLinkActive="active" [queryParamsHandling]="'preserve'"-->
+<!--                 (click)="selectItem(childItem)">{{ childItem.name }}</a>-->
+<!--            </li>-->
+<!--          </ul>-->
+
+<!--      </ul>-->
+<!--    </nav>-->
+<!--  </div>-->
+<!--  <div class="flex-1 mb-12 overflow-y-auto">-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </div>-->
+<!--  </div>-->
+<!--</div>-->

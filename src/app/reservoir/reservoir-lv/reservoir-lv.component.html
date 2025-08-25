@@ -1,0 +1,16 @@
+<div class="grid grid-rows-2 grid-flow-col gap-4 overflow-x-auto">
+  <table *ngFor="let array of lvArrays">
+    <thead>
+    <tr>
+      <th class="whitespace-nowrap px-8 py-4">Sath, m</th>
+      <th class="whitespace-nowrap px-8 py-4">Xajm, mln.m³</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of array">
+      <td>{{data.level}}</td>
+      <td>{{data.volume}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

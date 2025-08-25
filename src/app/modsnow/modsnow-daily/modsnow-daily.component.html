@@ -1,0 +1,29 @@
+<app-card-wrapper>
+  <div slot="body" class="flex flex-col justify-center px-2 py-1 flex-1">
+    <app-card-header [title]="'MODSNOW'"></app-card-header>
+    <div *ngIf="images$ | async as urls; else loader">
+      <p-carousel [value]="urls" [numVisible]="itemCount" [numScroll]="itemCount" [circular]="true"
+                  *ngIf="urls.length > 0; else noImages">
+        <ng-template let-url pTemplate="item">
+          <div class="flex flex-col justify-center mx-4 h-fit">
+            <h2 class="text-2xl font-medium text-center">{{ url.name }}</h2>
+            <div class="w-full"> <!-- Container for the image -->
+              <img src="{{url.url}}" alt="Modsnow Cover" class="m-auto">
+            </div>
+          </div>
+
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+</app-card-wrapper>
+
+
+<ng-template #loader>
+  <app-loader size="xl"></app-loader>
+</ng-template>
+
+<!-- Template for when no images are found -->
+<ng-template #noImages>
+  <p>No images found.</p>
+</ng-template>

@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {TimeService} from "../../service/time.service";
 import {LoggerService} from "../../../logger/logger.service";
 import {LoggerComponent} from "../../../logger/component/logger.component";
 import {LoggerRef} from "../../../logger/logger-ref";
 import {Subscription} from "rxjs";
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {DatePipe, NgClass, NgOptimizedImage} from "@angular/common";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-navbar',
@@ -14,13 +14,12 @@ import {DatePipe, NgClass, NgOptimizedImage} from "@angular/common";
   imports: [
     RouterLink,
     RouterLinkActive,
-    NgClass,
-    DatePipe,
-    NgOptimizedImage
+    DatePipe
   ],
   standalone: true
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  @Output() sidebarEmitter = new EventEmitter();
   currentTime?: Date
   loggerRef?: LoggerRef
   private subscription?: Subscription;
@@ -32,6 +31,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.subscription = this._timeService.getCurrentTimeSecond().subscribe(
       (data: any) => this.currentTime = data
     );
+  }
+
+  openSidebar() {
+    this.sidebarEmitter.emit();
   }
 
   openLogger() {

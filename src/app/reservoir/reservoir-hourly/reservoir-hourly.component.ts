@@ -1,20 +1,19 @@
-// noinspection JSIgnoredPromiseFromCall
-
 import {Component, OnInit} from '@angular/core';
-import {ChartConfiguration} from "chart.js";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ReservoirService} from "../reservoir.service";
 import {ApiService} from "../../service/api.service";
-import {
-  CategorisedArrayResponse,
-  CategorisedValueResponse,
-  ComplexValueResponse
-} from "../../shared/response/values-response";
-import {ReservoirResponse} from "../../shared/response/reservoir-response";
+import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {NgChartsModule} from "ng2-charts";
-import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import autoTable from "jspdf-autotable";
+import {jsPDF} from 'jspdf';
+import * as XLSX from "xlsx";
+import {ChartComponent} from "./chart/chart.component";
+import {DateChart} from "../../shared/struct/chart";
+import {OperativeTableComponent} from "./operative-table/operative-table.component";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
+import {DifferencePipe} from "../../shared/pipe/difference.pipe";
 
 @Component({
   selector: 'app-reservoir-hourly',
@@ -24,10 +23,14 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
     NgForOf,
     NgIf,
     NgChartsModule,
-    WeatherDetailedFrameComponent,
     DatePipe,
     DecimalPipe,
-    LoaderComponent
+    LoaderComponent,
+    CardHeaderComponent,
+    ChartComponent,
+    OperativeTableComponent,
+    CardWrapperComponent,
+    DifferencePipe
   ],
 
   standalone: true
@@ -36,9 +39,6 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
   times: Date[] = []
-  chartTimeline: string[] = []
-  reservoir?: ReservoirResponse
-  charts: { data: ChartConfiguration['data'], options: ChartConfiguration['options'] }[] = []
 
   reservoirsData: {
     id: number,
@@ -49,109 +49,159 @@ export class ReservoirHourlyComponent implements OnInit {
     volume?: { latest: number, old: number }
   }[] = []
 
+  selectedReservoir: number = 0
+
+  incomeCharts: DateChart[] = []
+  releaseCharts: DateChart[] = []
+  levelCharts: DateChart[] = []
+  volumeCharts: DateChart[] = []
+
+  get incomeChart() {
+    return this.incomeCharts[this.selectedReservoir - 1]
+  }
+
+  get releaseChart() {
+    return this.releaseCharts[this.selectedReservoir - 1]
+  }
+
+  get levelChart() {
+    return this.levelCharts[this.selectedReservoir - 1]
+  }
+
+  get volumeChart() {
+    return this.volumeCharts[this.selectedReservoir - 1]
+  }
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private reservoirService: ReservoirService,
     private api: ApiService
   ) {
   }
 
   async ngOnInit() {
     this.setInfoTime()
-
-    this.activatedRoute.queryParams.subscribe({
-      next: value => {
-        this.api.getReservoirById(value['reservoir']).subscribe({
-          next: (response: ReservoirResponse) => {
-            this.reservoir = response
-          }
-        })
-        this.api.getCurrentReservoirValues(value['reservoir']).subscribe({
-          next: (response: CategorisedValueResponse) => {
-            if (this.charts.length !== 0) {
-              this.charts = []
-              this.chartTimeline = []
-            }
-            this.chartTimeline = this.reservoirService.setupChartTimeline()
-            this.setupChart(response.income)
-            this.setupChart(response.release)
-            this.setupChart(response.level)
-            this.setupChart(response.volume)
-          }
-        })
-      }
-    })
     this.api.getDashboardValues().subscribe({
       next: (response: CategorisedArrayResponse) => {
         this.setupTable(response)
+        this.setupChartData(response)
       }
     })
-  }
 
-  navigateToReservoirWeather(id: number) {
-    // noinspection JSIgnoredPromiseFromCall
-    this.router.navigate(['/reservoir/weather'], {
-      queryParams: {reservoir: id}
+
+    this.activatedRoute.queryParams.subscribe({
+      next: value => {
+        this.selectedReservoir = parseInt(value['reservoir'])
+      }
     })
   }
 
   navigateToReservoir(id: number) {
-    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate([], {
       queryParams: {reservoir: id}
     })
   }
 
-  private setupChart(values: ComplexValueResponse) {
-    let label
-    if (values.category === 'income') {
-      label = 'Приток, м3/с'
-    } else if (values.category === 'release') {
-      label = 'Попуск, м3/с'
-    } else if (values.category === 'level') {
-      label = 'Уровень, м'
-    } else if (values.category === 'volume') {
-      label = 'Объём, млн. м3'
-    } else {
-      return
-    }
-    this.charts.push({
-      data: {
-        datasets: [
-          {
-            data: values.data.map(item => item.value),
-            label: label,
-            backgroundColor: 'rgba(148,159,177,0.2)',
-            borderColor: 'rgb(59, 130, 246)',
-            pointBorderColor: '#fff',
-            pointHoverBorderColor: 'white',
-            pointBackgroundColor: 'rgb(59, 130, 246)'
-          }
-        ],
-        labels: this.chartTimeline,
-      },
-      options: {
-        elements: {
-          line: {
-            tension: 0.5,
-          },
-        },
-        interaction: {
-          mode: 'index',
-          intersect: false
-        },
-        plugins: {
-          legend: {display: false},
-          title: {
-            display: true,
-            position: "top",
-            align: "center",
-            text: label
-          }
-        }
+  exportToExcel() {
+    const table = document.getElementById('table');
+    const worksheet = XLSX.utils.table_to_sheet(table);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, "exported_table.xlsx");
+  }
+
+  exportTableToPDF() {
+    const doc = new jsPDF({orientation: 'landscape'});
+    const tableHeaders = [
+      [
+        {content: "Suv omborlar", rowSpan: 2}, // Объединяем по вертикали
+        {content: "Suv sathi, m", colSpan: 3}, // Объединяем по горизонтали
+        {content: "Suv hajmi, mln.m³", colSpan: 3},
+        {content: "Suv kelishi, m³/s", colSpan: 7},
+        {content: "Suv chiqishi, m³/s", rowSpan: 2},
+      ],
+      [
+        {content: `${this.formatDate(this.times[1])}`},
+        {content: `${this.formatDate(this.times[0])}`},
+        {content: "Farqi"},
+        {content: `${this.formatDate(this.times[1])}`},
+        {content: `${this.formatDate(this.times[0])}`},
+        {content: "Farqi"},
+        {content: `${this.formatDate(this.times[5])}`},
+        {content: `${this.formatDate(this.times[4])}`},
+        {content: `${this.formatDate(this.times[3])}`},
+        {content: `${this.formatDate(this.times[2])}`},
+        {content: `${this.formatDate(this.times[1])}`},
+        {content: `${this.formatDate(this.times[0])}`},
+        {content: "Farqi"},
+      ],
+    ];
+
+    // Преобразование данных таблицы в формат для AutoTable
+    const tableData = this.reservoirsData.map(res => {
+      if (res.level != undefined && res.volume != undefined && res.income != undefined && res.release != undefined) {
+        return [
+          res.name,
+          res.level.old.toFixed(2) || '',
+          res.level.latest.toFixed(2) || '',
+          (res.level.latest - res.level.old).toFixed(2) || '',
+          res.volume.old.toFixed(2) || '',
+          res.volume.latest.toFixed(2) || '',
+          (res.volume.latest - res.volume.old).toFixed(2) || '',
+          ...(res.income.map(i => i.toFixed(2)) || []),
+          ((res.income[res.income.length - 1] - res.income[res.income.length - 2]).toFixed(2) || ''),
+          res.release.latest.toFixed(2) || ''
+        ];
+      } else {
+        return []
       }
-    })
+    });
+
+    // Генерация таблицы в PDF
+    autoTable(doc, {
+      head: tableHeaders, // Заголовки
+      body: tableData,      // Данные таблицы
+      startY: 10,           // Начальная позиция по вертикали
+      styles: {fontSize: 8}, // Общие стили таблицы
+      headStyles: {fillColor: [41, 128, 185]}, // Цвет заголовков
+    });
+
+    // Сохранение PDF
+    doc.save('Reservoirs-Table.pdf');
+  }
+
+  private setupChartData(data: CategorisedArrayResponse) {
+    for (let i = 0; i < data.income.length; i++) {
+      this.incomeCharts.push({
+        data: data.income[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        seriesName: 'Kelish, m³/s',
+        color: 'rgba(37, 99, 235,0.4)',
+      })
+      this.releaseCharts.push({
+        data: data.release[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        seriesName: 'Chiqish, m³/s',
+        color: 'rgba(225, 29, 72,0.4)',
+      })
+      this.levelCharts.push({
+        data: data.level[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        seriesName: 'Sath, m',
+        color: 'rgba(22, 163, 74,0.4)',
+      })
+      this.volumeCharts.push({
+        data: data.volume[i].data.reverse().map(e => ({timestamp: new Date(e.date).getTime(), value: e.value})),
+        seriesName: 'Hajm, mln.m³',
+        color: 'rgba(147, 51, 234,0.4)',
+      })
+    }
+  }
+
+  private formatDate(date: Date) {
+    const formattedTime = new Intl.DateTimeFormat("en-GB", {hour: "2-digit", minute: "2-digit"}).format(date);
+    const formattedDate = new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "2-digit"
+    }).format(this.selectedDate); // Формат дня, месяца и года
+    return `${formattedTime}\n(${formattedDate})`;
   }
 
   private setupTable(response: CategorisedArrayResponse) {
@@ -189,7 +239,7 @@ export class ReservoirHourlyComponent implements OnInit {
       let data =
         this.reservoirsData.find(value => value.id === item.reservoir_id)
       if (data) {
-        data.income = item.data.map(value => value.value).slice(-4)
+        data.income = item.data.map(value => value.value).slice(-6)
       }
     }
   }

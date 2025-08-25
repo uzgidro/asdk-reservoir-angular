@@ -1,7 +1,8 @@
 @import "primeicons/primeicons.css";
 @import "primeng/resources/primeng.css";
-@import "primeng/resources/themes/lara-light-blue/theme.css"; /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
 @import 'material-symbols/outlined.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,28 +10,51 @@
 @layer primeng;
 
 @layer base {
-  p,h1,h2,h3,h4,h5,h6,th,td {
+  * {
+    font-family: 'Gilroy', sans-serif;
+    @apply text-white
+  }
+
+  p, h1, h2, h3, h4, h5, h6, th, td {
     @apply cursor-default
   }
+
   body {
-    @apply bg-gray-200
+    @apply bg-background text-slate-200
   }
+
   table {
-    @apply table-auto w-full border-collapse text-sm overflow-x-auto
+    @apply table-auto w-full border border-slate-300 border-collapse overflow-x-auto
   }
-  thead tr:first-child th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-4 first:rounded-tl-3xl last:rounded-tr-3xl
+
+  th {
+    @apply bg-slate-900 px-4 py-3 text-lg border border-slate-300 break-words
   }
-  thead tr th {
-    @apply text-gray-500 bg-gray-300 border-b border-gray-400 p-4
+
+  td {
+    @apply px-4 py-3 text-center break-words text-base border border-slate-300
   }
-  tbody tr td {
-    @apply px-4 py-2 border-b border-gray-500 text-center break-words max-w-20
+
+  table tbody tr {
+    @apply even:bg-slate-500/80 odd:bg-slate-800
   }
 }
 
-.material-card {
-  @apply border-2 border-gray-500 p-4 bg-white rounded-xl shadow-xl
+.odd-row {
+  @apply bg-slate-500/80
+}
+
+.red-difference {
+  @apply italic font-extralight text-red-500
+}
+
+.difference {
+  @apply italic font-extralight text-lime-300
+}
+
+
+.active {
+  @apply text-white border-l-white hover:text-slate-400  hover:border-l-slate-400
 }
 
 .card-title {
@@ -72,3 +96,166 @@
   @apply bg-amber-500 hover:bg-amber-600 active:bg-amber-400 disabled:bg-amber-300
 }
 
+.vertical-dark-gradient {
+  @apply bg-gradient-to-b from-dark-gray to-deep-black
+}
+
+.horizontal-blue-gradient {
+  @apply bg-gradient-to-r from-transparent via-primary to-transparent
+}
+
+.active-button {
+  @apply bg-cyan-300/95 border border-slate-300 border-opacity-60 text-slate-800
+}
+
+.inactive-button {
+  @apply bg-slate-800 text-white border border-slate-300
+}
+
+.active-button:hover, .inactive-button:hover {
+  @apply bg-slate-500
+}
+
+.active-button:active, .inactive-button:active {
+  @apply bg-slate-900
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-Heavy.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-ThinItalic.woff2') format('woff2');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-BlackItalic.woff2') format('woff2');
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-UltraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-ExtraBoldItalic.woff2') format('woff2');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-HeavyItalic.woff2') format('woff2');
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-RegularItalic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-UltraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('assets/fonts/Gilroy-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}

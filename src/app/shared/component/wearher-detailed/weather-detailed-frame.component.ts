@@ -4,8 +4,10 @@ import {WeatherService} from "../../../service/weather.service";
 import {ReservoirResponse} from "../../response/reservoir-response";
 import {WeatherCurrentDto, WeatherCurrentResponse} from "../../response/weather-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {RusDatePipe} from "../../pipe/rus-date.pipe";
 import {LoaderComponent} from "../loader/loader.component";
+import {UzbDatePipePipe} from "../../pipe/uzb-date-pipe.pipe";
+import {CardHeaderComponent} from "../card-header/card-header.component";
+import {CardWrapperComponent} from "../card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-weather-detailed',
@@ -17,13 +19,16 @@ import {LoaderComponent} from "../loader/loader.component";
     DecimalPipe,
     DatePipe,
     NgForOf,
-    RusDatePipe,
-    LoaderComponent
+    LoaderComponent,
+    UzbDatePipePipe,
+    CardHeaderComponent,
+    CardWrapperComponent
   ],
   standalone: true
 })
 export class WeatherDetailedFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse
+  @Input() displayTitle: boolean = true
   reservoirName?: string
   weatherCurrent?: WeatherCurrentDto
   weatherHourly: WeatherCurrentDto[] = []
@@ -33,8 +38,8 @@ export class WeatherDetailedFrameComponent implements OnChanges {
     nightIcon?: string
     dayIconDescription?: string
     nightIconDescription?: string
-    dayTemperature?: number
-    nightTemperature?: number
+    dayTemperature?: string
+    nightTemperature?: string
   }[] = []
 
   constructor(private weatherApiService: WeatherApiService, private weatherService: WeatherService) {
@@ -47,8 +52,8 @@ export class WeatherDetailedFrameComponent implements OnChanges {
     const lat = res.lat
     const lon = res.lon
     this.weatherApiService.getCurrent(lat, lon).subscribe({
-      next: (response: WeatherCurrentResponse) => {
-          this.weatherCurrent = this.weatherService.convertCurrentResponse(response)
+      next: response => {
+        this.weatherCurrent = response
       }
     })
     this.weatherApiService.getForecast(lat, lon).subscribe({
@@ -67,7 +72,7 @@ export class WeatherDetailedFrameComponent implements OnChanges {
                 existsElement.dayIcon = weather.weatherIcon
                 existsElement.dayIconDescription = weather.weatherDescription
                 existsElement.dayTemperature = weather.temp
-              } else if (weather.time.getHours() === 17) {
+              } else if (weather.time.getHours() === 23) {
                 existsElement.nightIcon = weather.weatherIcon
                 existsElement.nightIconDescription = weather.windDirection
                 existsElement.nightTemperature = weather.temp
@@ -75,7 +80,7 @@ export class WeatherDetailedFrameComponent implements OnChanges {
             }
           }
         }
-        this.weatherDaily = this.weatherDaily.slice(0,4)
+        this.weatherDaily = this.weatherDaily.slice(0, 4)
       }
     })
   }

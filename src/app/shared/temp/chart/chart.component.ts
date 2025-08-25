@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Chart, registerables} from "chart.js";
+import {Chart} from "chart.js";
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css'],
-  standalone:true
+  standalone: true
 })
 export class ChartComponent implements OnInit {
   chart?: Chart
@@ -16,11 +16,10 @@ export class ChartComponent implements OnInit {
   @Input() borderColor: string = ''
   @Input() backgroundColor: string = 'rgba(128, 128, 128, 0.2)'
   @Input() title: string = ''
-  @Input() id:number = -1
+  @Input() id: number = -1
 
 
   ngOnInit() {
-    Chart.register(...registerables)
     this.drawChart()
   }
 

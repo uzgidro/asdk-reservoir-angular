@@ -1,0 +1,7 @@
+th, td {
+  @apply text-sm px-0 py-1
+}
+
+.current-year {
+  @apply bg-slate-600/60
+}

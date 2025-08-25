@@ -20,9 +20,9 @@ export interface WeatherCurrentResponse {
 }
 
 export interface WeatherCurrentDto {
-  temp: number
-  tempFeelsLike: number
-  humidity: number
+  temp: string
+  tempFeelsLike: string
+  humidity: string
   weatherDescription: string
   weatherIcon: string
   windDirection: string
@@ -30,4 +30,14 @@ export interface WeatherCurrentDto {
   time: Date
   pressure: number
   clouds: number
+}
+
+export interface Forecast {
+  date: Date
+  dayIcon?: string
+  nightIcon?: string
+  dayIconDescription?: string
+  nightIconDescription?: string
+  dayTemperature?: string
+  nightTemperature?: string
 }

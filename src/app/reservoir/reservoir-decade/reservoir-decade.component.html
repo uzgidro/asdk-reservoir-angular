@@ -1,81 +1,50 @@
-<!--suppress JSUnusedGlobalSymbols -->
-<app-metric-select (categoryEmitter)="changeCategory($event)"></app-metric-select>
+<app-card-wrapper>
+  <app-card-header slot="header" [title]="'O\'n kunlik ma\'lumotlar'"></app-card-header>
+  <div slot="body" class="flex flex-col space-y-4">
+    <table *ngIf="tableData; else loader">
+      <thead>
+      <tr>
+        <th rowspan="2">Ma'lumot turi</th>
+        <th [colSpan]="daysInDecade.length">{{ today | date:'MMMM' | uzbMonthPipe }}</th>
+        <th rowspan="2">O'rtacha</th>
+      </tr>
+      <tr>
+        <th *ngFor="let day of daysInDecade">{{ day }}</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="tableData">
+      <tr *ngIf="tableData.income">
+        <td>Kelishi, m³/s</td>
+        <td *ngFor="let value of tableData.income.data; index as i">{{ value.value | number:'0.0-0' }}</td>
+        <td *ngFor="let day of daysInDecade.slice(tableData.income.data.length)"></td>
+        <td>{{ avgIncome }}</td>
+      </tr>
+      <tr *ngIf="tableData.release">
+        <td>Chiqish, m³/s</td>
+        <td *ngFor="let value of tableData.release.data">{{ value.value | number:'0.0-0' }}</td>
+        <!--suppress JSUnusedGlobalSymbols, JSUnusedGlobalSymbols -->
+        <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
+        <td>{{ avgRelease }}</td>
+      </tr>
+      <tr *ngIf="tableData.level">
+        <td>Suv sathi, m</td>
+        <td *ngFor="let value of tableData.level.data">{{ value.value }}</td>
+        <td *ngFor="let day of daysInDecade.slice(tableData.level.data.length)"></td>
+        <td></td>
+      </tr>
+      <tr *ngIf="tableData.volume">
+        <td>Suv hajmi, mln.m³</td>
+        <td *ngFor="let value of tableData.volume.data">{{ value.value }}</td>
+        <td *ngFor="let day of daysInDecade.slice(tableData.volume.data.length)"></td>
+        <td></td>
+      </tr>
 
-<div *ngIf="reservoirName && tableData && totalValues.length !== 0; else loader" class="w-full flex flex-col px-4 pt-6 space-y-4 justify-center">
-  <h3 class="text-center text-3xl">{{reservoirName}}</h3>
+      </tbody>
+    </table>
 
-  <table>
-    <thead>
-    <tr>
-      <th rowspan="2">Данные</th>
-      <th [colSpan]="daysInDecade.length">{{today | date:'MMMM' | rusMonth}}</th>
-      <th rowspan="2">Среднее</th>
-    </tr>
-    <tr>
-      <th *ngFor="let day of daysInDecade">{{day}}</th>
-    </tr>
-    </thead>
-    <tbody *ngIf="tableData">
-    <tr *ngIf="tableData.income">
-      <td>Приток, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
-      <td *ngFor="let value of tableData.income.data; index as i">{{value.value | number:'0.0-0'}}</td>
-      <td *ngFor="let day of daysInDecade.slice(tableData.income.data.length)"></td>
-      <td>{{avgIncome}}</td>
-    </tr>
-    <tr *ngIf="tableData.release">
-      <td>Попуск, <p *ngIf="metrics == MetricCategory.SPEED">м3/с</p><p *ngIf="metrics == MetricCategory.VOLUME">млн. м3</p></td>
-      <td *ngFor="let value of tableData.release.data">{{value.value | number:'0.0-0'}}</td>
-      <!--suppress JSUnusedGlobalSymbols, JSUnusedGlobalSymbols -->
-      <td *ngFor="let day of daysInDecade.slice(tableData.release.data.length)"></td>
-      <td>{{avgRelease}}</td>
-    </tr>
-    <tr *ngIf="tableData.level">
-      <td>Уровень, м</td>
-      <td *ngFor="let value of tableData.level.data">{{value.value}}</td>
-      <td *ngFor="let day of daysInDecade.slice(tableData.level.data.length)"></td>
-      <td></td>
-    </tr>
-    <tr *ngIf="tableData.volume">
-      <td>Объём, млн. м3</td>
-      <td *ngFor="let value of tableData.volume.data">{{value.value}}</td>
-      <td *ngFor="let day of daysInDecade.slice(tableData.volume.data.length)"></td>
-      <td></td>
-    </tr>
-
-    </tbody>
-  </table>
-
-  <table>
-    <thead>
-    <tr>
-      <th rowspan="2">Водохранилища</th>
-      <th colspan="4">Средний приток, млн.м<sup>3</sup></th>
-      <th colspan="3">Разница в процентном соотношении</th>
-    </tr>
-    <tr>
-      <th><p>30 лет<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th><p>10 лет<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th><p>{{pastYear}} год<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th><p>{{ currentYear }} год<br><small>{{decade | date: 'dd.MM'}}</small></p></th>
-      <th>30 лет</th>
-      <th>10 лет</th>
-      <th>{{pastYear}} год</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let res of totalValues">
-    <tr>
-      <td>{{res.reservoir}}</td>
-      <td>{{res.avg30}}<br><p class="text-red-600 text-xs">{{ res.decadeAvg30 }}</p></td>
-      <td>{{res.avg10}}<br><p class="text-red-600 text-xs">{{ res.decadeAvg10 }}</p></td>
-      <td>{{res.lastYear}}<br><p class="text-red-600 text-xs">{{ res.decadeLastYear }}</p></td>
-      <td>{{res.currentYear}}<br><p class="text-red-600 text-xs">{{ res.decadeCurrentYear }}</p></td>
-      <td>{{ res.avg30 !== 0 ? ((res.currentYear / res.avg30) * 100 | number: '.0-2') : '0' }}<br><p class="text-red-600 text-xs">{{ res.decadeAvg30 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg30) * 100 | number: '.0-2') : '0' }}</p></td>
-      <td>{{ res.avg10 !== 0 ? ((res.currentYear / res.avg10) * 100 | number: '.0-2') : '0' }}<br><p class="text-red-600 text-xs">{{ res.decadeAvg10 !== 0 ? ((res.decadeCurrentYear / res.decadeAvg10) * 100 | number: '.0-2') : '0' }}</p></td>
-      <td>{{ (res.currentYear / res.lastYear) * 100 | number: '.0-2' }}<br><p class="text-red-600 text-xs">{{ (res.decadeCurrentYear / res.decadeLastYear) * 100 | number: '.0-2' }}</p></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+    <app-decade-many-years-income-table></app-decade-many-years-income-table>
+  </div>
+</app-card-wrapper>
 
 <ng-template #loader>
   <app-loader size="xl"></app-loader>

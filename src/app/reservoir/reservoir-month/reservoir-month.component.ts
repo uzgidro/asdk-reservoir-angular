@@ -3,31 +3,30 @@ import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
-import {MetricCategory} from "../../shared/enum/metric-category";
-import {ReservoirService} from "../reservoir.service";
-import {MetricSelectComponent} from "../../shared/component/metric-select/metric-select.component";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {RusMonthPipe} from "../../shared/pipe/rus-month.pipe";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {UzbMonthPipePipe} from "../../shared/pipe/uzb-month-pipe.pipe";
+import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
   selector: 'app-reservoir-month',
   templateUrl: './reservoir-month.component.html',
   styleUrl: './reservoir-month.component.css',
   imports: [
-    MetricSelectComponent,
     NgForOf,
     NgIf,
     DecimalPipe,
     DatePipe,
-    RusMonthPipe,
-    LoaderComponent
+    LoaderComponent,
+    UzbMonthPipePipe,
+    CardHeaderComponent,
+    CardWrapperComponent
   ],
   standalone: true
 })
 export class ReservoirMonthComponent implements OnInit {
   reservoirName?: string
-  metrics: MetricCategory = MetricCategory.SPEED
   data: {
     date: Date
     income: any[]
@@ -36,9 +35,8 @@ export class ReservoirMonthComponent implements OnInit {
     volume: any[]
   }[] = []
 
-  protected readonly MetricCategory = MetricCategory;
 
-  constructor(private activatedRoute: ActivatedRoute, private api: ApiService, private reservoirService: ReservoirService) {
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
   }
 
   ngOnInit() {
@@ -56,14 +54,6 @@ export class ReservoirMonthComponent implements OnInit {
           }
         })
       }
-    })
-  }
-
-  changeCategory(event: MetricCategory) {
-    this.metrics = event
-    this.data.forEach(month => {
-      this.reservoirService.convertMetrics(month.income, event)
-      this.reservoirService.convertMetrics(month.release, event)
     })
   }
 

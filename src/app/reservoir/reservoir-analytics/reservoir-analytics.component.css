@@ -1,18 +1,19 @@
-td {
-  @apply text-sm
-}
-th {
-  @apply text-sm max-w-32
-}
-
 .min {
-  @apply text-red-600
+  @apply bg-red-600; /* Apply red background */
 }
 
 .max {
-  @apply text-green-600
+  @apply bg-green-600; /* Apply green background */
 }
 
 .past {
-  @apply text-amber-600
+  @apply bg-amber-600; /* Apply amber background */
+}
+
+.current {
+  @apply bg-purple-600; /* Apply purple background */
+}
+
+th,td {
+  @apply border
 }

@@ -8,69 +8,74 @@ import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
 import {ReservoirHourlyComponent} from "./reservoir/reservoir-hourly/reservoir-hourly.component";
 import {ReservoirDecadeComponent} from "./reservoir/reservoir-decade/reservoir-decade.component";
-import {ReservoirDashboardComponent} from "./reservoir/reservoir-dashboard/reservoir-dashboard.component";
-import {ModsnowDailyComponent} from "./reservoir/modsnow-daily/modsnow-daily.component";
-import {ModsnowYearlyComponent} from "./reservoir/modsnow-yearly/modsnow-yearly.component";
+import {ModsnowDailyComponent} from "./modsnow/modsnow-daily/modsnow-daily.component";
+import {ModsnowYearlyComponent} from "./modsnow/modsnow-yearly/modsnow-yearly.component";
 import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
-import {HydroPostComponent} from "./reservoir/hydro-post/hydro-post.component";
+import {HydroPostComponent} from "./hydrometer/hydro-post/hydro-post.component";
 import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
-import {HydroMeterComponent} from "./reservoir/hydro-meter/hydro-meter.component";
-import {HydroIndicatorComponent} from "./reservoir/hydro-indicator/hydro-indicator.component";
-import {HydroWorksComponent} from "./reservoir/hydro-works/hydro-works.component";
+import {HydroMeterComponent} from "./hydrometer/hydro-meter/hydro-meter.component";
+import {HydroIndicatorComponent} from "./hydrometer/hydro-indicator/hydro-indicator.component";
+import {HydroWorksComponent} from "./hydrometer/hydro-works/hydro-works.component";
 import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
 import {WeatherComponent} from "./reservoir/weather/weather.component";
 import {ReservoirScheduleComponent} from "./reservoir/reservoir-schedule/reservoir-schedule.component";
+import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
+import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
+import {ExploitationComponent} from "./exploitation/exploitation.component";
+import {DashboardReservoirComponent} from "./dashboard/dashboard-reservoir/dashboard-reservoir.component";
+import {TopPositionScreenComponent} from "./top-position-screen/top-position-screen.component";
+import {HydrometerComponent} from "./hydrometer/hydrometer.component";
+import {ModsnowComponent} from "./modsnow/modsnow.component";
 
 const routes: Routes = [
   {
     path: '', component: MainLayoutComponent, children: [
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
+      {path: 'recourses', component: WaterRecoursesComponent},
       {path: 'region', component: RegionComponent},
       {path: 'ges', component: GesComponent},
-      {path: 'reservoir', component: ReservoirComponent, children: [
-          {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
-          {path: 'dashboard', component: ReservoirDashboardComponent},
-          {path: 'water', children: [
-              {path: '', pathMatch: 'full', redirectTo: 'current'},
-              {path: 'current', component: ReservoirHourlyComponent},
-              {path: 'decade', component: ReservoirDecadeComponent},
-              {path: 'month', component: ReservoirMonthComponent},
-              {path: 'year', component: ReservoirYearlyComponent},
-              {path: 'analytics', component: ReservoirAnalyticsComponent},
-              {path: 'schedule', component: ReservoirScheduleComponent},
-            ]},
-          {path: 'snow', children: [
-              {path: '', pathMatch: 'full', redirectTo: 'current'},
-              {path: 'current', component: ModsnowDailyComponent},
-              {path: 'all-time', component: ModsnowYearlyComponent}
-            ]},
-          {
-            path: 'weather', component: WeatherComponent
-          },
-          {path: 'hydro', children: [
-              {path: '', pathMatch: 'full', redirectTo: 'posts'},
-              {path: 'posts', component: HydroPostComponent},
-              {path: 'meter', component: HydroMeterComponent},
-              {path: 'indicator', component: HydroIndicatorComponent},
-              {path: 'journal', component: BlankPageComponent},
-              {path: 'contract', component: BlankPageComponent},
-              {path: 'works', component: HydroWorksComponent}
-            ]},
-          {path: 'docs', component: OrdersComponent}
-        ]},
-      // {
-      //   path: 'not-found', component: NotFoundComponent
-      // },
-      // {
-      //   path: '**', component: NotFoundComponent
-      // }
+      {path: 'reservoir', component: DashboardReservoirComponent},
+      {
+        path: 'water', component: ReservoirComponent, children: [
+          {path: '', pathMatch: 'full', redirectTo: 'current'},
+          {path: 'current', component: ReservoirHourlyComponent},
+          {path: 'decade', component: ReservoirDecadeComponent},
+          {path: 'month', component: ReservoirMonthComponent},
+          {path: 'year', component: ReservoirYearlyComponent},
+          {path: 'lv', component: ReservoirLvComponent},
+          {path: 'filter', component: BlankPageComponent},
+          {path: 'analytics', component: ReservoirAnalyticsComponent},
+          {path: 'schedule', component: ReservoirScheduleComponent},
+        ]
+      },
+      {
+        path: 'snow', component: ModsnowComponent, children: [
+          {path: '', pathMatch: 'full', redirectTo: 'current'},
+          {path: 'current', component: ModsnowDailyComponent},
+          {path: 'all-time', component: ModsnowYearlyComponent}
+        ]
+      },
+      {
+        path: 'weather', component: WeatherComponent
+      },
+      {
+        path: 'hydro', component: HydrometerComponent,  children: [
+          {path: '', pathMatch: 'full', redirectTo: 'posts'},
+          {path: 'posts', component: HydroPostComponent},
+          {path: 'meter', component: HydroMeterComponent},
+          {path: 'indicator', component: HydroIndicatorComponent},
+          {path: 'journal', component: BlankPageComponent},
+          {path: 'contract', component: BlankPageComponent},
+          {path: 'works', component: HydroWorksComponent}
+        ]
+      },
+      {path: 'rules', component: ExploitationComponent},
+      {path: 'docs', component: OrdersComponent},
+      {path: 'map', component: TopPositionScreenComponent}
     ]
   },
-  // {
-  //   path: 'login', component: LoginComponent
-  // },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
@@ -82,6 +87,7 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forRoot(routes, {
     initialNavigation: 'enabledBlocking'
-})]
+  })]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

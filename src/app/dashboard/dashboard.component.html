@@ -1,30 +1,216 @@
-<div class="h-full w-full flex flex-col space-y-4 justify-center items-center text-center">
-  <div class="flex flex-row space-x-4 w-full justify-center ">
-    <a routerLink="/reservoir" class="dash-card">
-        <span class="material-symbols-outlined text-7xl">water_drop</span>
-        <h3 class="font-medium text-4xl">Водные ресурсы</h3>
-    </a>
-    <a routerLink="/reservoir/weather" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">partly_cloudy_day</span>
-      <h3 class="font-medium text-4xl">Погода</h3>
-    </a>
-    <a routerLink="/" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">swap_driving_apps_wheel</span>
-      <h3 class="font-medium text-4xl">КИА</h3>
-    </a>
-  </div>
-  <div class="flex flex-row space-x-4 w-full justify-center ">
-    <a routerLink="/reservoir/snow" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">ac_unit</span>
-      <h3 class="font-medium text-4xl">MODSNOW</h3>
-    </a>
-    <a routerLink="/" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">earthquake</span>
-      <h3 class="font-medium text-4xl">Сейсмология</h3>
-    </a>
-    <a routerLink="/" class="dash-card">
-      <span class="material-symbols-outlined text-7xl">rocket_launch</span>
-      <h3 class="font-medium text-4xl">УзбекКосмос</h3>
-    </a>
-  </div>
+<div class="grid grid-cols-3 px-12 pt-10 gap-4">
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'Suv resurslar'"></app-card-header>
+
+    <app-dashboard-current-chart slot="body" class="flex h-full"></app-dashboard-current-chart>
+  </app-card-wrapper>
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'Ko\'p yillik'"></app-card-header>
+    <app-decade-many-years-income-table slot="body"></app-decade-many-years-income-table>
+  </app-card-wrapper>
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'Ob-havo'"></app-card-header>
+
+    <table slot="body">
+      <thead>
+      <tr>
+        <th rowspan="2">Viloyatlar</th>
+        <th [colSpan]="weatherDaily.length > 0 ? weatherDaily[0].forecast.length * 2 : 0">Havo harorati</th>
+      </tr>
+      <tr>
+        <th *ngFor="let date of forecastDate" colspan="2">{{ date | date:'dd.MM.yyyy' }}</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let forecast of weatherDaily" class="even:odd-row">
+        <td class="py-6">{{ forecast.reservoir }}</td>
+        <ng-container *ngFor="let item of forecast.forecast">
+          <td class="py-6">
+            <div class="flex flex-row space-x-1"><img ngSrc="{{item.dayIcon}}"
+                                                      alt="{{item.dayIconDescription}}"
+                                                      width="30"
+                                                      height="30">
+              <p>{{ item.dayTemperature }}</p></div>
+          </td>
+          <td class="py-6">
+            <div class="flex flex-row space-x-1"><img ngSrc="{{item.nightIcon}}"
+                                                      alt="{{item.nightIconDescription}}"
+                                                      width="30"
+                                                      height="30">
+              <p>{{ item.nightTemperature }}</p></div>
+          </td>
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+  </app-card-wrapper>
+
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
+
+    <app-dashboard-snow-chart slot="body" class="flex h-full"></app-dashboard-snow-chart>
+  </app-card-wrapper>
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
+
+    <app-dashboard-snow-table slot="body"></app-dashboard-snow-table>
+  </app-card-wrapper>
+  <app-card-wrapper>
+    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
+
+    <app-dashboard-snow-slider slot="body"></app-dashboard-snow-slider>
+  </app-card-wrapper>
+
+<!--  <app-card-wrapper>-->
+<!--    <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>-->
+
+<!--    <app-dashboard-snow-review slot="body" class="flex flex-1"></app-dashboard-snow-review>-->
+<!--  </app-card-wrapper>-->
 </div>
+
+<!--<div class="grid grid-cols-3 px-12 pt-10 gap-4">-->
+<!--  <div class="flex flex-col space-y-2">-->
+<!--    <app-card-header [title]="'Suv resurslar'"></app-card-header>-->
+
+<!--    <app-dashboard-current-chart class="flex flex-1"></app-dashboard-current-chart>-->
+<!--  </div>-->
+<!--  <div class="flex flex-col space-y-2 justify-between">-->
+<!--    <app-card-header [title]="'MODSNOW'"></app-card-header>-->
+
+<!--   <app-dashboard-snow-chart></app-dashboard-snow-chart>-->
+<!--  </div>-->
+<!--  <div class="flex flex-col space-y-2">-->
+<!--    <app-card-header [title]="'Nazorat o\'lchash qurilmalar'"></app-card-header>-->
+
+<!--    <div class="grid grid-flow-col-dense justify-stretch gap-2 text-xs">-->
+<!--      <button class="inactive-button px-4 py-2" *ngFor="let reservoir of reservoirs">{{ reservoir }}</button>-->
+<!--    </div>-->
+
+<!--    <a href="https://atnt.uz" target="_blank" class="flex h-full">-->
+<!--      <canvas-->
+<!--        baseChart-->
+<!--        [data]="lineChartData"-->
+<!--        [options]="lineChartOptions"-->
+<!--        [type]="lineChartType"-->
+<!--      ></canvas>-->
+<!--    </a>-->
+<!--  </div>-->
+<!--  <div class="flex flex-col space-y-2">-->
+<!--    <app-card-header [title]="'Seysmologiya'"></app-card-header>-->
+
+<!--    <a href="https://soep.uz" target="_blank" class="p-1 h-full">-->
+<!--      <div class="h-full w-full bg-cover bg-center" style="background-image: url('assets/video/Seysmic.gif');"></div>-->
+<!--    </a>-->
+<!--  </div>-->
+<!--  <div class="flex flex-col space-y-2">-->
+<!--    <app-card-header [title]="'O\'zbekkosmos'"></app-card-header>-->
+
+<!--    <div class="grid grid-cols-2 p-1 gap-4 h-full">-->
+<!--      <a href="https://gis.uzspace.uz/uzspace/apps/dashboards/2b1e7a6f61624a06be6613fce69afd36" target="_blank">-->
+<!--        <div class="w-full h-full bg-cover bg-center border border-primary"-->
+<!--             style="background-image: url('assets/video/gis.gif');">-->
+<!--          <div class="w-full p-4 bg-black bg-opacity-50">-->
+<!--            <p>GIS UZSPACE</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </a>-->
+
+<!--      <a href="https://portal.synspective.io/login" target="_blank">-->
+<!--        <div class="w-full h-full bg-cover bg-center border border-primary"-->
+<!--             style="background-image: url('assets/video/synspective.gif');">-->
+<!--          <div class="w-full p-4 bg-black bg-opacity-50">-->
+<!--            <p>SYNSCPECTIVE</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </a>-->
+
+<!--      <a class="col-span-2" href="https://3d.gis.uzspace.uz/" target="_blank">-->
+<!--        <div class="w-full h-full bg-cover bg-center border border-primary"-->
+<!--             style="background-image: url('assets/video/3d gis.gif');">-->
+<!--          <div class="w-full p-4 bg-black bg-opacity-50">-->
+<!--            <p>3D GIS UZSPACE</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </a>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="flex flex-col space-y-2">-->
+<!--    <app-card-header [title]="'Ob-havo'"></app-card-header>-->
+
+<!--    <table>-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th rowspan="2">Viloyatlar</th>-->
+<!--        <th colspan="8">Havo harorati</th>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <th *ngFor="let date of forecastDate" colspan="2">{{ date | date:'dd.MM.yyyy' }}</th>-->
+
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr *ngFor="let forecast of weatherDaily">-->
+<!--        <td class="py-6">{{ forecast.reservoir }}</td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[0].dayIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[0].dayIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[0].dayTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[0].nightIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[0].nightIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[0].nightTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[1].dayIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[1].dayIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[1].dayTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[1].nightIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[1].nightIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[1].nightTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[2].dayIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[2].dayIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[2].dayTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[2].nightIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[2].nightIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[2].nightTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[3].dayIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[3].dayIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[3].dayTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--        <td class="py-6">-->
+<!--          <div class="flex flex-row space-x-1"><img ngSrc="{{forecast.forecast ? forecast.forecast[3].nightIcon : ''}}"-->
+<!--                    alt="{{forecast.forecast ? forecast.forecast[3].nightIconDescription : ''}}"-->
+<!--                    width="30"-->
+<!--                    height="30">-->
+<!--            <p>{{ forecast.forecast ? forecast.forecast[3].nightTemperature : '' }}</p></div>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--</div>-->
