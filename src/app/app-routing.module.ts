@@ -61,7 +61,7 @@ const routes: Routes = [
         path: 'weather', component: WeatherComponent
       },
       {
-        path: 'hydro', component: HydrometerComponent,  children: [
+        path: 'hydro', component: HydrometerComponent, children: [
           {path: '', pathMatch: 'full', redirectTo: 'posts'},
           {path: 'posts', component: HydroPostComponent},
           {path: 'meter', component: HydroMeterComponent},
@@ -76,11 +76,6 @@ const routes: Routes = [
       {path: 'map', component: TopPositionScreenComponent}
     ]
   },
-  {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
-  },
-
 ]
 
 @NgModule({
