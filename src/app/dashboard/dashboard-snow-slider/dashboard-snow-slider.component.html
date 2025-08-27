@@ -3,8 +3,8 @@
     <ng-template let-url pTemplate="item">
       <div class="flex flex-col justify-center mx-2 space-y-2 h-fit">
         <h2 class="text-2xl font-medium text-center">{{ url.name }}</h2>
-        <div class="relative w-full h-64"> <!-- Sized container for the image -->
-          <img [ngSrc]="url.url" [alt]="url.name" fill class="object-contain m-auto rounded-md">
+        <div class="w-full"> <!-- Container for the image -->
+          <img src="{{url.url}}" alt="Modsnow Cover" class="m-auto">
         </div>
       </div>
 
