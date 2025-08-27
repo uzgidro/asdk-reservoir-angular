@@ -8,7 +8,7 @@ import {ReservoirResponse} from "../shared/response/reservoir-response";
 import {Forecast, WeatherCurrentResponse} from "../shared/response/weather-response";
 import {WeatherService} from "../service/weather.service";
 import {WeatherApiService} from "../service/weather-api.service";
-import {NgOptimizedImage} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {DashboardSnowChartComponent} from "./dashboard-snow-char/dashboard-snow-char.component";
 import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrapper.component";
 import {
@@ -16,7 +16,6 @@ import {
 } from "../reservoir/reservoir-decade/decade-many-years-income-table/decade-many-years-income-table.component";
 import {DashboardSnowTableComponent} from "./dashboard-snow-table/dashboard-snow-table.component";
 import {DashboardSnowSliderComponent} from "./dashboard-snow-slider/dashboard-snow-slider.component";
-import {response} from "express";
 
 @Component({
   selector: 'app-dashboard',
@@ -33,6 +32,7 @@ import {response} from "express";
     DecadeManyYearsIncomeTableComponent,
     DashboardSnowTableComponent,
     DashboardSnowSliderComponent,
+    DatePipe,
   ],
   standalone: true
 })

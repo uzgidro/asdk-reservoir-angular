@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "uasdk-angular": {
+    "srmt-front": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -32,7 +32,7 @@
               "rgbcolor",
               "jspdf-autotable"
             ],
-            "outputPath": "dist/uasdk-angular/browser",
+            "outputPath": "dist/srmt-front/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -88,10 +88,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "uasdk-angular:build:production"
+              "buildTarget": "srmt-front:build:production"
             },
             "development": {
-              "buildTarget": "uasdk-angular:build:development"
+              "buildTarget": "srmt-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -99,7 +99,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "uasdk-angular:build"
+            "buildTarget": "srmt-front:build"
           }
         },
         "test": {
@@ -126,7 +126,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/uasdk-angular/server",
+            "outputPath": "dist/srmt-front/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
           },
@@ -154,12 +154,12 @@
           "builder": "@angular-devkit/build-angular:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "uasdk-angular:build:development",
-              "serverTarget": "uasdk-angular:server:development"
+              "browserTarget": "srmt-front:build:development",
+              "serverTarget": "srmt-front:server:development"
             },
             "production": {
-              "browserTarget": "uasdk-angular:build:production",
-              "serverTarget": "uasdk-angular:server:production"
+              "browserTarget": "srmt-front:build:production",
+              "serverTarget": "srmt-front:server:production"
             }
           },
           "defaultConfiguration": "development"
@@ -173,12 +173,12 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "uasdk-angular:build:production",
-              "serverTarget": "uasdk-angular:server:production"
+              "browserTarget": "srmt-front:build:production",
+              "serverTarget": "srmt-front:server:production"
             },
             "development": {
-              "browserTarget": "uasdk-angular:build:development",
-              "serverTarget": "uasdk-angular:server:development"
+              "browserTarget": "srmt-front:build:development",
+              "serverTarget": "srmt-front:server:development"
             }
           },
           "defaultConfiguration": "production"

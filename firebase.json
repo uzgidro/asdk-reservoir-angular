@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/uasdk-angular/browser",
+    "public": "dist/srmt-front/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

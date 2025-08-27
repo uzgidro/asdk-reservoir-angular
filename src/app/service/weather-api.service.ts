@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
-import {catchError, map, Observable} from "rxjs";
+import {catchError, map, Observable, of} from "rxjs";
 import {WeatherCurrentDto, WeatherCurrentResponse} from "../shared/response/weather-response";
 import {WeatherService} from "./weather.service";
 
@@ -19,7 +19,6 @@ export class WeatherApiService {
   }
 
   getCurrent(lat: number, lon: number): Observable<WeatherCurrentDto> {
-
     return this.http.get<WeatherCurrentResponse>(BASE_URL + CURRENT, {
       params: new HttpParams().appendAll({
         'lat': lat,
@@ -29,13 +28,12 @@ export class WeatherApiService {
       map(value => this.weatherService.convertCurrentResponse(value)),
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
+        return of({} as WeatherCurrentDto)
       })
     )
   }
 
   getForecast(lat: number, lon: number): Observable<any> {
-
     return this.http.get(BASE_URL + FORECAST, {
       params: new HttpParams().appendAll({
         'lat': lat,
@@ -44,7 +42,7 @@ export class WeatherApiService {
     }).pipe(
       catchError((error) => {
         this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
-        return [];
+        return of([])
       })
     )
   }
