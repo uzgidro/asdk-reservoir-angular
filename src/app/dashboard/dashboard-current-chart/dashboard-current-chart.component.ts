@@ -7,13 +7,14 @@ import {Chart} from "../../shared/component/chart";
 import {CategoryChart} from "../../shared/struct/chart";
 
 @Component({
-    selector: 'app-dashboard-current-chart',
-    imports: [
-        RouterLink,
-        NgClass
-    ],
-    templateUrl: './dashboard-current-chart.component.html',
-    styleUrl: './dashboard-current-chart.component.css'
+  selector: 'app-dashboard-current-chart',
+  imports: [
+    RouterLink,
+    NgClass
+  ],
+  templateUrl: './dashboard-current-chart.component.html',
+  standalone: true,
+  styleUrl: './dashboard-current-chart.component.css'
 })
 export class DashboardCurrentChartComponent
   extends Chart

@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from "../../service/api.service";
 import {ActivatedRoute} from "@angular/router";
 import {CategorisedValueResponse} from "../../shared/response/values-response";
-import {ReservoirResponse} from "../../shared/response/reservoir-response";
-import {Subscription} from "rxjs";
+import {combineLatest, distinctUntilChanged, filter, map, Subject, switchMap, takeUntil} from "rxjs";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {DecadeService} from "../decade.service";
 import {Decade} from "../../shared/interfaces";
@@ -24,10 +23,10 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
     CardWrapperComponent
   ]
 })
-export class ReservoirYearlyComponent implements OnInit {
+export class ReservoirYearlyComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   reservoirName?: string
-  subscribe?: Subscription
-  category: number = 0
+  category = 0;
 
   tableData: Decade[] = []
   months: string[] = this.decadeService.months;
@@ -42,31 +41,28 @@ export class ReservoirYearlyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe({
-      next: value => {
-        const reservoir = value['reservoir']
-        if (this.subscribe) {
-          this.subscribe.unsubscribe()
-          this.subscribe = undefined
-          this.tableData = []
-        }
-        this.api.getReservoirById(reservoir).subscribe({
-          next: (response: ReservoirResponse) => {
-            this.reservoirName = response.name
-          }
-        })
+    this.activatedRoute.queryParams.pipe(
+      map(params => params['reservoir']),
+      filter(reservoirId => !!reservoirId),
+      distinctUntilChanged(),
+      switchMap(reservoirId => combineLatest({
+        reservoirInfo: this.api.getReservoirById(reservoirId),
+        decadeValues: this.api.getDecadeYearsValues(reservoirId)
+      })),
+      takeUntil(this.destroy$)
+    ).subscribe(({reservoirInfo, decadeValues}) => {
+      this.reservoirName = reservoirInfo.name;
+      this.tableData = [
+        this.decadeService.setDecade('Kelishi, m³/s', decadeValues.income.data, false),
+        this.decadeService.setDecade('Chiqish, m³/s', decadeValues.release.data, false),
+        this.decadeService.setDecade('Suv sathi, m', decadeValues.level.data, false),
+        this.decadeService.setDecade('Suv hajmi, mln.m³', decadeValues.volume.data, false),
+      ];
+    });
+  }
 
-        this.subscribe = this.api.getDecadeYearsValues(reservoir).subscribe({
-          next: (response: CategorisedValueResponse) => {
-            this.tableData.push(
-              this.decadeService.setDecade('Kelishi, m³/s', response.income.data, false),
-              this.decadeService.setDecade('Chiqish, m³/s', response.release.data, false),
-              this.decadeService.setDecade('Suv sathi, m', response.level.data, false),
-              this.decadeService.setDecade('Suv hajmi, mln.m³', response.volume.data, false),
-            )
-          }
-        })
-      }
-    })
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -11,21 +11,24 @@ import {Observable} from "rxjs";
 import {ModsnowImg} from "../../shared/interfaces";
 import {ApiService} from "../../service/api.service";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
-    selector: 'app-modsnow-daily',
-    imports: [
-        CarouselModule,
-        TagModule,
-        ButtonModule,
-        CalendarModule,
-        FormsModule,
-        CardHeaderComponent,
-        CardWrapperComponent,
-        LoaderComponent
-    ],
-    templateUrl: './modsnow-daily.component.html',
-    styleUrl: './modsnow-daily.component.css'
+  selector: 'app-modsnow-daily',
+  imports: [
+    CarouselModule,
+    TagModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    CardHeaderComponent,
+    CardWrapperComponent,
+    LoaderComponent,
+    NgOptimizedImage
+  ],
+  templateUrl: './modsnow-daily.component.html',
+  standalone: true,
+  styleUrl: './modsnow-daily.component.css'
 })
 export class ModsnowDailyComponent implements OnInit {
   @Input() itemCount: number = 3

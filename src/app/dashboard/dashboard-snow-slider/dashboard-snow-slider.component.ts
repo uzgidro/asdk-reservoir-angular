@@ -12,7 +12,8 @@ import {NgOptimizedImage} from "@angular/common";
   imports: [
     CarouselModule,
     SharedModule,
-    LoaderComponent
+    LoaderComponent,
+    NgOptimizedImage
   ],
   templateUrl: './dashboard-snow-slider.component.html',
   standalone: true,

@@ -13,6 +13,7 @@ import {ModsnowService} from "../../service/modsnow.service";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {DashboardSnowReviewComponent} from "../dashboard-snow-review/dashboard-snow-review.component";
 import {combineLatest, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, takeUntil, tap} from "rxjs";
+import {DataCardComponent} from "../../shared/component/data-card/data-card.component";
 
 @Component({
   selector: 'app-dashboard-reservoir',
@@ -21,13 +22,12 @@ import {combineLatest, distinctUntilChanged, filter, map, Observable, of, Subjec
     NgIf,
     WeatherDetailedFrameComponent,
     CardWrapperComponent,
-    DecimalPipe,
-    NgClass,
     CardHeaderComponent,
     LoaderComponent,
     DashboardSnowReviewComponent,
     AsyncPipe,
-    NgOptimizedImage
+    NgOptimizedImage,
+    DataCardComponent
   ],
   templateUrl: './dashboard-reservoir.component.html',
   standalone: true,

@@ -5,14 +5,15 @@ import {Modsnow} from "../../shared/interfaces";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
-    selector: 'app-dashboard-snow-table',
-    imports: [
-        NgIf,
-        LoaderComponent,
-        NgForOf
-    ],
-    templateUrl: './dashboard-snow-table.component.html',
-    styleUrl: './dashboard-snow-table.component.css'
+  selector: 'app-dashboard-snow-table',
+  imports: [
+    NgIf,
+    LoaderComponent,
+    NgForOf
+  ],
+  templateUrl: './dashboard-snow-table.component.html',
+  standalone: true,
+  styleUrl: './dashboard-snow-table.component.css'
 })
 export class DashboardSnowTableComponent implements OnInit {
 
