@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {LoaderComponent} from './shared/component/loader/loader.component';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {
@@ -28,11 +28,11 @@ import {Chart, registerables} from "chart.js";
   declarations: [
     AppComponent
   ],
+  bootstrap: [AppComponent],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     NgOptimizedImage,
     BrowserAnimationsModule,
     MatTooltipModule,
@@ -47,19 +47,19 @@ import {Chart, registerables} from "chart.js";
     RusMonthPipe,
     LoaderComponent,
     MetricSelectComponent,
-    AggregateValuesTableComponent,
+    AggregateValuesTableComponent
   ],
-  exports: [HttpClientModule],
   providers: [
     MessageService,
     {
       provide: 'ChartSetup',
       useFactory: () => {
-        Chart.register(...registerables)
-        return Chart
+        Chart.register(...registerables);
+        return Chart;
       }
-    }
-  ],
-  bootstrap: [AppComponent],
+    },
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
-export class AppModule {}
+export class AppModule {
+}

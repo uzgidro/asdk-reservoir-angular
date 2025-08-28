@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {catchError, Observable, of, timeout} from "rxjs";
 import {ModsnowImageResponse, ModsnowPercentResponse} from "../shared/response/modsnow-response";

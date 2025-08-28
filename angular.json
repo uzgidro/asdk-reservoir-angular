@@ -11,7 +11,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": [
               "core-js/modules/es.array.index-of.js",
@@ -32,9 +32,10 @@
               "rgbcolor",
               "jspdf-autotable"
             ],
-            "outputPath": "dist/srmt-front/browser",
+            "outputPath": {
+              "base": "dist/srmt-front"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -49,7 +50,8 @@
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -68,9 +70,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
@@ -122,66 +122,6 @@
             ],
             "scripts": []
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/srmt-front/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media"
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "sourceMap": true,
-              "extractLicenses": false,
-              "vendorChunk": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
-                }
-              ]
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@angular-devkit/build-angular:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "srmt-front:build:development",
-              "serverTarget": "srmt-front:server:development"
-            },
-            "production": {
-              "browserTarget": "srmt-front:build:production",
-              "serverTarget": "srmt-front:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@angular-devkit/build-angular:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "srmt-front:build:production",
-              "serverTarget": "srmt-front:server:production"
-            },
-            "development": {
-              "browserTarget": "srmt-front:build:development",
-              "serverTarget": "srmt-front:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }
