@@ -9,16 +9,15 @@ import {DateChart} from "../shared/struct/chart";
 import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
-  selector: 'app-water-recourses',
-  standalone: true,
-  imports: [
-    CardHeaderComponent,
-    NgForOf,
-    WaterRecourseCardComponent,
-    CardWrapperComponent
-  ],
-  templateUrl: './water-recourses.component.html',
-  styleUrl: './water-recourses.component.css'
+    selector: 'app-water-recourses',
+    imports: [
+        CardHeaderComponent,
+        NgForOf,
+        WaterRecourseCardComponent,
+        CardWrapperComponent
+    ],
+    templateUrl: './water-recourses.component.html',
+    styleUrl: './water-recourses.component.css'
 })
 export class WaterRecoursesComponent implements OnInit {
   reservoirData: {

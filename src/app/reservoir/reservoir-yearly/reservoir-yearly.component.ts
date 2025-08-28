@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {CategorisedValueResponse} from "../../shared/response/values-response";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {Subscription} from "rxjs";
-import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {DecadeService} from "../decade.service";
 import {Decade} from "../../shared/interfaces";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
@@ -14,17 +14,15 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
   selector: 'app-reservoir-yearly',
   templateUrl: './reservoir-yearly.component.html',
   styleUrl: './reservoir-yearly.component.css',
+  standalone: true,
   imports: [
     NgForOf,
-    NgClass,
     NgIf,
     DecimalPipe,
     DatePipe,
     CardHeaderComponent,
     CardWrapperComponent
-  ],
-  standalone: true
-
+  ]
 })
 export class ReservoirYearlyComponent implements OnInit {
   reservoirName?: string

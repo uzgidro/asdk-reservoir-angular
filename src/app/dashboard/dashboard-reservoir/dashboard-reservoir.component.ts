@@ -15,21 +15,20 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {DashboardSnowReviewComponent} from "../dashboard-snow-review/dashboard-snow-review.component";
 
 @Component({
-  selector: 'app-dashboard-reservoir',
-  standalone: true,
-  imports: [
-    ReservoirAnalyticsComponent,
-    NgIf,
-    WeatherDetailedFrameComponent,
-    CardWrapperComponent,
-    DecimalPipe,
-    NgClass,
-    CardHeaderComponent,
-    LoaderComponent,
-    DashboardSnowReviewComponent
-  ],
-  templateUrl: './dashboard-reservoir.component.html',
-  styleUrl: './dashboard-reservoir.component.css'
+    selector: 'app-dashboard-reservoir',
+    imports: [
+        ReservoirAnalyticsComponent,
+        NgIf,
+        WeatherDetailedFrameComponent,
+        CardWrapperComponent,
+        DecimalPipe,
+        NgClass,
+        CardHeaderComponent,
+        LoaderComponent,
+        DashboardSnowReviewComponent
+    ],
+    templateUrl: './dashboard-reservoir.component.html',
+    styleUrl: './dashboard-reservoir.component.css'
 })
 export class DashboardReservoirComponent implements OnInit {
 

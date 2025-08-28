@@ -17,22 +17,21 @@ import {DashboardSnowTableComponent} from "./dashboard-snow-table/dashboard-snow
 import {DashboardSnowSliderComponent} from "./dashboard-snow-slider/dashboard-snow-slider.component";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
-  imports: [
-    CarouselModule,
-    CardHeaderComponent,
-    DashboardCurrentChartComponent,
-    NgOptimizedImage,
-    DashboardSnowChartComponent,
-    CardWrapperComponent,
-    DecadeManyYearsIncomeTableComponent,
-    DashboardSnowTableComponent,
-    DashboardSnowSliderComponent,
-    DatePipe,
-  ],
-  standalone: true
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css'],
+    imports: [
+        CarouselModule,
+        CardHeaderComponent,
+        DashboardCurrentChartComponent,
+        NgOptimizedImage,
+        DashboardSnowChartComponent,
+        CardWrapperComponent,
+        DecadeManyYearsIncomeTableComponent,
+        DashboardSnowTableComponent,
+        DashboardSnowSliderComponent,
+        DatePipe,
+    ]
 })
 export class DashboardComponent implements OnInit {
   public reservoirs: string[] = []

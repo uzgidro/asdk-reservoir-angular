@@ -9,14 +9,13 @@ import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-dashboard-snow-slider',
-  standalone: true,
   imports: [
     CarouselModule,
     SharedModule,
-    LoaderComponent,
-    NgOptimizedImage
+    LoaderComponent
   ],
   templateUrl: './dashboard-snow-slider.component.html',
+  standalone: true,
   styleUrl: './dashboard-snow-slider.component.css'
 })
 export class DashboardSnowSliderComponent implements OnInit {

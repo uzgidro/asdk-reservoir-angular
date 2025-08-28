@@ -4,16 +4,15 @@ import {NgClass, NgForOf, PercentPipe} from "@angular/common";
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-aggregate-table',
-  templateUrl: './aggregate-table.component.html',
-  styleUrls: ['./aggregate-table.component.css'],
-  imports: [
-    NgForOf,
-    NgClass,
-    RouterLink,
-    PercentPipe
-  ],
-  standalone: true
+    selector: 'app-aggregate-table',
+    templateUrl: './aggregate-table.component.html',
+    styleUrls: ['./aggregate-table.component.css'],
+    imports: [
+        NgForOf,
+        NgClass,
+        RouterLink,
+        PercentPipe
+    ]
 })
 export class AggregateTableComponent {
 

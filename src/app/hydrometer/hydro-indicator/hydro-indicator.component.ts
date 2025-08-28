@@ -3,14 +3,13 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
-  selector: 'app-hydro-indicator',
-  standalone: true,
-  imports: [
-    CardHeaderComponent,
-    CardWrapperComponent
-  ],
-  templateUrl: './hydro-indicator.component.html',
-  styleUrl: './hydro-indicator.component.css'
+    selector: 'app-hydro-indicator',
+    imports: [
+        CardHeaderComponent,
+        CardWrapperComponent
+    ],
+    templateUrl: './hydro-indicator.component.html',
+    styleUrl: './hydro-indicator.component.css'
 })
 export class HydroIndicatorComponent {
 

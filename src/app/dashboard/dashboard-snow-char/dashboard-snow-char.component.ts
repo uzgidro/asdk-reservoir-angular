@@ -5,13 +5,12 @@ import {CategoryChart} from "../../shared/struct/chart";
 import {ApiService} from "../../service/api.service";
 
 @Component({
-  selector: 'app-dashboard-snow-chart',
-  standalone: true,
-  imports: [
-    RouterLink
-  ],
-  templateUrl: './dashboard-snow-char.component.html',
-  styleUrl: './dashboard-snow-char.component.css'
+    selector: 'app-dashboard-snow-chart',
+    imports: [
+        RouterLink
+    ],
+    templateUrl: './dashboard-snow-char.component.html',
+    styleUrl: './dashboard-snow-char.component.css'
 })
 export class DashboardSnowChartComponent
   extends Chart

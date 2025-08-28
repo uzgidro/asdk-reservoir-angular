@@ -6,18 +6,17 @@ import {Chart} from "../../shared/component/chart";
 import {DateChart} from "../../shared/struct/chart";
 
 @Component({
-  selector: 'app-water-recourse-card',
-  standalone: true,
-  imports: [
-    DecimalPipe,
-    NgIf,
-    RouterLink,
-    TitleCasePipe,
-    UzbWeatherPipe,
-    NgClass
-  ],
-  templateUrl: './water-recourse-card.component.html',
-  styleUrl: './water-recourse-card.component.css'
+    selector: 'app-water-recourse-card',
+    imports: [
+        DecimalPipe,
+        NgIf,
+        RouterLink,
+        TitleCasePipe,
+        UzbWeatherPipe,
+        NgClass
+    ],
+    templateUrl: './water-recourse-card.component.html',
+    styleUrl: './water-recourse-card.component.css'
 })
 export class WaterRecourseCardComponent
   extends Chart

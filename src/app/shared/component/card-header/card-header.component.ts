@@ -3,11 +3,11 @@ import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-card-header',
-  standalone: true,
   imports: [
     NgIf
   ],
   templateUrl: './card-header.component.html',
+  standalone: true,
   styleUrl: './card-header.component.css'
 })
 export class CardHeaderComponent {

@@ -9,22 +9,16 @@ import {AggregateTableComponent} from "../shared/component/aggregate-table/aggre
 import {ChartsTempComponent} from "../shared/temp/charts-temp/charts-temp.component";
 
 @Component({
-  selector: 'app-ges',
-  templateUrl: './ges.component.html',
-  styleUrls: ['./ges.component.css'],
-  imports: [
-    GesTableComponent,
-    NgIf,
-    AggregateTableComponent,
-    ChartsTempComponent,
-    AggregateValuesTableComponent
-  ],
-  // imports: [
-  //   NgIf,
-  //   AppModule,
-  //   AggregateValuesTableComponent
-  // ],
-  standalone: true
+    selector: 'app-ges',
+    templateUrl: './ges.component.html',
+    styleUrls: ['./ges.component.css'],
+    imports: [
+        GesTableComponent,
+        NgIf,
+        AggregateTableComponent,
+        ChartsTempComponent,
+        AggregateValuesTableComponent
+    ]
 })
 export class GesComponent implements OnInit {
 

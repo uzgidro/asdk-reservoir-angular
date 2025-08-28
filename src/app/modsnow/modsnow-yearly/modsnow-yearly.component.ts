@@ -10,18 +10,17 @@ import {ApiService} from "../../service/api.service";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
-  selector: 'app-modsnow-yearly',
-  standalone: true,
-  imports: [
-    CarouselModule,
-    NgOptimizedImage,
-    SharedModule,
-    CardHeaderComponent,
-    CardWrapperComponent,
-    LoaderComponent
-  ],
-  templateUrl: './modsnow-yearly.component.html',
-  styleUrl: './modsnow-yearly.component.css'
+    selector: 'app-modsnow-yearly',
+    imports: [
+        CarouselModule,
+        NgOptimizedImage,
+        SharedModule,
+        CardHeaderComponent,
+        CardWrapperComponent,
+        LoaderComponent
+    ],
+    templateUrl: './modsnow-yearly.component.html',
+    styleUrl: './modsnow-yearly.component.css'
 })
 export class ModsnowYearlyComponent implements OnInit {
   responsiveOptions: any[] = []

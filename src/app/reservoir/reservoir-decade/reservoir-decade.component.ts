@@ -12,21 +12,20 @@ import {
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
-  selector: 'app-reservoir-decade',
-  templateUrl: './reservoir-decade.component.html',
-  styleUrls: ['./reservoir-decade.component.css'],
-  imports: [
-    NgIf,
-    DatePipe,
-    LoaderComponent,
-    DecimalPipe,
-    NgForOf,
-    CardHeaderComponent,
-    UzbMonthPipePipe,
-    DecadeManyYearsIncomeTableComponent,
-    CardWrapperComponent
-  ],
-  standalone: true
+    selector: 'app-reservoir-decade',
+    templateUrl: './reservoir-decade.component.html',
+    styleUrls: ['./reservoir-decade.component.css'],
+    imports: [
+        NgIf,
+        DatePipe,
+        LoaderComponent,
+        DecimalPipe,
+        NgForOf,
+        CardHeaderComponent,
+        UzbMonthPipePipe,
+        DecadeManyYearsIncomeTableComponent,
+        CardWrapperComponent
+    ]
 })
 
 export class ReservoirDecadeComponent implements OnInit {

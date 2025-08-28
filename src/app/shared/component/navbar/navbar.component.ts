@@ -8,15 +8,14 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    DatePipe
-  ],
-  standalone: true
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.css'],
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        DatePipe
+    ]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   @Output() sidebarEmitter = new EventEmitter();

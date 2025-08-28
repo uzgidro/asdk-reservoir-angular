@@ -12,24 +12,21 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
 import {DifferencePipe} from "../../shared/pipe/difference.pipe";
 
 @Component({
-  selector: 'app-reservoir-hourly',
-  templateUrl: './reservoir-hourly.component.html',
-  styleUrls: ['./reservoir-hourly.component.css'],
-  imports: [
-    NgForOf,
-    NgIf,
-    DatePipe,
-    DecimalPipe,
-    LoaderComponent,
-    CardHeaderComponent,
-    ChartComponent,
-    OperativeTableComponent,
-    CardWrapperComponent,
-    DifferencePipe
-  ],
-
-  standalone: true
-
+    selector: 'app-reservoir-hourly',
+    templateUrl: './reservoir-hourly.component.html',
+    styleUrls: ['./reservoir-hourly.component.css'],
+    imports: [
+        NgForOf,
+        NgIf,
+        DatePipe,
+        DecimalPipe,
+        LoaderComponent,
+        CardHeaderComponent,
+        ChartComponent,
+        OperativeTableComponent,
+        CardWrapperComponent,
+        DifferencePipe
+    ]
 })
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()

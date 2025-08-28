@@ -7,16 +7,15 @@ import {NgClass, NgForOf} from "@angular/common";
 import {BrodacastService} from "../service/brodacast.service";
 
 @Component({
-  selector: 'app-reservoir',
-  templateUrl: './reservoir.component.html',
-  styleUrls: ['./reservoir.component.css'],
-  animations: [DropDownAnimation, SideMenuAnimation],
-  imports: [
-    RouterOutlet,
-    NgForOf,
-    NgClass,
-  ],
-  standalone: true
+    selector: 'app-reservoir',
+    templateUrl: './reservoir.component.html',
+    styleUrls: ['./reservoir.component.css'],
+    animations: [DropDownAnimation, SideMenuAnimation],
+    imports: [
+        RouterOutlet,
+        NgForOf,
+        NgClass,
+    ]
 })
 export class ReservoirComponent implements OnInit {
   reservoirs: { id: number, name: string }[] = []

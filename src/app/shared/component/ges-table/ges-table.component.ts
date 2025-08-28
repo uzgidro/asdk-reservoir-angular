@@ -7,19 +7,18 @@ import {RouterLink} from "@angular/router";
 import {AggregateTableFieldComponent} from "../aggregate-table-field/aggregate-table-field.component";
 
 @Component({
-  selector: 'app-ges-table',
-  templateUrl: './ges-table.component.html',
-  styleUrls: ['./ges-table.component.css'],
-  imports: [
-    MatTooltipModule,
-    NgForOf,
-    RouterLink,
-    LowerCasePipe,
-    AggregateTableFieldComponent,
-    DecimalPipe,
-    NgIf
-  ],
-  standalone: true
+    selector: 'app-ges-table',
+    templateUrl: './ges-table.component.html',
+    styleUrls: ['./ges-table.component.css'],
+    imports: [
+        MatTooltipModule,
+        NgForOf,
+        RouterLink,
+        LowerCasePipe,
+        AggregateTableFieldComponent,
+        DecimalPipe,
+        NgIf
+    ]
 })
 export class GesTableComponent implements OnInit{
 

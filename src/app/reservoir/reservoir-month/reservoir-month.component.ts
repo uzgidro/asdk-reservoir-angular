@@ -10,20 +10,19 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
-  selector: 'app-reservoir-month',
-  templateUrl: './reservoir-month.component.html',
-  styleUrl: './reservoir-month.component.css',
-  imports: [
-    NgForOf,
-    NgIf,
-    DecimalPipe,
-    DatePipe,
-    LoaderComponent,
-    UzbMonthPipePipe,
-    CardHeaderComponent,
-    CardWrapperComponent
-  ],
-  standalone: true
+    selector: 'app-reservoir-month',
+    templateUrl: './reservoir-month.component.html',
+    styleUrl: './reservoir-month.component.css',
+    imports: [
+        NgForOf,
+        NgIf,
+        DecimalPipe,
+        DatePipe,
+        LoaderComponent,
+        UzbMonthPipePipe,
+        CardHeaderComponent,
+        CardWrapperComponent
+    ]
 })
 export class ReservoirMonthComponent implements OnInit {
   reservoirName?: string

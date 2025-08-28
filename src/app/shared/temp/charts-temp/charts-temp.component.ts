@@ -3,13 +3,12 @@ import {Chart} from "chart.js";
 import {NgClass} from "@angular/common";
 
 @Component({
-  selector: 'app-charts-temp',
-  templateUrl: './charts-temp.component.html',
-  styleUrls: ['./charts-temp.component.css'],
-  imports: [
-    NgClass
-  ],
-  standalone: true
+    selector: 'app-charts-temp',
+    templateUrl: './charts-temp.component.html',
+    styleUrls: ['./charts-temp.component.css'],
+    imports: [
+        NgClass
+    ]
 })
 export class ChartsTempComponent implements OnInit {
 

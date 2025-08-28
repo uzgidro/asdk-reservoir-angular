@@ -6,13 +6,12 @@ import {ResizableModule, ResizeEvent} from "angular-resizable-element";
 
 // noinspection JSUnusedGlobalSymbols
 @Component({
-  selector: 'app-component',
-  templateUrl: './logger.component.html',
-  styleUrls: ['./logger.component.css'],
-  imports: [
-    ResizableModule
-  ],
-  standalone: true
+    selector: 'app-component',
+    templateUrl: './logger.component.html',
+    styleUrls: ['./logger.component.css'],
+    imports: [
+        ResizableModule
+    ]
 })
 export class LoggerComponent {
 

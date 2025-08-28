@@ -5,16 +5,15 @@ import {Stock} from "../../../shared/interfaces";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-decade-many-years-income-table',
-  standalone: true,
-  imports: [
-    LoaderComponent,
-    NgIf,
-    DatePipe,
-    NgForOf
-  ],
-  templateUrl: './decade-many-years-income-table.component.html',
-  styleUrl: './decade-many-years-income-table.component.css'
+    selector: 'app-decade-many-years-income-table',
+    imports: [
+        LoaderComponent,
+        NgIf,
+        DatePipe,
+        NgForOf
+    ],
+    templateUrl: './decade-many-years-income-table.component.html',
+    styleUrl: './decade-many-years-income-table.component.css'
 })
 export class DecadeManyYearsIncomeTableComponent implements OnInit {
 

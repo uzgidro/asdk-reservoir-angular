@@ -3,13 +3,12 @@ import {NgClass} from "@angular/common";
 import {MetricCategory} from "../../enum/metric-category";
 
 @Component({
-  selector: 'app-metric-select',
-  standalone: true,
-  imports: [
-    NgClass
-  ],
-  templateUrl: './metric-select.component.html',
-  styleUrl: './metric-select.component.css'
+    selector: 'app-metric-select',
+    imports: [
+        NgClass
+    ],
+    templateUrl: './metric-select.component.html',
+    styleUrl: './metric-select.component.css'
 })
 export class MetricSelectComponent {
   category: MetricCategory = MetricCategory.SPEED

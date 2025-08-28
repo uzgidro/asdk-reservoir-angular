@@ -11,22 +11,21 @@ import {ChartsTempComponent} from "../shared/temp/charts-temp/charts-temp.compon
 import {LoaderComponent} from "../shared/component/loader/loader.component";
 
 @Component({
-  selector: 'app-region',
-  templateUrl: './region.component.html',
-  styleUrls: ['./region.component.css'],
-  imports: [
-    NgIf,
-    MatTooltipModule,
-    AggregateTableFieldComponent,
-    DatePipe,
-    DecimalPipe,
-    RouterLink,
-    NgClass,
-    GesVerticalTableComponent,
-    ChartsTempComponent,
-    LoaderComponent
-  ],
-  standalone: true
+    selector: 'app-region',
+    templateUrl: './region.component.html',
+    styleUrls: ['./region.component.css'],
+    imports: [
+        NgIf,
+        MatTooltipModule,
+        AggregateTableFieldComponent,
+        DatePipe,
+        DecimalPipe,
+        RouterLink,
+        NgClass,
+        GesVerticalTableComponent,
+        ChartsTempComponent,
+        LoaderComponent
+    ]
 })
 export class RegionComponent implements OnInit {
 
