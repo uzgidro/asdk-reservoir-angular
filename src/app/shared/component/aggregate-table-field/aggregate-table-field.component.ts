@@ -7,7 +7,8 @@ import {DecimalPipe} from "@angular/common";
     styleUrls: ['./aggregate-table-field.component.css'],
     imports: [
         DecimalPipe
-    ]
+    ],
+  standalone: true,
 })
 export class AggregateTableFieldComponent {
   @Input() aggregates: number = 0

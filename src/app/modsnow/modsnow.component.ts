@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterOutlet} from "@angular/router";
 
 @Component({
@@ -7,7 +7,8 @@ import {RouterOutlet} from "@angular/router";
         RouterOutlet
     ],
     templateUrl: './modsnow.component.html',
-    styleUrl: './modsnow.component.css'
+  styleUrl: './modsnow.component.css',
+  standalone: true,
 })
 export class ModsnowComponent {
 

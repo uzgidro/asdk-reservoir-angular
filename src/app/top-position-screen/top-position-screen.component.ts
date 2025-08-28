@@ -9,7 +9,8 @@ import {OperativeTableComponent} from "../reservoir/reservoir-hourly/operative-t
         OperativeTableComponent
     ],
     templateUrl: './top-position-screen.component.html',
-    styleUrl: './top-position-screen.component.css'
+  styleUrl: './top-position-screen.component.css',
+  standalone: true,
 })
 export class TopPositionScreenComponent {
 

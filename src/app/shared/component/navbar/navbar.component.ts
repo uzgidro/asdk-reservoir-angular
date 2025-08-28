@@ -15,7 +15,8 @@ import {DatePipe} from "@angular/common";
         RouterLink,
         RouterLinkActive,
         DatePipe
-    ]
+    ],
+  standalone: true,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   @Output() sidebarEmitter = new EventEmitter();

@@ -15,7 +15,8 @@ import {BrodacastService} from "../service/brodacast.service";
         RouterOutlet,
         NgForOf,
         NgClass,
-    ]
+    ],
+  standalone: true,
 })
 export class ReservoirComponent implements OnInit {
   reservoirs: { id: number, name: string }[] = []

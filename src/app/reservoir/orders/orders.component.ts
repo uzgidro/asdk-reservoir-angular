@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 
 @Component({
@@ -7,7 +7,8 @@ import {NgOptimizedImage} from "@angular/common";
         NgOptimizedImage
     ],
     templateUrl: './orders.component.html',
-    styleUrl: './orders.component.css'
+  styleUrl: './orders.component.css',
+  standalone: true,
 })
 export class OrdersComponent {
 

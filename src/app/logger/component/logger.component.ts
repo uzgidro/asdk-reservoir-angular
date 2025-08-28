@@ -11,7 +11,8 @@ import {ResizableModule, ResizeEvent} from "angular-resizable-element";
     styleUrls: ['./logger.component.css'],
     imports: [
         ResizableModule
-    ]
+    ],
+  standalone: true,
 })
 export class LoggerComponent {
 

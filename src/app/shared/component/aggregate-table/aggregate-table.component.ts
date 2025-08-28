@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AggregateService} from "../../service/aggregate.service";
 import {NgClass, NgForOf, PercentPipe} from "@angular/common";
 import {RouterLink} from "@angular/router";
@@ -12,7 +12,8 @@ import {RouterLink} from "@angular/router";
         NgClass,
         RouterLink,
         PercentPipe
-    ]
+    ],
+  standalone: true,
 })
 export class AggregateTableComponent {
 

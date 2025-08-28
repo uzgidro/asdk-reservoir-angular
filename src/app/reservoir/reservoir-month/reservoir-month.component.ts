@@ -22,7 +22,8 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
         UzbMonthPipePipe,
         CardHeaderComponent,
         CardWrapperComponent
-    ]
+    ],
+  standalone: true,
 })
 export class ReservoirMonthComponent implements OnInit {
   reservoirName?: string

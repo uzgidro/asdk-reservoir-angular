@@ -25,7 +25,8 @@ import {LoaderComponent} from "../shared/component/loader/loader.component";
         GesVerticalTableComponent,
         ChartsTempComponent,
         LoaderComponent
-    ]
+    ],
+  standalone: true,
 })
 export class RegionComponent implements OnInit {
 

@@ -8,6 +8,7 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
         CardHeaderComponent,
         CardWrapperComponent
     ],
+  standalone: true,
     templateUrl: './hydro-meter.component.html',
     styleUrl: './hydro-meter.component.css'
 })

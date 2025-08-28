@@ -16,7 +16,8 @@ import {DateChart} from "../../shared/struct/chart";
         NgClass
     ],
     templateUrl: './water-recourse-card.component.html',
-    styleUrl: './water-recourse-card.component.css'
+  styleUrl: './water-recourse-card.component.css',
+  standalone: true,
 })
 export class WaterRecourseCardComponent
   extends Chart

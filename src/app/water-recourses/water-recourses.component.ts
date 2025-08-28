@@ -17,7 +17,8 @@ import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrappe
         CardWrapperComponent
     ],
     templateUrl: './water-recourses.component.html',
-    styleUrl: './water-recourses.component.css'
+  styleUrl: './water-recourses.component.css',
+  standalone: true,
 })
 export class WaterRecoursesComponent implements OnInit {
   reservoirData: {

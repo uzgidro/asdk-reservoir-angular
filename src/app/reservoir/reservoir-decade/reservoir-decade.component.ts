@@ -25,7 +25,8 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
         UzbMonthPipePipe,
         DecadeManyYearsIncomeTableComponent,
         CardWrapperComponent
-    ]
+    ],
+  standalone: true,
 })
 
 export class ReservoirDecadeComponent implements OnInit {

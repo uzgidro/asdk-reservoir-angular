@@ -10,7 +10,8 @@ import {NgForOf} from "@angular/common";
         NgForOf
     ],
     templateUrl: './reservoir-lv.component.html',
-    styleUrl: './reservoir-lv.component.css'
+  styleUrl: './reservoir-lv.component.css',
+  standalone: true,
 })
 export class ReservoirLvComponent implements OnInit {
 

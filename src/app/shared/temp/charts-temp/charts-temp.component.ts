@@ -8,7 +8,8 @@ import {NgClass} from "@angular/common";
     styleUrls: ['./charts-temp.component.css'],
     imports: [
         NgClass
-    ]
+    ],
+  standalone: true,
 })
 export class ChartsTempComponent implements OnInit {
 

@@ -17,7 +17,8 @@ import {DifferencePipe} from "../../../shared/pipe/difference.pipe";
         DifferencePipe
     ],
     templateUrl: './operative-table.component.html',
-    styleUrl: './operative-table.component.css'
+  styleUrl: './operative-table.component.css',
+  standalone: true,
 })
 export class OperativeTableComponent implements OnInit {
   @Input() shortView: boolean = false

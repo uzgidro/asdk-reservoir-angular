@@ -18,7 +18,8 @@ import {AggregateTableFieldComponent} from "../aggregate-table-field/aggregate-t
         LowerCasePipe,
         NgIf,
         AggregateTableFieldComponent
-    ]
+    ],
+  standalone: true,
 })
 export class GesVerticalTableComponent implements OnInit {
   gesList: GesValues[] = []

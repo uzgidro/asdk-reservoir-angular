@@ -18,7 +18,8 @@ import {ChartsTempComponent} from "../shared/temp/charts-temp/charts-temp.compon
         AggregateTableComponent,
         ChartsTempComponent,
         AggregateValuesTableComponent
-    ]
+    ],
+  standalone: true,
 })
 export class GesComponent implements OnInit {
 

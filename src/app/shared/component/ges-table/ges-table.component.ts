@@ -18,7 +18,8 @@ import {AggregateTableFieldComponent} from "../aggregate-table-field/aggregate-t
         AggregateTableFieldComponent,
         DecimalPipe,
         NgIf
-    ]
+    ],
+  standalone: true,
 })
 export class GesTableComponent implements OnInit{
 

@@ -7,20 +7,21 @@ import {MenuItem} from "../../interfaces";
 import {DropDownAnimation} from "../../animation/menu-animation";
 
 @Component({
-    selector: 'app-main-layout',
-    templateUrl: './main-layout.component.html',
-    styleUrls: ['./main-layout.component.css'],
-    animations: [DropDownAnimation],
-    imports: [
-        NavbarComponent,
-        RouterOutlet,
-        SidebarModule,
-        NgClass,
-        NgIf,
-        NgForOf,
-        RouterLinkActive,
-        RouterLink
-    ]
+  selector: 'app-main-layout',
+  templateUrl: './main-layout.component.html',
+  styleUrls: ['./main-layout.component.css'],
+  animations: [DropDownAnimation],
+  imports: [
+    NavbarComponent,
+    RouterOutlet,
+    SidebarModule,
+    NgClass,
+    NgIf,
+    NgForOf,
+    RouterLinkActive,
+    RouterLink
+  ],
+  standalone: true,
 })
 export class MainLayoutComponent implements OnInit {
   isSidebarVisible = false

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NgForOf} from "@angular/common";
 
 @Component({
@@ -7,7 +7,8 @@ import {NgForOf} from "@angular/common";
     styleUrls: ['./aggregate-values-table.component.css'],
     imports: [
         NgForOf
-    ]
+    ],
+  standalone: true,
 })
 export class AggregateValuesTableComponent {
 

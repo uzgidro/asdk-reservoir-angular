@@ -11,7 +11,8 @@ import {NgForOf} from "@angular/common";
     imports: [
         WeatherDetailedFrameComponent,
         NgForOf
-    ]
+    ],
+  standalone: true,
 })
 export class WeatherComponent implements OnInit {
   // selectedReservoir?: RegionInfo

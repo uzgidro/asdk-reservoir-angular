@@ -5,7 +5,8 @@ import {BrodacastService} from "../../service/brodacast.service";
     selector: 'app-reservoir-map',
     imports: [],
     templateUrl: './reservoir-map.component.html',
-    styleUrl: './reservoir-map.component.css'
+  styleUrl: './reservoir-map.component.css',
+  standalone: true,
 })
 export class ReservoirMapComponent {
 

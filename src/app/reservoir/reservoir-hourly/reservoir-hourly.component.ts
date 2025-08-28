@@ -26,7 +26,8 @@ import {DifferencePipe} from "../../shared/pipe/difference.pipe";
         OperativeTableComponent,
         CardWrapperComponent,
         DifferencePipe
-    ]
+    ],
+  standalone: true,
 })
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()

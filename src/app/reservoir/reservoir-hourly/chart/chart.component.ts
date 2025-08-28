@@ -6,7 +6,8 @@ import {DateChart} from "../../../shared/struct/chart";
     selector: 'app-chart',
     imports: [],
     templateUrl: './chart.component.html',
-    styleUrl: './chart.component.css'
+  styleUrl: './chart.component.css',
+  standalone: true,
 })
 export class ChartComponent
   extends Chart

@@ -8,7 +8,8 @@ import {MetricCategory} from "../../enum/metric-category";
         NgClass
     ],
     templateUrl: './metric-select.component.html',
-    styleUrl: './metric-select.component.css'
+  styleUrl: './metric-select.component.css',
+  standalone: true,
 })
 export class MetricSelectComponent {
   category: MetricCategory = MetricCategory.SPEED

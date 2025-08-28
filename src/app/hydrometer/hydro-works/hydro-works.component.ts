@@ -9,7 +9,8 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
     imports: [
         CardHeaderComponent,
         CardWrapperComponent
-    ]
+    ],
+  standalone: true,
 })
 export class HydroWorksComponent {
 
