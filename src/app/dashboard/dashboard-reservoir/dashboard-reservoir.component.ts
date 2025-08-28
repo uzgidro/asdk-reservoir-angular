@@ -1,42 +1,46 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ReservoirAnalyticsComponent} from "../../reservoir/reservoir-analytics/reservoir-analytics.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BrodacastService} from "../../service/brodacast.service";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse, ComplexValueResponse} from "../../shared/response/values-response";
-import {DecimalPipe, NgClass, NgIf} from "@angular/common";
+import {AsyncPipe, DecimalPipe, NgClass, NgIf, NgOptimizedImage} from "@angular/common";
 import {ReservoirResponse} from "../../shared/response/reservoir-response";
 import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-detailed/weather-detailed-frame.component";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import {ModsnowService} from "../../service/modsnow.service";
-import {ModsnowImageResponse} from "../../shared/response/modsnow-response";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {DashboardSnowReviewComponent} from "../dashboard-snow-review/dashboard-snow-review.component";
+import {combineLatest, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, takeUntil, tap} from "rxjs";
 
 @Component({
-    selector: 'app-dashboard-reservoir',
-    imports: [
-        ReservoirAnalyticsComponent,
-        NgIf,
-        WeatherDetailedFrameComponent,
-        CardWrapperComponent,
-        DecimalPipe,
-        NgClass,
-        CardHeaderComponent,
-        LoaderComponent,
-        DashboardSnowReviewComponent
-    ],
-    templateUrl: './dashboard-reservoir.component.html',
-    styleUrl: './dashboard-reservoir.component.css'
+  selector: 'app-dashboard-reservoir',
+  imports: [
+    ReservoirAnalyticsComponent,
+    NgIf,
+    WeatherDetailedFrameComponent,
+    CardWrapperComponent,
+    DecimalPipe,
+    NgClass,
+    CardHeaderComponent,
+    LoaderComponent,
+    DashboardSnowReviewComponent,
+    AsyncPipe,
+    NgOptimizedImage
+  ],
+  templateUrl: './dashboard-reservoir.component.html',
+  standalone: true,
+  styleUrl: './dashboard-reservoir.component.css'
 })
-export class DashboardReservoirComponent implements OnInit {
+export class DashboardReservoirComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
 
   selectedReservoir: number = 1
 
-  reservoirs: ReservoirResponse[] = []
+  reservoirs: ReservoirResponse[] = [];
 
-  snowImages: ModsnowImageResponse[] = []
+  snowImages$!: Observable<any>;
 
   incomeData: { value: number, difference: number }[] = []
   releaseData: { value: number, difference: number }[] = []
@@ -63,55 +67,66 @@ export class DashboardReservoirComponent implements OnInit {
     return this.reservoirs[this.selectedReservoir - 1]
   }
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private api: ApiService, private modsnow: ModsnowService, private broadcast: BrodacastService, private zone: NgZone) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private api: ApiService,
+    private modsnow: ModsnowService,
+    private broadcast: BrodacastService
+  ) {
   }
 
   ngOnInit() {
-    this.broadcast.reservoir.subscribe({
-      next: value => {
-        this.zone.run(() => {
-          this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: {reservoir: value},
-            queryParamsHandling: 'merge', // Сохраняем существующие queryParams
-          });
-        })
-      }
-    })
-
-    this.activatedRoute.queryParams.subscribe({
-      next: value => {
-        let reservoirId = value['reservoir'];
-        if (reservoirId == undefined) {
-          this.zone.run(async () => {
-            await this.router.navigate([], {
+    // Combine data streams for a more reactive approach
+    combineLatest([
+      this.api.getReservoirs(), // Load reservoir list
+      this.api.getDashboardValues(), // Load chart data
+      this.activatedRoute.queryParams.pipe( // Track queryParams changes
+        map(params => params['reservoir']),
+        tap(reservoirId => {
+          // If reservoir param is missing, set a default
+          if (!reservoirId) {
+            this.router.navigate([], {
               relativeTo: this.activatedRoute,
               queryParams: {reservoir: 1},
-              queryParamsHandling: 'merge', // Сохраняем существующие queryParams
-            })
-          })
-        } else {
-          this.selectedReservoir = reservoirId
-          this.modsnow.getReservoir(parseInt(reservoirId)).subscribe({
-            next: value => {
-              this.snowImages = value
-            }
-          })
-        }
-      }
-    })
+              queryParamsHandling: 'merge'
+            });
+          }
+        }),
+        filter(reservoirId => !!reservoirId), // Continue only if ID exists
+        distinctUntilChanged() // Avoid re-fetching for the same ID
+      )
+    ]).pipe(
+      tap(([reservoirsResponse, dashboardValuesResponse, currentReservoirId]) => {
+        // Update reservoir list
+        this.reservoirs = reservoirsResponse;
+        // Set the selected reservoir
+        this.selectedReservoir = parseInt(currentReservoirId);
+        // Setup chart data
+        this.setupChartData(dashboardValuesResponse);
+      }),
+      switchMap(([, , currentReservoirId]) => {
+        // After getting all main data, fetch snowImages
+        return this.modsnow.getReservoir(parseInt(currentReservoirId));
+      }),
+      takeUntil(this.destroy$) // Unsubscribe on component destruction
+    ).subscribe(
+      snowImagesResponse => {
+        this.snowImages$ = of(snowImagesResponse); // Wrap in an Observable for the async pipe
+      },
+      error => console.error('Error loading data:', error)
+    );
 
-    this.api.getDashboardValues().subscribe({
-      next: (response: CategorisedArrayResponse) => {
-        this.setupChartData(response)
-      }
-    })
-
-    this.api.getReservoirs().subscribe({
-      next: (response: ReservoirResponse[]) => {
-        this.reservoirs = response
-      }
-    })
+    // Handle external changes to the reservoir from the broadcast service (separate subscription)
+    this.broadcast.reservoir
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute,
+          queryParams: {reservoir: value},
+          queryParamsHandling: 'merge',
+        });
+      });
   }
 
   private setupChartData(data: CategorisedArrayResponse) {
@@ -147,5 +162,10 @@ export class DashboardReservoirComponent implements OnInit {
         difference: response.data[0].value - response.data[1].value
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

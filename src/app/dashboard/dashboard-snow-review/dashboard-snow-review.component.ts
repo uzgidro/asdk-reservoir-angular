@@ -3,10 +3,11 @@ import {Chart} from "../../shared/component/chart";
 import {data} from "autoprefixer";
 
 @Component({
-    selector: 'app-dashboard-snow-review',
-    imports: [],
-    templateUrl: './dashboard-snow-review.component.html',
-    styleUrl: './dashboard-snow-review.component.css'
+  selector: 'app-dashboard-snow-review',
+  imports: [],
+  templateUrl: './dashboard-snow-review.component.html',
+  standalone: true,
+  styleUrl: './dashboard-snow-review.component.css'
 })
 export class DashboardSnowReviewComponent
   extends Chart

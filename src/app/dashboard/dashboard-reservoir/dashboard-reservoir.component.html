@@ -44,14 +44,16 @@
                           [displayTitle]="false"></app-weather-detailed>
     <!--  /Weather  -->
     <!--  Snow cover  -->
-    <app-card-wrapper *ngIf="snowImages.length > 0" class="col-span-2 row-span-4">
-      <img slot="body" [src]="snowImages[0].url" alt="" class="h-full w-full">
-    </app-card-wrapper>
-    <!--  /Snow cover  -->
-    <!--  Snow dynamics  -->
-    <app-card-wrapper *ngIf="snowImages.length > 0" class="col-span-5 row-span-4">
-      <img slot="body" [src]="snowImages[1].url" alt="" class="h-full w-full">
-    </app-card-wrapper>
+    <ng-container *ngIf="snowImages$ | async as snowUrls">
+      <app-card-wrapper *ngIf="snowUrls.length > 0" class="col-span-2 row-span-4">
+        <img slot="body" [ngSrc]="snowUrls[0].url" alt="Snow Cover Image" class="h-full w-full object-contain" fill>
+      </app-card-wrapper>
+      <!--  /Snow cover  -->
+      <!--  Snow dynamics  -->
+      <app-card-wrapper *ngIf="snowUrls.length > 1" class="col-span-5 row-span-4">
+        <img slot="body" [ngSrc]="snowUrls[1].url" alt="Snow Dynamics Image" class="h-full w-full object-contain" fill>
+      </app-card-wrapper>
+    </ng-container>
     <!--  /Snow dynamics  -->
     <!--  Analytics  -->
     <app-reservoir-analytics class="col-span-9 row-span-8"></app-reservoir-analytics>

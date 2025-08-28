@@ -10,17 +10,18 @@ import {DateChart} from "../../shared/struct/chart";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
-    selector: 'app-reservoir-analytics',
-    templateUrl: './reservoir-analytics.component.html',
-    styleUrl: './reservoir-analytics.component.css',
-    imports: [
-        NgClass,
-        NgStyle,
-        NgForOf,
-        NgIf,
-        DecimalPipe,
-        CardWrapperComponent
-    ]
+  selector: 'app-reservoir-analytics',
+  templateUrl: './reservoir-analytics.component.html',
+  styleUrl: './reservoir-analytics.component.css',
+  standalone: true,
+  imports: [
+    NgClass,
+    NgStyle,
+    NgForOf,
+    NgIf,
+    DecimalPipe,
+    CardWrapperComponent
+  ]
 })
 export class ReservoirAnalyticsComponent
   extends Chart

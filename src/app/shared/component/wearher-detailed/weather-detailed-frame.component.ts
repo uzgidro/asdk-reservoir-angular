@@ -10,20 +10,21 @@ import {CardHeaderComponent} from "../card-header/card-header.component";
 import {CardWrapperComponent} from "../card-wrapper/card-wrapper.component";
 
 @Component({
-    selector: 'app-weather-detailed',
-    templateUrl: './weather-detailed-frame.component.html',
-    styleUrl: './weather-detailed-frame.component.css',
-    imports: [
-        NgIf,
-        NgOptimizedImage,
-        DecimalPipe,
-        DatePipe,
-        NgForOf,
-        LoaderComponent,
-        UzbDatePipePipe,
-        CardHeaderComponent,
-        CardWrapperComponent
-    ]
+  selector: 'app-weather-detailed',
+  templateUrl: './weather-detailed-frame.component.html',
+  styleUrl: './weather-detailed-frame.component.css',
+  standalone: true,
+  imports: [
+    NgIf,
+    NgOptimizedImage,
+    DecimalPipe,
+    DatePipe,
+    NgForOf,
+    LoaderComponent,
+    UzbDatePipePipe,
+    CardHeaderComponent,
+    CardWrapperComponent
+  ]
 })
 export class WeatherDetailedFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse
