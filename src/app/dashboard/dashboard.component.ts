@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {NgChartsModule} from "ng2-charts";
 import {CarouselModule} from "primeng/carousel";
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
 import {DashboardCurrentChartComponent} from "./dashboard-current-chart/dashboard-current-chart.component";
@@ -22,7 +21,6 @@ import {DashboardSnowSliderComponent} from "./dashboard-snow-slider/dashboard-sn
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   imports: [
-    NgChartsModule,
     CarouselModule,
     CardHeaderComponent,
     DashboardCurrentChartComponent,

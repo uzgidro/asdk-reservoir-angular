@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
-import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse, ComplexValueResponse} from "../../shared/response/values-response";
@@ -11,7 +10,6 @@ import {CategoryChart} from "../../shared/struct/chart";
   selector: 'app-dashboard-current-chart',
   standalone: true,
   imports: [
-    NgChartsModule,
     RouterLink,
     NgClass
   ],

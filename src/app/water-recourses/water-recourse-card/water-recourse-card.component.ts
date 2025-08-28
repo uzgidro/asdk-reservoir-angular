@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, Input} from '@angular/core';
 import {DecimalPipe, NgClass, NgIf, TitleCasePipe} from "@angular/common";
-import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {UzbWeatherPipe} from "../../shared/pipe/uzb-weather.pipe";
 import {Chart} from "../../shared/component/chart";
@@ -11,7 +10,6 @@ import {DateChart} from "../../shared/struct/chart";
   standalone: true,
   imports: [
     DecimalPipe,
-    NgChartsModule,
     NgIf,
     RouterLink,
     TitleCasePipe,

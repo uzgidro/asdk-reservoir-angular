@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
-import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {Chart} from "../../shared/component/chart";
 import {CategoryChart} from "../../shared/struct/chart";
@@ -9,7 +8,6 @@ import {ApiService} from "../../service/api.service";
   selector: 'app-dashboard-snow-chart',
   standalone: true,
   imports: [
-    NgChartsModule,
     RouterLink
   ],
   templateUrl: './dashboard-snow-char.component.html',

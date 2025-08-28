@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {NgChartsModule} from "ng2-charts";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import {ChartComponent} from "./chart/chart.component";
@@ -19,7 +18,6 @@ import {DifferencePipe} from "../../shared/pipe/difference.pipe";
   imports: [
     NgForOf,
     NgIf,
-    NgChartsModule,
     DatePipe,
     DecimalPipe,
     LoaderComponent,

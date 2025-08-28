@@ -4,7 +4,6 @@ import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
-import {NgChartsModule} from "ng2-charts";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import {ActivatedRoute} from "@angular/router";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
@@ -22,7 +21,6 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
     ButtonModule,
     CalendarModule,
     FormsModule,
-    NgChartsModule,
     CardHeaderComponent,
     CardWrapperComponent,
     LoaderComponent

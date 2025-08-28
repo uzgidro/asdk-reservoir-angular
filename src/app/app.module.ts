@@ -12,7 +12,6 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ResizableModule} from 'angular-resizable-element';
-import {NgChartsModule} from 'ng2-charts';
 import {CalendarModule} from 'primeng/calendar';
 import {FormsModule} from '@angular/forms';
 import {MessageService} from 'primeng/api';
@@ -37,7 +36,6 @@ import {Chart, registerables} from "chart.js";
     BrowserAnimationsModule,
     MatTooltipModule,
     ResizableModule,
-    NgChartsModule,
     CalendarModule,
     FormsModule,
     ToastModule,

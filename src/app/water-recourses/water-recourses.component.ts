@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
-import {NgChartsModule} from "ng2-charts";
 import {NgForOf} from "@angular/common";
 import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
@@ -14,7 +13,6 @@ import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrappe
   standalone: true,
   imports: [
     CardHeaderComponent,
-    NgChartsModule,
     NgForOf,
     WaterRecourseCardComponent,
     CardWrapperComponent
