@@ -4,9 +4,9 @@ import {data} from "autoprefixer";
 
 @Component({
   selector: 'app-dashboard-snow-review',
-  standalone: true,
   imports: [],
   templateUrl: './dashboard-snow-review.component.html',
+  standalone: true,
   styleUrl: './dashboard-snow-review.component.css'
 })
 export class DashboardSnowReviewComponent

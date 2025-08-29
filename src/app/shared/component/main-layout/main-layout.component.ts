@@ -21,8 +21,7 @@ import {DropDownAnimation} from "../../animation/menu-animation";
     RouterLinkActive,
     RouterLink
   ],
-  standalone: true
-
+  standalone: true,
 })
 export class MainLayoutComponent implements OnInit {
   isSidebarVisible = false

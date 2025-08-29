@@ -1,11 +1,18 @@
 import {Component} from '@angular/core';
+import {RouterOutlet} from "@angular/router";
+import {ToastModule} from "primeng/toast";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-
+  template: `
+    <router-outlet></router-outlet>
+    <p-toast></p-toast>
+  `,
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    ToastModule
+  ]
 })
 export class AppComponent {
-  title = 'uasdk-angular';
 }

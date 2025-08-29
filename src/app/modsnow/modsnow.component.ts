@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterOutlet} from "@angular/router";
 
 @Component({
-  selector: 'app-modsnow',
-  standalone: true,
+    selector: 'app-modsnow',
     imports: [
         RouterOutlet
     ],
-  templateUrl: './modsnow.component.html',
-  styleUrl: './modsnow.component.css'
+    templateUrl: './modsnow.component.html',
+  styleUrl: './modsnow.component.css',
+  standalone: true,
 })
 export class ModsnowComponent {
 

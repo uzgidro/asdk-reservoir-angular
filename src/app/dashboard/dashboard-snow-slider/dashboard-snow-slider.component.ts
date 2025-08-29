@@ -5,16 +5,18 @@ import {ApiService} from "../../service/api.service";
 import {Observable} from "rxjs";
 import {ModsnowImg} from "../../shared/interfaces";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-dashboard-snow-slider',
-  standalone: true,
   imports: [
     CarouselModule,
     SharedModule,
-    LoaderComponent
+    LoaderComponent,
+    NgOptimizedImage
   ],
   templateUrl: './dashboard-snow-slider.component.html',
+  standalone: true,
   styleUrl: './dashboard-snow-slider.component.css'
 })
 export class DashboardSnowSliderComponent implements OnInit {

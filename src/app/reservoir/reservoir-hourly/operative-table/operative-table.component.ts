@@ -6,19 +6,19 @@ import {LoaderComponent} from "../../../shared/component/loader/loader.component
 import {DifferencePipe} from "../../../shared/pipe/difference.pipe";
 
 @Component({
-  selector: 'app-operative-table',
+    selector: 'app-operative-table',
+    imports: [
+        DatePipe,
+        DecimalPipe,
+        NgForOf,
+        LoaderComponent,
+        NgIf,
+        NgClass,
+        DifferencePipe
+    ],
+    templateUrl: './operative-table.component.html',
+  styleUrl: './operative-table.component.css',
   standalone: true,
-  imports: [
-    DatePipe,
-    DecimalPipe,
-    NgForOf,
-    LoaderComponent,
-    NgIf,
-    NgClass,
-    DifferencePipe
-  ],
-  templateUrl: './operative-table.component.html',
-  styleUrl: './operative-table.component.css'
 })
 export class OperativeTableComponent implements OnInit {
   @Input() shortView: boolean = false

@@ -6,13 +6,13 @@ import {LoaderComponent} from "../../shared/component/loader/loader.component";
 
 @Component({
   selector: 'app-dashboard-snow-table',
-  standalone: true,
   imports: [
     NgIf,
     LoaderComponent,
     NgForOf
   ],
   templateUrl: './dashboard-snow-table.component.html',
+  standalone: true,
   styleUrl: './dashboard-snow-table.component.css'
 })
 export class DashboardSnowTableComponent implements OnInit {

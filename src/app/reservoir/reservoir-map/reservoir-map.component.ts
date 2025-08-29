@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {BrodacastService} from "../../service/brodacast.service";
 
 @Component({
-  selector: 'app-reservoir-map',
+    selector: 'app-reservoir-map',
+    imports: [],
+    templateUrl: './reservoir-map.component.html',
+  styleUrl: './reservoir-map.component.css',
   standalone: true,
-  imports: [],
-  templateUrl: './reservoir-map.component.html',
-  styleUrl: './reservoir-map.component.css'
 })
 export class ReservoirMapComponent {
 

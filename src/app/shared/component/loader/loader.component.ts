@@ -3,11 +3,11 @@ import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-loader',
-  standalone: true,
   templateUrl: './loader.component.html',
   imports: [
     NgClass
   ],
+  standalone: true,
   styleUrls: ['./loader.component.css']
 })
 export class LoaderComponent {

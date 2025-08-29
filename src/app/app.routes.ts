@@ -1,33 +1,32 @@
-import {RouterModule, Routes} from "@angular/router";
+import {Routes} from "@angular/router";
 import {MainLayoutComponent} from "./shared/component/main-layout/main-layout.component";
-import {NgModule} from "@angular/core";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
 import {RegionComponent} from "./region/region.component";
 import {GesComponent} from "./ges/ges.component";
+import {DashboardReservoirComponent} from "./dashboard/dashboard-reservoir/dashboard-reservoir.component";
 import {ReservoirComponent} from "./reservoir/reservoir.component";
-import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
 import {ReservoirHourlyComponent} from "./reservoir/reservoir-hourly/reservoir-hourly.component";
 import {ReservoirDecadeComponent} from "./reservoir/reservoir-decade/reservoir-decade.component";
+import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
+import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
+import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
+import {BlankPageComponent} from "./shared/temp/blank-page/blank-page.component";
+import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
+import {ModsnowComponent} from "./modsnow/modsnow.component";
 import {ModsnowDailyComponent} from "./modsnow/modsnow-daily/modsnow-daily.component";
 import {ModsnowYearlyComponent} from "./modsnow/modsnow-yearly/modsnow-yearly.component";
-import {ReservoirYearlyComponent} from "./reservoir/reservoir-yearly/reservoir-yearly.component";
+import {WeatherComponent} from "./reservoir/weather/weather.component";
+import {HydrometerComponent} from "./hydrometer/hydrometer.component";
 import {HydroPostComponent} from "./hydrometer/hydro-post/hydro-post.component";
-import {OrdersComponent} from "./reservoir/orders/orders.component";
-import {ReservoirAnalyticsComponent} from "./reservoir/reservoir-analytics/reservoir-analytics.component";
 import {HydroMeterComponent} from "./hydrometer/hydro-meter/hydro-meter.component";
 import {HydroIndicatorComponent} from "./hydrometer/hydro-indicator/hydro-indicator.component";
 import {HydroWorksComponent} from "./hydrometer/hydro-works/hydro-works.component";
-import {ReservoirMonthComponent} from "./reservoir/reservoir-month/reservoir-month.component";
-import {WeatherComponent} from "./reservoir/weather/weather.component";
-import {WaterRecoursesComponent} from "./water-recourses/water-recourses.component";
-import {ReservoirLvComponent} from "./reservoir/reservoir-lv/reservoir-lv.component";
 import {ExploitationComponent} from "./exploitation/exploitation.component";
-import {DashboardReservoirComponent} from "./dashboard/dashboard-reservoir/dashboard-reservoir.component";
+import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {TopPositionScreenComponent} from "./top-position-screen/top-position-screen.component";
-import {HydrometerComponent} from "./hydrometer/hydrometer.component";
-import {ModsnowComponent} from "./modsnow/modsnow.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '', component: MainLayoutComponent, children: [
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -55,9 +54,7 @@ const routes: Routes = [
           {path: 'all-time', component: ModsnowYearlyComponent}
         ]
       },
-      {
-        path: 'weather', component: WeatherComponent
-      },
+      {path: 'weather', component: WeatherComponent},
       {
         path: 'hydro', component: HydrometerComponent, children: [
           {path: '', pathMatch: 'full', redirectTo: 'posts'},
@@ -74,13 +71,4 @@ const routes: Routes = [
       {path: 'map', component: TopPositionScreenComponent}
     ]
   },
-]
-
-@NgModule({
-  exports: [RouterModule],
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-  })]
-})
-export class AppRoutingModule {
-}
+];

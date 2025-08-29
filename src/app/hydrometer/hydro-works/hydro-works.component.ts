@@ -6,11 +6,11 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
     selector: 'app-hydro-works',
     templateUrl: './hydro-works.component.html',
     styleUrl: './hydro-works.component.css',
-  imports: [
-    CardHeaderComponent,
-    CardWrapperComponent
-  ],
-    standalone: true
+    imports: [
+        CardHeaderComponent,
+        CardWrapperComponent
+    ],
+  standalone: true,
 })
 export class HydroWorksComponent {
 

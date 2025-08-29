@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "uasdk-angular": {
+    "srmt-front": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -11,7 +11,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": [
               "core-js/modules/es.array.index-of.js",
@@ -32,9 +32,10 @@
               "rgbcolor",
               "jspdf-autotable"
             ],
-            "outputPath": "dist/uasdk-angular/browser",
+            "outputPath": {
+              "base": "dist/srmt-front"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -49,7 +50,8 @@
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -68,9 +70,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
@@ -88,10 +88,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "uasdk-angular:build:production"
+              "buildTarget": "srmt-front:build:production"
             },
             "development": {
-              "buildTarget": "uasdk-angular:build:development"
+              "buildTarget": "srmt-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -99,7 +99,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "uasdk-angular:build"
+            "buildTarget": "srmt-front:build"
           }
         },
         "test": {
@@ -122,66 +122,6 @@
             ],
             "scripts": []
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/uasdk-angular/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media"
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "sourceMap": true,
-              "extractLicenses": false,
-              "vendorChunk": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
-                }
-              ]
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@angular-devkit/build-angular:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "uasdk-angular:build:development",
-              "serverTarget": "uasdk-angular:server:development"
-            },
-            "production": {
-              "browserTarget": "uasdk-angular:build:production",
-              "serverTarget": "uasdk-angular:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@angular-devkit/build-angular:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "uasdk-angular:build:production",
-              "serverTarget": "uasdk-angular:server:production"
-            },
-            "development": {
-              "browserTarget": "uasdk-angular:build:development",
-              "serverTarget": "uasdk-angular:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }

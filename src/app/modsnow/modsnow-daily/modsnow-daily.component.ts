@@ -4,7 +4,6 @@ import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
-import {NgChartsModule} from "ng2-charts";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 import {ActivatedRoute} from "@angular/router";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
@@ -12,22 +11,23 @@ import {Observable} from "rxjs";
 import {ModsnowImg} from "../../shared/interfaces";
 import {ApiService} from "../../service/api.service";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-modsnow-daily',
-  standalone: true,
   imports: [
     CarouselModule,
     TagModule,
     ButtonModule,
     CalendarModule,
     FormsModule,
-    NgChartsModule,
     CardHeaderComponent,
     CardWrapperComponent,
-    LoaderComponent
+    LoaderComponent,
+    NgOptimizedImage
   ],
   templateUrl: './modsnow-daily.component.html',
+  standalone: true,
   styleUrl: './modsnow-daily.component.css'
 })
 export class ModsnowDailyComponent implements OnInit {

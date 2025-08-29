@@ -3,12 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {CategorisedArrayResponse} from "../../shared/response/values-response";
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {NgChartsModule} from "ng2-charts";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
-import autoTable from "jspdf-autotable";
-import {jsPDF} from 'jspdf';
-import * as XLSX from "xlsx";
 import {ChartComponent} from "./chart/chart.component";
 import {DateChart} from "../../shared/struct/chart";
 import {OperativeTableComponent} from "./operative-table/operative-table.component";
@@ -16,25 +12,22 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
 import {DifferencePipe} from "../../shared/pipe/difference.pipe";
 
 @Component({
-  selector: 'app-reservoir-hourly',
-  templateUrl: './reservoir-hourly.component.html',
-  styleUrls: ['./reservoir-hourly.component.css'],
-  imports: [
-    NgForOf,
-    NgIf,
-    NgChartsModule,
-    DatePipe,
-    DecimalPipe,
-    LoaderComponent,
-    CardHeaderComponent,
-    ChartComponent,
-    OperativeTableComponent,
-    CardWrapperComponent,
-    DifferencePipe
-  ],
-
-  standalone: true
-
+    selector: 'app-reservoir-hourly',
+    templateUrl: './reservoir-hourly.component.html',
+    styleUrls: ['./reservoir-hourly.component.css'],
+    imports: [
+        NgForOf,
+        NgIf,
+        DatePipe,
+        DecimalPipe,
+        LoaderComponent,
+        CardHeaderComponent,
+        ChartComponent,
+        OperativeTableComponent,
+        CardWrapperComponent,
+        DifferencePipe
+    ],
+  standalone: true,
 })
 export class ReservoirHourlyComponent implements OnInit {
   selectedDate = new Date()
@@ -102,74 +95,6 @@ export class ReservoirHourlyComponent implements OnInit {
     })
   }
 
-  exportToExcel() {
-    const table = document.getElementById('table');
-    const worksheet = XLSX.utils.table_to_sheet(table);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    XLSX.writeFile(workbook, "exported_table.xlsx");
-  }
-
-  exportTableToPDF() {
-    const doc = new jsPDF({orientation: 'landscape'});
-    const tableHeaders = [
-      [
-        {content: "Suv omborlar", rowSpan: 2}, // Объединяем по вертикали
-        {content: "Suv sathi, m", colSpan: 3}, // Объединяем по горизонтали
-        {content: "Suv hajmi, mln.m³", colSpan: 3},
-        {content: "Suv kelishi, m³/s", colSpan: 7},
-        {content: "Suv chiqishi, m³/s", rowSpan: 2},
-      ],
-      [
-        {content: `${this.formatDate(this.times[1])}`},
-        {content: `${this.formatDate(this.times[0])}`},
-        {content: "Farqi"},
-        {content: `${this.formatDate(this.times[1])}`},
-        {content: `${this.formatDate(this.times[0])}`},
-        {content: "Farqi"},
-        {content: `${this.formatDate(this.times[5])}`},
-        {content: `${this.formatDate(this.times[4])}`},
-        {content: `${this.formatDate(this.times[3])}`},
-        {content: `${this.formatDate(this.times[2])}`},
-        {content: `${this.formatDate(this.times[1])}`},
-        {content: `${this.formatDate(this.times[0])}`},
-        {content: "Farqi"},
-      ],
-    ];
-
-    // Преобразование данных таблицы в формат для AutoTable
-    const tableData = this.reservoirsData.map(res => {
-      if (res.level != undefined && res.volume != undefined && res.income != undefined && res.release != undefined) {
-        return [
-          res.name,
-          res.level.old.toFixed(2) || '',
-          res.level.latest.toFixed(2) || '',
-          (res.level.latest - res.level.old).toFixed(2) || '',
-          res.volume.old.toFixed(2) || '',
-          res.volume.latest.toFixed(2) || '',
-          (res.volume.latest - res.volume.old).toFixed(2) || '',
-          ...(res.income.map(i => i.toFixed(2)) || []),
-          ((res.income[res.income.length - 1] - res.income[res.income.length - 2]).toFixed(2) || ''),
-          res.release.latest.toFixed(2) || ''
-        ];
-      } else {
-        return []
-      }
-    });
-
-    // Генерация таблицы в PDF
-    autoTable(doc, {
-      head: tableHeaders, // Заголовки
-      body: tableData,      // Данные таблицы
-      startY: 10,           // Начальная позиция по вертикали
-      styles: {fontSize: 8}, // Общие стили таблицы
-      headStyles: {fillColor: [41, 128, 185]}, // Цвет заголовков
-    });
-
-    // Сохранение PDF
-    doc.save('Reservoirs-Table.pdf');
-  }
-
   private setupChartData(data: CategorisedArrayResponse) {
     for (let i = 0; i < data.income.length; i++) {
       this.incomeCharts.push({
@@ -193,15 +118,6 @@ export class ReservoirHourlyComponent implements OnInit {
         color: 'rgba(147, 51, 234,0.4)',
       })
     }
-  }
-
-  private formatDate(date: Date) {
-    const formattedTime = new Intl.DateTimeFormat("en-GB", {hour: "2-digit", minute: "2-digit"}).format(date);
-    const formattedDate = new Intl.DateTimeFormat("en-GB", {
-      day: "2-digit",
-      month: "2-digit"
-    }).format(this.selectedDate); // Формат дня, месяца и года
-    return `${formattedTime}\n(${formattedDate})`;
   }
 
   private setupTable(response: CategorisedArrayResponse) {

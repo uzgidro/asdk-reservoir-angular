@@ -33,7 +33,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asdk-reservoir:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/srmt-front:${{ github.sha }}
 
       # 5. Клонируем GitOps-репозиторий
       - name: Checkout GitOps Repo
@@ -48,13 +48,13 @@ jobs:
         run: |
           cd gitops
           # Используем yq для безопасного редактирования YAML
-          yq e '.spec.template.spec.containers[0].image = "${{ secrets.DOCKERHUB_USERNAME }}/asdk-reservoir:${{ github.sha }}"' -i reservoir-k8s.yaml
-          
+          yq e '.spec.template.spec.containers[0].image = "${{ secrets.DOCKERHUB_USERNAME }}/srmt-front:${{ github.sha }}"' -i srmt-front-k8s.yaml
+
           # Настраиваем Git
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
           # Делаем коммит и пуш
           git add reservoir-k8s.yaml
-          git commit -m "Update image for asdk-reservoir to ${{ github.sha }}" || echo "No changes to commit"
+          git commit -m "Update image for srmt-front to ${{ github.sha }}" || echo "No changes to commit"
           git push

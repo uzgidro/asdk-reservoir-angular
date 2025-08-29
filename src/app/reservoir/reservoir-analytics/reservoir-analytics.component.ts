@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
-import {NgChartsModule} from "ng2-charts";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {ComplexValueResponse, ValueResponse} from "../../shared/response/values-response";
@@ -14,16 +13,15 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
   selector: 'app-reservoir-analytics',
   templateUrl: './reservoir-analytics.component.html',
   styleUrl: './reservoir-analytics.component.css',
+  standalone: true,
   imports: [
-    NgChartsModule,
     NgClass,
     NgStyle,
     NgForOf,
     NgIf,
     DecimalPipe,
     CardWrapperComponent
-  ],
-  standalone: true
+  ]
 })
 export class ReservoirAnalyticsComponent
   extends Chart

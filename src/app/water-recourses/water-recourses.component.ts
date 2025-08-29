@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {CardHeaderComponent} from "../shared/component/card-header/card-header.component";
-import {NgChartsModule} from "ng2-charts";
 import {NgForOf} from "@angular/common";
 import {ApiService} from "../service/api.service";
 import {WeatherApiService} from "../service/weather-api.service";
@@ -10,17 +9,16 @@ import {DateChart} from "../shared/struct/chart";
 import {CardWrapperComponent} from "../shared/component/card-wrapper/card-wrapper.component";
 
 @Component({
-  selector: 'app-water-recourses',
+    selector: 'app-water-recourses',
+    imports: [
+        CardHeaderComponent,
+        NgForOf,
+        WaterRecourseCardComponent,
+        CardWrapperComponent
+    ],
+    templateUrl: './water-recourses.component.html',
+  styleUrl: './water-recourses.component.css',
   standalone: true,
-  imports: [
-    CardHeaderComponent,
-    NgChartsModule,
-    NgForOf,
-    WaterRecourseCardComponent,
-    CardWrapperComponent
-  ],
-  templateUrl: './water-recourses.component.html',
-  styleUrl: './water-recourses.component.css'
 })
 export class WaterRecoursesComponent implements OnInit {
   reservoirData: {

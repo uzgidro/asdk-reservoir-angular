@@ -13,6 +13,7 @@ import {CardWrapperComponent} from "../card-wrapper/card-wrapper.component";
   selector: 'app-weather-detailed',
   templateUrl: './weather-detailed-frame.component.html',
   styleUrl: './weather-detailed-frame.component.css',
+  standalone: true,
   imports: [
     NgIf,
     NgOptimizedImage,
@@ -23,8 +24,7 @@ import {CardWrapperComponent} from "../card-wrapper/card-wrapper.component";
     UzbDatePipePipe,
     CardHeaderComponent,
     CardWrapperComponent
-  ],
-  standalone: true
+  ]
 })
 export class WeatherDetailedFrameComponent implements OnChanges {
   @Input() reservoir?: ReservoirResponse

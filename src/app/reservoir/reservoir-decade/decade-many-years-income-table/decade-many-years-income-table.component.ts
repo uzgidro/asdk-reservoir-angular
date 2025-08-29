@@ -6,7 +6,6 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-decade-many-years-income-table',
-  standalone: true,
   imports: [
     LoaderComponent,
     NgIf,
@@ -14,6 +13,7 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
     NgForOf
   ],
   templateUrl: './decade-many-years-income-table.component.html',
+  standalone: true,
   styleUrl: './decade-many-years-income-table.component.css'
 })
 export class DecadeManyYearsIncomeTableComponent implements OnInit {

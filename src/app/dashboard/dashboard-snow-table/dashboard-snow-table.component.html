@@ -3,7 +3,7 @@
   <tr>
     <th rowspan="2">Suv omborlar</th>
     <th rowspan="2" colspan="2">Qor bilan qoplanganlik, %</th>
-    <th colspan="10">Balandliklar bo'yicha, m</th>
+    <th colspan="8">Balandliklar bo'yicha, m</th>
   </tr>
   <tr>
     <th>1000 - 1500</th>
@@ -31,8 +31,8 @@
     </tr>
     <tr>
       <td class="odd-row difference">Farqi</td> <!-- year -->
-      <td class="current-year">{{ item.diff_percent }}</td>
-      <td *ngFor="let val of item.diff_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
+      <td class="odd-row difference">{{ item.diff_percent }}</td>
+      <td *ngFor="let val of item.diff_data" class="odd-row difference">{{ val !== 0 ? val : '' }}</td>
     </tr>
   </ng-container>
   </tbody>

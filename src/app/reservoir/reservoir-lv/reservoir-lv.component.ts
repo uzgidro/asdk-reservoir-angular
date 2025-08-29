@@ -5,13 +5,13 @@ import {LevelVolume} from "../../shared/interfaces";
 import {NgForOf} from "@angular/common";
 
 @Component({
-  selector: 'app-reservoir-lv',
+    selector: 'app-reservoir-lv',
+    imports: [
+        NgForOf
+    ],
+    templateUrl: './reservoir-lv.component.html',
+  styleUrl: './reservoir-lv.component.css',
   standalone: true,
-  imports: [
-    NgForOf
-  ],
-  templateUrl: './reservoir-lv.component.html',
-  styleUrl: './reservoir-lv.component.css'
 })
 export class ReservoirLvComponent implements OnInit {
 

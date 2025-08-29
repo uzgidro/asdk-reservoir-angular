@@ -5,16 +5,14 @@ import {WeatherDetailedFrameComponent} from "../../shared/component/wearher-deta
 import {NgForOf} from "@angular/common";
 
 @Component({
-  selector: 'app-weather',
-  templateUrl: './weather.component.html',
-  styleUrl: './weather.component.css',
-  imports: [
-    WeatherDetailedFrameComponent,
-    NgForOf
-  ],
-  standalone: true
-
-
+    selector: 'app-weather',
+    templateUrl: './weather.component.html',
+    styleUrl: './weather.component.css',
+    imports: [
+        WeatherDetailedFrameComponent,
+        NgForOf
+    ],
+  standalone: true,
 })
 export class WeatherComponent implements OnInit {
   // selectedReservoir?: RegionInfo

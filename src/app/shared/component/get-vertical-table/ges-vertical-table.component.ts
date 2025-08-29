@@ -7,19 +7,19 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {AggregateTableFieldComponent} from "../aggregate-table-field/aggregate-table-field.component";
 
 @Component({
-  selector: 'app-ges-vertical-table',
-  templateUrl: './ges-vertical-table.component.html',
-  styleUrls: ['./ges-vertical-table.component.css'],
-  imports: [
-    NgForOf,
-    RouterLink,
-    DecimalPipe,
-    MatTooltipModule,
-    LowerCasePipe,
-    NgIf,
-    AggregateTableFieldComponent
-  ],
-  standalone: true
+    selector: 'app-ges-vertical-table',
+    templateUrl: './ges-vertical-table.component.html',
+    styleUrls: ['./ges-vertical-table.component.css'],
+    imports: [
+        NgForOf,
+        RouterLink,
+        DecimalPipe,
+        MatTooltipModule,
+        LowerCasePipe,
+        NgIf,
+        AggregateTableFieldComponent
+    ],
+  standalone: true,
 })
 export class GesVerticalTableComponent implements OnInit {
   gesList: GesValues[] = []

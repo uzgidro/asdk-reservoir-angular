@@ -1,25 +1,23 @@
 import {AfterViewInit, Component, Input} from '@angular/core';
 import {DecimalPipe, NgClass, NgIf, TitleCasePipe} from "@angular/common";
-import {NgChartsModule} from "ng2-charts";
 import {RouterLink} from "@angular/router";
 import {UzbWeatherPipe} from "../../shared/pipe/uzb-weather.pipe";
 import {Chart} from "../../shared/component/chart";
 import {DateChart} from "../../shared/struct/chart";
 
 @Component({
-  selector: 'app-water-recourse-card',
+    selector: 'app-water-recourse-card',
+    imports: [
+        DecimalPipe,
+        NgIf,
+        RouterLink,
+        TitleCasePipe,
+        UzbWeatherPipe,
+        NgClass
+    ],
+    templateUrl: './water-recourse-card.component.html',
+  styleUrl: './water-recourse-card.component.css',
   standalone: true,
-  imports: [
-    DecimalPipe,
-    NgChartsModule,
-    NgIf,
-    RouterLink,
-    TitleCasePipe,
-    UzbWeatherPipe,
-    NgClass
-  ],
-  templateUrl: './water-recourse-card.component.html',
-  styleUrl: './water-recourse-card.component.css'
 })
 export class WaterRecourseCardComponent
   extends Chart
