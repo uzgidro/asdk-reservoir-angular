@@ -103,12 +103,22 @@ export class Chart implements OnInit, OnDestroy {
       let xAxis = chart.xAxes.getIndex(0) as am5xy.DateAxis<am5xy.AxisRenderer> | undefined;
 
       if (!xAxis) {
+        const baseInterval = this.setTimeStep(data)
         xAxis = chart.xAxes.push(am5xy.DateAxis.new(this.root, {
-          maxDeviation: 1,
-          baseInterval: this.setTimeStep(data),
+          maxDeviation: 0,
+          baseInterval: baseInterval,
+          tooltipDateFormat: this.setupTooltipDateFormat(baseInterval.timeUnit),
           renderer: am5xy.AxisRendererX.new(this.root, {minorGridEnabled: true}),
           tooltip: am5.Tooltip.new(this.root, {}),
         }));
+
+        if (baseInterval.timeUnit === 'month') {
+          xAxis.set("periodChangeDateFormats", {
+            "day": "MMM dd",
+            "month": "MMM",
+            "year": "yyyy"
+          });
+        }
 
         xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
         xAxis.data.setAll(data[0].data.map(item => ({
@@ -210,12 +220,23 @@ export class Chart implements OnInit, OnDestroy {
     if (!options?.hideLegend) legend = this.createLegend(root, chart, options?.legendPosition)
 
     if (data) {
+      const baseInterval = this.setTimeStep(data)
       let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-        maxDeviation: 1,
-        baseInterval: this.setTimeStep(data),
+        maxDeviation: 0,
+        baseInterval: baseInterval,
+        tooltipDateFormat: this.setupTooltipDateFormat(baseInterval.timeUnit),
         renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
         tooltip: am5.Tooltip.new(root, {})
       }));
+
+      if (baseInterval.timeUnit === 'month') {
+        xAxis.set("periodChangeDateFormats", {
+          "day": "MMM dd",
+          "month": "MMM",
+          "year": "yyyy"
+        });
+      }
+
       xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
       xAxis.data.setAll(data[0].data)
       data.forEach(item => {
@@ -498,39 +519,48 @@ export class Chart implements OnInit, OnDestroy {
 
     if (seconds <= 1) {
       return {
-        timeUnit: 'millisecond',
-        count: milliseconds,
-      }
-    } else if (minutes <= 1) {
-      return {
         timeUnit: 'second',
         count: seconds,
       }
-    } else if (hours <= 1) {
+    } else if (minutes <= 1) {
       return {
         timeUnit: 'minute',
         count: minutes,
       }
-    } else if (days <= 1) {
+    } else if (hours <= 1) {
       return {
         timeUnit: 'hour',
         count: hours,
       }
-    } else if (months <= 1) {
+    } else if (days <= 1) {
       return {
         timeUnit: 'day',
         count: days,
       }
-    } else if (years <= 1) {
+    } else if (months <= 1) {
       return {
         timeUnit: 'month',
         count: months,
+      }
+    } else if (years <= 1) {
+      return {
+        timeUnit: 'year',
+        count: years,
       }
     } else {
       return {
         timeUnit: 'year',
         count: years,
       }
+    }
+  }
+
+  private setupTooltipDateFormat(timeUnit: TimeUnit): string | undefined {
+    switch (timeUnit) {
+      case "month":
+        return "MMMM"
+      default:
+        return undefined
     }
   }
 

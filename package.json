@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --watch",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch",
     "test": "ng test",
     "serve:ssr:srmt-front": "node dist/srmt-front/server/server.mjs"
   },
