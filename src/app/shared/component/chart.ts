@@ -106,6 +106,7 @@ export class Chart implements OnInit, OnDestroy {
         xAxis = chart.xAxes.push(am5xy.DateAxis.new(this.root, {
           maxDeviation: 1,
           baseInterval: this.setTimeStep(data),
+          tooltipDateFormat: this.setupTooltipDateFormat(data),
           renderer: am5xy.AxisRendererX.new(this.root, {minorGridEnabled: true}),
           tooltip: am5.Tooltip.new(this.root, {}),
         }));
@@ -213,6 +214,7 @@ export class Chart implements OnInit, OnDestroy {
       let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
         maxDeviation: 1,
         baseInterval: this.setTimeStep(data),
+        tooltipDateFormat: this.setupTooltipDateFormat(data),
         renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
         tooltip: am5.Tooltip.new(root, {})
       }));
@@ -498,39 +500,56 @@ export class Chart implements OnInit, OnDestroy {
 
     if (seconds <= 1) {
       return {
-        timeUnit: 'millisecond',
-        count: milliseconds,
-      }
-    } else if (minutes <= 1) {
-      return {
         timeUnit: 'second',
         count: seconds,
       }
-    } else if (hours <= 1) {
+    } else if (minutes <= 1) {
       return {
         timeUnit: 'minute',
         count: minutes,
       }
-    } else if (days <= 1) {
+    } else if (hours <= 1) {
       return {
         timeUnit: 'hour',
         count: hours,
       }
-    } else if (months <= 1) {
+    } else if (days <= 1) {
       return {
         timeUnit: 'day',
         count: days,
       }
-    } else if (years <= 1) {
+    } else if (months <= 1) {
       return {
         timeUnit: 'month',
         count: months,
+      }
+    } else if (years <= 1) {
+      return {
+        timeUnit: 'year',
+        count: years,
       }
     } else {
       return {
         timeUnit: 'year',
         count: years,
       }
+    }
+  }
+
+  private setupTooltipDateFormat(data: DateChart[]): string | undefined {
+    const milliseconds = Math.abs(data[0].data[1].timestamp - data[0].data[0].timestamp);
+
+    const seconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 28);
+    const years = Math.floor(days / 365);
+
+    if (months <= 1) {
+      return "MMMM"
+    } else {
+      return undefined
     }
   }
 
