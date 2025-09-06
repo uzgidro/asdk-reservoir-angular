@@ -103,13 +103,22 @@ export class Chart implements OnInit, OnDestroy {
       let xAxis = chart.xAxes.getIndex(0) as am5xy.DateAxis<am5xy.AxisRenderer> | undefined;
 
       if (!xAxis) {
+        const baseInterval = this.setTimeStep(data)
         xAxis = chart.xAxes.push(am5xy.DateAxis.new(this.root, {
-          maxDeviation: 1,
-          baseInterval: this.setTimeStep(data),
-          tooltipDateFormat: this.setupTooltipDateFormat(data),
+          maxDeviation: 0,
+          baseInterval: baseInterval,
+          tooltipDateFormat: this.setupTooltipDateFormat(baseInterval.timeUnit),
           renderer: am5xy.AxisRendererX.new(this.root, {minorGridEnabled: true}),
           tooltip: am5.Tooltip.new(this.root, {}),
         }));
+
+        if (baseInterval.timeUnit === 'month') {
+          xAxis.set("periodChangeDateFormats", {
+            "day": "MMM dd",
+            "month": "MMM",
+            "year": "yyyy"
+          });
+        }
 
         xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
         xAxis.data.setAll(data[0].data.map(item => ({
@@ -211,13 +220,23 @@ export class Chart implements OnInit, OnDestroy {
     if (!options?.hideLegend) legend = this.createLegend(root, chart, options?.legendPosition)
 
     if (data) {
+      const baseInterval = this.setTimeStep(data)
       let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-        maxDeviation: 1,
-        baseInterval: this.setTimeStep(data),
-        tooltipDateFormat: this.setupTooltipDateFormat(data),
+        maxDeviation: 0,
+        baseInterval: baseInterval,
+        tooltipDateFormat: this.setupTooltipDateFormat(baseInterval.timeUnit),
         renderer: am5xy.AxisRendererX.new(root, {minorGridEnabled: true}),
         tooltip: am5.Tooltip.new(root, {})
       }));
+
+      if (baseInterval.timeUnit === 'month') {
+        xAxis.set("periodChangeDateFormats", {
+          "day": "MMM dd",
+          "month": "MMM",
+          "year": "yyyy"
+        });
+      }
+
       xAxis.get("renderer").labels.template.setAll({fill: am5.color("#fff")});
       xAxis.data.setAll(data[0].data)
       data.forEach(item => {
@@ -536,20 +555,12 @@ export class Chart implements OnInit, OnDestroy {
     }
   }
 
-  private setupTooltipDateFormat(data: DateChart[]): string | undefined {
-    const milliseconds = Math.abs(data[0].data[1].timestamp - data[0].data[0].timestamp);
-
-    const seconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    const months = Math.floor(days / 28);
-    const years = Math.floor(days / 365);
-
-    if (months <= 1) {
-      return "MMMM"
-    } else {
-      return undefined
+  private setupTooltipDateFormat(timeUnit: TimeUnit): string | undefined {
+    switch (timeUnit) {
+      case "month":
+        return "MMMM"
+      default:
+        return undefined
     }
   }
 
