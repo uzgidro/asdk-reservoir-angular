@@ -1,8 +1,4 @@
-<div class="flex flex-col h-screen">
-  <video autoplay muted loop class="fixed object-cover h-full w-full -z-10 blur-md">
-    <source src="/assets/video/bg.webm" type="video/mp4">
-    Your browser does not support HTML5 video.
-  </video>
+<app-video-wrapper>
   <div class="fixed top-0 left-0">
     <app-navbar (sidebarEmitter)="toggleSidebar()"></app-navbar>
   </div>
@@ -44,4 +40,4 @@
   <div class="mt-14 flex-1 overflow-hidden">
     <router-outlet></router-outlet>
   </div>
-</div>
+</app-video-wrapper>

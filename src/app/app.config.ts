@@ -12,7 +12,7 @@ import {FormsModule} from "@angular/forms";
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideClientHydration(),
+    // provideClientHydration(),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
     importProvidersFrom(FormsModule),
