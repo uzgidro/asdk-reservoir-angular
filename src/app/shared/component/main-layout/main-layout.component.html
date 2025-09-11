@@ -1,7 +1,17 @@
 <app-video-wrapper>
-  <div class="fixed top-0 left-0">
-    <app-navbar (sidebarEmitter)="toggleSidebar()"></app-navbar>
-  </div>
+  <app-navbar>
+    <ul>
+      <li><i (click)="toggleSidebar()" class="pi pi-bars"></i></li>
+      <li><a routerLink="/dashboard" routerLinkActive="active">Bosh sahifa</a></li>
+      <li><a routerLink="/water" routerLinkActive="active" queryParamsHandling="merge">Suv resuslar</a></li>
+      <li><a routerLink="/hydro" routerLinkActive="active">Gidrometriya</a></li>
+      <li><a routerLink="/snow" routerLinkActive="active">Modsnow</a></li>
+      <li><a routerLink="/weather" routerLinkActive="active">Ob-havo</a></li>
+      <li><a routerLink="/docs" routerLinkActive="active">Normativ hujjatlar</a></li>
+      <li><a routerLink="/map" routerLinkActive="active">Xarita</a></li>
+      <li><a routerLink="/reservoir" [queryParams]="{reservoir: 1}" routerLinkActive="active">Grafik</a></li>
+    </ul>
+  </app-navbar>
   <p-sidebar
     class="bg-slate-900 text-slate-300 border-r border-r-dark-gray"
     styleClass="bg-slate-900 text-slate-300 border-r border-r-dark-gray"
@@ -10,24 +20,26 @@
       <nav>
         <ul class="font-medium text-lg mt-4 px-4">
           <li class="mb-4" *ngFor="let item of menuItems">
-            <a class="items-center flex flex-row justify-between pl-2 border-l border-l-slate-300 hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
-               [routerLink]="item.children ? null : item.path"
-               [queryParamsHandling]="item.path.includes('dashboard') ? null : 'preserve'"
-               [ngClass]="{'active': currentUrl.includes(item.path)}"
-               (click)="selectItem(item)">
+            <a
+              class="items-center flex flex-row justify-between pl-2 border-l border-l-slate-300 hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
+              [routerLink]="item.children ? null : item.path"
+              [queryParamsHandling]="item.path.includes('dashboard') ? null : 'preserve'"
+              [ngClass]="{'active': currentUrl.includes(item.path)}"
+              (click)="selectItem(item)">
               {{ item.name }}
               <i *ngIf="item.children" class="pi"
                  [ngClass]="item.isOpen ? 'pi-angle-up' : 'pi-angle-down'"></i>
             </a>
             <ul *ngIf="item.children && item.isOpen" class="mt-3" [@DropDownMenu]>
               <li class="pl-4 mb-4" *ngFor="let childItem of item.children">
-                <a class="pl-2 border-l border-l-slate-300 hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
-                   [routerLink]="childItem.path == '' ? null : (item.path || '') + (childItem.path || '')"
-                   [href]="childItem.externalLink"
-                   [queryParams]="item.path.includes('water') && !selectedReservoir ? {reservoir: 1} : {}"
-                   routerLinkActive="active"
-                   [queryParamsHandling]="'merge'"
-                   (click)="selectItem(childItem)">
+                <a
+                  class="pl-2 border-l border-l-slate-300 hover:text-slate-400  hover:border-l-slate-400 active:text-white  active:border-l-white"
+                  [routerLink]="childItem.path == '' ? null : (item.path || '') + (childItem.path || '')"
+                  [href]="childItem.externalLink"
+                  [queryParams]="item.path.includes('water') && !selectedReservoir ? {reservoir: 1} : {}"
+                  routerLinkActive="active"
+                  [queryParamsHandling]="'merge'"
+                  (click)="selectItem(childItem)">
                   {{ childItem.name }}
                 </a>
               </li>
