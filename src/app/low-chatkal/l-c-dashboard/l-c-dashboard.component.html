@@ -1,6 +1,27 @@
 <div class="grid grid-cols-2 px-12 gap-4">
   <app-card-wrapper>
     <app-card-header [title]="'Tu\'gon va GES'" slot="header"></app-card-header>
+    <div class="flex-1 flex flex-col space-y-2" slot="body">
+      <div class="grid grid-cols-4 items-center justify-items-center">
+        <div class="grid grid-rows-2 w-fit">
+          <p>H<sub>yb</sub> = 930.0 m</p>
+          <p>H<sub>pb</sub> = 920.0 m</p>
+        </div>
+        <div class="grid grid-rows-2 w-fit">
+          <p>H<sub>bos</sub> = 10.0 m</p>
+          <p>Q<sub>GES</sub> = 30 m<sup>3</sup>/sek</p>
+        </div>
+        <div class="grid grid-rows-2 w-fit">
+          <p>Q<sub>per</sub> = 100 m<sup>3</sup>/sek</p>
+          <p>Q<sub>pro</sub> = 10 m<sup>3</sup>/sek</p>
+        </div>
+        <div class="grid grid-rows-3 w-fit">
+          <p>Q<sub>kel</sub> = 35 m<sup>3</sup>/sek</p>
+          <p>W = 45 mln.m<sup>3</sup></p>
+          <p>Q<sub>chiq</sub> = 140 m<sup>3</sup>/sek</p>
+        </div>
+      </div>
+    </div>
   </app-card-wrapper>
   <app-card-wrapper>
     <app-card-header [title]="'Tahliliy ma\'lumotlar'" slot="header"></app-card-header>
