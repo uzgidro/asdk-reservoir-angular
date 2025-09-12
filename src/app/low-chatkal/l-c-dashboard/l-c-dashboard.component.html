@@ -37,6 +37,36 @@
   </app-card-wrapper>
   <app-card-wrapper>
     <app-card-header [title]="'Zatvorlar'" slot="header"></app-card-header>
+    <div class="flex-1 flex flex-row space-x-2 items-center justify-between" slot="body">
+      <img alt="Zatvor" src="assets/img/zatvor.png" style="width: 60%;"/>
+
+      <div class="grid grid-cols-2 gap-8 items-center">
+        <div class="grid grid-rows-2 w-fit">
+          <p>L<sub>1</sub> = 0/4500</p>
+          <p>Q<sub>1</sub> = 0 m<sup>3</sup>/sek</p>
+        </div>
+        <div class="grid grid-rows-2 w-fit">
+          <p>L<sub>2</sub> = 0/4500</p>
+          <p>Q<sub>2</sub> = 0 m<sup>3</sup>/sek</p>
+        </div>
+        <div class="grid grid-rows-2 w-fit">
+          <p>L<sub>3</sub> = 1000/4500</p>
+          <p>Q<sub>3</sub> = 30 m<sup>3</sup>/sek</p>
+        </div>
+        <div class="grid grid-rows-2 w-fit">
+          <p>L<sub>4</sub> = 2000/4500</p>
+          <p>Q<sub>4</sub> = 60 m<sup>3</sup>/sek</p>
+        </div>
+        <div class="grid grid-rows-2 w-fit">
+          <p>L<sub>p-5</sub> = 2500/5000</p>
+          <p>Q<sub>p-5</sub> = 60 m<sup>3</sup>/sek</p>
+        </div>
+        <div class="grid grid-rows-2 w-fit">
+          <p>L<sub>krz</sub> = 2500/5000</p>
+          <p>Q<sub>krz</sub> = 60 m<sup>3</sup>/sek</p>
+        </div>
+      </div>
+    </div>
   </app-card-wrapper>
   <app-card-wrapper>
     <app-card-header [title]="'MODSNOW'" slot="header"></app-card-header>
