@@ -1,9 +1,9 @@
 nav {
-  @apply grid grid-cols-3 w-screen px-4 py-3 items-center text-slate-300 bg-slate-900 border-b border-slate-400
+  @apply grid grid-cols-4 w-screen px-4 py-3 items-center text-slate-300 bg-slate-900 border-b border-slate-400
 }
 
 :host ::ng-deep ul {
-  @apply flex space-x-5 text-sm w-full justify-center
+  @apply col-span-2 flex space-x-5 text-sm w-full justify-center
 }
 
 :host ::ng-deep ul li a {
