@@ -1,8 +1,17 @@
 <div class="grid grid-cols-2 px-12 gap-4">
   <app-card-wrapper>
     <app-card-header [title]="'Tu\'gon va GES'" slot="header"></app-card-header>
-    <div class="flex-1 flex flex-col space-y-2" slot="body">
-      <div class="grid grid-cols-4 items-center justify-items-center">
+    <div class="flex-1 flex flex-row space-x-2 items-center" slot="body">
+      <div class="flex-1" slot="body">
+        <p-galleria [circular]="true" [showIndicators]="true" [showThumbnails]="false"
+                    [value]="images">
+          <ng-template let-item pTemplate="item">
+            <img [alt]="item.alt" [src]="item.itemImageSrc" style="width: 60%;"/>
+          </ng-template>
+        </p-galleria>
+      </div>
+
+      <div class="grid grid-rows-4 gap-4 items-center">
         <div class="grid grid-rows-2 w-fit">
           <p>H<sub>yb</sub> = 930.0 m</p>
           <p>H<sub>pb</sub> = 920.0 m</p>

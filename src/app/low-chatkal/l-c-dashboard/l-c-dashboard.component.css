@@ -1,0 +1,7 @@
+:host ::ng-deep .p-galleria-indicators .p-galleria-indicator button {
+  @apply bg-slate-500;
+}
+
+:host ::ng-deep .p-galleria-indicators .p-galleria-indicator.p-highlight button {
+  @apply bg-cyan-400;
+}

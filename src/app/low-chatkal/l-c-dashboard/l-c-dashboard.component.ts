@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GalleriaModule} from "primeng/galleria";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
 
@@ -7,11 +8,30 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
   standalone: true,
   imports: [
     CardWrapperComponent,
-    CardHeaderComponent
+    CardHeaderComponent,
+    GalleriaModule,
   ],
   templateUrl: './l-c-dashboard.component.html',
-  styleUrl: './l-c-dashboard.component.css'
+  styleUrls: ['./l-c-dashboard.component.css']
 })
-export class LCDashboardComponent {
+export class LCDashboardComponent implements OnInit {
+  images: any[] | undefined;
 
+  ngOnInit() {
+    // В реальном приложении пути к изображениям будут вести на ваши файлы в /assets
+    this.images = [
+      {
+        itemImageSrc: 'assets/img/ges.png',
+        alt: 'GES',
+      },
+      {
+        itemImageSrc: 'assets/img/promiv.png',
+        alt: 'Promiv',
+      },
+      {
+        itemImageSrc: 'assets/img/sbros.png',
+        alt: 'Sbros',
+      }
+    ];
+  }
 }
