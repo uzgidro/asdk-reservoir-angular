@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GalleriaModule} from "primeng/galleria";
 import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wrapper.component";
 import {CardHeaderComponent} from "../../shared/component/card-header/card-header.component";
+import {ReservoirAnalyticsComponent} from "../../reservoir/reservoir-analytics/reservoir-analytics.component";
 
 @Component({
   selector: 'app-l-c-dashboard',
@@ -10,6 +11,7 @@ import {CardHeaderComponent} from "../../shared/component/card-header/card-heade
     CardWrapperComponent,
     CardHeaderComponent,
     GalleriaModule,
+    ReservoirAnalyticsComponent,
   ],
   templateUrl: './l-c-dashboard.component.html',
   styleUrls: ['./l-c-dashboard.component.css']
