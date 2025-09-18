@@ -1,4 +1,4 @@
-<div class="grid grid-cols-6 grid-rows-3 h-full w-full gap-4">
+<div *ngIf="!isModule; else single" class="grid grid-cols-6 grid-rows-3 h-full w-full gap-4">
   <!-- Chart with buttons -->
   <app-card-wrapper class="col-span-5 row-span-2">
     <div *ngIf="category == 'income'" [id]="id" slot="body" class="flex flex-1"></div>
@@ -221,43 +221,50 @@
             O'rtacha ko'p yillik
           </td>
           <td
-          [ngClass]="{
+            [ngClass]="{
          'bg-blue-600': avg.display,
-         'text-blue-600': !avg.display}">{{ (avg.value) | number: '.0-0' }}</td>
+         'text-blue-600': !avg.display}">{{ (avg.value) | number: '.0-0' }}
+          </td>
         </tr>
         <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)">
           <td
             [ngClass]="{
           'bg-cyan-600': tenAvg.display,
-          'text-cyan-600': !tenAvg.display}">O'rtacha 10 yil</td>
+          'text-cyan-600': !tenAvg.display}">O'rtacha 10 yil
+          </td>
           <td
             [ngClass]="{
           'bg-cyan-600': tenAvg.display,
-          'text-cyan-600': !tenAvg.display}">{{ (tenAvg.value) | number: '.0-0' }}</td>
+          'text-cyan-600': !tenAvg.display}">{{ (tenAvg.value) | number: '.0-0' }}
+          </td>
         </tr>
         <tr
           *ngIf="max"
           (click)="changeVisibility(max.id)">
           <td
-          [ngClass]="{
+            [ngClass]="{
           'bg-green-600': max.display,
-          'text-green-600':!max.display}">Maksimal</td>
+          'text-green-600':!max.display}">Maksimal
+          </td>
           <td
-          [ngClass]="{
+            [ngClass]="{
           'bg-green-600': max.display,
-          'text-green-600':!max.display}">{{ (max.value) | number: '.0-0' }}</td>
+          'text-green-600':!max.display}">{{ (max.value) | number: '.0-0' }}
+          </td>
         </tr>
         <tr
           *ngIf="min"
           (click)="changeVisibility(min.id)">
           <td
-          [ngClass]="{
+            [ngClass]="{
          'bg-red-600': min.display,
-         'text-red-600':!min.display}">Minimal</td>
+         'text-red-600':!min.display}">Minimal
+          </td>
           <td
-          [ngClass]="{
+            [ngClass]="{
          'bg-red-600': min.display,
-         'text-red-600':!min.display}">{{ (min.value) | number: '.0-0' }}</td>
+         'text-red-600':!min.display}">{{ (min.value) | number: '.0-0' }}
+          </td>
         </tr>
         </tbody>
       </table>
@@ -265,3 +272,7 @@
   </app-card-wrapper>
   <!-- / Additional table -->
 </div>
+
+<ng-template #single>
+  <div [id]="id" slot="body" class="h-full w-full"></div>
+</ng-template>

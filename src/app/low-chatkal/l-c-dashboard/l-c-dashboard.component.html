@@ -1,12 +1,12 @@
-<div class="grid grid-cols-2 grid-rows-2 px-12 gap-4 h-screen text-xl">
+<div class="grid grid-cols-2 grid-rows-2 px-12 gap-4 h-full w-full text-xl">
   <app-card-wrapper>
     <app-card-header [title]="'Tu\'gon va GES'" slot="header"></app-card-header>
-    <div class="flex-1 flex flex-row space-x-2 items-center overflow-y-auto" slot="body">
+    <div class="flex-1 flex flex-row space-x-2 items-center" slot="body">
       <div class="flex-1">
         <p-galleria [circular]="true" [showIndicators]="true" [showThumbnails]="false"
                     [value]="images">
           <ng-template let-item pTemplate="item">
-            <img [alt]="item.alt" [src]="item.itemImageSrc" style="width: 100%;"/>
+            <img [alt]="item.alt" [src]="item.itemImageSrc" style="width: 80%;"/>
           </ng-template>
         </p-galleria>
       </div>
@@ -34,13 +34,13 @@
   </app-card-wrapper>
   <app-card-wrapper>
     <app-card-header [title]="'Tahliliy ma\'lumotlar'" slot="header"></app-card-header>
-    <div slot="body" class="overflow-y-auto">
-      <app-reservoir-analytics></app-reservoir-analytics>
+    <div slot="body" class="w-full h-full">
+      <app-reservoir-analytics [isModule]="true"></app-reservoir-analytics>
     </div>
   </app-card-wrapper>
   <app-card-wrapper>
     <app-card-header [title]="'Zatvorlar'" slot="header"></app-card-header>
-    <div class="flex-1 flex flex-row space-x-2 items-center justify-between overflow-y-auto" slot="body">
+    <div class="flex-1 flex flex-row space-x-2 items-center justify-between" slot="body">
       <img alt="Zatvor" src="assets/img/zatvor.png" style="width: 60%;"/>
 
       <div class="grid grid-cols-2 gap-8 items-center">
@@ -73,7 +73,7 @@
   </app-card-wrapper>
   <app-card-wrapper>
     <app-card-header [title]="'MODSNOW'" slot="header"></app-card-header>
-    <div slot="body" class="flex flex-row flex-1 gap-4 overflow-y-auto">
+    <div slot="body" class="flex flex-row flex-1 gap-4 overflow-y-hidden">
       <!--      <img src="assets/img/lc-cov.jpg" alt="Cover" style="width: 40%; height: auto;">-->
       <img src="assets/img/lc-dyn.jpg" alt="Dynamics" style="width: 100%; object-fit: contain;">
     </div>

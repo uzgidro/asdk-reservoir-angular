@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, NgZone, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {ComplexValueResponse, ValueResponse} from "../../shared/response/values-response";
@@ -26,6 +26,7 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
 export class ReservoirAnalyticsComponent
   extends Chart
   implements AfterViewInit {
+  @Input() public isModule : boolean = false
 
   protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
