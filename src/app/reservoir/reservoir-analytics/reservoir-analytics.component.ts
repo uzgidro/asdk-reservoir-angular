@@ -80,7 +80,8 @@ export class ReservoirAnalyticsComponent
     this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        if (value['reservoir'] == undefined) {
+        const reservoirId = value['reservoir']
+        if (reservoirId == undefined) {
           this.zone.run(async () => {
             await this.router.navigate([], {
               relativeTo: this.activatedRoute,
@@ -89,15 +90,19 @@ export class ReservoirAnalyticsComponent
             })
           })
         }
-
-        this.api.getReservoirById(value['reservoir']).subscribe({
+        this.api.getReservoirById(reservoirId).subscribe({
           next: (response: ReservoirResponse) => {
             this.reservoirId = response.id
             this.reservoirName = response.name
           }
         })
         this.clearSeries()
-        this.configureData(value['reservoir'])
+
+        if (this.isModule) {
+          this.getAnalyticsData(reservoirId)
+        } else {
+          this.configureData(reservoirId)
+        }
       }
     })
   }
@@ -239,6 +244,14 @@ export class ReservoirAnalyticsComponent
 
   getColor(yearValue: YearValue) {
     return this._incomeChart.find(i => i.year?.year == yearValue.year && i.display)?.chart.color
+  }
+
+  private getAnalyticsData(reservoirId: number) {
+    this.api.getAnalytics(reservoirId).subscribe({
+      next: value => {
+        console.log(value)
+      }
+    })
   }
 
   private configureData(reservoirId: number) {

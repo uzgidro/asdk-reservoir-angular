@@ -3,6 +3,19 @@ import {ReservoirResponse} from "./reservoir-response";
 export interface ValueResponse {
   date: string
   value: number
+  avg_income: number
+}
+
+export interface AnalyticsResponse {
+  reservoir_id: number
+  reservoir: string
+  years: ValueResponse
+  current_year: ValueResponse
+  past_year: ValueResponse
+  min: ValueResponse
+  max: ValueResponse
+  avg: ValueResponse
+  ten_avg: ValueResponse
 }
 
 export interface ComplexValueResponse {
