@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, NgZone, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, NgZone, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {ComplexValueResponse, ValueResponse} from "../../shared/response/values-response";
@@ -26,6 +26,7 @@ import {CardWrapperComponent} from "../../shared/component/card-wrapper/card-wra
 export class ReservoirAnalyticsComponent
   extends Chart
   implements AfterViewInit {
+  @Input() public isModule: boolean = false
 
   protected mSecondsInDay = 0.0864
   protected years: YearValue[] = []
@@ -79,7 +80,8 @@ export class ReservoirAnalyticsComponent
     this.shuffleArray(this.colors)
     this.activatedRoute.queryParams.subscribe({
       next: value => {
-        if (value['reservoir'] == undefined) {
+        const reservoirId = value['reservoir']
+        if (reservoirId == undefined) {
           this.zone.run(async () => {
             await this.router.navigate([], {
               relativeTo: this.activatedRoute,
@@ -88,15 +90,19 @@ export class ReservoirAnalyticsComponent
             })
           })
         }
-
-        this.api.getReservoirById(value['reservoir']).subscribe({
+        this.api.getReservoirById(reservoirId).subscribe({
           next: (response: ReservoirResponse) => {
             this.reservoirId = response.id
             this.reservoirName = response.name
           }
         })
         this.clearSeries()
-        this.configureData(value['reservoir'])
+
+        if (this.isModule) {
+          this.getAnalyticsData(reservoirId)
+        } else {
+          this.configureData(reservoirId)
+        }
       }
     })
   }
@@ -232,12 +238,57 @@ export class ReservoirAnalyticsComponent
     }
   }
 
-  changeCategory(category: 'income' | 'volume') {
-    this.category = category
-  }
-
   getColor(yearValue: YearValue) {
     return this._incomeChart.find(i => i.year?.year == yearValue.year && i.display)?.chart.color
+  }
+
+  private getAnalyticsData(reservoirId: number) {
+    this.api.getAnalytics(reservoirId).subscribe({
+      next: value => {
+        this.startYear = new Date(value.years[0].date)
+        this.endYear = new Date(value.past_year[0].date)
+        this.years = value.years.flatMap(item => {
+          return {year: new Date(item.date).getFullYear(), value: item.value}
+        })
+
+        this.collectDataNew({
+          id: 'avg',
+          seriesName: `(${this.startYear?.getFullYear()} - ${this.endYear?.getFullYear()}) o'rtacha`,
+          seriesColor: 'rgb(37, 99, 235)',
+          response: value.avg
+        })
+        this.collectDataNew({
+          id: 'tenAvg',
+          seriesName: `O'rtacha 10 yil`,
+          seriesColor: 'rgb(13, 148, 136)',
+          response: value.ten_avg
+        })
+        this.collectDataNew({
+          id: 'min',
+          seriesName: `${this.getYear(value.min)} minimal`,
+          seriesColor: 'rgb(225, 29, 72)',
+          response: value.min
+        })
+        this.collectDataNew({
+          id: 'max',
+          seriesName: `${this.getYear(value.max)} maksimal`,
+          seriesColor: 'rgb(22, 163, 74)',
+          response: value.max
+        })
+        this.collectDataNew({
+          id: 'past',
+          seriesName: this.getYear(value.past_year).toString(),
+          seriesColor: 'rgb(217, 119, 6)',
+          response: value.past_year
+        })
+        this.collectDataNew({
+          id: 'current',
+          seriesName: this.getYear(value.current_year).toString(),
+          seriesColor: 'rgb(147, 51, 234)',
+          response: value.current_year
+        })
+      }
+    })
   }
 
   private configureData(reservoirId: number) {
@@ -357,6 +408,34 @@ export class ReservoirAnalyticsComponent
     }))
   }
 
+  private collectDataNew(data: {
+    id: string,
+    seriesName: string,
+    seriesColor: string,
+    response: ValueResponse[]
+  }) {
+    const chart: DateChart = {
+      seriesName: data.seriesName,
+      color: data.seriesColor,
+      data: data.response.map(item => {
+        return {value: item.value, timestamp: new Date(item.date).setFullYear(2020)}
+      })
+    }
+    this.addDateSeries([chart], {hideBullets: true})
+    const year = data.id.includes('vg') ? undefined : {
+      year: new Date(data.response[0].date).setFullYear(2020),
+      value: data.response.reduce((a, b) => a + b.value, 0)
+    }
+    this._incomeChart.push({
+      id: data.id,
+      chart: chart,
+      valuesByMonth: data.response.map(item => item.value),
+      year: year,
+      avgValue: data.response.reduce((a, b) => a + b.value, 0) / data.response.length,
+      display: true
+    })
+  }
+
   private collectData(data: {
     id: string,
     seriesName: string,
@@ -381,6 +460,10 @@ export class ReservoirAnalyticsComponent
       avgValue: this.calculateMonthlySum(data.response),
       display: true
     })
+  }
+
+  private getYear(response: ValueResponse[]) {
+    return new Date(response[0].date).getFullYear()
   }
 
   private getResponseYear(response: ComplexValueResponse) {

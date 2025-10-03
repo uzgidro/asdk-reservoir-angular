@@ -25,6 +25,9 @@ import {HydroWorksComponent} from "./hydrometer/hydro-works/hydro-works.componen
 import {ExploitationComponent} from "./exploitation/exploitation.component";
 import {OrdersComponent} from "./reservoir/orders/orders.component";
 import {TopPositionScreenComponent} from "./top-position-screen/top-position-screen.component";
+import {LowChatkalComponent} from "./low-chatkal/low-chatkal.component";
+import {LCDashboardComponent} from "./low-chatkal/l-c-dashboard/l-c-dashboard.component";
+import {LCPlotinaComponent} from "./low-chatkal/l-c-plotina/l-c-plotina.component";
 
 export const routes: Routes = [
   {
@@ -71,4 +74,11 @@ export const routes: Routes = [
       {path: 'map', component: TopPositionScreenComponent}
     ]
   },
+  {
+    path: 'lc', component: LowChatkalComponent, children: [
+      {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
+      {path: 'dashboard', component: LCDashboardComponent},
+      {path: 'reservoir', component: LCPlotinaComponent}
+    ]
+  }
 ];

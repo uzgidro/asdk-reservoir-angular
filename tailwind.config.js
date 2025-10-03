@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px',
+      },
       colors: {
         'dark-gray': '#1d1c1c',
         'deep-black': '#080e0f',
@@ -24,4 +27,3 @@ module.exports = {
   },
   plugins: [],
 }
-

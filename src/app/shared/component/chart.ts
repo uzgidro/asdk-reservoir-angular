@@ -517,40 +517,40 @@ export class Chart implements OnInit, OnDestroy {
     const months = Math.floor(days / 28);
     const years = Math.floor(days / 365);
 
-    if (seconds <= 1) {
+    if (years >= 1) {
       return {
-        timeUnit: 'second',
-        count: seconds,
+        timeUnit: 'year',
+        count: years,
       }
-    } else if (minutes <= 1) {
-      return {
-        timeUnit: 'minute',
-        count: minutes,
-      }
-    } else if (hours <= 1) {
-      return {
-        timeUnit: 'hour',
-        count: hours,
-      }
-    } else if (days <= 1) {
-      return {
-        timeUnit: 'day',
-        count: days,
-      }
-    } else if (months <= 1) {
+    } else if (months >= 1) {
       return {
         timeUnit: 'month',
         count: months,
       }
-    } else if (years <= 1) {
+    } else if (hours >= 1) {
       return {
-        timeUnit: 'year',
-        count: years,
+        timeUnit: 'hour',
+        count: hours,
+      }
+    } else if (days >= 1) {
+      return {
+        timeUnit: 'day',
+        count: days,
+      }
+    } else if (minutes >= 1) {
+      return {
+        timeUnit: 'minute',
+        count: minutes,
+      }
+    } else if (seconds >= 1) {
+      return {
+        timeUnit: 'second',
+        count: seconds,
       }
     } else {
       return {
-        timeUnit: 'year',
-        count: years,
+        timeUnit: 'millisecond',
+        count: milliseconds,
       }
     }
   }

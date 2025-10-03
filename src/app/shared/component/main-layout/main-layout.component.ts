@@ -5,6 +5,7 @@ import {SidebarModule} from "primeng/sidebar";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MenuItem} from "../../interfaces";
 import {DropDownAnimation} from "../../animation/menu-animation";
+import {VideoWrapperComponent} from "../video-wrapper/video-wrapper.component";
 
 @Component({
   selector: 'app-main-layout',
@@ -19,7 +20,8 @@ import {DropDownAnimation} from "../../animation/menu-animation";
     NgIf,
     NgForOf,
     RouterLinkActive,
-    RouterLink
+    RouterLink,
+    VideoWrapperComponent
   ],
   standalone: true,
 })

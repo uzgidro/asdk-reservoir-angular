@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpParams } from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {catchError, Observable, of} from "rxjs";
 import {
+  AnalyticsResponse,
   CategorisedArrayResponse,
   CategorisedValueResponse,
   ComplexValueResponse,
@@ -33,6 +34,7 @@ const STOCK: string = '/stock'
 const MODSNOW: string = '/modsnow'
 const COVER: string = '/cover'
 const DYNAMICS: string = '/dynamics'
+const ANALYTICS: string = '/analytics'
 
 
 @Injectable({
@@ -158,6 +160,15 @@ export class ApiService {
 
 
   // Analytics
+  getAnalytics(reservoirId: number): Observable<AnalyticsResponse> {
+    return this.http.get<AnalyticsResponse>(BASE_URL_V3 + ANALYTICS, {params: new HttpParams().set('id', reservoirId)}).pipe(
+      catchError((error) => {
+        this.messageService.add({severity: 'error', summary: 'Ошибка', detail: error.message})
+        return of({} as AnalyticsResponse);
+      })
+    )
+  }
+
   getByYearValues(reservoirId: number): Observable<ComplexValueResponse> {
     return this.http.get<ComplexValueResponse>(BASE_URL_V2 + VALUE + YEARS, {params: new HttpParams().set('id', reservoirId)}).pipe(
       catchError((error) => {

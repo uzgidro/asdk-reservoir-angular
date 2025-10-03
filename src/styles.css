@@ -12,7 +12,7 @@
 @layer base {
   * {
     font-family: 'Gilroy', sans-serif;
-    @apply text-white
+    @apply text-white text-sm 3xl:text-base;
   }
 
   p, h1, h2, h3, h4, h5, h6, th, td {
@@ -28,11 +28,11 @@
   }
 
   th {
-    @apply bg-slate-900 px-4 py-3 text-lg border border-slate-300 break-words
+    @apply bg-slate-900 px-2 py-1.5 3xl:px-4 3xl:py-3 text-sm 3xl:text-lg border border-slate-300 break-words
   }
 
   td {
-    @apply px-4 py-3 text-center break-words text-base border border-slate-300
+    @apply px-2 py-1.5 3xl:px-4 3xl:py-3 text-center break-words text-sm 3xl:text-base border border-slate-300
   }
 
   table tbody tr {
@@ -55,10 +55,6 @@
 
 .active {
   @apply text-white border-l-white hover:text-slate-400  hover:border-l-slate-400
-}
-
-.card-title {
-  @apply text-center text-3xl
 }
 
 .material-symbols-outlined {
