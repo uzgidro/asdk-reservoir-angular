@@ -508,7 +508,23 @@ export class Chart implements OnInit, OnDestroy {
   }
 
   private setTimeStep(data: DateChart[]): { timeUnit: TimeUnit, count: number } {
-    const milliseconds = Math.abs(data[0].data[1].timestamp - data[0].data[0].timestamp);
+    if (!data || data.length === 0 || !data[0].data || data[0].data.length < 2) {
+      return {timeUnit: 'day', count: 1};
+    }
+
+    const seriesData = data[0].data;
+    let milliseconds = Infinity;
+
+    for (let i = 1; i < seriesData.length; i++) {
+      const diff = Math.abs(seriesData[i].timestamp - seriesData[i - 1].timestamp);
+      if (diff > 0 && diff < milliseconds) {
+        milliseconds = diff;
+      }
+    }
+
+    if (milliseconds === Infinity) {
+      return {timeUnit: 'day', count: 1};
+    }
 
     const seconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(seconds / 60);
