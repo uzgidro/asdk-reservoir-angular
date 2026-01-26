@@ -78,26 +78,6 @@ export class MainLayoutComponent implements OnInit {
         {name: 'Xudud', path: '', externalLink: 'https://modsnow.online/'},
       ]
     },
-    {
-      name: 'Ob-havo',
-      path: '/weather'
-    },
-    {
-      name: 'Elspluatatsiya qoidalari',
-      path: '/rules',
-    },
-    {
-      name: 'Normativ hujjatlar',
-      path: '/docs',
-    },
-    {
-      name: 'Xarita',
-      path: '/map',
-    },
-    {
-      name: 'Grafik',
-      path: '/reservoir?reservoir=1',
-    },
   ];
 
 
