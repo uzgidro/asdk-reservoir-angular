@@ -1,19 +1,67 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-slate-700/30 rounded;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-cyan-500/50 rounded hover:bg-cyan-500/70;
+}
+
+/* Year item hover effect */
+.year-item:hover {
+  @apply bg-slate-700/70;
+}
+
+/* Analytics table */
+.analytics-table {
+  @apply border-collapse text-[9px] 3xl:text-[11px];
+}
+
+.analytics-table th {
+  @apply px-1 py-0.5 3xl:px-1.5 3xl:py-1 text-center font-medium text-cyan-300 border border-slate-600/50 whitespace-nowrap;
+}
+
+.analytics-table td {
+  @apply px-1 py-0.5 3xl:px-1.5 3xl:py-1 text-center border border-slate-600/30 whitespace-nowrap;
+}
+
+.analytics-table .data-row:hover {
+  filter: brightness(1.15);
+}
+
+/* Legend item */
+.legend-item {
+  @apply border border-transparent;
+}
+
+.legend-item:hover {
+  @apply border-slate-500/50;
+}
+
+/* Status colors for year list */
 .min {
-  @apply bg-red-600; /* Apply red background */
+  @apply border-l-red-500 bg-red-500/20;
 }
 
 .max {
-  @apply bg-green-600; /* Apply green background */
+  @apply border-l-green-500 bg-green-500/20;
 }
 
 .past {
-  @apply bg-amber-600; /* Apply amber background */
+  @apply border-l-amber-500 bg-amber-500/20;
 }
 
 .current {
-  @apply bg-purple-600; /* Apply purple background */
-}
-
-th,td {
-  @apply border
+  @apply border-l-purple-500 bg-purple-500/20;
 }

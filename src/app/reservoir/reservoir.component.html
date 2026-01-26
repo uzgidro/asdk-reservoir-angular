@@ -1,12 +1,12 @@
-<div class="flex flex-col h-full pt-10 px-12 overflow-y-hidden">
-  <div class="grid grid-flow-col gap-6">
-    <a class="inactive-button px-4 py-2 flex justify-center text-2xl font-light"
+<div class="flex flex-col h-full py-2 px-4 3xl:py-3 3xl:px-6 overflow-hidden">
+  <div class="grid grid-flow-col gap-2 3xl:gap-4 flex-shrink-0 mb-2">
+    <a class="inactive-button px-2 py-1 3xl:px-4 3xl:py-2 flex justify-center text-sm 3xl:text-xl font-light"
        *ngFor="let reservoir of reservoirs"
        [ngClass]="{'active-button': selectedReservoirId == reservoir.id}"
        (click)="changeReservoir(reservoir.id)">{{ reservoir.name }}</a>
   </div>
 
-  <div class="flex-1 pt-6 pb-10 px-2 overflow-y-auto">
+  <div class="flex-1 min-h-0 overflow-hidden">
     <router-outlet></router-outlet>
   </div>
 </div>

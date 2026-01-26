@@ -11,7 +11,6 @@ import {Observable} from "rxjs";
 import {ModsnowImg} from "../../shared/interfaces";
 import {ApiService} from "../../service/api.service";
 import {LoaderComponent} from "../../shared/component/loader/loader.component";
-import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-modsnow-daily',
@@ -23,8 +22,7 @@ import {NgOptimizedImage} from "@angular/common";
     FormsModule,
     CardHeaderComponent,
     CardWrapperComponent,
-    LoaderComponent,
-    NgOptimizedImage
+    LoaderComponent
   ],
   templateUrl: './modsnow-daily.component.html',
   standalone: true,

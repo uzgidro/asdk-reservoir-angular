@@ -28,11 +28,21 @@
   }
 
   th {
-    @apply bg-slate-900 px-2 py-1.5 3xl:px-4 3xl:py-3 text-sm 3xl:text-lg border border-slate-300 break-words
+    @apply bg-slate-900 px-1 py-0.5 3xl:px-2 3xl:py-1 text-[10px] 3xl:text-xs border border-slate-300 break-words
   }
 
   td {
-    @apply px-2 py-1.5 3xl:px-4 3xl:py-3 text-center break-words text-sm 3xl:text-base border border-slate-300
+    @apply px-1 py-0.5 3xl:px-2 3xl:py-1 text-center break-words text-[10px] 3xl:text-xs border border-slate-300
+  }
+
+  /* Dashboard table - stretches to fill container */
+  table.dashboard-table {
+    @apply h-full table-fixed;
+  }
+
+  table.dashboard-table th,
+  table.dashboard-table td {
+    @apply px-0.5 py-0 3xl:px-1 3xl:py-0.5 text-[9px] 3xl:text-[11px] leading-tight;
   }
 
   table tbody tr {

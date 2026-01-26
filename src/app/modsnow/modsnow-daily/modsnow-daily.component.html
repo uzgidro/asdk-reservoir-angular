@@ -1,29 +1,26 @@
-<app-card-wrapper>
-  <div slot="body" class="flex flex-col justify-center px-2 py-1 flex-1">
-    <app-card-header [title]="'MODSNOW'"></app-card-header>
-    <div *ngIf="images$ | async as urls; else loader">
+<app-card-wrapper class="h-full">
+  <app-card-header slot="header" [title]="'MODSNOW'"></app-card-header>
+  <div slot="body" class="h-full min-h-0 overflow-hidden">
+    <div class="h-full" *ngIf="images$ | async as urls; else loader">
       <p-carousel [value]="urls" [numVisible]="itemCount" [numScroll]="itemCount" [circular]="true"
-                  *ngIf="urls.length > 0; else noImages">
+                  styleClass="h-full" *ngIf="urls.length > 0; else noImages">
         <ng-template let-url pTemplate="item">
-          <div class="flex flex-col justify-center mx-4 h-fit">
-            <h2 class="text-2xl font-medium text-center">{{ url.name }}</h2>
-            <div class="w-full"> <!-- Container for the image -->
-              <img [ngSrc]="url.url" [alt]="url.name" width="1527" height="907" class="m-auto">
+          <div class="flex flex-col h-full justify-center mx-2 space-y-1">
+            <h2 class="text-base 3xl:text-xl font-medium text-center flex-shrink-0">{{ url.name }}</h2>
+            <div class="flex-1 min-h-0 flex items-center justify-center overflow-hidden">
+              <img [src]="url.url" [alt]="url.name" class="max-w-full max-h-full object-contain">
             </div>
           </div>
-
         </ng-template>
       </p-carousel>
     </div>
   </div>
 </app-card-wrapper>
 
-
 <ng-template #loader>
   <app-loader size="xl"></app-loader>
 </ng-template>
 
-<!-- Template for when no images are found -->
 <ng-template #noImages>
   <p>No images found.</p>
 </ng-template>
