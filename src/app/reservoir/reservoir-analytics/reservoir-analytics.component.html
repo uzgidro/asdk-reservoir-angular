@@ -145,69 +145,69 @@
     <div class="w-48 3xl:w-56 bg-slate-800/90 rounded-lg shadow-lg shadow-cyan-500/30 p-2 3xl:p-3 flex flex-col gap-1.5 overflow-y-auto custom-scrollbar">
       <span class="text-[10px] 3xl:text-xs text-slate-400 uppercase tracking-wider mb-1">Legenda</span>
 
-      <div *ngIf="startYear && endYear"
+      <div *ngIf="startYear && endYear && avg"
            (click)="changeVisibility(avg.id)"
            class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
-           [ngClass]="{'bg-blue-600/80 shadow-md': avg?.display, 'bg-slate-700/50 hover:bg-slate-700': !avg?.display}">
+           [ngClass]="{'bg-blue-600/80 shadow-md': avg.display, 'bg-slate-700/50 hover:bg-slate-700': !avg.display}">
         <div class="w-2 h-2 rounded-full bg-blue-500"></div>
         <div class="flex-1 min-w-0">
           <p class="text-[10px] 3xl:text-xs font-medium truncate">O'rtacha</p>
-          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ avg?.value | number: '.0-0' }}</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ avg.value | number: '.0-0' }}</p>
         </div>
       </div>
 
       <div *ngIf="tenAvg"
            (click)="changeVisibility(tenAvg.id)"
            class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
-           [ngClass]="{'bg-teal-600/80 shadow-md': tenAvg?.display, 'bg-slate-700/50 hover:bg-slate-700': !tenAvg?.display}">
+           [ngClass]="{'bg-teal-600/80 shadow-md': tenAvg.display, 'bg-slate-700/50 hover:bg-slate-700': !tenAvg.display}">
         <div class="w-2 h-2 rounded-full bg-teal-500"></div>
         <div class="flex-1 min-w-0">
           <p class="text-[10px] 3xl:text-xs font-medium truncate">10 yil o'rtacha</p>
-          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ tenAvg?.value | number: '.0-0' }}</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ tenAvg.value | number: '.0-0' }}</p>
         </div>
       </div>
 
       <div *ngIf="max"
            (click)="changeVisibility(max.id)"
            class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
-           [ngClass]="{'bg-green-600/80 shadow-md': max?.display, 'bg-slate-700/50 hover:bg-slate-700': !max?.display}">
+           [ngClass]="{'bg-green-600/80 shadow-md': max.display, 'bg-slate-700/50 hover:bg-slate-700': !max.display}">
         <div class="w-2 h-2 rounded-full bg-green-500"></div>
         <div class="flex-1 min-w-0">
-          <p class="text-[10px] 3xl:text-xs font-medium truncate">Maksimal ({{ max?.year }})</p>
-          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ max?.value | number: '.0-0' }}</p>
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">Maksimal ({{ max.year }})</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ max.value | number: '.0-0' }}</p>
         </div>
       </div>
 
       <div *ngIf="min"
            (click)="changeVisibility(min.id)"
            class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
-           [ngClass]="{'bg-red-600/80 shadow-md': min?.display, 'bg-slate-700/50 hover:bg-slate-700': !min?.display}">
+           [ngClass]="{'bg-red-600/80 shadow-md': min.display, 'bg-slate-700/50 hover:bg-slate-700': !min.display}">
         <div class="w-2 h-2 rounded-full bg-red-500"></div>
         <div class="flex-1 min-w-0">
-          <p class="text-[10px] 3xl:text-xs font-medium truncate">Minimal ({{ min?.year }})</p>
-          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ min?.value | number: '.0-0' }}</p>
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">Minimal ({{ min.year }})</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ min.value | number: '.0-0' }}</p>
         </div>
       </div>
 
       <div *ngIf="past"
            (click)="changeVisibility(past.id)"
            class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
-           [ngClass]="{'bg-amber-600/80 shadow-md': past?.display, 'bg-slate-700/50 hover:bg-slate-700': !past?.display}">
+           [ngClass]="{'bg-amber-600/80 shadow-md': past.display, 'bg-slate-700/50 hover:bg-slate-700': !past.display}">
         <div class="w-2 h-2 rounded-full bg-amber-500"></div>
         <div class="flex-1 min-w-0">
-          <p class="text-[10px] 3xl:text-xs font-medium truncate">{{ past?.year }} yil</p>
-          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ past?.value | number: '.0-0' }}</p>
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">{{ past.year }} yil</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ past.value | number: '.0-0' }}</p>
         </div>
       </div>
 
       <div *ngIf="current"
            (click)="changeVisibility(current.id)"
            class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
-           [ngClass]="{'bg-purple-600/80 shadow-md': current?.display, 'bg-slate-700/50 hover:bg-slate-700': !current?.display}">
+           [ngClass]="{'bg-purple-600/80 shadow-md': current.display, 'bg-slate-700/50 hover:bg-slate-700': !current.display}">
         <div class="w-2 h-2 rounded-full bg-purple-500"></div>
         <div class="flex-1 min-w-0">
-          <p class="text-[10px] 3xl:text-xs font-medium truncate">{{ current?.year }} yil</p>
-          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ current?.value | number: '.0-0' }}</p>
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">{{ current.year }} yil</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ current.value | number: '.0-0' }}</p>
         </div>
       </div>
     </div>
