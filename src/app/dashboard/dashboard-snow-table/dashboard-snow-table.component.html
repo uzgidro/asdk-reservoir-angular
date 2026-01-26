@@ -1,42 +1,45 @@
-<table *ngIf="data.length !== 0; else loader">
-  <thead>
-  <tr>
-    <th rowspan="2">Suv omborlar</th>
-    <th rowspan="2" colspan="2">Qor bilan qoplanganlik, %</th>
-    <th colspan="8">Balandliklar bo'yicha, m</th>
-  </tr>
-  <tr>
-    <th>1000 - 1500</th>
-    <th>1500 - 2000</th>
-    <th>2000 - 2500</th>
-    <th>2500 - 3000</th>
-    <th>3000 - 3500</th>
-    <th>3500 - 4000</th>
-    <th>4000 - 4500</th>
-    <th>4500 - 5000</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let item of data">
+<div class="h-full flex flex-col" *ngIf="data.length !== 0; else loader">
+  <table class="dashboard-table">
+    <thead>
     <tr>
-      <td class="bg-slate-800" rowspan="3">{{item.name}}</td> <!-- name -->
-      <td class="current-year">{{ item.current_year }}</td>
-      <td class="current-year">{{ item.current_percent }}</td>
-      <td *ngFor="let val of item.current_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
+      <th rowspan="2">Suv omborlar</th>
+      <th rowspan="2" colspan="2">Qor qoplanganligi, %</th>
+      <th colspan="9">Balandliklar, m</th>
     </tr>
     <tr>
-      <td class="current-year">{{ item.past_year }}</td>
-      <td class="current-year">{{ item.past_percent }}</td>
-      <td *ngFor="let val of item.past_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
+      <th>0-1000</th>
+      <th>1000-1500</th>
+      <th>1500-2000</th>
+      <th>2000-2500</th>
+      <th>2500-3000</th>
+      <th>3000-3500</th>
+      <th>3500-4000</th>
+      <th>4000-4500</th>
+      <th>4500-5000</th>
     </tr>
-    <tr>
-      <td class="odd-row difference">Farqi</td> <!-- year -->
-      <td class="odd-row difference">{{ item.diff_percent }}</td>
-      <td *ngFor="let val of item.diff_data" class="odd-row difference">{{ val !== 0 ? val : '' }}</td>
-    </tr>
-  </ng-container>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let item of data">
+      <tr>
+        <td class="bg-slate-800" rowspan="3">{{item.name}}</td>
+        <td class="current-year">{{ item.current_year }}</td>
+        <td class="current-year">{{ item.current_percent }}</td>
+        <td *ngFor="let val of item.current_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
+      </tr>
+      <tr>
+        <td class="current-year">{{ item.past_year }}</td>
+        <td class="current-year">{{ item.past_percent }}</td>
+        <td *ngFor="let val of item.past_data" class="current-year">{{ val !== 0 ? val : '' }}</td>
+      </tr>
+      <tr>
+        <td class="odd-row difference">Farqi</td>
+        <td class="odd-row difference">{{ item.diff_percent }}</td>
+        <td *ngFor="let val of item.diff_data" class="odd-row difference">{{ val !== 0 ? val : '' }}</td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
 
 <ng-template #loader>
   <app-loader size="xl"></app-loader>

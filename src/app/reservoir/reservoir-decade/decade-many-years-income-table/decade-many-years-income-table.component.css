@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+th, td {
+  @apply text-[9px] 3xl:text-[11px] px-0.5 py-0
+}
