@@ -1,278 +1,219 @@
-<div *ngIf="!isModule; else single" class="grid grid-cols-6 grid-rows-3 h-full w-full gap-4">
-  <!-- Chart with buttons -->
-  <app-card-wrapper class="col-span-5 row-span-2">
-    <div *ngIf="category == 'income'" [id]="id" slot="body" class="flex flex-1"></div>
-  </app-card-wrapper>
-  <!-- /Chart with buttons -->
+<div *ngIf="!isModule; else single" class="grid grid-cols-6 grid-rows-[1fr_auto] h-full w-full gap-2 3xl:gap-3">
 
-  <!-- Year select -->
-  <app-card-wrapper class="row-span-2">
-    <div slot="body" class="overflow-y-auto">
-      <table>
-        <thead>
-        <tr>
-          <th>
-            <input type="checkbox" [checked]="isYearsChecked(years)" class="w-4 h-4 mr-2 mt-2"
-                   (click)="toggleYears(years)">
-            Yil
-          </th>
-          <th>Suv kelishi, mln.m³</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of years" (click)="yearSelect(item.year)">
-          <td
-            [ngStyle]="{'background-color': getColor(item)}"
-            [ngClass]="{
-    'min': min?.year == item.year,
-    'max': max?.year == item.year,
-    'past': past?.year == item.year,
-    'current': current?.year == item.year,
-    }"
-          >
-            {{ item.year }}
-          </td>
-          <td
-            [ngStyle]="{'background-color': getColor(item)}"
-            [ngClass]="{
-     'min': min?.year == item.year,
-     'max': max?.year == item.year,
-     'past': past?.year == item.year,
-     'current': current?.year == item.year,
-     }">
-            {{ item.value | number: '.0-0' }}
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </app-card-wrapper>
-  <!-- /Year select -->
+  <!-- Chart -->
+  <div class="col-span-5 row-span-1 bg-slate-800/90 rounded-lg shadow-lg shadow-cyan-500/30 p-3 min-h-0 overflow-hidden">
+    <div *ngIf="category == 'income'" [id]="id" class="h-full w-full"></div>
+  </div>
 
-  <!-- Info table -->
-  <app-card-wrapper class="col-span-5">
-    <div slot="body" class="overflow-y-auto">
-      <table>
-        <thead>
-        <tr>
-          <th rowspan="2">Yillar</th>
-          <th colspan="12">Oylar, mln.m³</th>
-          <th rowspan="2">O'rtacha kelishi, m³/s</th>
-          <th rowspan="2">Yillik kelishi, mln.m³</th>
-          <th rowspan="2">O'rtacha ko'rsatkichga kelsak, %</th>
-        </tr>
-        <tr>
-          <th>Yan.</th>
-          <th>Fev.</th>
-          <th>Mart</th>
-          <th>Apr.</th>
-          <th>May</th>
-          <th>Iyun</th>
-          <th>Iyul</th>
-          <th>Avg.</th>
-          <th>Sen.</th>
-          <th>Okt.</th>
-          <th>Noy.</th>
-          <th>Dek.</th>
-        </tr>
-        </thead>
-        <tbody *ngIf="avg">
-        <tr
-          *ngIf="startYear && endYear && avg.display"
-          (click)="changeVisibility(avg.id)"
-          [ngStyle]="{'background-color': 'oklch(0.546 0.245 262.881)'}">
-          <td
-            *ngIf="startYear && endYear" class="text-sm p-1">
-            O'rtacha ko'p yillik
-          </td>
-          <td
-            *ngFor="let val of avg.byMonth">
-            {{ val | number: '.0-0' }}
-          </td>
-          <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
-          <td>{{ (avg.value) | number: '.0-0' }}</td>
-          <td>100</td>
-        </tr>
-        <tr
-          *ngIf="max && max.display"
-          (click)="changeVisibility(max.id)"
-          [ngStyle]="{'background-color': 'oklch(0.627 0.194 149.214)'}">
-          <td class="p-1">
-            Maksimal
-          </td>
-          <td
-            *ngFor="let val of max.byMonth">
-            {{ val | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}
-          </td>
-          <td>{{ (max.value) | number: '.0-0' }}</td>
-          <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>
-        </tr>
-        <tr
-          *ngIf="min && min.display"
-          (click)="changeVisibility(min.id)"
-          [ngStyle]="{'background-color': 'oklch(0.586 0.253 17.585)'}">
-          <td class="p-1">
-            Minimal
-          </td>
-          <td
-            *ngFor="let val of min.byMonth">
-            {{ val | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}
-          </td>
-          <td>{{ (min.value) | number: '.0-0' }}</td>
-          <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
-        </tr>
-        <tr
-          *ngIf="tenAvg && tenAvg.display"
-          (click)="changeVisibility(tenAvg.id)"
-          [ngStyle]="{'background-color': 'oklch(0.609 0.126 221.723)'}">
-          <td>O'rtacha 10 yil</td>
-          <td
-            *ngFor="let val of tenAvg.byMonth">
-            {{ val | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (tenAvg.value / mSecondsInDay / 360) | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (tenAvg.value) | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (tenAvg.value * 100 / avg.value) | number: '.0-0' }}
-          </td>
-        </tr>
-        <tr
-          *ngIf="past && past.display"
-          (click)="changeVisibility(past.id)"
-          [ngStyle]="{'background-color': 'oklch(0.666 0.179 58.318)'}">
-          <td>O'tgan yil o'rtacha</td>
-          <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
-          <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
-          <td>{{ (past.value) | number: '.0-0' }}</td>
-          <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
-        </tr>
-        <tr
-          *ngIf="current && current.display"
-          (click)="changeVisibility(current.id)"
-          [ngStyle]="{'background-color': 'oklch(0.558 0.288 302.321)'}">
-          <td>{{ current.year }}</td>
-          <td
-            *ngFor="let val of current.byMonth">
-            {{ val | number: '.0-0' }}
-          </td>
-          <td
-            *ngFor="let _ of incomeChartLabels.slice(current.byMonth.length)">
-          </td>
-          <td>
-            {{ (current.value / mSecondsInDay / 360) | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (current.value) | number: '.0-0' }}
-          </td>
-          <td>{{ (current.value * 100 / avg.value) | number: '.0-0' }}</td>
-        </tr>
-        <tr
-          *ngFor="let item of selected"
-          (click)="changeVisibility(item.id)"
-          [ngStyle]="{'background-color': item.color}">
-          <td>{{ item.year }}</td>
-          <td
-            *ngFor="let val of item.byMonth">
-            {{ val | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (item.value / mSecondsInDay / 360) | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (item.value) | number: '.0-0' }}
-          </td>
-          <td>
-            {{ (item.value * 100 / avg.value) | number: '.0-0' }}
-          </td>
-        </tr>
-        </tbody>
-      </table>
+  <!-- Year selector - modern scrollable list -->
+  <div class="row-span-1 bg-slate-800/90 rounded-lg shadow-lg shadow-cyan-500/30 flex flex-col min-h-0 overflow-hidden">
+    <div class="flex items-center justify-between px-3 py-2 border-b border-cyan-500/30 flex-shrink-0">
+      <span class="text-xs 3xl:text-sm font-medium text-cyan-300">Yillar</span>
+      <label class="flex items-center gap-1 cursor-pointer">
+        <input type="checkbox" [checked]="isYearsChecked(years)"
+               (click)="toggleYears(years)"
+               class="w-3 h-3 rounded border-cyan-500 text-cyan-500 focus:ring-cyan-500/50">
+        <span class="text-[10px] text-slate-400">Hammasi</span>
+      </label>
     </div>
-  </app-card-wrapper>
-  <!-- / Info table -->
+    <div class="flex-1 overflow-y-auto custom-scrollbar">
+      <div *ngFor="let item of years"
+           (click)="yearSelect(item.year)"
+           class="year-item flex items-center justify-between px-3 py-1.5 cursor-pointer transition-all duration-200 border-l-2"
+           [ngClass]="{
+             'border-l-red-500 bg-red-500/20': min?.year == item.year,
+             'border-l-green-500 bg-green-500/20': max?.year == item.year,
+             'border-l-amber-500 bg-amber-500/20': past?.year == item.year,
+             'border-l-purple-500 bg-purple-500/20': current?.year == item.year,
+             'border-l-transparent hover:border-l-cyan-500/50 hover:bg-slate-700/50': !min?.year && !max?.year && !past?.year && !current?.year
+           }"
+           [ngStyle]="{'border-left-color': getColor(item), 'background-color': getColor(item) ? getColor(item) + '33' : ''}">
+        <span class="text-xs 3xl:text-sm font-medium">{{ item.year }}</span>
+        <span class="text-[10px] 3xl:text-xs text-slate-300">{{ item.value | number: '.0-0' }}</span>
+      </div>
+    </div>
+  </div>
 
-  <!-- Additional table -->
-  <app-card-wrapper>
-    <div slot="body" class="overflow-y-auto">
-      <table>
-        <thead>
-        <tr>
-          <th>Yil</th>
-          <th>Yillik kelishi, mln.m³</th>
-        </tr>
-        </thead>
-        <tbody *ngIf="avg">
-        <tr
-          *ngIf="startYear && endYear"
-          (click)="changeVisibility(avg.id) ">
-          <td [ngClass]="{
-         'bg-blue-600': avg.display,
-         'text-blue-600': !avg.display}">
-            O'rtacha ko'p yillik
-          </td>
-          <td
-            [ngClass]="{
-         'bg-blue-600': avg.display,
-         'text-blue-600': !avg.display}">{{ (avg.value) | number: '.0-0' }}
-          </td>
-        </tr>
-        <tr *ngIf="tenAvg" (click)="changeVisibility(tenAvg.id)">
-          <td
-            [ngClass]="{
-          'bg-cyan-600': tenAvg.display,
-          'text-cyan-600': !tenAvg.display}">O'rtacha 10 yil
-          </td>
-          <td
-            [ngClass]="{
-          'bg-cyan-600': tenAvg.display,
-          'text-cyan-600': !tenAvg.display}">{{ (tenAvg.value) | number: '.0-0' }}
-          </td>
-        </tr>
-        <tr
-          *ngIf="max"
-          (click)="changeVisibility(max.id)">
-          <td
-            [ngClass]="{
-          'bg-green-600': max.display,
-          'text-green-600':!max.display}">Maksimal
-          </td>
-          <td
-            [ngClass]="{
-          'bg-green-600': max.display,
-          'text-green-600':!max.display}">{{ (max.value) | number: '.0-0' }}
-          </td>
-        </tr>
-        <tr
-          *ngIf="min"
-          (click)="changeVisibility(min.id)">
-          <td
-            [ngClass]="{
-         'bg-red-600': min.display,
-         'text-red-600':!min.display}">Minimal
-          </td>
-          <td
-            [ngClass]="{
-         'bg-red-600': min.display,
-         'text-red-600':!min.display}">{{ (min.value) | number: '.0-0' }}
-          </td>
-        </tr>
-        </tbody>
-      </table>
+  <!-- Bottom section: Info table + Legend -->
+  <div class="col-span-6 flex gap-2 3xl:gap-3 min-h-0" style="max-height: 35%;">
+
+    <!-- Info table -->
+    <div class="flex-1 bg-slate-800/90 rounded-lg shadow-lg shadow-cyan-500/30 overflow-hidden flex flex-col min-h-0">
+      <div class="overflow-auto custom-scrollbar flex-1">
+        <table class="analytics-table w-full">
+          <thead class="sticky top-0 z-10">
+          <tr>
+            <th rowspan="2" class="bg-slate-900">Yillar</th>
+            <th colspan="12" class="bg-slate-900">Oylar, mln.m³</th>
+            <th rowspan="2" class="bg-slate-900">m³/s</th>
+            <th rowspan="2" class="bg-slate-900">Yillik</th>
+            <th rowspan="2" class="bg-slate-900">%</th>
+          </tr>
+          <tr>
+            <th class="bg-slate-900">I</th>
+            <th class="bg-slate-900">II</th>
+            <th class="bg-slate-900">III</th>
+            <th class="bg-slate-900">IV</th>
+            <th class="bg-slate-900">V</th>
+            <th class="bg-slate-900">VI</th>
+            <th class="bg-slate-900">VII</th>
+            <th class="bg-slate-900">VIII</th>
+            <th class="bg-slate-900">IX</th>
+            <th class="bg-slate-900">X</th>
+            <th class="bg-slate-900">XI</th>
+            <th class="bg-slate-900">XII</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="avg">
+          <tr *ngIf="startYear && endYear && avg.display"
+              (click)="changeVisibility(avg.id)"
+              class="data-row cursor-pointer hover:brightness-110 transition-all"
+              style="background-color: rgba(37, 99, 235, 0.6);">
+            <td class="font-medium">O'rtacha</td>
+            <td *ngFor="let val of avg.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (avg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td class="font-medium">{{ avg.value | number: '.0-0' }}</td>
+            <td>100</td>
+          </tr>
+          <tr *ngIf="max && max.display"
+              (click)="changeVisibility(max.id)"
+              class="data-row cursor-pointer hover:brightness-110 transition-all"
+              style="background-color: rgba(22, 163, 74, 0.6);">
+            <td class="font-medium">Maks ({{ max.year }})</td>
+            <td *ngFor="let val of max.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (max.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td class="font-medium">{{ max.value | number: '.0-0' }}</td>
+            <td>{{ (max.value * 100 / avg.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="min && min.display"
+              (click)="changeVisibility(min.id)"
+              class="data-row cursor-pointer hover:brightness-110 transition-all"
+              style="background-color: rgba(225, 29, 72, 0.6);">
+            <td class="font-medium">Min ({{ min.year }})</td>
+            <td *ngFor="let val of min.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (min.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td class="font-medium">{{ min.value | number: '.0-0' }}</td>
+            <td>{{ (min.value * 100 / avg.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="tenAvg && tenAvg.display"
+              (click)="changeVisibility(tenAvg.id)"
+              class="data-row cursor-pointer hover:brightness-110 transition-all"
+              style="background-color: rgba(13, 148, 136, 0.6);">
+            <td class="font-medium">10 yil</td>
+            <td *ngFor="let val of tenAvg.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (tenAvg.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td class="font-medium">{{ tenAvg.value | number: '.0-0' }}</td>
+            <td>{{ (tenAvg.value * 100 / avg.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="past && past.display"
+              (click)="changeVisibility(past.id)"
+              class="data-row cursor-pointer hover:brightness-110 transition-all"
+              style="background-color: rgba(217, 119, 6, 0.6);">
+            <td class="font-medium">{{ past.year }}</td>
+            <td *ngFor="let val of past.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (past.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td class="font-medium">{{ past.value | number: '.0-0' }}</td>
+            <td>{{ (past.value * 100 / avg.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngIf="current && current.display"
+              (click)="changeVisibility(current.id)"
+              class="data-row cursor-pointer hover:brightness-110 transition-all"
+              style="background-color: rgba(147, 51, 234, 0.6);">
+            <td class="font-medium">{{ current.year }}</td>
+            <td *ngFor="let val of current.byMonth">{{ val | number: '.0-0' }}</td>
+            <td *ngFor="let _ of incomeChartLabels.slice(current.byMonth.length)"></td>
+            <td>{{ (current.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td class="font-medium">{{ current.value | number: '.0-0' }}</td>
+            <td>{{ (current.value * 100 / avg.value) | number: '.0-0' }}</td>
+          </tr>
+          <tr *ngFor="let item of selected"
+              (click)="changeVisibility(item.id)"
+              class="data-row cursor-pointer hover:brightness-110 transition-all"
+              [ngStyle]="{'background-color': item.color + 'aa'}">
+            <td class="font-medium">{{ item.year }}</td>
+            <td *ngFor="let val of item.byMonth">{{ val | number: '.0-0' }}</td>
+            <td>{{ (item.value / mSecondsInDay / 360) | number: '.0-0' }}</td>
+            <td class="font-medium">{{ item.value | number: '.0-0' }}</td>
+            <td>{{ (item.value * 100 / avg.value) | number: '.0-0' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </app-card-wrapper>
-  <!-- / Additional table -->
+
+    <!-- Legend panel -->
+    <div class="w-48 3xl:w-56 bg-slate-800/90 rounded-lg shadow-lg shadow-cyan-500/30 p-2 3xl:p-3 flex flex-col gap-1.5 overflow-y-auto custom-scrollbar">
+      <span class="text-[10px] 3xl:text-xs text-slate-400 uppercase tracking-wider mb-1">Legenda</span>
+
+      <div *ngIf="startYear && endYear"
+           (click)="changeVisibility(avg.id)"
+           class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
+           [ngClass]="{'bg-blue-600/80 shadow-md': avg?.display, 'bg-slate-700/50 hover:bg-slate-700': !avg?.display}">
+        <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">O'rtacha</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ avg?.value | number: '.0-0' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="tenAvg"
+           (click)="changeVisibility(tenAvg.id)"
+           class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
+           [ngClass]="{'bg-teal-600/80 shadow-md': tenAvg?.display, 'bg-slate-700/50 hover:bg-slate-700': !tenAvg?.display}">
+        <div class="w-2 h-2 rounded-full bg-teal-500"></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">10 yil o'rtacha</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ tenAvg?.value | number: '.0-0' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="max"
+           (click)="changeVisibility(max.id)"
+           class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
+           [ngClass]="{'bg-green-600/80 shadow-md': max?.display, 'bg-slate-700/50 hover:bg-slate-700': !max?.display}">
+        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">Maksimal ({{ max?.year }})</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ max?.value | number: '.0-0' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="min"
+           (click)="changeVisibility(min.id)"
+           class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
+           [ngClass]="{'bg-red-600/80 shadow-md': min?.display, 'bg-slate-700/50 hover:bg-slate-700': !min?.display}">
+        <div class="w-2 h-2 rounded-full bg-red-500"></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">Minimal ({{ min?.year }})</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ min?.value | number: '.0-0' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="past"
+           (click)="changeVisibility(past.id)"
+           class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
+           [ngClass]="{'bg-amber-600/80 shadow-md': past?.display, 'bg-slate-700/50 hover:bg-slate-700': !past?.display}">
+        <div class="w-2 h-2 rounded-full bg-amber-500"></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">{{ past?.year }} yil</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ past?.value | number: '.0-0' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="current"
+           (click)="changeVisibility(current.id)"
+           class="legend-item flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
+           [ngClass]="{'bg-purple-600/80 shadow-md': current?.display, 'bg-slate-700/50 hover:bg-slate-700': !current?.display}">
+        <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] 3xl:text-xs font-medium truncate">{{ current?.year }} yil</p>
+          <p class="text-[9px] 3xl:text-[10px] text-slate-300">{{ current?.value | number: '.0-0' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #single>
-  <div [id]="id" slot="body" class="h-full w-full"></div>
+  <div [id]="id" class="h-full w-full"></div>
 </ng-template>
