@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+:host ::ng-deep .p-carousel,
+:host ::ng-deep .p-carousel-content,
+:host ::ng-deep .p-carousel-container,
+:host ::ng-deep .p-carousel-items-container,
+:host ::ng-deep .p-carousel-items-content {
+  height: 100%;
+}
+
+:host ::ng-deep .p-carousel-item {
+  height: 100%;
+  display: flex;
+}
