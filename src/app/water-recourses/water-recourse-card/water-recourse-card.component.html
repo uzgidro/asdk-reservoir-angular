@@ -1,6 +1,7 @@
-<div *ngIf="data" class="flex flex-col space-y-2 flex-1"><a routerLink="/water"
-                                                            [queryParams]="{reservoir: data.reservoirId}">
-  <div [id]="id" class="w-full h-80"></div>
+<div *ngIf="data" class="flex flex-col flex-1 h-full min-h-0"><a routerLink="/water"
+                                                                 [queryParams]="{reservoir: data.reservoirId}"
+                                                                 class="flex-1 min-h-0">
+  <div [id]="id" class="w-full h-full"></div>
 </a>
 
   <div class="grid grid-flow-col-dense">
