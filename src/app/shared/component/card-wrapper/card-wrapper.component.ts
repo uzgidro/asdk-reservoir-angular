@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card-wrapper',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './card-wrapper.component.css'
 })
 export class CardWrapperComponent {
+  @Input() fillHeight = false;
 
+  @HostBinding('class.fill-height') get fillHeightClass() {
+    return this.fillHeight;
+  }
 }
