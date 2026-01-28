@@ -1,5 +1,20 @@
 :host {
   display: flex;
+  flex-direction: column;
   height: 100%;
+  width: 100%;
+}
+
+/* Container for router-outlet needs to be a flex container */
+.router-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure router-outlet sibling (the actual routed component) fills the container */
+router-outlet + * {
+  flex: 1;
   min-height: 0;
+  height: 100%;
+  width: 100%;
 }
