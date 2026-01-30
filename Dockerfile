@@ -1,4 +1,4 @@
-# Используем официальный Node.js образ для сборки приложения
+# Stage 1: Build
 FROM node:22.13.1-alpine AS builder
 
 WORKDIR /app
@@ -9,12 +9,10 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Serve with nginx
-FROM nginx:alpine
+# Stage 2: Serve with nginx-unprivileged (runs as non-root)
+FROM nginxinc/nginx-unprivileged:alpine
 
-RUN rm -rf /etc/nginx/conf.d
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/dist/srmt-front/browser /usr/share/nginx/html
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 8080
