@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: srmt-front
+  labels:
+    app: srmt-front
+spec:
+  type: ClusterIP
+  selector:
+    app: srmt-front
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP

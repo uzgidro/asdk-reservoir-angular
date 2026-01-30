@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: srmt-front
+  labels:
+    app: srmt-front
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - srmt-front.speedwagon.uz
+      secretName: srmt-front-tls
+  rules:
+    - host: srmt-front.speedwagon.uz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: srmt-front
+                port:
+                  number: 80
